@@ -1,0 +1,690 @@
+    1  ls
+    2  mount 
+    3  ls
+    4  cd ../
+    5  ls
+    6  cd ../
+    7  l
+    8  ls
+    9  cd ../
+   10  ls
+   11  ls -ltr
+   12  xcalc
+   13  sudo apt-get update
+   14  sudo apt-get install firefox
+   15  hitory
+   16  history
+   17  sudo apt-get install skype
+   18  sudo apt-get update
+   19  sudo apt-get install skype
+   20  skype
+   21  gvim
+   22  sudo apt install gvim
+   23  sudo apt install vim
+   24  gvim
+   25  sudo apt install gvim
+   26  vim
+   27  write 
+   28  xcalc
+   29  gmail
+   30  note
+   31  kwrite
+   32  write
+   33  xemacs
+   34  emacs
+   35  emacs24
+   36  konsole
+   37  sudo add-apt-repository "deb http://archive.canonical.com/ precise partner"
+   38  sudo apt-get update
+   39  sudo apt install adobereader-enu
+   40  acroread 
+   41  sudo add-apt-repository -r "deb http://archive.canonical.com/ precise partner"
+   42  sudo apt update
+   43  acroread 
+   44  bg
+   45  gvim
+   46  vim
+   47  sudo apt install adobereader-enu
+   48  :p
+   49  konsole
+   50  sudo apt install konsole
+   51  konsole
+   52  xterm
+   53  rails server
+   54  cd
+   55  ls
+   56  ls -ltr
+   57  ls
+   58  ls -ltr
+   59  cd dev/
+   60  ls
+   61  mkdir tranconta
+   62  ls
+   63  cd tranconta/
+   64  gem install rails -v 5.1.4
+   65  konsol
+   66  konsole
+   67  ls -ltr /var/lib/gems/2.3.0/
+   68  rm -rf /var/lib/gems/2.3.0
+   69  rm -rf /var/lib/gems
+   70  ls -ltr /var/lib/gems
+   71  su root
+   72  sudo pass root
+   73  sudo passwd root
+   74  su root
+   75  rails _5.1.4_ new hello_app
+   76  su root
+   77  ruby
+   78  which ruby
+   79  gem install rails -v 5.1.4
+   80  sudo apt install ruby
+   81  gem install rails -v 5.1.4
+   82  su root
+   83  gem install rails -v 5.1.4
+   84  sudo apt-get remove ruby
+   85  gem install rails -v 5.1.4
+   86  sudo apt-get update 
+   87  sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
+   88  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+   89  git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+   90  gem install rails -v 5.1.4
+   91  rbenv install 2.3.1
+   92  sudo apt install rbenv
+   93  rbenv install 2.3.1
+   94  rbenv install 2.3.1ruby -v
+   95  gem install rails -v 5.1.4
+   96  suco gem install rails -v 5.1.4
+   97  sudo gem install rails -v 5.1.4
+   98  sudo gem install rails 
+   99  sudo apt-get install ruby-dev
+  100  sudo gem install rails 
+  101  sudo gem install rails -v 5.1.4
+  102  history
+  103  history > ~/commands.txt
+  104  cat ~/commands.txt 
+  105  pwd
+  106  rails _5.1.4_ new hello_app
+  107  sudo rails _5.1.4_ new hello_app
+  108  ks
+  109  ls
+  110  cd hello_app/
+  111  ks
+  112  ls
+  113  gvim Gemfile
+  114  sudo apt install gvim
+  115  gvim Gemfile
+  116  vim
+  117  sudo apt install vim
+  118  gvim
+  119  sudo apt-get install vim-gnome 
+  120  gvim Gemfile
+  121  ls -ltr
+  122  sudo gvim Gemfile
+  123  bundle install
+  124  sudo bundle install
+  125  ks
+  126  rails server 
+  127  sudo bundle install
+  128  sudo bundle update
+  129  sudo bundle install
+  130  rails server 
+  131  pwd
+  132  cd ../
+  133  sudo rails _5.1.4_ new hello_app
+  134  sudo rails _5.1.4_ new hello_app2
+  135  ls
+  136  cd hello_app2
+  137  rails servr
+  138  rails server
+  139  sudo rails server
+  140  vim Gemfile
+  141  sudo vim Gemfile
+  142  sudo rails server
+  143  sudo vim Gemfile
+  144  which rails
+  145  rails -v
+  146  sudo gem update rails
+  147  rails -v
+  148  rm -rf Gemfile.lock 
+  149  sudo rm -rf Gemfile.lock 
+  150  rails -v
+  151  sudo gem update rails
+  152  rails -v
+  153  pwd
+  154  cd ../
+  155  ls
+  156  rails -v
+  157  sudo rails _5.1.5_ new hello_app3
+  158  ks
+  159  ls
+  160  cd hello_app3/
+  161  sudo rails server
+  162  rails -c
+  163  rails -v
+  164  rails server
+  165  ls
+  166  sudo vim Gemfile
+  167  ls
+  168  bundle install
+  169  rails server
+  170  bundle update
+  171  sudo bundle update
+  172  bundle install
+  173  sudo bundle install
+  174  rails server
+  175  sudo apt-get install nodejs
+  176  rails server
+  177  sudo rails server
+  178  ls
+  179  sudo vim app/controllers/application_controller.rb 
+  180  sudo gvim config/routes.rb 
+  181  sudo rails server
+  182  ls
+  183  gvim app/controllers/application_controller.rb 
+  184  sudo gvim app/controllers/application_controller.rb 
+  185  pwd
+  186  sudo rails server
+  187  ls -ltr
+  188  cd app
+  189  ls -ltr
+  190  cd controllers/
+  191  ls -ltr
+  192  vim application_controller.rb 
+  193  ls
+  194  cd ../
+  195  ls
+  196  cd ../
+  197  ls
+  198  cat config/routes.rb 
+  199  vim config/routes.rb 
+  200  su vim config/routes.rb 
+  201  su gvim config/routes.rb 
+  202  gvim config/routes.rb 
+  203  su gvim config/routes.rb 
+  204  chmod 775 config/routes.rb 
+  205  su gvim config/routes.rb 
+  206  sudo gvim config/routes.rb 
+  207  sudo mv app/controllers/application_controller.rb app/controllers/ctrl1_controller.rb
+  208  sudo gvim app/controllers/ctrl1_controller.rb
+  209  pwd
+  210  sudo rails server
+  211  sudo gvim app/controllers/ctrl1_controller.rb
+  212  sudo rails server
+  213  pwd
+  214  ls
+  215  sudo cat app/controllers/ctrl1_controller.rb
+  216  sudo cat  config/routes.rb 
+  217  git
+  218  pwd
+  219  git config --global user.name "Your Name"
+  220  git config --global user.name "Alex"
+  221  git config --global user.email your.email@example.com
+  222  git init
+  223  sudo git init
+  224  git add -A
+  225  sudo git add -A
+  226  git status
+  227  git commit -m ¨intilize git¨
+  228  sudo git commit -m ¨intilize git¨
+  229  sudo git commit -m "intilize git"
+  230  git log
+  231  ls
+  232  sudo mv config.ru x
+  233  sudo git checkout -f
+  234  ls
+  235  diff config.ru x
+  236  rm -rf x
+  237  sudo rm -rf x
+  238  pwd
+  239  sudo rails generate scaffold User name:string email:string
+  240  sudo rails db:migrate
+  241  sudo bundle exec rake db:migrate
+  242  sudo rails server
+  243  pwd
+  244  ls
+  245  sudo rails generate scaffold User name:string email:string
+  246  sudo rails server
+  247  sudo rails generate scaffold User name:string email:string
+  248  sudo rails db:migrate
+  249  sudo rails db:migrate -v
+  250  sudo rails db:migrate -h
+  251  sudo rails db:migrate -D
+  252  which rails
+  253  rails -v
+  254  sudo rails server
+  255  pwd
+  256  ls
+  257  cd config/
+  258  cd ../app
+  259  ls
+  260  cd controllers/
+  261  ls
+  262  mv ctrl1_controller.rb application_controller.rb 
+  263  sudo mv ctrl1_controller.rb application_controller.rb 
+  264  ls
+  265  cat application_controller.rb 
+  266  sudo vim application_controller.rb 
+  267  pwd
+  268  cd ../
+  269  ls
+  270  cd ../
+  271  ls
+  272  cd config/
+  273  ls
+  274  vim routes.rb 
+  275  cd ../
+  276  ls
+  277  sudo gvim config/routes.rb 
+  278  sudo rails server
+  279  bg
+  280  sudo vim config/routes.rb 
+  281  sudo vim app/controllers/users_controller.rb 
+  282  bg
+  283  ls
+  284  ls app/
+  285  ls
+  286  cd app
+  287  ls
+  288  cd controllers/
+  289  ls
+  290  sudo gvim users_controller.rb 
+  291  pwd
+  292  ls
+  293  cd ../
+  294  ls
+  295  cd ../
+  296  ls
+  297  cd config/
+  298  ls
+  299  vim routes.rb 
+  300  pwd
+  301  sudo rails generate scaffold User name:string email:string
+  302  pwd
+  303  ls -ltr
+  304  cd dev
+  305  ls
+  306  cd tranconta/
+  307  ls
+  308  ls -ltr
+  309  cd hello_app3/
+  310  ls
+  311  ls -ltr
+  312  ls *.git
+  313  ls -a
+  314  cd .git
+  315  ls
+  316  cd ../
+  317  ls
+  318  git remote add origin git@bitbucket.org:contra/contran.git
+  319  su git remote add origin git@bitbucket.org:contra/contran.git
+  320  su git remote add origin A1ex77@bitbucket.org:contra/contran.git
+  321  git remote add origin A1ex77@bitbucket.org:contra/contran.git
+  322  chmod 755 *
+  323  su chmod 755 *
+  324  git remote add origin A1ex77@bitbucket.org:contra/contran.git
+  325  sudo git remote add origin A1ex77@bitbucket.org:contra/contran.git
+  326  sudo git push -u origin --all
+  327  pwd
+  328  cd ../
+  329  ls
+  330  ls -a
+  331  cd hello_app3/
+  332  ls
+  333  sudo git remote add origin A1ex77@bitbucket.org:contra/hello_app3.git
+  334  sudo git remote add origin https://A1ex77@bitbucket.org/A1ex77/contran.git
+  335  sudo git remote add origin A1ex77@bitbucket.org/A1ex77/contran.git
+  336  sudo git remote add origin git@bitbucket.org/A1ex77/hello_app3.git
+  337  sudo  git push -u origin --all
+  338  ls
+  339  ls -a
+  340  cd app
+  341  ls
+  342  ls -a
+  343  cd ../
+  344  ls
+  345  cd ../
+  346  ls
+  347  ls -a
+  348  cd hello_app3/
+  349  ls
+  350  sudo git remote add origin git@bitbucket.org/A1ex77/hello_app3.git
+  351  cd ../pwd
+  352  pwd
+  353  ls
+  354  sudo git remote add origin git@bitbucket.org/A1ex77/hello_app3.git
+  355  sudo git remote add origin https://A1ex77@bitbucket.org/A1ex77/hello_app3.git
+  356  it push -u origin --all
+  357  git push -u origin --all
+  358  sudo git push -u origin --all
+  359  pwd
+  360  sudo git push -u origin --all
+  361  sudo git remote add origin A1ex77@bitbucket.org/A1ex77/hello_app3.git
+  362  cat ~/.ssh/id_rsa.pub
+  363  cat .ssh/id_rsa.pub
+  364  cd
+  365  ssh-keygen 
+  366  cat ~/.ssh/id_rsa.pub
+  367  ls
+  368  ssh-keygen 
+  369  cat ~/.ssh/id_rsa.pub
+  370  cat ~/key
+  371  cat ~/.ssh/id_rsa.pub | xclip -sel clip
+  372  cat ~/key | xclip -sel clip
+  373  sudo apt install xclip
+  374  cat ~/key | xclip -sel clip
+  375  cat ~/key 
+  376  cat ~/key | xclip -sel clip.
+  377  cat ~/key | xclip 
+  378  cat ~/key 
+  379  cat ~/key | xclip -sel clip
+  380  cd
+  381  ls
+  382  ls .ssh
+  383  cd .ssh
+  384  ls
+  385  ssh-keygen 
+  386  ls
+  387  cat id_rsa.pub 
+  388  pwd
+  389  cd ../
+  390  ls
+  391  cd dev
+  392  ls
+  393  cd tranconta/
+  394  ls
+  395  cd hello_app3/
+  396  ls
+  397  sudo git remote add origin A1ex77@bitbucket.org/A1ex77/hello_app3.git
+  398  sudo git push -u origin --all
+  399  git push -u origin --all
+  400  ls
+  401  ls *.git
+  402  ls
+  403  pwd
+  404  git status
+  405  git add config/routes.rb
+  406  sudo git add config/routes.rb
+  407  git commit -m "test"
+  408  sudo git commit -m "test"
+  409  git status
+  410  ls
+  411  cd ../
+  412  ls -a
+  413  cd hello_app
+  414  ls
+  415  cd ..
+  416  ls
+  417  cd hello_app3/
+  418  ls
+  419  ls -a
+  420  sudo git remote add origin A1ex77@bitbucket.org/A1ex77/.git
+  421  sudo git push -u origin --all
+  422  git push -u origin --all
+  423  ls
+  424  git status
+  425  pwd
+  426  cd ..
+  427  sudo git remote add origin A1ex77@bitbucket.org/A1ex77/hello_app3.git
+  428  cd -
+  429  sudo git remote add origin A1ex77@bitbucket.org/A1ex77/hello_app3.git
+  430  ls
+  431  ls .git/config
+  432  cat .git/config
+  433  sudo  git remote set-url origin  A1ex77@bitbucket.org/A1ex77/hello_app3.git
+  434  git push -u origin --all
+  435  sudo git push -u origin --all
+  436  sudo  git remote set-url origin  A1ex77@bitbucket.org:contra/contran.git
+  437  sudo git push -u origin --all
+  438  sudo  git remote set-url origin  A1ex77@bitbucket.org:contra/contran.git
+  439  sudo  git remote set-url origin  A1ex77@bitbucket.org/A1ex77/hello_app3.git
+  440  sudo git push -u origin --all
+  441  git remote rm origin
+  442  sudo git remote rm origin
+  443  ls
+  444  ls .git
+  445  ls .git/
+  446  ls .git/config 
+  447  cat .git/config 
+  448  sudo  git remote add origin  A1ex77@bitbucket.org/A1ex77/hello_app3.git
+  449  cat .git/config 
+  450  sudo git push -u origin --all
+  451  git remote rm origin
+  452  sudo git remote rm origin
+  453  sudo  git remote add origin  A1ex77@bitbucket.org/A1ex77/.git
+  454  sudo git push -u origin --all
+  455  cat .git/config 
+  456  sudo git push -u origin --all
+  457  sudo  git remote add origin  https://A1ex77@bitbucket.org/A1ex77/hello_app3.git
+  458  git remote rm origin
+  459  sudo git remote rm origin
+  460  ls
+  461  ls -ltr
+  462  ls .git
+  463  ls
+  464  git status
+  465  git log
+  466  ls
+  467  git checkout master
+  468  su git checkout master
+  469  sudo git checkout master
+  470  ls
+  471  git push
+  472  sudo git push
+  473  pwd
+  474  sudo  git remote add origin  https://A1ex77@bitbucket.org/A1ex77/.git
+  475  sudo git push -u origin --all
+  476  sudo git remote rm origin
+  477  sudo  git remote add origin  https://A1ex77@bitbucket.org/A1ex77/hello_app.git
+  478  sudo git push -u origin --all
+  479  sudo git remote rm origin
+  480  ls
+  481  cat .git/config 
+  482  sudo  git remote add origin  https://A1ex77@bitbucket.org/A1ex77/hello_app3.git
+  483  sudo git remote rm origin
+  484  sudo  git remote add origin  https://A1ex77@bitbucket.org/A1ex77/hello_app3.git
+  485  sudo git push -u origin --all
+  486  sudo git pull
+  487  sudo git push -u origin --all
+  488  sudo git pull ...
+  489  sudo git pull .
+  490  sudo git push -u origin --all
+  491  sudo git push -f -u origin --all
+  492  sudo rails generate scaffold DriverExpense CNP_id:text DATETIME:datetime AMOUNT:integer INFO:text 
+  493  sudo rails generate scaffold TruckExpense TRUCK_id:text DATETIME:datetime AMOUNT:integer INFO:text 
+  494  sudo rails generate scaffold Trucks TRUCK_id:text INFO:text 
+  495  sudo rails generate scaffold Drivers CNP_id:text INFO:text 
+  496  sudo rails generate scaffold Drivers CNP_id:text FIRST_NAME:text FAMILY_NAME:text  INFO:text 
+  497  sudo rails --force generate scaffold Drivers CNP_id:text FIRST_NAME:text FAMILY_NAME:text  INFO:text 
+  498  sudo rails generate scaffold --force Drivers CNP_id:text FIRST_NAME:text FAMILY_NAME:text  INFO:text 
+  499  sudo rails --force generate scaffold Drivers CNP_id:text FIRST_NAME:text FAMILY_NAME:text  INFO:text 
+  500  sudo rails generate scaffold --force Drivers CNP_id:text FIRST_NAME:text FAMILY_NAME:text  INFO:text 
+  501  sudo   rails destroy scaffold  Drivers 
+  502  sudo rails generate scaffold --force Drivers CNP_id:text FIRST_NAME:text FAMILY_NAME:text  INFO:text 
+  503  sudo   rails destroy scaffold  Drivers 
+  504  sudo rails generate scaffold Drivers CNP_id:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  505  sudo rails generate scaffold Events DATETIME:datetime CNP_id:text TRUCK_is:text START_END:boolean
+  506  rails db:migrate
+  507  sudo rails db:migrate
+  508  history
+  509  gvim ~/commands.txt 
+  510  sudo rails server
+  511  rake db:migrate
+  512  sudo rake db:migrate
+  513  71491977RR
+  514  sudo rake db:migrate
+  515  sudo bundle exec rake db:migrate
+  516  sudo rails server
+  517  bg
+  518  rails db
+  519  ls
+  520  cd app
+  521  ls
+  522  cd models/
+  523  ls
+  524  gvim -o *.rb
+  525  sudo gvim -o *.rb
+  526  sudo rails server
+  527  lsof 
+  528  lsof  -wni tcp:3000
+  529  lsof  -wni tcp:8000
+  530  lsof  -wni tcp:3000
+  531  kill -9 3265
+  532  lsof  -wni tcp:3000
+  533  rails console
+  534  sudo rails console
+  535  sudo rails server
+  536  pwd
+  537  ls
+  538  cd ev
+  539  cd dev
+  540  ls
+  541  cd tranconta/
+  542  ls
+  543  cd hello_app3/
+  544  sudo rails server
+  545  sudo rails server -h
+  546  sudo rails server 
+  547  lsof  -wni tcp:3000
+  548  sudo rails server 
+  549  cat /home/alex/dev/tranconta/hello_app3/tmp/pids/server.pid
+  550  ls /home/alex/dev/tranconta/hello_app3/tmp/pids/
+  551  ls /home/alex/dev/tranconta/hello_app3/tmp/pids/server.pid 
+  552  cat /home/alex/dev/tranconta/hello_app3/tmp/pids/server.pid 
+  553  kill -9 7271
+  554  sudo rails server 
+  555  rails server
+  556  sudo rails server
+  557  lsof -wni tcp:3000
+  558  cat /home/alex/dev/tranconta/hello_app3/tmp/pids/server.pid 
+  559  kill -9 7271
+  560  lsof -i tcp:3000 -t
+  561  kill -9 $(lsof -i tcp:3000 -t)
+  562  sudo rails server
+  563  ps alex
+  564  ps alex | grep rails
+  565  kill -9 7270
+  566  kill -9 54796
+  567  kill -9 3848
+  568  ps aux | grep rails
+  569  sudo kill -9 7270
+  570  sudo kill -9 9715
+  571  sudo rails server
+  572  mv /home/alex/dev/tranconta/hello_app3/tmp/pids/server.pid /home/alex/dev/tranconta/hello_app3/tmp/pids/server1
+  573  sudo mv /home/alex/dev/tranconta/hello_app3/tmp/pids/server.pid /home/alex/dev/tranconta/hello_app3/tmp/pids/server1
+  574  sudo rails server
+  575  sudo kill -9 7270
+  576  sudo kill -9 9715
+  577  ps aux | grep rails
+  578  sudo kill -9 9794
+  579  sudo rails server
+  580  sudo mv /home/alex/dev/tranconta/hello_app3/tmp/pids/server1 /home/alex/dev/tranconta/hello_app3/tmp/pids/server.pid
+  581  sudo rails server
+  582  kill -9 $(lsof -i tcp:3000 -t)
+  583  sudo mv /home/alex/dev/tranconta/hello_app3/tmp/pids/server.pid /home/alex/server1
+  584  ps aux | grep rails
+  585  sudo kill -9 9898
+  586  ps aux | grep rails
+  587  sudo kill -9 9912
+  588  ps aux | grep r
+  589  ps aux | grep rails
+  590  sudo kill -9 9920
+  591  ps aux | grep rails
+  592  sudo kill -9 9924
+  593  ps aux | grep rails
+  594  sudo kill -9 9931
+  595  ps aux | grep rails
+  596  sudo kill -9 9935
+  597  ps aux | grep rails
+  598  sudo kill -9 9939
+  599  ps aux | grep rails
+  600  ps aux | grep ruby
+  601* sudo kil
+  602  ps aux | grep ruby
+  603  ps alex 
+  604  ps aux | grep ruby
+  605  ps aux | grep rails
+  606  ls /home/alex/dev/tranconta/hello_app3/tmp/pids/server.pid 
+  607  ls /home/alex/dev/tranconta/hello_app3/tmp/pids/
+  608* 
+  609  ps aux | grep ruby
+  610  killall -9 rails
+  611  sudo killall -9 rails
+  612  sudo pkill -9 rails
+  613  ps aux | grep ruby
+  614  ps aux | grep rails
+  615  sudo pkill -f rails
+  616  sudo pkill -f ruby
+  617  ps aux | grep rails
+  618  sudo rails server -p 3001
+  619  bg
+  620  sudo rails db:migrate
+  621  sudo rails server -p 3001
+  622  sudo rails console
+  623  sudo rake db:rollback
+  624  rails destroy scaffold *
+  625  sudo rails destroy scaffold *
+  626  sudo rails generate scaffold Drivers        id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  627  sudo rails generate -f scaffold Drivers        id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  628  sudo rails generate --force_plural scaffold Drivers        id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  629  sudo rails generate scaffold Drivers id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  630  sudo rails --force generate scaffold Drivers id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  631  sudo rails generate --force scaffold Drivers id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  632  sudo rails generate scaffold --force Drivers id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  633  sudo rails generate scaffold --force DriverExpense id:integer DATETIME:datetime AMOUNT:integer INFO:text cnp:text
+  634  sudo rails db:migrate
+  635  sudo rails generate scaffold --force Driver id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  636  sudo rails generate scaffold  Driver id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  637  sudo rails generate scaffold --force Drivers id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  638  pwd
+  639  cd ../
+  640  mkdir hello_app4
+  641  cd hello_app4
+  642* 
+  643  cd ../
+  644  ls
+  645  rm -rf hello_app4
+  646  rails _5.1.4_ new hello_app4
+  647  ls
+  648  cd hello_app4
+  649  ls
+  650  vim Gemfile
+  651  sudo gvim Gemfile1
+  652  mv Gemfile g
+  653  mv Gemfile1 Gemfile
+  654  ls
+  655  sudo  bundle install --without production
+  656  sudo  bundle update
+  657  sudo rails generate scaffold Drivers        id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  658  sudo rails destroy scaffold Drivers
+  659  sudo rails generate scaffold Driver id:integer cnp:text FIRSTNAME:text SECONDNAME:text  INFO:text 
+  660  sudo rails generate scaffold Driver id:integer cnp:text, :unique => true FIRSTNAME:text SECONDNAME:text  INFO:text 
+  661  sudo rails generate scaffold --force Driver id:integer cnp:text, :unique => true FIRSTNAME:text SECONDNAME:text  INFO:text 
+  662  sudo rails db:migrate
+  663  ls
+  664  sudo rails server -p 3001
+  665  sudo rails server -p 3002
+  666  bg
+  667  sudo db:migrate RAILS_ENV=development 
+  668  sudo rails db:migrate RAILS_ENV=development 
+  669  sudo rails generate scaffold --force Driver id: false  cnp:text, :unique => true FIRSTNAME:text SECONDNAME:text  INFO:text 
+  670  sudo rails generate scaffold --force DriverExpense id:integer DATETIME:datetime AMOUNT:integer INFO:text cnp:text
+  671  sudo rails db:migrate
+  672  sudo rails generate scaffold --force Driver id: false  cnp:text, :unique => true FIRSTNAME:text SECONDNAME:text  INFO:text 
+  673  sudo rails db:migrate
+  674  sudo rails generate scaffold --force Driver id: false  cnp:text, :unique => true FIRSTNAME:text SECONDNAME:text  INFO:text 
+  675  sudo rails server -p 3002
+  676  sudo rails server -p 3003
+  677  sudo pkill -f ruby
+  678  sudo pkill -f rails
+  679  sudo rails server -p 3002
+  680  bg
+  681  sudo rails db:migrate
+  682  sudo rails generate scaffold --force Driver id:integer  cnp:text, :unique => true FIRSTNAME:text SECONDNAME:text  INFO:text 
+  683  sudo rails db:migrate
+  684  sudo rails generate scaffold --force Driver id:integer cnp:text, :unique => true FIRSTNAME:text SECONDNAME:text  INFO:text 
+  685  sudo rails generate scaffold --force DriverExpense id:integer DATETIME:datetime AMOUNT:integer INFO:text cnp:text
+  686  sudo rails generate scaffold  Driver id:integer cnp:text, :unique => true FIRSTNAME:text SECONDNAME:text  INFO:text 
+  687  sudo rails destroy scaffold Drivers
+  688  sudo rails destroy scaffold DriverExpenses
+  689  sudo rails destroy scaffold Driver
+  690  history > out

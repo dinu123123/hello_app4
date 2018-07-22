@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td, th {
+    border: 1px solid #aaaaaa;
+    text-align: left;
+    padding: 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Belgium Tolls</h1>
+
+<p>
+  <strong>Platenr:</strong>
+  <%= @truck.NB_PLATE %>
+</p>
+
+<p>
+  <strong>Startdate:</strong>
+  <%= @belgium_toll.StartDate %>
+</p>
+
+<p>
+  <strong>Starttime:</strong>
+  <%= @belgium_toll.StartTime %>
+</p>
+
+<p>
+  <strong>Enddate:</strong>
+  <%= @belgium_toll.EndDate %>
+</p>
+
+<p>
+  <strong>Endtime:</strong>
+  <%= @belgium_toll.EndTime %>
+</p>
+
+<p>
+  <strong>Km:</strong>
+  <%= @belgium_toll.Km %>
+</p>
+
+<p>
+  <strong>Eur:</strong>
+  <%= @belgium_toll.EUR %>
+</p>
+
+<%= link_to 'Edit', edit_belgium_toll_path(@belgium_toll) %> |
+<%= link_to 'Back', belgium_tolls_path %>

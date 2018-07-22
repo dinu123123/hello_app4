@@ -1,0 +1,40 @@
+<%= form_with(model: truck, local: true) do |form| %>
+  <% if truck.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(truck.errors.count, "error") %> prohibited this truck from being saved:</h2>
+
+      <ul>
+      <% truck.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :"Number Plate (write without white spaces)" %>
+    <%= form.text_area :NB_PLATE, id: :truck_NB_PLATE, cols: "8", rows: "1", :required => 'required' %>
+  </div>
+
+
+
+  <div class="field">
+    <%= form.label :CHASSIS %>
+    <%= form.text_area :CHASSIS, id: :truck_CHASSIS, cols: "20", rows: "1", :required => 'required' %>
+  </div>
+
+   <div class="field">
+    <%= form.label :FABDATE %>
+    <%= form.date_select :FABDATE, id: :truck_FABDATE,  :start_year=>2008,:end_year=>2030, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :INFO %>
+    <%= form.text_area :INFO, id: :truck_INFO, :required => 'required' %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

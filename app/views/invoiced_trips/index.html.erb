@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td, th {
+    border: 1px solid #aaaaaa;
+    text-align: left;
+    padding: 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Invoiced Trips</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>InvoiceID</th>
+      <th>Client Name</th>
+      <th>Client ID</th>
+      <th>Driver Name</th>
+      <th>Driver CNP </th>
+      <th>Driver ID</th>
+      <th>Truck</th>
+       <th>Truck ID</th>
+      <th>Germany toll</th>
+      <th>Belgium toll</th>
+      <th>Swiss toll</th>
+      <th>France toll</th>
+      <th>Italy toll</th>
+      <th>Uk toll</th>
+      <th>Netherlands toll</th>
+      <th>Km</th>
+      <th>Trip Start Date</th>
+      <th>Trip End Date</th>
+      <th>Invoice Date</th>
+      <th>Total amount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invoiced_trips.each do |invoiced_trip| %>
+      <tr>
+        <td><%= invoiced_trip.invoice_id %></td>
+        <td><%= @clients.find(invoiced_trip.client_id).Name %></td>
+        <td><%= invoiced_trip.client_id %></td>
+        <td><%= @drivers.find(invoiced_trip.DRIVER_id).FIRSTNAME+" "+ @drivers.find(invoiced_trip.DRIVER_id).SECONDNAME %></td>
+        <td><%= @drivers.find(invoiced_trip.DRIVER_id).CNP %></td>
+        <td><%= invoiced_trip.DRIVER_id %></td>
+        <td><%= @trucks.find(invoiced_trip.truck_id).NB_PLATE %></td>
+        <td><%= invoiced_trip.truck_id %></td>
+        <td><%= invoiced_trip.germany_toll %></td>
+        <td><%= invoiced_trip.belgium_toll %></td>
+        <td><%= invoiced_trip.swiss_toll %></td>
+        <td><%= invoiced_trip.france_toll %></td>
+        <td><%= invoiced_trip.italy_toll %></td>
+        <td><%= invoiced_trip.uk_toll %></td>
+        <td><%= invoiced_trip.netherlands_toll %></td>
+        <td><%= invoiced_trip.km %></td>
+        <td><%= invoiced_trip.StartDate %></td>
+        <td><%= invoiced_trip.EndDate %></td>
+        <td><%= invoiced_trip.date %></td>
+        <td><%= invoiced_trip.total_amount %></td>
+        <td><%= link_to 'Show', invoiced_trip %></td>
+        <td><%= link_to 'Edit', edit_invoiced_trip_path(invoiced_trip) %></td>
+        <td><%= link_to 'Destroy', invoiced_trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Invoiced Trip', new_invoiced_trip_path %>

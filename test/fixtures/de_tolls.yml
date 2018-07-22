@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  PlateNr: MyString
+  Date: 2018-07-22
+  Time: 2018-07-22 21:02:29
+  BookingID: MyString
+  Art: 1
+  Road: MyString
+  Via: MyString
+  Departure: MyString
+  CostCentre: 1
+  TariffModel: 1
+  AxelClass: 1
+  WeightClass: 1
+  EmissionCat: 1
+  RoadOperators: 1
+  Ver: MyString
+  Km: 9.99
+  EUR: 9.99
+  truck_id: 1
+
+two:
+  PlateNr: MyString
+  Date: 2018-07-22
+  Time: 2018-07-22 21:02:29
+  BookingID: MyString
+  Art: 1
+  Road: MyString
+  Via: MyString
+  Departure: MyString
+  CostCentre: 1
+  TariffModel: 1
+  AxelClass: 1
+  WeightClass: 1
+  EmissionCat: 1
+  RoadOperators: 1
+  Ver: MyString
+  Km: 9.99
+  EUR: 9.99
+  truck_id: 1

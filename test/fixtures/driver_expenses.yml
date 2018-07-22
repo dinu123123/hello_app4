@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  DRIVER_id: MyText
+  DATETIME: 2018-05-06 18:23:08
+  AMOUNT: 1
+  INFO: MyText
+  DESCRIPTION: MyText
+
+two:
+  DRIVER_id: MyText
+  DATETIME: 2018-05-06 18:23:08
+  AMOUNT: 1
+  INFO: MyText
+  DESCRIPTION: MyText

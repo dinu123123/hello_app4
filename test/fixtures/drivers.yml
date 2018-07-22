@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  CNP: MyText
+  FIRSTNAME: MyText
+  SECONDNAME: MyText
+  INFO: MyText
+  DESCRIPTION: MyText
+
+two:
+  CNP: MyText
+  FIRSTNAME: MyText
+  SECONDNAME: MyText
+  INFO: MyText
+  DESCRIPTION: MyText

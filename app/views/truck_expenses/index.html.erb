@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td, th {
+    border: 1px solid #aaaaaa;
+    text-align: left;
+    padding: 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Truck Expenses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Truck</th>
+      <th>Date</th>
+      <th>Amount</th>
+      <th>Info</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @truck_expenses.each do |truck_expense| %>
+      <tr>
+        <td><%= @trucks.find(truck_expense.truck_id).NB_PLATE %></td>
+        <td><%= truck_expense.DATE %></td>
+        <td><%= truck_expense.AMOUNT %></td>
+        <td><%= truck_expense.INFO %></td>
+        <td><%= truck_expense.DESCRIPTION %></td>
+        <td><%= link_to 'Show', truck_expense %></td>
+        <td><%= link_to 'Edit', edit_truck_expense_path(truck_expense) %></td>
+        <td><%= link_to 'Destroy', truck_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+</body>
+</html>
+
+<%= link_to 'New Truck Expense', new_truck_expense_path %>

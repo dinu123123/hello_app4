@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td, th {
+    border: 1px solid #aaaaaa;
+    text-align: left;
+    padding: 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Trstime:</strong>
+  <%= @fuel_expense.trstime %>
+</p>
+
+<p>
+  <strong>Trsdate:</strong>
+  <%= @fuel_expense.trsdate %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @fuel_expense.product %>
+</p>
+
+<p>
+  <strong>Volume:</strong>
+  <%= @fuel_expense.volume %>
+</p>
+
+<p>
+  <strong>Netamount:</strong>
+  <%= @fuel_expense.eurnetamount %>
+</p>
+
+<p>
+  <strong>Kminsertion:</strong>
+  <%= @fuel_expense.kminsertion %>
+</p>
+
+<p>
+  <strong>Platenr:</strong>
+  <%= @fuel_expense.platenr %>
+</p>
+
+<p>
+  <strong>Cardnr:</strong>
+  <%= @fuel_expense.cardnr %>
+</p>
+
+<p>
+  <strong>Stationname:</strong>
+  <%= @fuel_expense.stationname %>
+</p>
+
+<p>
+  <strong>Grossunitprice:</strong>
+  <%= @fuel_expense.eurgrossunitprice %>
+</p>
+
+<p>
+  <strong>Grossamount:</strong>
+  <%= @fuel_expense.eurgrossamount %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @fuel_expense.country %>
+</p>
+
+<%= link_to 'Edit', edit_fuel_expense_path(@fuel_expense) %> |
+<%= link_to 'Back', fuel_expenses_path %>

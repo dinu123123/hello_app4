@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h1>Truck Expenses</h1>
+
+<table>
+  <tr>
+    <th>Number Plate</th>
+    <th>Date&</th>
+    <th>Amount</th>
+    <th>Info</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><%= @truck.NB_PLATE %></td>
+    <td><%= @truck_expense.DATE %></td>
+    <td><%= @truck_expense.AMOUNT %></td>
+    <td><%= @truck_expense.INFO %></td>
+    <td><%= @truck_expense.DESCRIPTION %></td>
+  </tr> 
+</table>
+<br>
+<p id="notice"><%= notice %></p>
+<%= link_to 'Edit', edit_truck_expense_path(@truck_expense) %> |
+<%= link_to 'Back', truck_expenses_path %>
+</body>
+</html>
+
+

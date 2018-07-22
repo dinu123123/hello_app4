@@ -1,0 +1,50 @@
+<%= form_with(model: driver_expense, local: true) do |form| %>
+  <% if driver_expense.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(driver_expense.errors.count, "error") %> prohibited this driver_expense from being saved:</h2>
+
+      <ul>
+      <% driver_expense.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<% if false %>
+  <div class="field">
+    <%= form.label :DRIVER_id %>
+    <%= form.text_area :DRIVER_id, id: :driver_expense_DRIVER_id %>
+  </div>
+
+  <%= form.collection_select :DRIVER_id, Driver.all, :id,:CNP, {prompt: "Driver Name"} %>
+<% end %>
+
+  
+
+<%= form.collection_select :DRIVER_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'Please Select'}, :required => 'required' %>
+
+  <div class="field">
+    <%= form.label :DATE %>
+    <%= form.date_select :DATE, id: :driver_expense_DATE, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :AMOUNT %>
+    <%= form.number_field :AMOUNT, id: :driver_expense_AMOUNT, :required => 'required' %>
+  </div>
+
+<div class="field">
+    <%= form.label :INFO %>
+    <%= form.select :INFO, options_for_select(['Salary','Fine','Parking','Bridge','Tunnel','Ferryboat']), { prompt: "Expense Type"}, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :DESCRIPTION, 'Describe the expense (country, invoice/ticket ID, etc.):' %>
+    <%= form.text_area :DESCRIPTION, id: :driver_expense_DESCRIPTION, :required => 'required' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

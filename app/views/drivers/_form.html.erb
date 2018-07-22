@@ -1,0 +1,53 @@
+<%= form_with(model: driver, local: true) do |form| %>
+  <% if driver.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(driver.errors.count, "error") %> prohibited this driver from being saved:</h2>
+
+      <ul>
+      <% driver.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :CNP %>
+    <%= form.text_area :CNP, id: :driver_CNP, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :FIRSTNAME %>
+    <%= form.text_area :FIRSTNAME, id: :driver_FIRSTNAME, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :SECONDNAME %>
+    <%= form.text_area :SECONDNAME, id: :driver_SECONDNAME, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :INFO, 'Salary' %>
+    <%= form.text_area :INFO, id: :driver_INFO, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :DESCRIPTION %>
+    <%= form.text_area :DESCRIPTION, id: :driver_DESCRIPTION %>
+  </div>
+
+  <div class="field">
+    <%= form.label :StartDate, 'Employment Date' %>
+    <%= form.date_select :StartDate, id: :driver_StartDate, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :EndDate, 'Termination Date' %>
+    <%= form.date_select :EndDate, id: :driver_EndDate %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

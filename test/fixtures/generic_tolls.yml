@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  StartDate: 2018-07-11
+  EndDate: 2018-07-11
+  Km: 9.99
+  EUR: 9.99
+  truck_id: 1
+  country: MyString
+
+two:
+  StartDate: 2018-07-11
+  EndDate: 2018-07-11
+  Km: 9.99
+  EUR: 9.99
+  truck_id: 1
+  country: MyString

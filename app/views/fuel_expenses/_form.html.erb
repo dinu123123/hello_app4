@@ -1,0 +1,85 @@
+<%= form_with(model: fuel_expense, local: true) do |form| %>
+  <% if fuel_expense.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(fuel_expense.errors.count, "error") %> prohibited this fuel_expense from being saved:</h2>
+
+      <ul>
+      <% fuel_expense.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+   
+  <div class="field">
+    <%= form.label :trstime %>
+    <%= form.time_field :trstime, id: :fuel_expense_trstime, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :trsdate %>
+    <%= form.date_field :trsdate, id: :fuel_expense_trsdate, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :product %>
+    <%= form.text_field :product, id: :fuel_expense_product, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :volume %>
+    <%= form.text_field :volume, id: :fuel_expense_volume, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :eurnetamount %>
+    <%= form.text_field :eurnetamount, id: :fuel_expense_eurnetamount, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kminsertion %>
+    <%= form.text_field :kminsertion, id: :fuel_expense_kminsertion, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :platenr %>
+    <%= form.text_field :platenr, id: :fuel_expense_platenr, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cardnr %>
+    <%= form.text_field :cardnr, id: :fuel_expense_cardnr, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :stationid %>
+    <%= form.text_field :stationid, id: :fuel_expense_stationid, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :stationname %>
+    <%= form.text_field :stationname, id: :fuel_expense_stationname, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :eurgrossunitprice %>
+    <%= form.text_field :eurgrossunitprice, id: :fuel_expense_eurgrossunitprice, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :grossamount %>
+    <%= form.text_field :eurgrossamount, id: :fuel_expense_eurgrossamount, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :country %>
+    <%= form.text_field :country, id: :fuel_expense_country, :required => 'required' %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+  
+<% end %>

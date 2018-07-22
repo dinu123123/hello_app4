@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  DATETIME: 2018-05-13 21:23:09
+  DRIVER_id: 1
+  truck_id: 1
+  START_END: false
+
+two:
+  DATETIME: 2018-05-13 21:23:09
+  DRIVER_id: 1
+  truck_id: 1
+  START_END: false

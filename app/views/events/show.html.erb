@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h1>Events</h1>
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Driver CNP</th>
+    <th>First Name</th>
+    <th>Second Name</th>
+    <th>Client</th>
+    <th>Truck Number Plate</th>
+    <th>Start/End</th>
+  </tr>
+  <tr>
+    <td><%= @event.DATE.strftime("%d %B %Y")%></td>
+    <td><%= @driver.CNP %></td>
+    <td><%= @driver.FIRSTNAME %></td>
+    <td><%= @driver.SECONDNAME %></td>
+    <td><%= @client.Name %></td>
+    <td><%= @truck.NB_PLATE %></td>
+    <% if @event.START_END? %>
+      <td><%= 'Start' %></td>
+      <% else %>
+      <td><%= 'End' %></td>
+      <% end %>
+  </tr> 
+</table>
+<br>
+<p id="notice"><%= notice %></p>
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
+</body>
+</html>
+
+

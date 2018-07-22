@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<h1>De Tolls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Platenr</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Bookingid</th>
+      <th>Art</th>
+      <th>Road</th>
+      <th>Via</th>
+      <th>Departure</th>
+      <th>Costcentre</th>
+      <th>Tariffmodel</th>
+      <th>Axelclass</th>
+      <th>Weightclass</th>
+      <th>Emissioncat</th>
+      <th>Roadoperators</th>
+      <th>Ver</th>
+      <th>Km</th>
+      <th>Eur</th>
+      <th>Truck</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @de_tolls.each do |de_toll| %>
+      <tr>
+        <td><%= de_toll.platenr %></td>
+        <td><%= de_toll.date %></td>
+        <td><%= de_toll.time %></td>
+        <td><%= de_toll.bookingid %></td>
+        <td><%= de_toll.art %></td>
+        <td><%= de_toll.road %></td>
+        <td><%= de_toll.via %></td>
+        <td><%= de_toll.departure %></td>
+        <td><%= de_toll.costcentre %></td>
+        <td><%= de_toll.tariffmodel %></td>
+        <td><%= de_toll.axelclass %></td>
+        <td><%= de_toll.weightclass %></td>
+        <td><%= de_toll.emissioncat %></td>
+        <td><%= de_toll.roadoperators %></td>
+        <td><%= de_toll.ver %></td>
+        <td><%= de_toll.km %></td>
+        <td><%= de_toll.eur %></td>
+        <td><%= de_toll.truck_id %></td>
+        <td><%= link_to 'Show', de_toll %></td>
+        <td><%= link_to 'Edit', edit_de_toll_path(de_toll) %></td>
+        <td><%= link_to 'Destroy', de_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+<div>
+<h4> Import that data!</h4>
+  <%= form_tag import_de_tolls_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag  "Import CSV"%>
+<% end %>
+</div>
+<%= link_to 'New De Toll', new_de_toll_path %>

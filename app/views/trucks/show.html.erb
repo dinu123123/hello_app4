@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nb plate:</strong>
+  <%= @truck.NB_PLATE %>
+</p>
+
+<p>
+  <strong>Info:</strong>
+  <%= @truck.INFO %>
+</p>
+
+<%= link_to 'Edit', edit_truck_path(@truck) %> |
+<%= link_to 'Back', trucks_path %>

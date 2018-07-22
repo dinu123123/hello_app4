@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+
+<div class="row">
+  <div class="column">
+<h3>Trucks:</h3>
+<table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Truck', new_truck_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Trucks', trucks_path %> </th>
+  </tr>
+  </table>
+<h3>Truck Expenses:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Truck Expense', new_truck_expense_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Truck Expenses', truck_expenses_path %> </th>
+  </tr>
+</table>
+
+<h3>Clients:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Client', new_client_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Clients', clients_path %> </th>
+  </tr>
+</table>
+  </div>
+
+  <div class="column">  
+<h3>Drivers:</h3>
+<table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Driver', new_driver_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Drivers', drivers_path %> </th>
+  </tr>
+  </table>
+
+<h3>Driver Expenses:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Driver Expense', new_driver_expense_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Driver Expenses', driver_expenses_path %> </th>
+  </tr>
+</table>
+
+
+<h3>Invoiced Trips:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Invoiced Trip', new_invoiced_trip_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Invoiced Trips', invoiced_trips_path %> </th>
+  </tr>
+</table>
+
+
+
+
+  </div>
+
+  <div class="column">
+<h3>Driver Events:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Driver Event', new_event_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Driver Events', events_path %> </th>
+  </tr>
+</table>
+
+
+<h3>Fuel Expense:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Fuel Expense', new_fuel_expense_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'File Import', fuel_expense_file_import_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Fuel Expenses', fuel_expenses_path %> </th>
+  </tr>
+</table>
+
+
+</div>
+</table>
+
+<div class="column">
+<% if false %>
+<h3>Toll Germany:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Germany Toll', new_germany_toll_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Germany Tolls', germany_tolls_path %> </th>
+  </tr>
+<%end%>  
+
+
+
+<h3>Toll Germany:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Germany Toll', new_de_toll_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'File Import', de_toll_file_import_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Germany Toll', de_tolls_path %> </th>
+  </tr>
+
+</table>
+  
+
+<h3>Toll Belgium:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Belgium Toll', new_belgium_toll_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Belgium Tolls', belgium_tolls_path %> </th>
+  </tr>
+</table>
+
+<h3>Toll Generic:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Generic Toll', new_generic_toll_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Generic Tolls', generic_tolls_path %> </th>
+  </tr>
+</table>
+  </div>
+
+<p id="notice"><%= notice %></p>
+
+
+</body>
+</html>

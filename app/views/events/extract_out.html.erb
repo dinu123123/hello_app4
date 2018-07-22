@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+  <p id="notice"><%= notice %></p>
+  <h1>Calculation Interval</h1>
+
+  <% if false %>
+  <%= form_tag events_path, :method => 'get' do %>
+  <%= date_select :search, params[:search] %>
+  <%= submit_tag  "Search"%>
+  <% end %>
+  <% end %> 
+
+
+  <div class="row">
+    <div class="pull-right range-query">
+      <%= form_tag mission_path, :method => 'get' do %>
+      <%= text_field_tag 'search[date_from]', @search.date_from %>
+      <%= text_field_tag 'search[date_to]', @search.date_to %>
+
+      <% if false %>
+      <%= text_field_tag 'search[truck_id]', @search.truck_id %>
+      <%= text_field_tag 'search[driver_id]', @search.driver_id %>
+      <% end %>
+
+      <%= collection_select :search, :driver_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
+
+      <%= submit_tag 'Search', class: 'btn search-button' %>  
+      <% end %>
+    </div>
+  </div>
+</br>
+
+
+<table>
+    <h1>Credit</h1>
+    <thead>
+      <tr>
+        <th>Truck Costs</th>
+        <th>Toll Germany</th>
+        <th>Toll Belgium</th>
+        <th>Toll Generic</th>
+        <th>Driver Expenses</th>
+        <th>Total Debit</th>
+        <th>Total Credit</th> 
+         <th>Profit</th> 
+      </tr>
+    </thead>
+<tbody>    
+    <tr>
+      <td><%= @total_truck_expenses %></td>
+      <td><%= @total_germany_tolls %></td>
+      <td><%= @total_belgium_tolls %></td>
+      <td><%= @total_generic_tolls %></td>
+      <td><%= @total_driver_expeses %></td>
+      <td><%= @total_debit %></td>
+      <td><%= @total_invoiced_trips %></td>
+      <td><%= @total_invoiced_trips - @total_debit %></td>
+      
+    </tr>
+     </tbody>
+</table>
+
+  <table>
+    <h1>Driver Events</h1>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Driver CNP</th>
+        <th>First Name</th>
+        <th>First Name</th>
+        <th>Number Plate</th>
+        <th>Start/End</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+<tbody>    
+    <% @events.each do |event| %>
+    <tr>
+      <td><%= event.DATE.strftime("%d %B %Y") %></td>
+      <td><%= @drivers.find(event.DRIVER_id).CNP %></td>
+      <td><%= @drivers.find(event.DRIVER_id).FIRSTNAME %></td>
+      <td><%= @drivers.find(event.DRIVER_id).SECONDNAME %></td>
+      <td><%= @trucks.find(event.truck_id).NB_PLATE %></td>
+      
+      <% if event.START_END? %>
+      <td><%= 'Start' %></td>
+      <% else %>
+      <td><%= 'End' %></td>
+      <% end %>
+
+      <td><%= link_to 'Show', event %></td>
+      <td><%= link_to 'Edit', edit_event_path(event) %></td>
+      <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+  <table>
+    <h1>Driver Expenses</h1>
+    <thead>
+      <tr>
+        <th>Driver CNP</th>
+        <th>Driver First Name</th>
+        <th>Driver Second Name</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Info</th>
+        <th>Description</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+<tbody>
+
+    <% @driver_expenses.each do |driver_expense| %>
+    <tr>
+      <td><%= @drivers.find(driver_expense.DRIVER_id).CNP %></td>
+      <td><%= @drivers.find(driver_expense.DRIVER_id).FIRSTNAME %></td>
+      <td><%= @drivers.find(driver_expense.DRIVER_id).SECONDNAME %></td>
+      <td><%= driver_expense.DATE %></td>
+      <td><%= driver_expense.AMOUNT %></td>
+      <td><%= driver_expense.INFO %></td>
+      <td><%= driver_expense.DESCRIPTION %></td>
+      <td><%= link_to 'Show', driver_expense %></td>
+      <td><%= link_to 'Edit', edit_driver_expense_path(driver_expense) %></td>
+      <td><%= link_to 'Destroy', driver_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+</tbody>
+
+  </table>
+
+  <h1>Truck Expenses</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Truck</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Info</th>
+        <th>Description</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+<tbody>
+    <% @truck_expenses.each do |truck_expense| %>
+    <tr>
+      <td><%= @trucks.find(truck_expense.truck_id).NB_PLATE %></td>
+      <td><%= truck_expense.DATE %></td>
+      <td><%= truck_expense.AMOUNT %></td>
+      <td><%= truck_expense.INFO %></td>
+      <td><%= truck_expense.DESCRIPTION %></td>
+      <td><%= link_to 'Show', truck_expense %></td>
+      <td><%= link_to 'Edit', edit_truck_expense_path(truck_expense) %></td>
+      <td><%= link_to 'Destroy', truck_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  
+</tbody>
+</table>
+
+
+
+<h1>Germany Toll Expenses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>NumberPlate</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>BookingID</th>
+      <th>Art</th>
+      <th>Road</th>
+      <th>Via</th>
+      <th>Departure</th>
+      <th>CostCentre</th>
+      <th>TariffModel</th>
+      <th>AxelClass</th>
+      <th>WeightClass</th>
+      <th>EmissionClass</th>
+      <th>RodOperators</th>
+      <th>Ver</th>
+      <th>Km</th>
+      <th>EUR</th>
+      <th>TruckID</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @germany_tolls.each do |germany_toll| %>
+    <tr>
+      <td><%= germany_toll.platenr %></td>
+      <td><%= germany_toll.date   %></td>
+      <td><%= germany_toll.time.strftime("%H:%M") %></td>
+      <td><%= germany_toll.bookingid %></td>
+      <td><%= germany_toll.art %></td>
+      <td><%= germany_toll.road %></td>
+      <td><%= germany_toll.via %></td>
+      <td><%= germany_toll.departure %></td>
+      <td><%= germany_toll.costcentre %></td>
+      <td><%= germany_toll.tariffmodel %></td>
+      <td><%= germany_toll.axelclass %></td>
+      <td><%= germany_toll.weightclass %></td>
+      <td><%= germany_toll.emissioncat %></td>
+      <td><%= germany_toll.roadoperators %></td>
+      <td><%= germany_toll.ver %></td>
+      <td><%= germany_toll.km %></td>
+      <td><%= germany_toll.eur %></td>
+      <td><%= germany_toll.truck_id %></td>
+      <td><%= link_to 'Show', germany_toll %></td>
+      <td><%= link_to 'Edit', edit_germany_toll_path(germany_toll) %></td>
+      <td><%= link_to 'Destroy', germany_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<h1>Belgium Tolls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>NumberPlate</th>
+      <th>StartDate</th>
+      <th>StartTime</th>
+      <th>EndDate</th>
+      <th>EndTime</th>
+      <th>Km</th>
+      <th>Eur</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @belgium_tolls.each do |belgium_toll| %>
+      <tr>
+        <td><%= @trucks.find(belgium_toll.truck_id).NB_PLATE %></td>
+        <td><%= belgium_toll.StartDate %></td>
+        <td><%= belgium_toll.StartTime %></td>
+        <td><%= belgium_toll.EndDate %></td>
+        <td><%= belgium_toll.EndTime %></td>
+        <td><%= belgium_toll.Km %></td>
+        <td><%= belgium_toll.EUR %></td>
+        <td><%= link_to 'Show', belgium_toll %></td>
+        <td><%= link_to 'Edit', edit_belgium_toll_path(belgium_toll) %></td>
+        <td><%= link_to 'Destroy', belgium_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>Generic Tolls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>NumberPlate </th>
+      <th>StartDate</th>
+      <th>EndDate</th>
+      <th>Km</th>
+      <th>Eur</th>
+      <th>Country</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @generic_tolls.each do |generic_toll| %>
+      <tr>
+        <td><%= @trucks.find(generic_toll.truck_id).NB_PLATE %></td>
+        <td><%= generic_toll.StartDate %></td>
+        <td><%= generic_toll.EndDate %></td>
+        <td><%= generic_toll.Km %></td>
+        <td><%= generic_toll.EUR %></td>
+        <td><%= generic_toll.country %></td>
+        <td><%= link_to 'Show', generic_toll %></td>
+        <td><%= link_to 'Edit', edit_generic_toll_path(generic_toll) %></td>
+        <td><%= link_to 'Destroy', generic_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>Invoiced Trips</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Client Name</th>
+      <th>Client ID</th>
+      <th>Driver Name</th>
+      <th>Driver CNP </th>
+      <th>Driver ID</th>
+      <th>Truck</th>
+       <th>Truck ID</th>
+      <th>Germany toll</th>
+      <th>Belgium toll</th>
+      <th>Swiss toll</th>
+      <th>France toll</th>
+      <th>Italy toll</th>
+      <th>Uk toll</th>
+      <th>Netherlands toll</th>
+      <th>Km</th>
+      <th>Trip Start Date</th>
+      <th>Trip End Date</th>
+      <th>Invoice Date</th>
+      <th>Total amount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invoiced_trips.each do |invoiced_trip| %>
+      <tr>
+        <td><%= @clients.find(invoiced_trip.client_id).Name %></td>
+        <td><%= invoiced_trip.client_id %></td>
+        <td><%= @drivers.find(invoiced_trip.DRIVER_id).FIRSTNAME+" "+ @drivers.find(invoiced_trip.DRIVER_id).SECONDNAME %></td>
+        <td><%= @drivers.find(invoiced_trip.DRIVER_id).CNP %></td>
+        <td><%= invoiced_trip.DRIVER_id %></td>
+        <td><%= @trucks.find(invoiced_trip.truck_id).NB_PLATE %></td>
+        <td><%= invoiced_trip.truck_id %></td>
+        <td><%= invoiced_trip.germany_toll %></td>
+        <td><%= invoiced_trip.belgium_toll %></td>
+        <td><%= invoiced_trip.swiss_toll %></td>
+        <td><%= invoiced_trip.france_toll %></td>
+        <td><%= invoiced_trip.italy_toll %></td>
+        <td><%= invoiced_trip.uk_toll %></td>
+        <td><%= invoiced_trip.netherlands_toll %></td>
+        <td><%= invoiced_trip.km %></td>
+        <td><%= invoiced_trip.StartDate %></td>
+        <td><%= invoiced_trip.EndDate %></td>
+        <td><%= invoiced_trip.date %></td>
+        <td><%= invoiced_trip.total_amount %></td>
+        <td><%= link_to 'Show', invoiced_trip %></td>
+        <td><%= link_to 'Edit', edit_invoiced_trip_path(invoiced_trip) %></td>
+        <td><%= link_to 'Destroy', invoiced_trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+</body>
+</html>
+
+<%= link_to 'New Event', new_event_path %>

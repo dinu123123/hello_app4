@@ -1,0 +1,85 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @client.Name %>
+</p>
+
+<p>
+  <strong>Driver:</strong>
+  <%= @driver.FIRSTNAME+" "+@driver.SECONDNAME %>
+</p>
+
+<p>
+  <strong>CNP:</strong>
+  <%= @driver.CNP %>
+</p>
+
+<p>
+  <strong>Truck:</strong>
+  <%= @truck.NB_PLATE %>
+</p>
+
+<p>
+  <strong>Germany toll:</strong>
+  <%= @invoiced_trip.germany_toll %>
+</p>
+
+<p>
+  <strong>Belgium toll:</strong>
+  <%= @invoiced_trip.belgium_toll %>
+</p>
+
+<p>
+  <strong>Swiss toll:</strong>
+  <%= @invoiced_trip.swiss_toll %>
+</p>
+
+<p>
+  <strong>France toll:</strong>
+  <%= @invoiced_trip.france_toll %>
+</p>
+
+<p>
+  <strong>Italy toll:</strong>
+  <%= @invoiced_trip.italy_toll %>
+</p>
+
+<p>
+  <strong>Uk toll:</strong>
+  <%= @invoiced_trip.uk_toll %>
+</p>
+
+<p>
+  <strong>Netherlands toll:</strong>
+  <%= @invoiced_trip.netherlands_toll %>
+</p>
+
+<p>
+  <strong>Km:</strong>
+  <%= @invoiced_trip.km %>
+</p>
+
+<p>
+  <strong>Trip Start Date:</strong>
+  <%= @invoiced_trip.StartDate %>
+</p>
+
+<p>
+  <strong>Trip End Date:</strong>
+  <%= @invoiced_trip.EndDate %>
+</p>
+
+<p>
+  <strong>Invoice Date:</strong>
+  <%= @invoiced_trip.date %>
+</p>
+
+
+<p>
+  <strong>Total amount:</strong>
+  <%= @invoiced_trip.total_amount %>
+</p>
+
+<%= link_to 'Edit', edit_invoiced_trip_path(@invoiced_trip) %> |
+<%= link_to 'Back', invoiced_trips_path %>

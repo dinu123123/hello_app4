@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  PlateNr: MyString
+  StartDate: 2018-06-23
+  StartTime: 2018-06-23 22:39:47
+  EndDate: 2018-06-23
+  EndTime: 2018-06-23 22:39:47
+  Km: 9.99
+  EUR: 9.99
+
+two:
+  PlateNr: MyString
+  StartDate: 2018-06-23
+  StartTime: 2018-06-23 22:39:47
+  EndDate: 2018-06-23
+  EndTime: 2018-06-23 22:39:47
+  Km: 9.99
+  EUR: 9.99

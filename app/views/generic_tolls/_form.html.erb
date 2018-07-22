@@ -1,0 +1,76 @@
+<%= form_with(model: generic_toll, local: true) do |form| %>
+  <% if generic_toll.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(generic_toll.errors.count, "error") %> prohibited this generic_toll from being saved:</h2>
+
+      <ul>
+      <% generic_toll.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Number plate"}, :required => 'required' %>
+
+
+  <div class="field">
+    <%= form.label :StartDate %>
+    <%= form.date_select :StartDate, id: :generic_toll_StartDate, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :EndDate %>
+    <%= form.date_select :EndDate, id: :generic_toll_EndDate, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Km %>
+    <%= form.text_field :Km, id: :generic_toll_Km, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :EUR %>
+    <%= form.text_field :EUR, id: :generic_toll_EUR, :required => 'required' %>
+  </div>
+
+ <%if false%>
+  <div class="field">
+    <%= form.label :truck_id %>
+    <%= form.number_field :truck_id, id: :generic_toll_truck_id, :required => 'required' %>
+  </div>
+  <%end%>
+
+  <div class="field">
+    <%= form.label :country %>
+    <%= form.select :country, options_for_select(['Swiss', 'Italy', 'Austria','France','Hungary','Romania','Czech']), { prompt: "Country Select"}, :required => 'required' %>
+  </div>
+
+
+<%if false%>
+<%= form.select(:country, [['Type A', 'Type A'],
+                                  ['Type B', 'Type B'],
+                                  ['Type C', 'Type C'],
+                                  ['Type D', 'Type D'],
+                                  ['Type E', 'Type E']
+                                 ],{ :prompt => "Please select"},
+                                   { :multiple => true, :size => 5 }
+                                 ) %>
+
+<%= form.select :country, options_for_select(["Asst", "dir", "pres"]), {}, {:multiple => true, :class => "chzn-select", :style => "width:450px;" } %>
+
+<%= form.collection_check_boxes :country, Truck.all, :id, :NB_PLATE, {}, :multiple => true %>
+
+<%= form.check_box(:country, { :multiple => true },[['Type A', 'Type A'],
+                                  ['Type B', 'Type B'],
+                                  ['Type C', 'Type C'],
+                                  ['Type D', 'Type D'],
+                                  ['Type E', 'Type E']
+                                 ] , nil) %>
+
+<%end%>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

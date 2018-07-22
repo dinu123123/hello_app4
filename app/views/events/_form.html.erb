@@ -1,0 +1,48 @@
+<%= form_with(model: event, local: true) do |form| %>
+  <% if event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% event.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :DATE %>
+    <%= form.date_select :DATE, id: :event_DATE, :required => 'required' %>
+  </div>
+
+<% if false %>
+  <div class="field">
+    <%= form.label :DRIVER_id %>
+    <%= form.number_field :DRIVER_id, id: :event_DRIVER_id, :required => 'required' %>
+  </div>
+<% end %>
+
+<%= form.collection_select :DRIVER_id, Driver.all, :id, :name_with_cnp, {prompt: "Driver Name and CNP"}%>
+
+<% if false %>
+  <div class="field">
+    <%= form.label :truck_id %>
+    <%= form.number_field :truck_id, id: :event_truck_id, :required => 'required' %>
+  </div>
+<% end %>
+
+<%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
+
+ <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Number plate"}, :required => 'required' %>
+
+
+  <div class="field">
+    <%= form.label :START_END, 'Mark the check-box if Start Event'  %>
+    <%= form.check_box :START_END, id: :event_START_END%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

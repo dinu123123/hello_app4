@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Generic Tolls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Startdate</th>
+      <th>Enddate</th>
+      <th>Km</th>
+      <th>Eur</th>
+      <th>Truck Nb Plate</th>
+      <th>Country</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @generic_tolls.each do |generic_toll| %>
+      <tr>
+        <td><%= generic_toll.StartDate %></td>
+        <td><%= generic_toll.EndDate %></td>
+        <td><%= generic_toll.Km %></td>
+        <td><%= generic_toll.EUR %></td>
+        <td><%= @trucks.find(generic_toll.truck_id).NB_PLATE %></td>
+        <td><%= generic_toll.country %></td>
+        <td><%= link_to 'Show', generic_toll %></td>
+        <td><%= link_to 'Edit', edit_generic_toll_path(generic_toll) %></td>
+        <td><%= link_to 'Destroy', generic_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Generic Toll', new_generic_toll_path %>

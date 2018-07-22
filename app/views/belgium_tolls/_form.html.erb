@@ -1,0 +1,60 @@
+
+<%= form_with(model: belgium_toll, local: true) do |form| %>
+  <% if belgium_toll.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(belgium_toll.errors.count, "error") %> prohibited this belgium_toll from being saved:</h2>
+
+      <ul>
+      <% belgium_toll.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<% if false %>
+  <div class="field">
+    <%= form.label :PlateNr %>
+    <%= form.text_field :PlateNr, id: :belgium_toll_PlateNr %>
+  </div>
+  <% end %>
+
+
+ <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Number plate"} %>
+
+  <div class="field">
+    <%= form.label :StartDate %>
+    <%= form.date_select :StartDate, id: :belgium_toll_StartDate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :StartTime %>
+    <%= form.time_select :StartTime, id: :belgium_toll_StartTime %>
+  </div>
+
+  <div class="field">
+    <%= form.label :EndDate %>
+    <%= form.date_select :EndDate, id: :belgium_toll_EndDate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :EndTime %>
+    <%= form.time_select :EndTime, id: :belgium_toll_EndTime %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Km %>
+    <%= form.text_field :Km, id: :belgium_toll_Km %>
+  </div>
+
+  <div class="field">
+    <%= form.label :EUR %>
+    <%= form.text_field :EUR, id: :belgium_toll_EUR %>
+  </div>
+
+  <div class="actions">
+
+    <%= form.submit %>
+  </div>
+
+<% end %>

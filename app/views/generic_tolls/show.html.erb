@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Startdate:</strong>
+  <%= @generic_toll.StartDate %>
+</p>
+
+<p>
+  <strong>Enddate:</strong>
+  <%= @generic_toll.EndDate %>
+</p>
+
+<p>
+  <strong>Km:</strong>
+  <%= @generic_toll.Km %>
+</p>
+
+<p>
+  <strong>Eur:</strong>
+  <%= @generic_toll.EUR %>
+</p>
+
+<p>
+  <strong>Truck Nb Plate:</strong>
+  <%= @trucks.find(@generic_toll.truck_id).NB_PLATE %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @generic_toll.country %>
+</p>
+
+<%= link_to 'Edit', edit_generic_toll_path(@generic_toll) %> |
+<%= link_to 'Back', generic_tolls_path %>

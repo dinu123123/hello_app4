@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h1>Driver Expenses</h1>
+
+<table>
+  <tr>
+    <th>First Name</th>
+    <th>Second Name</th>
+    <th>CNP</th>
+    <th>Date</th>
+    <th>Amount</th>
+    <th>Info</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><%= @driver.FIRSTNAME %></td>
+    <td><%= @driver.SECONDNAME %></td>
+    <td><%= @driver.CNP %></td>
+    <td><%= @driver_expense.DATE %></td>
+    <td><%= @driver_expense.AMOUNT %></td>
+    <td><%= @driver_expense.INFO %></td>
+    <td><%= @driver_expense.DESCRIPTION %></td>
+  </tr>
+</table>
+<br>
+<p id="notice"><%= notice %></p>
+<%= link_to 'Edit', edit_driver_expense_path(@driver_expense) %> |
+<%= link_to 'Back', driver_expenses_path %>
+</body>
+</html>
+
+

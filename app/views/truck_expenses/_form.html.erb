@@ -1,0 +1,54 @@
+<%= form_with(model: truck_expense, local: true) do |form| %>
+  <% if truck_expense.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(truck_expense.errors.count, "error") %> prohibited this truck_expense from being saved:</h2>
+
+      <ul>
+      <% truck_expense.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<% if false %>
+  <div class="field">
+   <%= form.label :truck_id %>
+    <%= form.number_field :truck_id, id: :truck_expense_truck_id %>
+  </div>
+<% end %>
+
+ <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Number plate"}, :required => 'required' %>
+
+  <div class="field">
+    <%= form.label :DATE %>
+    <%= form.date_select :DATE, id: :truck_expense_DATE, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :AMOUNT %>
+    <%=  form.number_field :AMOUNT, id: :truck_expense_AMOUNT, :required => 'required' %>
+  </div>
+
+
+<% if false %>
+  <div class="field">
+    <%= form.label :INFO %>
+    <%= form.text_area :INFO, id: :truck_expense_INFO, :required => 'required' %>
+  </div>
+<% end %>
+
+<div class="field">
+    <%= form.label :INFO %>
+    <%= form.select :INFO, options_for_select(['Repair+Parts','','Parking','Bridge','Tunnel','Ferryboat']), { prompt: "Expense Type"}, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :DESCRIPTION %>
+    <%= form.text_area :DESCRIPTION, id: :truck_expense_DESCRIPTION, :required => 'required' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
