@@ -1,6 +1,6 @@
 class FuelExpense < ApplicationRecord
  require 'csv'
- belongs_to :truck
+ belongs_to :truck, :optional => true
  validates_uniqueness_of :trsdate, scope: %i[product truck_id]
 
  #CSV.read(file.path, :quote_char => "\´")

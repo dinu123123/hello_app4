@@ -1,6 +1,6 @@
 class DeToll < ApplicationRecord
 require 'csv'
- belongs_to :truck
+ belongs_to :truck, :optional => true
  validates :bookingid, uniqueness: true
  
  #CSV.read(file.path, :quote_char => "\´")
