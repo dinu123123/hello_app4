@@ -27,7 +27,7 @@
 
   <div class="field">
     <%= form.label :AMOUNT %>
-    <%=  form.number_field :AMOUNT, id: :truck_expense_AMOUNT, :required => 'required' %>
+    <%= form.number_field :AMOUNT, id: :truck_expense_AMOUNT, :required => 'required' %>
   </div>
 
 
@@ -40,7 +40,7 @@
 
 <div class="field">
     <%= form.label :INFO %>
-    <%= form.select :INFO, options_for_select(['Repair+Parts','','Parking','Bridge','Tunnel','Ferryboat']), { prompt: "Expense Type"}, :required => 'required' %>
+    <%= form.select :INFO, options_for_select(['Repair with Parts','Repair without Parts','Parking','Bridge','Tunnel','Ferryboat']), { prompt: "Expense Type"}, :required => 'required' %>
   </div>
 
   <div class="field">
