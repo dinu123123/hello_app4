@@ -17,11 +17,11 @@
   <div class="row">
     <div class="pull-right range-query">
       <%= form_tag mission_path, :method => 'get' do %>
-      <%= text_field_tag 'search[date_from]', @search.date_from %>
-      <%= text_field_tag 'search[date_to]', @search.date_to %>
+      <%= date_field_tag 'search[date_from]', @search.date_from %>
+      <%= date_field_tag 'search[date_to]', @search.date_to %>
 
       <% if false %>
-      <%= text_field_tag 'search[truck_id]', @search.truck_id %>
+      <%= date_field_tag 'search[truck_id]', @search.truck_id %>
       <%= text_field_tag 'search[driver_id]', @search.driver_id %>
       <% end %>
 

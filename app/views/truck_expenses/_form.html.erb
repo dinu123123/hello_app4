@@ -40,11 +40,11 @@
 
 <div class="field">
     <%= form.label :INFO %>
-    <%= form.select :INFO, options_for_select(['Repair with Parts','Repair without Parts','Parking','Bridge','Tunnel','Ferryboat']), { prompt: "Expense Type"}, :required => 'required' %>
+    <%= form.select :INFO, options_for_select(['Repair with Parts','Repair without Parts','Other']), { prompt: "Expense Type"}, :required => 'required' %>
   </div>
 
   <div class="field">
-    <%= form.label :DESCRIPTION %>
+    <%= form.label :DESCRIPTION, 'Details of the expense (e.g. what repairs were done, what parts were used etc.)' %>
     <%= form.text_area :DESCRIPTION, id: :truck_expense_DESCRIPTION, :required => 'required' %>
   </div>
 

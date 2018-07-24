@@ -78,6 +78,7 @@ if @TruckExpense
     arrayTruckExpense.concat(@truckExpense)
 end
 
+
 if @GermanyToll
     @germanyTollExpenses = GermanyToll.find_by_sql(["SELECT * FROM Germany_Tolls where 
       Germany_Tolls.truck_id = ? AND Germany_Tolls.date BETWEEN ? AND ? ORDER BY 
@@ -121,12 +122,12 @@ if @TruckExpense
 end
 
 
-if @GermanyToll !=nil
+
   @germanyTollExpenses = GermanyToll.find_by_sql(["SELECT * FROM Germany_Tolls where 
     Germany_Tolls.date BETWEEN ? AND ? ORDER BY 
     Germany_Tolls.date ASC", @date_from, @date_to ])
   arrayGermanyToll.concat(@germanyTollExpenses)
-end
+
 
 if @BelgiumToll !=nil
   @belgiumTollExpenses = BelgiumToll.find_by_sql(["SELECT * FROM Belgium_Tolls where 
@@ -176,55 +177,45 @@ end
 
 
 @totalTruckExpense = 0
-if  arrayTruckExpense != nil
     1.upto( arrayTruckExpense.count) do |i|
         @totalTruckExpense = @totalTruckExpense.to_d + arrayTruckExpense[i-1].AMOUNT.to_d
     end
-end    
 
 @totalGermanyToll = 0
 
-if  arrayGermanyToll != nil
     1.upto( arrayGermanyToll.count) do |i|
         @totalGermanyToll = @totalGermanyToll.to_d + arrayGermanyToll[i-1].eur.to_d
     end
-end    
 
 
 @totalBelgiumToll = 0
 
-if  arrayBelgiumToll != nil
     1.upto( arrayBelgiumToll.count) do |i|
         @totalBelgiumToll = @totalBelgiumToll.to_d + arrayBelgiumToll[i-1].EUR.to_d
     end
-end   
 
 @totalGenericToll = 0
 
-if  arrayGenericToll != nil
     1.upto( arrayGenericToll.count) do |i|
         @totalGenericToll = @totalGenericToll.to_d + arrayGenericToll[i-1].EUR.to_d
     end
-end   
 
 @totalDriverExpenses = 0
 
-if  arrayDriverExpenses != nil
     1.upto( arrayDriverExpenses.count) do |i|
         @totalDriverExpenses = @totalDriverExpenses.to_d + arrayDriverExpenses[i-1].AMOUNT.to_d
     end
-end  
 
 @totalInvoicedTrips = 0
 
-if  arrayInvoicedTrips != nil
     1.upto( arrayInvoicedTrips.count) do |i|
         @totalInvoicedTrips = @totalInvoicedTrips.to_d + arrayInvoicedTrips[i-1].total_amount.to_d
     end
-end  
 
 @total_debit = @totalTruckExpense.to_d + @totalGermanyToll.to_d + @totalBelgiumToll.to_d +
                @totalGenericToll.to_d + @totalDriverExpenses.to_d
+
+
 
 return     arrayEvents,
            arrayTruckExpense,
