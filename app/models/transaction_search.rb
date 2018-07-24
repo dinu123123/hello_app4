@@ -70,7 +70,7 @@ if @driver_id > 0
     #puts @localEvent[2*(i-1)+1].truck_id
 
 
-if TruckExpense !=nil
+if @TruckExpense
     @truckExpense = TruckExpense.find_by_sql(["SELECT * FROM Truck_Expenses where 
       Truck_Expenses.truck_id = ? AND Truck_Expenses.DATE BETWEEN ? AND ? ORDER BY 
       Truck_Expenses.DATE ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
@@ -78,7 +78,7 @@ if TruckExpense !=nil
     arrayTruckExpense.concat(@truckExpense)
 end
 
-if GermanyToll
+if @GermanyToll
     @germanyTollExpenses = GermanyToll.find_by_sql(["SELECT * FROM Germany_Tolls where 
       Germany_Tolls.truck_id = ? AND Germany_Tolls.date BETWEEN ? AND ? ORDER BY 
       Germany_Tolls.date ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
@@ -86,7 +86,7 @@ if GermanyToll
     arrayGermanyToll.concat(@germanyTollExpenses)
 end
 
-if BelgiumToll
+if @BelgiumToll
     @belgiumTollExpenses = BelgiumToll.find_by_sql(["SELECT * FROM Belgium_Tolls where 
       Belgium_Tolls.truck_id = ? AND Belgium_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
       Belgium_Tolls.StartDate ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
@@ -94,7 +94,7 @@ if BelgiumToll
      arrayBelgiumToll.concat(@belgiumTollExpenses)
 end
 
-if GenericToll
+if @GenericToll
     @genericTollExpenses = GenericToll.find_by_sql(["SELECT * FROM Generic_Tolls where 
       Generic_Tolls.truck_id = ? AND Generic_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
       Generic_Tolls.StartDate ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
@@ -104,13 +104,16 @@ end
     
    end
 
+if @Event
 @events = Event.find_by_sql(["SELECT * FROM Events where Events.driver_id = ? 
   and Events.DATE BETWEEN ? AND ? ORDER BY Events.DATE ASC", @driver_id, @date_from, @date_to])
 arrayEvents.concat(@events) 
+end
+
 
 else
 
-if TruckExpense !=nil
+if @TruckExpense
  @truckExpense = TruckExpense.find_by_sql(["SELECT * FROM Truck_Expenses where 
     Truck_Expenses.DATE BETWEEN ? AND ? ORDER BY 
     Truck_Expenses.DATE ASC", @date_from, @date_to ])
@@ -118,14 +121,14 @@ if TruckExpense !=nil
 end
 
 
-if GermanyToll !=nil
+if @GermanyToll !=nil
   @germanyTollExpenses = GermanyToll.find_by_sql(["SELECT * FROM Germany_Tolls where 
     Germany_Tolls.date BETWEEN ? AND ? ORDER BY 
     Germany_Tolls.date ASC", @date_from, @date_to ])
   arrayGermanyToll.concat(@germanyTollExpenses)
 end
 
-if BelgiumToll !=nil
+if @BelgiumToll !=nil
   @belgiumTollExpenses = BelgiumToll.find_by_sql(["SELECT * FROM Belgium_Tolls where 
     Belgium_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
     Belgium_Tolls.StartDate ASC", @date_from, @date_to ])
@@ -133,39 +136,43 @@ if BelgiumToll !=nil
 end
 
 
-if GermanyToll != nil
+if @GermanyToll != nil
   @genericTollExpenses = GenericToll.find_by_sql(["SELECT * FROM Generic_Tolls where 
     Generic_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
     Generic_Tolls.StartDate ASC", @date_from, @date_to ])
    arrayGenericToll.concat(@genericTollExpenses)
 end
 
-if DriverExpense != nil
+if @DriverExpense != nil
   @driverExpenses = DriverExpense.where('date BETWEEN ? AND ?',@date_from, @date_to)
   arrayDriverExpenses.concat(@driverExpenses)
 end
 
-if InvoicedTrip != nil
+if @InvoicedTrip != nil
   @invoicedTrips = InvoicedTrip.find_by_sql(["SELECT * FROM Invoiced_Trips where   
             Invoiced_Trips.StartDate > ? AND Invoiced_Trips.EndDate < ?", @date_from, @date_to])
   arrayInvoicedTrips.concat(@invoicedTrips)
 end 
 
+if @Event
 @events = Event.find_by_sql(["SELECT * FROM Events where Events.DATE 
   BETWEEN ? AND ? ORDER BY Events.DATE ASC", @date_from, @date_to])
 arrayEvents.concat(@events) 
+end
 
 end
 
 
-
+if @DriverExpense
 @driverExpenses = DriverExpense.where('DRIVER_id = ? AND date BETWEEN ? AND ?', @driver_id, @date_from, @date_to)
     arrayDriverExpenses.concat(@driverExpenses)
+end
 
+if InvoicedTrip
 @invoicedTrips = InvoicedTrip.find_by_sql(["SELECT * FROM Invoiced_Trips where Invoiced_Trips.driver_id = ? AND  
             Invoiced_Trips.StartDate > ? AND Invoiced_Trips.EndDate < ?", @driver_id, @date_from, @date_to])
 arrayInvoicedTrips.concat(@invoicedTrips)
-    
+end    
 
 
 @totalTruckExpense = 0
