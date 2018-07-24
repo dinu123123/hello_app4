@@ -136,7 +136,7 @@ if @BelgiumToll !=nil
 end
 
 
-if @GermanyToll != nil
+if @GenericToll
   @genericTollExpenses = GenericToll.find_by_sql(["SELECT * FROM Generic_Tolls where 
     Generic_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
     Generic_Tolls.StartDate ASC", @date_from, @date_to ])
@@ -144,7 +144,7 @@ if @GermanyToll != nil
 end
 
 if @DriverExpense != nil
-  @driverExpenses = DriverExpense.where('date BETWEEN ? AND ?',@date_from, @date_to)
+  @driverExpenses = DriverExpense.where('SELECT * FROM Driver_Expenses where date BETWEEN ? AND ?',@date_from, @date_to)
   arrayDriverExpenses.concat(@driverExpenses)
 end
 
@@ -164,11 +164,11 @@ end
 
 
 if @DriverExpense
-@driverExpenses = DriverExpense.where('DRIVER_id = ? AND date BETWEEN ? AND ?', @driver_id, @date_from, @date_to)
+@driverExpenses = DriverExpense.where('SELECT * FROM Driver_Expenses where DRIVER_id = ? AND date BETWEEN ? AND ?', @driver_id, @date_from, @date_to)
     arrayDriverExpenses.concat(@driverExpenses)
 end
 
-if InvoicedTrip
+if @InvoicedTrip
 @invoicedTrips = InvoicedTrip.find_by_sql(["SELECT * FROM Invoiced_Trips where Invoiced_Trips.driver_id = ? AND  
             Invoiced_Trips.StartDate > ? AND Invoiced_Trips.EndDate < ?", @driver_id, @date_from, @date_to])
 arrayInvoicedTrips.concat(@invoicedTrips)
