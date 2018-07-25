@@ -117,7 +117,7 @@ else
               Truck_Expenses.DATE BETWEEN ? AND ? ORDER BY 
               Truck_Expenses.DATE ASC", @date_from, @date_to ])
 
-             if @truckExpense           
+             if (@truckExpense  and @truckExpense.size >0 )         
               arrayTruckExpense.concat(@truckExpense)
              end
           end
@@ -127,7 +127,7 @@ else
               de_tolls.date BETWEEN ? AND ? ORDER BY 
               de_tolls.date ASC", @date_from, @date_to ])
             
-            if germanyTollExpenses
+            if @germanyTollExpenses
             arrayGermanyToll.concat(@germanyTollExpenses)
             end
           end
