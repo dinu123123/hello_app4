@@ -116,54 +116,74 @@ else
            @truckExpense = TruckExpense.find_by_sql(["SELECT * FROM Truck_Expenses where 
               Truck_Expenses.DATE BETWEEN ? AND ? ORDER BY 
               Truck_Expenses.DATE ASC", @date_from, @date_to ])
-            arrayTruckExpense.concat(@truckExpense)
+
+             if @truckExpense           
+              arrayTruckExpense.concat(@truckExpense)
+             end
           end
 
           if DeToll !=nil
             @germanyTollExpenses = DeToll.find_by_sql(["SELECT * FROM de_tolls where 
               de_tolls.date BETWEEN ? AND ? ORDER BY 
               de_tolls.date ASC", @date_from, @date_to ])
+            
+            if germanyTollExpenses
             arrayGermanyToll.concat(@germanyTollExpenses)
+            end
           end
 
           if BelgiumToll !=nil
             @belgiumTollExpenses = BelgiumToll.find_by_sql(["SELECT * FROM Belgium_Tolls where 
               Belgium_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
               Belgium_Tolls.StartDate ASC", @date_from, @date_to ])
+           
+            if @belgiumTollExpenses
              arrayBelgiumToll.concat(@belgiumTollExpenses)
+            end
           end
 
           if GenericToll
             @genericTollExpenses = GenericToll.find_by_sql(["SELECT * FROM Generic_Tolls where 
               Generic_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
               Generic_Tolls.StartDate ASC", @date_from, @date_to ])
+           if  @genericTollExpenses
              arrayGenericToll.concat(@genericTollExpenses)
+           end 
           end
 
 
           if DriverExpense != nil
             @driverExpenses = DriverExpense.find_by_sql(["SELECT * FROM Driver_Expenses where Driver_Expenses.DATE BETWEEN ? AND ?",@date_from, @date_to ])
+            if @driverExpenses
             arrayDriverExpenses.concat(@driverExpenses)
+            end
           end
 
           if InvoicedTrip != nil
             @invoicedTrips = InvoicedTrip.find_by_sql(["SELECT * FROM Invoiced_Trips where   
                       Invoiced_Trips.StartDate > ? AND Invoiced_Trips.EndDate < ?", @date_from, @date_to])
-            arrayInvoicedTrips.concat(@invoicedTrips)
+             if @invoicedTrips
+              arrayInvoicedTrips.concat(@invoicedTrips)
+             end
           end 
 
           if Event
           @events = Event.find_by_sql(["SELECT * FROM Events where Events.DATE 
             BETWEEN ? AND ? ORDER BY Events.DATE ASC", @date_from, @date_to])
+          if @events
           arrayEvents.concat(@events) 
-          end
-end
+          end  
 
-if InvoicedTrip
-@invoicedTrips = InvoicedTrip.find_by_sql(["SELECT * FROM Invoiced_Trips where Invoiced_Trips.driver_id = ? AND  
-            Invoiced_Trips.StartDate > ? AND Invoiced_Trips.EndDate < ?", @driver_id, @date_from, @date_to])
-arrayInvoicedTrips.concat(@invoicedTrips)
-end    
+          end
+  end
+
+  if InvoicedTrip
+  @invoicedTrips = InvoicedTrip.find_by_sql(["SELECT * FROM Invoiced_Trips where Invoiced_Trips.driver_id = ? AND  
+              Invoiced_Trips.StartDate > ? AND Invoiced_Trips.EndDate < ?", @driver_id, @date_from, @date_to])
+    if @invoicedTrips
+    arrayInvoicedTrips.concat(@invoicedTrips)
+    end
+  end    
 
 @totalTruckExpense = 0
 if  arrayTruckExpense != nil
