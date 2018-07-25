@@ -90,7 +90,7 @@ class EventsController < ApplicationController
       @driver = Driver.find(@event.DRIVER_id)
       @truck = Truck.find(@event.truck_id)
 
-      asdas
+      
     end
 
     def set_client
