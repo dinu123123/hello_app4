@@ -154,23 +154,22 @@ else
 
 
           if DriverExpense.all.size
-            @driverExpenses = DriverExpense.find_by_sql(["SELECT * FROM Driver_Expenses where Driver_Expenses.DATE BETWEEN ? AND ?",@date_from, @date_to ])
+            @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where driver_expenses."DATE" BETWEEN ? AND ?',@date_from, @date_to ])
             if @driverExpenses
             arrayDriverExpenses.concat(@driverExpenses)
             end
           end
 
           if InvoicedTrip.all.size
-            @invoicedTrips = InvoicedTrip.find_by_sql(["SELECT * FROM Invoiced_Trips where   
-                      Invoiced_Trips.StartDate > ? AND Invoiced_Trips.EndDate < ?", @date_from, @date_to])
+            @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where   
+                      invoiced_trips."StartDate" > ? AND invoiced_trips."EndDate" < ?', @date_from, @date_to])
              if @invoicedTrips
               arrayInvoicedTrips.concat(@invoicedTrips)
              end
           end 
 
           if Event.all.size
-          @events = Event.find_by_sql(["SELECT * FROM Events where Events.DATE 
-            BETWEEN ? AND ? ORDER BY Events.DATE ASC", @date_from, @date_to])
+          @events = Event.find_by_sql(['SELECT * FROM events where events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC', @date_from, @date_to])
           if @events
           arrayEvents.concat(@events) 
           end  
@@ -179,8 +178,8 @@ else
   end
 
   if InvoicedTrip.all.size
-  @invoicedTrips = InvoicedTrip.find_by_sql(["SELECT * FROM Invoiced_Trips where Invoiced_Trips.driver_id = ? AND  
-              Invoiced_Trips.StartDate > ? AND Invoiced_Trips.EndDate < ?", @driver_id, @date_from, @date_to])
+  @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.driver_id = ? AND  
+              invoiced_trips."StartDate" > ? AND invoiced_trips."EndDate" < ?', @driver_id, @date_from, @date_to])
     if @invoicedTrips
     arrayInvoicedTrips.concat(@invoicedTrips)
     end
