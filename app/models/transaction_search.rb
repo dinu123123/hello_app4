@@ -134,7 +134,7 @@ else
           end
 
           if BelgiumToll.all.size 
-            @belgiumTollExpenses = BelgiumToll.find_by_sql(['"SELECT * FROM belgium_tolls where 
+            @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM belgium_tolls where 
               belgium_tolls."StartDate" BETWEEN ? AND ? ORDER BY 
               belgium_tolls."StartDate" ASC', @date_from, @date_to ])
            
@@ -144,7 +144,7 @@ else
           end
 
           if GenericToll.all.size
-            @genericTollExpenses = GenericToll.find_by_sql(['"SELECT * FROM generic_tolls where 
+            @genericTollExpenses = GenericToll.find_by_sql(['SELECT * FROM generic_tolls where 
               generic_tolls."StartDate" BETWEEN ? AND ? ORDER BY 
               generic_tolls."StartDate" ASC', @date_from, @date_to ])
            if  @genericTollExpenses
