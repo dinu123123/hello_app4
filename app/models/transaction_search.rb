@@ -154,7 +154,8 @@ else
 
 
           if DriverExpense.all.size
-            @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where driver_expenses."DATE" BETWEEN ? AND ?',@date_from, @date_to ])
+            @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where driver_expenses."DATE" BETWEEN ? AND ?',
+              @date_from, @date_to ])
             if @driverExpenses
             arrayDriverExpenses.concat(@driverExpenses)
             end
@@ -162,7 +163,7 @@ else
 
           if InvoicedTrip.all.size
             @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where   
-                      invoiced_trips."StartDate" > ? AND invoiced_trips."EndDate" < ?', @date_from, @date_to])
+                      invoiced_trips."StartDate" >= ? AND invoiced_trips."EndDate" <= ?', @date_from, @date_to])
              if @invoicedTrips
               arrayInvoicedTrips.concat(@invoicedTrips)
              end
