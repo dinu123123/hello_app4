@@ -114,8 +114,8 @@ else
 
           if TruckExpense.all.size
            @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM truck_expenses where 
-              truck_expenses.DATE BETWEEN ? AND ? ORDER BY 
-              truck_expenses.DATE ASC', @date_from, @date_to ])
+              truck_expenses."DATE" BETWEEN ? AND ? ORDER BY 
+              truck_expenses."DATE" ASC', @date_from, @date_to ])
           
 
              if (@truckExpense  and @truckExpense.size >0 )         
