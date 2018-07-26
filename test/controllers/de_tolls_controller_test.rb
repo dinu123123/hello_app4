@@ -17,7 +17,16 @@ class DeTollsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create de_toll" do
     assert_difference('DeToll.count') do
-      post de_tolls_url, params: { de_toll: { Art: @de_toll.Art, AxelClass: @de_toll.AxelClass, BookingID: @de_toll.BookingID, CostCentre: @de_toll.CostCentre, Date: @de_toll.Date, Departure: @de_toll.Departure, EUR: @de_toll.EUR, EmissionCat: @de_toll.EmissionCat, Km: @de_toll.Km, PlateNr: @de_toll.PlateNr, Road: @de_toll.Road, RoadOperators: @de_toll.RoadOperators, TariffModel: @de_toll.TariffModel, Time: @de_toll.Time, Ver: @de_toll.Ver, Via: @de_toll.Via, WeightClass: @de_toll.WeightClass, truck_id: @de_toll.truck_id } }
+      post de_tolls_url, params: 
+ { de_toll: { art: @de_toll.art, axelclass: @de_toll.axelclass, 
+      bookingid: @de_toll.bookingid, costcentre: @de_toll.costcentre, 
+      date: @de_toll.date, departure: @de_toll.departure, eur: @de_toll.eur, 
+      emissioncat: @de_toll.emissioncat, km: @de_toll.km, platenr: @de_toll.platenr, 
+      road: @de_toll.road, roadoperators: @de_toll.roadoperators, 
+      tariffmodel: @de_toll.tariffmodel, time: @de_toll.time, 
+      ver: @de_toll.ver, via: @de_toll.via, 
+      weightclass: @de_toll.weightclass, truck_id: @de_toll.truck_id } }
+
     end
 
     assert_redirected_to de_toll_url(DeToll.last)
@@ -34,7 +43,16 @@ class DeTollsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update de_toll" do
-    patch de_toll_url(@de_toll), params: { de_toll: { Art: @de_toll.Art, AxelClass: @de_toll.AxelClass, BookingID: @de_toll.BookingID, CostCentre: @de_toll.CostCentre, Date: @de_toll.Date, Departure: @de_toll.Departure, EUR: @de_toll.EUR, EmissionCat: @de_toll.EmissionCat, Km: @de_toll.Km, PlateNr: @de_toll.PlateNr, Road: @de_toll.Road, RoadOperators: @de_toll.RoadOperators, TariffModel: @de_toll.TariffModel, Time: @de_toll.Time, Ver: @de_toll.Ver, Via: @de_toll.Via, WeightClass: @de_toll.WeightClass, truck_id: @de_toll.truck_id } }
+    patch de_toll_url(@de_toll), 
+    params:
+     { de_toll: { art: @de_toll.art, axelclass: @de_toll.axelclass, 
+      bookingid: @de_toll.bookingid, costcentre: @de_toll.costcentre, 
+      date: @de_toll.date, departure: @de_toll.departure, eur: @de_toll.eur, 
+      emissioncat: @de_toll.emissioncat, km: @de_toll.km, platenr: @de_toll.platenr, 
+      road: @de_toll.road, roadoperators: @de_toll.roadoperators, 
+      tariffmodel: @de_toll.tariffmodel, time: @de_toll.time, 
+      ver: @de_toll.ver, via: @de_toll.via, 
+      weightclass: @de_toll.weightclass, truck_id: @de_toll.truck_id } }
     assert_redirected_to de_toll_url(@de_toll)
   end
 

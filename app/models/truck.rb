@@ -12,6 +12,7 @@ has_many :de_tolls
 has_many :generic_tolls
 has_many :events
 has_many :invoiced_trips
+
 end
 
 

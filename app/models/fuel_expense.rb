@@ -16,4 +16,5 @@ class FuelExpense < ApplicationRecord
  	 	FuelExpense.create! @my_row.to_h
      end
  end
+ 
 end

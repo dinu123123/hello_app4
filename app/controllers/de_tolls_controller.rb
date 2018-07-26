@@ -76,8 +76,8 @@ class DeTollsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def de_toll_params
-      params.require(:de_toll).permit(:PlateNr, :Date, :Time, :BookingID, :Art, :Road, 
-        :Via, :Departure, :CostCentre, :TariffModel, :AxelClass, :WeightClass, :EmissionCat, 
-        :RoadOperators, :Ver, :Km, :EUR, :truck_id)
+      params.require(:de_toll).permit(:platenr, :date, :time, :bookingID, :art, :road, 
+        :via, :departure, :costcentre, :tariffmodel, :axelclass, :weightclass, :emissioncat, 
+        :roadoperators, :ver, :km, :eur, :truck_id)
     end
 end

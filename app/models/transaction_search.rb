@@ -64,7 +64,7 @@ if @driver_id > 0
           #puts @localEvent[2*(i-1)].truck_id
           #puts @localEvent[2*(i-1)+1].truck_id
 
-            if TruckExpense
+            if !TruckExpense.blank?
                 @truckExpense = TruckExpense.find_by_sql(["SELECT * FROM Truck_Expenses where 
                   Truck_Expenses.truck_id = ? AND Truck_Expenses.DATE BETWEEN ? AND ? ORDER BY 
                   Truck_Expenses.DATE ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
@@ -72,7 +72,7 @@ if @driver_id > 0
                 arrayTruckExpense.concat(@truckExpense)
             end
 
-            if DeToll
+            if !DeToll.blank?
                 @germanyTollExpenses = DeToll.find_by_sql(["SELECT * FROM de_tolls where 
                   de_tolls.truck_id = ? AND de_tolls.date BETWEEN ? AND ? ORDER BY 
                   de_tolls.date ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
@@ -80,7 +80,7 @@ if @driver_id > 0
                 arrayGermanyToll.concat(@germanyTollExpenses)
             end
 
-            if BelgiumToll
+            if !BelgiumToll.blank?
                 @belgiumTollExpenses = BelgiumToll.find_by_sql(["SELECT * FROM Belgium_Tolls where 
                   Belgium_Tolls.truck_id = ? AND Belgium_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
                   Belgium_Tolls.StartDate ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
@@ -88,7 +88,7 @@ if @driver_id > 0
                  arrayBelgiumToll.concat(@belgiumTollExpenses)
             end
 
-            if GenericToll
+            if !GenericToll.blank?
                 @genericTollExpenses = GenericToll.find_by_sql(["SELECT * FROM Generic_Tolls where 
                   Generic_Tolls.truck_id = ? AND Generic_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
                   Generic_Tolls.StartDate ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
@@ -96,7 +96,7 @@ if @driver_id > 0
                  arrayGenericToll.concat(@genericTollExpenses)
             end
 
-            if DriverExpense 
+            if !DriverExpense.blank? 
               @driverExpenses = DriverExpense.find_by_sql(["SELECT * FROM Driver_Expenses where  Driver_Expenses.DRIVER_id = ? 
                                 and Driver_Expenses.DATE BETWEEN ? AND ? ORDER BY Driver_Expenses.DATE",
                                 @driver_id,  @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
@@ -105,24 +105,29 @@ if @driver_id > 0
             
             end
 
-            if Event
+            if !Event.blank?
             @events = Event.find_by_sql(["SELECT * FROM Events where Events.driver_id = ? 
               and Events.DATE BETWEEN ? AND ? ORDER BY Events.DATE ASC", @driver_id, @date_from, @date_to])
             arrayEvents.concat(@events) 
             end
 else
 
-          if TruckExpense
+
+
+
+          if !TruckExpense.blank?
            @truckExpense = TruckExpense.find_by_sql(["SELECT * FROM Truck_Expenses where 
               Truck_Expenses.DATE BETWEEN ? AND ? ORDER BY 
               Truck_Expenses.DATE ASC", @date_from, @date_to ])
-
              if (@truckExpense  and @truckExpense.size >0 )         
               arrayTruckExpense.concat(@truckExpense)
              end
           end
 
-          if DeToll !=nil
+
+
+
+         if !DeToll.blank?
             @germanyTollExpenses = DeToll.find_by_sql(["SELECT * FROM de_tolls where 
               de_tolls.date BETWEEN ? AND ? ORDER BY 
               de_tolls.date ASC", @date_from, @date_to ])
@@ -132,7 +137,7 @@ else
             end
           end
 
-          if BelgiumToll !=nil
+          if !BelgiumToll.blank? 
             @belgiumTollExpenses = BelgiumToll.find_by_sql(["SELECT * FROM Belgium_Tolls where 
               Belgium_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
               Belgium_Tolls.StartDate ASC", @date_from, @date_to ])
@@ -142,7 +147,7 @@ else
             end
           end
 
-          if GenericToll
+          if !GenericToll.blank?
             @genericTollExpenses = GenericToll.find_by_sql(["SELECT * FROM Generic_Tolls where 
               Generic_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
               Generic_Tolls.StartDate ASC", @date_from, @date_to ])
@@ -152,14 +157,14 @@ else
           end
 
 
-          if DriverExpense != nil
+          if !DriverExpense.blank?
             @driverExpenses = DriverExpense.find_by_sql(["SELECT * FROM Driver_Expenses where Driver_Expenses.DATE BETWEEN ? AND ?",@date_from, @date_to ])
             if @driverExpenses
             arrayDriverExpenses.concat(@driverExpenses)
             end
           end
 
-          if InvoicedTrip != nil
+          if !InvoicedTrip.blank?
             @invoicedTrips = InvoicedTrip.find_by_sql(["SELECT * FROM Invoiced_Trips where   
                       Invoiced_Trips.StartDate > ? AND Invoiced_Trips.EndDate < ?", @date_from, @date_to])
              if @invoicedTrips
@@ -167,7 +172,7 @@ else
              end
           end 
 
-          if Event
+          if !Event.blank?
           @events = Event.find_by_sql(["SELECT * FROM Events where Events.DATE 
             BETWEEN ? AND ? ORDER BY Events.DATE ASC", @date_from, @date_to])
           if @events
@@ -177,7 +182,7 @@ else
           end
   end
 
-  if InvoicedTrip
+  if !InvoicedTrip.blank?
   @invoicedTrips = InvoicedTrip.find_by_sql(["SELECT * FROM Invoiced_Trips where Invoiced_Trips.driver_id = ? AND  
               Invoiced_Trips.StartDate > ? AND Invoiced_Trips.EndDate < ?", @driver_id, @date_from, @date_to])
     if @invoicedTrips
