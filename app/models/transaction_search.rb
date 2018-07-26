@@ -179,7 +179,7 @@ else
   end
 
   if InvoicedTrip.all.size
-  @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.driver_id = ? AND  
+  @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."DRIVER_id" = ? AND  
               invoiced_trips."StartDate" > ? AND invoiced_trips."EndDate" < ?', @driver_id, @date_from, @date_to])
     if @invoicedTrips
     arrayInvoicedTrips.concat(@invoicedTrips)
