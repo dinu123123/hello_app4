@@ -159,6 +159,8 @@ ActiveRecord::Schema.define(version: 20180722190229) do
     t.decimal "uk_toll"
     t.decimal "netherlands_toll"
     t.integer "km"
+    t.integer "km_evogps"
+    t.integer "km_driver_route_note"
     t.decimal "total_amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

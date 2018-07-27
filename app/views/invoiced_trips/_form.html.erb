@@ -23,11 +23,11 @@
     <%= form.text_field :invoice_id, id: :invoiced_trip_invoice_id, :required => 'required' %>
   </div>
 
-  <div class="field">
  <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
  <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
  <%= form.collection_select :DRIVER_id, Driver.all, :id, :name_with_cnp, {prompt: "Driver Name and CNP"}, :required => 'required'%>
 
+  <div class="field">
     <%= form.label :germany_toll %>
     <%= form.text_field :germany_toll, id: :invoiced_trip_germany_toll %>
   </div>
@@ -67,6 +67,18 @@
     <%= form.number_field :km, id: :invoiced_trip_km, :required => 'required' %>
   </div>
 
+
+  <div class="field">
+    <%= form.label :km_evogps %>
+    <%= form.number_field :km_evogps, id: :invoiced_trip_km_evogps, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :km_driver_route_note %>
+    <%= form.number_field :km_driver_route_note, id: :invoiced_trip_km_driver_route_note %>
+  </div>
+
+
   <div class="field">
     <%= form.label :StartDate, 'Trip Start Date' %>
     <%= form.date_select :StartDate, id: :invoiced_trip_StartDate, :required => 'required' %>
@@ -86,6 +98,10 @@
     <%= form.label :total_amount %>
     <%= form.text_field :total_amount, id: :invoiced_trip_total_amount %>
   </div>
+
+
+
+
 
   <div class="actions">
     <%= form.submit %>

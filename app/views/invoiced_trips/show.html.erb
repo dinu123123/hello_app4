@@ -1,5 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+
+<p>
+  <strong>Invoice ID:</strong>
+  <%= @invoiced_trip.invoice_id %>
+</p>
+
 <p>
   <strong>Client:</strong>
   <%= @client.Name %>
@@ -58,6 +64,16 @@
 <p>
   <strong>Km:</strong>
   <%= @invoiced_trip.km %>
+</p>
+
+<p>
+  <strong>Km EvoGps:</strong>
+  <%= @invoiced_trip.km_evogps %>
+</p>
+
+<p>
+  <strong>Km Driver Route Note:</strong>
+  <%= @invoiced_trip.km_driver_route_note %>
 </p>
 
 <p>

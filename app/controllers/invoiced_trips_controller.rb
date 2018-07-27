@@ -75,6 +75,8 @@ class InvoicedTripsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invoiced_trip_params
-      params.require(:invoiced_trip).permit(:date, :StartDate, :EndDate, :client_id, :DRIVER_id, :truck_id, :germany_toll, :belgium_toll, :swiss_toll, :france_toll, :italy_toll, :uk_toll, :netherlands_toll, :km, :total_amount)
+      params.require(:invoiced_trip).permit(:invoice_id, :date, :StartDate, :EndDate, :client_id, 
+        :DRIVER_id, :truck_id, :germany_toll, :belgium_toll, :swiss_toll, :france_toll, 
+        :italy_toll, :uk_toll, :netherlands_toll, :km, :km_evogps, :km_driver_route_note, :total_amount)
     end
 end

@@ -33,16 +33,14 @@
 <% end %>
 
 <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
+<%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Number plate"}, :required => 'required' %>
 
- <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Number plate"}, :required => 'required' %>
+<div class="field">
+  <%= form.label :START_END, 'Mark if Start event'  %>
+  <%= form.check_box :START_END, id: :event_START_END%>
+</div>
 
-
-  <div class="field">
-    <%= form.label :START_END, 'Mark the check-box if Start Event'  %>
-    <%= form.check_box :START_END, id: :event_START_END%>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+<div class="actions">
+  <%= form.submit %>
+</div>
 <% end %>
