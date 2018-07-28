@@ -3,36 +3,36 @@
 <head>
 </head>
 <body>
-  <p id="notice"><%= notice %></p>
-  <h1>Calculation Interval</h1>
+<p id="notice"><%= notice %></p>
 
-  <% if false %>
-  <%= form_tag events_path, :method => 'get' do %>
-  <%= date_select :search, params[:search] %>
-  <%= submit_tag  "Search"%>
-  <% end %>
-  <% end %> 
+<fieldset>
+      <legend> Calculation Interval </legend>
+      <p>Introduce the Event Start/End Date, Driver and Truck to get the cash-flow detailed view</p> 
+        <div class="row">
+          <div class="pull-right range-query">
+            <%= form_tag mission_path, :method => 'get' do %>
+            <%= date_field_tag 'search[date_from]', @search.date_from %>
+            <%= date_field_tag 'search[date_to]', @search.date_to %>
+            <%= collection_select :search, :driver_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
+            <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
+            <%= submit_tag 'Search', class: 'btn search-button' %>  
+            <% end %>
+          </div>
+        </div>
+      </br>
+</fieldset>
 
-
-  <div class="row">
-    <div class="pull-right range-query">
-      <%= form_tag mission_path, :method => 'get' do %>
-      <%= date_field_tag 'search[date_from]', @search.date_from %>
-      <%= date_field_tag 'search[date_to]', @search.date_to %>
-
-      <% if false %>
-      <%= date_field_tag 'search[truck_id]', @search.truck_id %>
-      <%= text_field_tag 'search[driver_id]', @search.driver_id %>
-      <% end %>
-
-      <%= collection_select :search, :driver_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
-
-      <%= submit_tag 'Search', class: 'btn search-button' %>  
-      <% end %>
-    </div>
-  </div>
-</br>
-
+<% if false %>
+<form method="post" id="contactForm" action="#">
+    <fieldset>
+        <legend>Newsletter Signup</legend>
+        <p>To sign up for our fabulous campaign of useless information that you will never, ever read, please submit your email address here.</p>
+        <label for="email" id="emailLabel">Email</label>
+        <input type="text" id="email" />
+        <input type="button" name="submit" value="Submit" id="submitButton" />
+    </fieldset>
+</form>
+<% end %>
 
 <table>
     <h2>Credit</h2>

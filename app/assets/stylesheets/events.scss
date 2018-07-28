@@ -1,3 +1,39 @@
 // Place all the styles related to the Events controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+    background-color: #996600;
+    color: black;
+}
+fieldset {
+    border: 2px solid #030524;
+    border-radius: 10px;
+    background-color: #dddddd;
+    box-shadow: 10px 10px 5px #888888;
+    position: relative;
+    margin-top: 35px;
+    margin-right: 1200px;
+}
+fieldset legend {
+    position: absolute;
+    top: -30px;
+    left: -6px;
+    font-size: 27px;
+     font-weight: bolder;
+}
+input[type=text] {
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #cccc80; 
+}
+input[type=button] {
+    background-color: #996600; 
+    border: 2px solid black;
+    border-radius: 5px;
+    color: #c9ae78;
+    font-weight: bolder;
+}
+p {
+    font-size: 12px;
+}

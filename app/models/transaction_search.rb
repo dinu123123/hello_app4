@@ -6,6 +6,7 @@ class TransactionSearch
     @date_from = parsed_date(params[:date_from],300.days.ago.to_date.to_s)
     @date_to = parsed_date(params[:date_to], Date.today.to_s)
     @driver_id = parsed_driver_id(params[:driver_id], 1)
+    @truck_id = parsed_truck_id(params[:truck_id], 1)
   end
 
 def scope   
@@ -64,11 +65,13 @@ if @driver_id > 0
           #puts @localEvent[2*(i-1)].truck_id
           #puts @localEvent[2*(i-1)+1].truck_id
 
+                if (@truck_id > 0 && @truck_id == @localEvent[2*(i-1)].truck_id) || @truck_id == 0 
                     if TruckExpense.all.size
-                        @truckExpense = TruckExpense.find_by_sql(["SELECT * FROM Truck_Expenses where 
+                          @truckExpense = TruckExpense.find_by_sql(["SELECT * FROM Truck_Expenses where 
                           Truck_Expenses.truck_id = ? AND Truck_Expenses.DATE BETWEEN ? AND ? ORDER BY 
                           Truck_Expenses.DATE ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
+                          
                         arrayTruckExpense.concat(@truckExpense)
                     end
 
@@ -81,8 +84,7 @@ if @driver_id > 0
                           0.upto( @germanyTollExpenses.size-1) do |j|
                             @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
                           end
-
-                        arrayGermanyToll.concat(@germanyTollExpenses)
+                           arrayGermanyToll.concat(@germanyTollExpenses)
                     end
 
                     if BelgiumToll.all.size
@@ -101,14 +103,14 @@ if @driver_id > 0
                          arrayGenericToll.concat(@genericTollExpenses)
                     end
 
-                    if DriverExpense.all.size 
-                      @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where 
-                        driver_expenses."DRIVER_id" = ? and driver_expenses."DATE" BETWEEN ? AND ? ORDER BY 
-                        driver_expenses."DATE"', @driver_id,  @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
-                      arrayDriverExpenses.concat(@driverExpenses)
-                    end                
-            
-            end
+                    if DriverExpense.all.size
+                        @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where 
+                          driver_expenses."DRIVER_id" = ? and driver_expenses."DATE" BETWEEN ? AND ? ORDER BY 
+                          driver_expenses."DATE"', @driver_id,  @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
+                        arrayDriverExpenses.concat(@driverExpenses)
+                    end
+                end
+          end
 
             if Event.all.size
             @events = Event.find_by_sql(['SELECT * FROM events where Events.driver_id = ? 
@@ -133,8 +135,12 @@ else
               de_tolls.date BETWEEN ? AND ? ORDER BY 
               de_tolls.date ASC", @date_from, @date_to ])
             
+            0.upto( @germanyTollExpenses.size-1) do |j|
+                @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
+            end
+
             if @germanyTollExpenses
-            arrayGermanyToll.concat(@germanyTollExpenses)
+               arrayGermanyToll.concat(@germanyTollExpenses)
             end
           end
 
@@ -266,6 +272,11 @@ end
     default.to_i
   end
 
+  def parsed_truck_id (n1, default)
+    n1.to_i
+    rescue ArgumentError, TypeError
+    default.to_i
+  end
 
 private
 
