@@ -1,11 +1,5 @@
 <%= form_with(model: invoiced_trip, local: true) do |form| %>
-
-<fieldset>
-
-    <legend>
-<h3>New Invoiced Trip</h3>
-</legend>
-  
+<h2>New Invoiced Trip</h2>
   <% if invoiced_trip.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(invoiced_trip.errors.count, "error") %> prohibited this invoiced_trip from being saved:</h2>
@@ -64,18 +58,18 @@
 
   <div class="field">
     <%= form.label :km %>
-    <%= form.number_field :km, id: :invoiced_trip_km, :required => 'required' %>
+    <%= form.text_field :km, id: :invoiced_trip_km, :required => 'required' %>
   </div>
 
 
   <div class="field">
     <%= form.label :km_evogps %>
-    <%= form.number_field :km_evogps, id: :invoiced_trip_km_evogps, :required => 'required' %>
+    <%= form.text_field :km_evogps, id: :invoiced_trip_km_evogps, :required => 'required' %>
   </div>
 
   <div class="field">
     <%= form.label :km_driver_route_note %>
-    <%= form.number_field :km_driver_route_note, id: :invoiced_trip_km_driver_route_note %>
+    <%= form.text_field :km_driver_route_note, id: :invoiced_trip_km_driver_route_note %>
   </div>
 
 
@@ -99,14 +93,7 @@
     <%= form.text_field :total_amount, id: :invoiced_trip_total_amount %>
   </div>
 
-
-
-
-
   <div class="actions">
     <%= form.submit %>
   </div>
-
-  </fieldset>
-
 <% end %>

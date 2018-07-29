@@ -50,21 +50,6 @@ body {
     text-align: center;
 }
 
-/* Style the top navigation bar */
-.topnav {
-    overflow: hidden;
-    background-color: #333;
-}
-
-/* Style the topnav links */
-.topnav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 4px 2px;
-    text-decoration: none;
-}
 
 /* Change color on hover */
 .topnav a:hover {
@@ -87,11 +72,43 @@ body {
 }
 
 
+input[type=text] {
+    border: 2px solid black;
+}
+
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
 @media screen and (max-width:600px) {
     .column {
         width: 100%;
     }
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #4CAF50;
+    color: white;
 }
 </style>
 <body>
@@ -103,8 +120,9 @@ body {
 
 
 <div class="topnav">
-  <%= link_to "DATA_IN", root_path %>
-  <%= link_to "DATA_OUT", mission_url %>
+  <%= link_to "Data Input", root_path %>
+  <%= link_to "Explicit Output", explicit_url %>
+  <%= link_to "Custom Output", mission_url %>
 </div>
 
 

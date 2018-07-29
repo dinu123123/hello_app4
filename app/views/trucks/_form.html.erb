@@ -13,14 +13,12 @@
 
   <div class="field">
     <%= form.label :"Number Plate (write without white spaces)" %>
-    <%= form.text_area :NB_PLATE, id: :truck_NB_PLATE, cols: "8", rows: "1", :required => 'required' %>
+    <%= form.text_field :NB_PLATE, id: :truck_NB_PLATE, cols: "8", rows: "1", :required => 'required' %>
   </div>
-
-
 
   <div class="field">
     <%= form.label :CHASSIS %>
-    <%= form.text_area :CHASSIS, id: :truck_CHASSIS, cols: "20", rows: "1", :required => 'required' %>
+    <%= form.text_field :CHASSIS, id: :truck_CHASSIS, cols: "20", rows: "1", :required => 'required' %>
   </div>
 
    <div class="field">
@@ -30,7 +28,7 @@
 
   <div class="field">
     <%= form.label :INFO %>
-    <%= form.text_area :INFO, id: :truck_INFO, :required => 'required' %>
+    <%= form.text_field :INFO, id: :truck_INFO, :required => 'required' %>
   </div>
 
 

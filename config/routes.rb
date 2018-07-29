@@ -29,8 +29,10 @@
   # <%= form_tag mission_path, :method => 'get' do %> 
 
   get "/events/extract_out", as: "mission"
+  get "/events/extract_explicit", as: "explicit"
 
   get "/de_tolls/file_import", as: "de_toll_file_import"
+  get "/de_tolls/index", as: "de_toll_index_import"
 
   get "/fuel_expenses/file_import", as: "fuel_expense_file_import"
 

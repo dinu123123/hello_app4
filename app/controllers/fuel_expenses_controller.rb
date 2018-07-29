@@ -10,7 +10,7 @@ class FuelExpensesController < ApplicationController
 
   def import
     FuelExpense.import(params[:file])
-    redirect_to root_url, notice: "Activity Data Imported!"
+    redirect_to fuel_expenses_url, notice: "Activity Data Imported!"
   end 
 
   # GET /fuel_expenses/1

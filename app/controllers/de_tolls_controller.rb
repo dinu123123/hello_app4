@@ -4,7 +4,7 @@ class DeTollsController < ApplicationController
 
   def import
     DeToll.import(params[:file])
-    redirect_to root_url, notice: "Activity Data Imported!"
+    redirect_to de_tolls_url, notice: "Activity Data Imported!"
   end 
 
 

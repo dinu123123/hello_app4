@@ -34,8 +34,9 @@
 </form>
 <% end %>
 
+<fieldset>
 <table>
-    <h2>Credit</h2>
+    <h2>Debit/Credit/Profit</h2>
     <thead>
       <tr>
         <th>Truck Expenses</th>
@@ -43,8 +44,8 @@
         <th>Toll Belgium</th>
         <th>Toll Generic</th>
         <th>Driver Expenses</th>
-        <th>Total Debit</th>
-        <th>Total Credit</th> 
+        <th>Debit</th>
+        <th>Credit</th> 
          <th>Profit</th> 
       </tr>
     </thead>
@@ -99,6 +100,69 @@
   </tbody>
 </table>
 
+</fieldset>
+
+<fieldset>
+<h1>Credit</h1>
+<h2>Invoiced Trips</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Client Name</th>
+      <th>Client ID</th>
+      <th>Driver Name</th>
+      <th>Driver CNP </th>
+      <th>Driver ID</th>
+      <th>Truck</th>
+       <th>Truck ID</th>
+      <th>Germany toll</th>
+      <th>Belgium toll</th>
+      <th>Swiss toll</th>
+      <th>France toll</th>
+      <th>Italy toll</th>
+      <th>Uk toll</th>
+      <th>Netherlands toll</th>
+      <th>Km</th>
+      <th>Trip Start Date</th>
+      <th>Trip End Date</th>
+      <th>Invoice Date</th>
+      <th>Total amount</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invoiced_trips.each do |invoiced_trip| %>
+      <tr>
+        <td><%= @clients.find(invoiced_trip.client_id).Name %></td>
+        <td><%= invoiced_trip.client_id %></td>
+        <td><%= @drivers.find(invoiced_trip.DRIVER_id).FIRSTNAME+" "+ @drivers.find(invoiced_trip.DRIVER_id).SECONDNAME %></td>
+        <td><%= @drivers.find(invoiced_trip.DRIVER_id).CNP %></td>
+        <td><%= invoiced_trip.DRIVER_id %></td>
+        <td><%= @trucks.find(invoiced_trip.truck_id).NB_PLATE %></td>
+        <td><%= invoiced_trip.truck_id %></td>
+        <td><%= invoiced_trip.germany_toll %></td>
+        <td><%= invoiced_trip.belgium_toll %></td>
+        <td><%= invoiced_trip.swiss_toll %></td>
+        <td><%= invoiced_trip.france_toll %></td>
+        <td><%= invoiced_trip.italy_toll %></td>
+        <td><%= invoiced_trip.uk_toll %></td>
+        <td><%= invoiced_trip.netherlands_toll %></td>
+        <td><%= invoiced_trip.km %></td>
+        <td><%= invoiced_trip.StartDate %></td>
+        <td><%= invoiced_trip.EndDate %></td>
+        <td><%= invoiced_trip.date %></td>
+        <td><%= invoiced_trip.total_amount %></td>
+        <td><%= link_to 'Show', invoiced_trip %></td>
+        <td><%= link_to 'Edit', edit_invoiced_trip_path(invoiced_trip) %></td>
+        <td><%= link_to 'Destroy', invoiced_trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</fieldset>
+<fieldset>
+<h1>Debit</h1>
   <table>
     <h2>Driver Expenses</h2>
     <thead>
@@ -114,7 +178,6 @@
       </tr>
     </thead>
 <tbody>
-
     <% @driver_expenses.each do |driver_expense| %>
     <tr>
       <td><%= @drivers.find(driver_expense.DRIVER_id).CNP %></td>
@@ -161,65 +224,6 @@
   
 </tbody>
 </table>
-
-
-
-<h2>Germany Toll Expenses</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>NumberPlate</th>
-      <th>Date</th>
-      <th>Time</th>
-      <th>BookingID</th>
-      <th>Art</th>
-      <th>Road</th>
-      <th>Via</th>
-      <th>Departure</th>
-      <th>CostCentre</th>
-      <th>TariffModel</th>
-      <th>AxelClass</th>
-      <th>WeightClass</th>
-      <th>EmissionClass</th>
-      <th>RodOperators</th>
-      <th>Ver</th>
-      <th>Km</th>
-      <th>EUR</th>
-      <th>TruckID</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @germany_tolls.each do |germany_toll| %>
-    <tr>
-      <td><%= germany_toll.platenr %></td>
-      <td><%= germany_toll.date   %></td>
-      <td><%= germany_toll.time.strftime("%H:%M") %></td>
-      <td><%= germany_toll.bookingid %></td>
-      <td><%= germany_toll.art %></td>
-      <td><%= germany_toll.road %></td>
-      <td><%= germany_toll.via %></td>
-      <td><%= germany_toll.departure %></td>
-      <td><%= germany_toll.costcentre %></td>
-      <td><%= germany_toll.tariffmodel %></td>
-      <td><%= germany_toll.axelclass %></td>
-      <td><%= germany_toll.weightclass %></td>
-      <td><%= germany_toll.emissioncat %></td>
-      <td><%= germany_toll.roadoperators %></td>
-      <td><%= germany_toll.ver %></td>
-      <td><%= germany_toll.km %></td>
-      <td><%= germany_toll.eur %></td>
-      <td><%= germany_toll.truck_id %></td>
-      <td><%= link_to 'Show', germany_toll %></td>
-      <td><%= link_to 'Edit', edit_germany_toll_path(germany_toll) %></td>
-      <td><%= link_to 'Destroy', germany_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-
 
 <h2>Belgium Tolls</h2>
 
@@ -287,63 +291,94 @@
   </tbody>
 </table>
 
-<h2>Invoiced Trips</h2>
-
+<h2>Fuel Expenses</h2>
 <table>
   <thead>
     <tr>
-      <th>Client Name</th>
-      <th>Client ID</th>
-      <th>Driver Name</th>
-      <th>Driver CNP </th>
-      <th>Driver ID</th>
-      <th>Truck</th>
-       <th>Truck ID</th>
-      <th>Germany toll</th>
-      <th>Belgium toll</th>
-      <th>Swiss toll</th>
-      <th>France toll</th>
-      <th>Italy toll</th>
-      <th>Uk toll</th>
-      <th>Netherlands toll</th>
-      <th>Km</th>
-      <th>Trip Start Date</th>
-      <th>Trip End Date</th>
-      <th>Invoice Date</th>
-      <th>Total amount</th>
+      <th>TrsTime</th>
+      <th>TrsDate</th>
+      <th>Product</th>
+      <th>Volume</th>
+      <th>EuroNetAmount</th>
+      <th>KmInsertion</th>
+      <th>PlateNr</th>
+      <th>CardNr</th>
+      <th>StatioNname</th>
+      <th>GrossUnitPrice</th>
+      <th>GrossAmount</th>
+      <th>Country</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @invoiced_trips.each do |invoiced_trip| %>
+    <% @fuel_expenses.each do |fuel_expense| %>
       <tr>
-        <td><%= @clients.find(invoiced_trip.client_id).Name %></td>
-        <td><%= invoiced_trip.client_id %></td>
-        <td><%= @drivers.find(invoiced_trip.DRIVER_id).FIRSTNAME+" "+ @drivers.find(invoiced_trip.DRIVER_id).SECONDNAME %></td>
-        <td><%= @drivers.find(invoiced_trip.DRIVER_id).CNP %></td>
-        <td><%= invoiced_trip.DRIVER_id %></td>
-        <td><%= @trucks.find(invoiced_trip.truck_id).NB_PLATE %></td>
-        <td><%= invoiced_trip.truck_id %></td>
-        <td><%= invoiced_trip.germany_toll %></td>
-        <td><%= invoiced_trip.belgium_toll %></td>
-        <td><%= invoiced_trip.swiss_toll %></td>
-        <td><%= invoiced_trip.france_toll %></td>
-        <td><%= invoiced_trip.italy_toll %></td>
-        <td><%= invoiced_trip.uk_toll %></td>
-        <td><%= invoiced_trip.netherlands_toll %></td>
-        <td><%= invoiced_trip.km %></td>
-        <td><%= invoiced_trip.StartDate %></td>
-        <td><%= invoiced_trip.EndDate %></td>
-        <td><%= invoiced_trip.date %></td>
-        <td><%= invoiced_trip.total_amount %></td>
-        <td><%= link_to 'Show', invoiced_trip %></td>
-        <td><%= link_to 'Edit', edit_invoiced_trip_path(invoiced_trip) %></td>
-        <td><%= link_to 'Destroy', invoiced_trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= fuel_expense.trstime %></td>
+        <td><%= fuel_expense.trsdate %></td>
+        <td><%= fuel_expense.product %></td>
+        <td><%= fuel_expense.volume %></td>
+        <td><%= fuel_expense.eurnetamount %></td>
+        <td><%= fuel_expense.kminsertion %></td>
+        <td><%= fuel_expense.platenr %></td>
+        <td><%= fuel_expense.cardnr %></td>
+        <td><%= fuel_expense.stationname %></td>
+        <td><%= fuel_expense.eurgrossunitprice %></td>
+        <td><%= fuel_expense.eurgrossamount %></td>
+        <td><%= fuel_expense.country %></td>
+        <td><%= link_to 'Show', fuel_expense %></td>
+        <td><%= link_to 'Edit', edit_fuel_expense_path(fuel_expense) %></td>
+        <td><%= link_to 'Destroy', fuel_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<h2>Germany Toll Expenses</h2>
+<table>
+  <thead>
+    <tr>
+      <th>NumberPlate</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>BookingID</th>
+      <th>Art</th>
+      <th>Road</th>
+      <th>Via</th>
+      <th>Departure</th>
+      <th>Axel</th>
+      <th>Emission</th>
+      <th>Km</th>
+      <th>EUR</th>
+      <th>TruckID</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @germany_tolls.each do |germany_toll| %>
+    <tr>
+      <td><%= germany_toll.platenr %></td>
+      <td><%= germany_toll.date   %></td>
+      <td><%= germany_toll.time.strftime("%H:%M") %></td>
+      <td><%= germany_toll.bookingid %></td>
+      <td><%= germany_toll.art %></td>
+      <td><%= germany_toll.road %></td>
+      <td><%= germany_toll.via %></td>
+      <td><%= germany_toll.departure %></td>
+      <td><%= germany_toll.axelclass %></td>
+      <td><%= germany_toll.emissioncat %></td>
+      <td><%= germany_toll.km %></td>
+      <td><%= germany_toll.eur %></td>
+      <td><%= germany_toll.truck_id %></td>
+      <td><%= link_to 'Show', germany_toll %></td>
+      <td><%= link_to 'Edit', edit_germany_toll_path(germany_toll) %></td>
+      <td><%= link_to 'Destroy', germany_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</fieldset>
 
 <br>
 </body>

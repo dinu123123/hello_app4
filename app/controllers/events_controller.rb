@@ -7,7 +7,10 @@ class EventsController < ApplicationController
     @search = TransactionSearch.new(params[:search])
     @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
     @belgium_tolls,@total_belgium_tolls,@generic_tolls,@total_generic_tolls,
-    @driver_expenses,@total_driver_expeses,@invoiced_trips,@total_invoiced_trips, @total_debit = @search.scope
+    @driver_expenses,@total_driver_expeses,@invoiced_trips,@total_invoiced_trips,
+    
+    @fuel_expenses, @total_fuel_expenses,
+    @total_debit = @search.scope
     @drivers = Driver.all
     @trucks = Truck.all
     @clients = Client.all
