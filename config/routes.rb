@@ -34,7 +34,7 @@
   # Butonul all clicks from any page inside events are intercepted by the events controler which should 
   # have an extract_out method to handle the request
   get "/events/extract_out", as: "mission"
-  get "/events/extract_explicit", as: "explicit"
+  get "/events/extract_explicit", as: "mission1"
 
   get "/de_tolls/file_import", as: "de_toll_file_import"
   get "/de_tolls/index", as: "de_toll_index_import"
