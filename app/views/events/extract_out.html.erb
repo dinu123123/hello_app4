@@ -54,11 +54,15 @@
       <td><%= @total_truck_expenses %></td>
       <td><%= @total_germany_tolls %></td>
       <td><%= @total_belgium_tolls %></td>
+
+
+
+
       <td><%= @total_generic_tolls %></td>
       <td><%= @total_driver_expeses %></td>
-      <td><%= @total_debit %></td>
-      <td><%= @total_invoiced_trips %></td>
-      <td><%= @total_invoiced_trips - @total_debit %></td>
+      <td bgcolor="#E8F993"><%= @total_debit %></td>
+      <td bgcolor="#E8F993"><%= @total_invoiced_trips %></td>
+      <th bgcolor="#E8F993"><%= @total_invoiced_trips - @total_debit %></th>
       
     </tr>
      </tbody>

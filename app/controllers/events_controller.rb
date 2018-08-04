@@ -2,8 +2,83 @@ class EventsController < ApplicationController
   before_action :set_driver_truck, :set_event, :set_client,
    only: [:show, :edit, :update, :destroy]
 
+def num_weeks(year = Date.today.year)
+  Date.new(year, 12, 28).cweek # magick date!
+end
+
+
+
+def extract_explicit
+
+@search = PeriodicTransactionSearch.new(params[:search])
+@nb_weeks = num_weeks
+
+@week_start = @search.date_from.to_date.cweek.to_i
+@week_end = @search.date_to.to_date.cweek.to_i
+
+if  (@week_end- @week_start)<0
+  @week_start = 1
+end
+
+@arrayWeeklyTruckExpense = Array.new(@week_end- @week_start+3){Array.new(Truck.all.size+2,0)}
+
+@arrayWeeklyTruckExpense[0][0]= "".to_s
+  Truck.all.each_with_index do |truck,j|
+    @arrayWeeklyTruckExpense[0][j+1]=Truck.all[j].NB_PLATE
+  end  
+
+@arrayWeeklyTruckExpense[0][0] = "Wk/Truck".to_s
+@arrayWeeklyTruckExpense[0][Truck.all.size+1] = "Total/Wk".to_s
+@arrayWeeklyTruckExpense[@week_end- @week_start+2][0] = "Total/Truck".to_s
+
+for week in @week_start..@week_end do
+  @arrayWeeklyTruckExpense[week-@week_start+1][0] = week
+end
+
+for week in @week_start..@week_end do
+  @week_total = 0
+  @date_from1 = Date.commercial(@search.date_from.to_date.strftime("%Y").to_i, week, 1)
+  @date_to1 = Date.commercial(@search.date_from.to_date.strftime("%Y").to_i, week, 7)
+
+          Truck.all.each_with_index do |truck,j|
+                @search.setDriver(0)
+                @search.setTruck(truck.id)
+                @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
+                @belgium_tolls,@total_belgium_tolls,@generic_tolls,@total_generic_tolls,
+                @driver_expenses,@total_driver_expeses,@invoiced_trips,@total_invoiced_trips,
+                @fuel_expenses, @total_fuel_expenses,
+                @total_per_truck = @search.scope1(@date_from1, @date_to1)
+
+
+                @arrayWeeklyTruckExpense[(week-@week_start+1).to_i][j+1]=@total_per_truck
+                @week_total += @total_per_truck            
+          end
+          @arrayWeeklyTruckExpense[(week-@week_start+1).to_i][Truck.all.size+1]=@week_total  
+
+end
+
+ # Truck.all.each_with_index do |truck,j|
+     for j in 1..Truck.all.size+1 do
+    
+
+    @total_per_truck = 0
+     for week in @week_start..@week_end do
+          @total_per_truck +=  @arrayWeeklyTruckExpense[week-@week_start+1][j]
+     end
+
+
+    @arrayWeeklyTruckExpense[@week_end-@week_start+2][j]=@total_per_truck 
+  end
+
+
+    @drivers = Driver.all
+    @trucks = Truck.all
+    @clients = Client.all
+  end
+
 
   def extract_out
+
     @search = TransactionSearch.new(params[:search])
     @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
     @belgium_tolls,@total_belgium_tolls,@generic_tolls,@total_generic_tolls,
@@ -15,6 +90,7 @@ class EventsController < ApplicationController
     @trucks = Truck.all
     @clients = Client.all
   end
+
 
   # GET /events
   # GET /events.json

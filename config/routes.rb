@@ -28,6 +28,10 @@
   # example:
   # <%= form_tag mission_path, :method => 'get' do %> 
 
+  # there should exist a controller with the same name as events and inside a method extract_out
+
+  # Butonul all clicks from any page inside events are intercepted by the events controler which should 
+  # have an extract_out method to handle the request
   get "/events/extract_out", as: "mission"
   get "/events/extract_explicit", as: "explicit"
 

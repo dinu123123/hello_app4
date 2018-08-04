@@ -169,6 +169,11 @@ elsif @truck_id > 0 && @driver_id == 0
                   end
                   truck_events = true
                else
+                 @localEvent = Array.new(2) { Event.new }
+                  @localEvent[0].START_END = true
+                  @localEvent[0].DATE = @date_from
+                  @localEvent[1].START_END = false
+                  @localEvent[1].DATE = @date_to
                   truck_events = false 
                end
 
@@ -190,7 +195,7 @@ elsif @truck_id > 0 && @driver_id == 0
                     if DeToll.all.size
                         @germanyTollExpenses = DeToll.find_by_sql(["SELECT * FROM de_tolls where 
                           de_tolls.truck_id = ? AND de_tolls.date BETWEEN ? AND ? ORDER BY 
-                          de_tolls.date ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                          de_tolls.date ASC", @truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
 
                           0.upto( @germanyTollExpenses.size-1) do |j|
