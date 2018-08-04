@@ -7,11 +7,12 @@ def num_weeks(year = Date.today.year)
 end
 
 def extract_explicit
-@search = PeriodicTransactionSearch.new(params[:search])
+  
+@search1 = PeriodicTransactionSearch.new(params[:search1])
 @nb_weeks = num_weeks
 
-@week_start = @search.date_from.to_date.cweek.to_i
-@week_end = @search.date_to.to_date.cweek.to_i
+@week_start = @search1.date_from.to_date.cweek.to_i
+@week_end = @search1.date_to.to_date.cweek.to_i
 
 if  (@week_end- @week_start)<0
   @week_start = 1
@@ -34,17 +35,17 @@ end
 
 for week in @week_start..@week_end do
   @week_total = 0
-  @date_from1 = Date.commercial(@search.date_from.to_date.strftime("%Y").to_i, week, 1)
-  @date_to1 = Date.commercial(@search.date_from.to_date.strftime("%Y").to_i, week, 7)
+  @date_from1 = Date.commercial(@search1.date_from.to_date.strftime("%Y").to_i, week, 1)
+  @date_to1 = Date.commercial(@search1.date_from.to_date.strftime("%Y").to_i, week, 7)
 
           Truck.all.each_with_index do |truck,j|
-                @search.setDriver(0)
-                @search.setTruck(truck.id)
+                @search1.setDriver(0)
+                @search1.setTruck(truck.id)
                 @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
                 @belgium_tolls,@total_belgium_tolls,@generic_tolls,@total_generic_tolls,
                 @driver_expenses,@total_driver_expeses,@invoiced_trips,@total_invoiced_trips,
                 @fuel_expenses, @total_fuel_expenses,
-                @total_per_truck = @search.scope1(@date_from1, @date_to1)
+                @total_per_truck = @search1.scope1(@date_from1, @date_to1)
 
 
                 @arrayWeeklyTruckExpense[(week-@week_start+1).to_i][j+1]=@total_per_truck
