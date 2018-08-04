@@ -6,10 +6,7 @@ def num_weeks(year = Date.today.year)
   Date.new(year, 12, 28).cweek # magick date!
 end
 
-
-
 def extract_explicit
-
 @search = PeriodicTransactionSearch.new(params[:search])
 @nb_weeks = num_weeks
 
