@@ -14,7 +14,7 @@
   get 'fuel_expenses/import'
 
   get 'events/extract_out'
-  get "/events/extract_explicit"
+  get 'events/extract_explicit'
   #resources :fuel_expenses
 
 
