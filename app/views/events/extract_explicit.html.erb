@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<p id="notice"><%= notice %></p>
+
+<fieldset>
+      <legend> Calculation Interval </legend>
+      <p>Introduce the Event Start/End Date, Driver and Truck to get the cash-flow detailed view</p> 
+        <div class="row">
+          <div class="pull-right range-query">
+            <%= form_tag mission1_path, :method => 'get' do %>
+            <%= date_field_tag 'search1[date_from]', @search1.date_from %>
+            <%= date_field_tag 'search1[date_to]', @search1.date_to %>
+           
+
+<% if false %>
+            <%= date_field_tag 'search1[date_from]', @search1.date_from, value: Date.new(Date.today.year, 1).beginning_of_year %>
+            <%= date_field_tag 'search1[date_to]', @search1.date_to, value: Date.current.strftime('%Y-%m-%d') %>
+<% end %>
+
+            <%= select_tag 'search1[interval]', options_for_select([["Weeks",1],["Months",2]]) %>
+            <%= select_tag 'search1[type]', options_for_select([["Trucks",1],["Drivers",2]]) %>
+            <%= submit_tag 'search1', class: 'btn search-button' %>  
+            <% end %>
+          </div>
+        </div>
+      </br>
+</fieldset>
+
+
+<td><%= @nb_weeks %></td>
+
+<td><%= @week_start %></td>
+
+<td><%= @week_end %></td>
+<fieldset>
+<legend> Profit </legend>
+<table>
+<tbody>
+  <% @arrayWeeklyTruckExpense.each_with_index do |row, i| %>
+    <tr>
+
+      <% row.each_with_index do |value, j| %>
+         <% if i== @arrayWeeklyTruckExpense.size-1 or j== @arrayWeeklyTruckExpense[0].size-1 %>
+             <% if i== @arrayWeeklyTruckExpense.size-1 and j== @arrayWeeklyTruckExpense[0].size-1 %>
+              <td bgcolor="#A8F993" style="font-weight:bold"><span class="font-weight:bold">  <%= value %></span> </td>
+<% else %>
+        
+         
+<td bgcolor="#E8F993"><%= value %></td>
+         <% end %>
+
+
+         <% else %>
+        
+         
+
+              <td><%= value %></td>
+         <% end %>
+
+         <% end %>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+</fieldset>
+
+<br>
+</body>
+</html>
