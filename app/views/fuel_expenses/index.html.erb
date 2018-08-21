@@ -47,7 +47,7 @@ tr:nth-child(even) {
   <tbody>
     <% @fuel_expenses.each do |fuel_expense| %>
       <tr>
-        <td><%= fuel_expense.trstime %></td>
+        <td><%= fuel_expense.trstime.strftime("%H:%M") %></td>
         <td><%= fuel_expense.trsdate %></td>
         <td><%= fuel_expense.product %></td>
         <td><%= fuel_expense.volume %></td>

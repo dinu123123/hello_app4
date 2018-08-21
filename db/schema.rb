@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20180722190229) do
 
   create_table "driver_expenses", force: :cascade do |t|
     t.text "DRIVER_id"
+    t.integer "truck_id"
     t.date "DATE"
     t.decimal "AMOUNT"
     t.text "INFO"

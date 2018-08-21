@@ -3,7 +3,7 @@ class TransactionSearch
 
   def initialize(params)
     params ||= {}
-    @date_from = parsed_date(params[:date_from],300.days.ago.to_date.to_s)
+    @date_from = parsed_date(params[:date_from],30.days.ago.to_date.to_s)
     @date_to = parsed_date(params[:date_to], Date.today.to_s)
     @driver_id = parsed_driver_id(params[:driver_id], 1)
     @truck_id = parsed_truck_id(params[:truck_id], 1)
@@ -23,11 +23,19 @@ arrayFuelExpenses = Array.new
 arrayInvoicedTrips = Array.new
 arrayEvents = Array.new
 
+
+
 if @driver_id > 0
+
+
+
               @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
               and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC', @driver_id, @date_from, @date_to])
 
+
+
               if @localEvent.count > 0 
+                
                   if @localEvent.count%2 == 1
                     if @localEvent[0].START_END == true
                        #append at the end the @date_to as it comes from the form interval
@@ -35,6 +43,7 @@ if @driver_id > 0
                        @localEvent[@localEvent.count-1].id = @localEvent.count
                        @localEvent[@localEvent.count-1].DATE = @date_to
                        @localEvent[@localEvent.count-1].START_END = false
+                       
                     else
                        #append at the beginning the @date_from as it comes from the form interval
                        @localEvent.unshift(@localEvent[0].dup)
@@ -78,6 +87,7 @@ if @driver_id > 0
                     end
 
                     if DeToll.all.size
+
                         @germanyTollExpenses = DeToll.find_by_sql(["SELECT * FROM de_tolls where 
                           de_tolls.truck_id = ? AND de_tolls.date BETWEEN ? AND ? ORDER BY 
                           de_tolls.date ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
@@ -98,6 +108,7 @@ if @driver_id > 0
                     end
 
                     if FuelExpense.all.size
+
                         @fuelExpenses = FuelExpense.find_by_sql(["SELECT * FROM fuel_expenses where 
                           fuel_expenses.truck_id = ? AND fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
                           fuel_expenses.trsdate ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
@@ -110,6 +121,7 @@ if @driver_id > 0
                             Generic_Tolls.truck_id = ? AND Generic_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
                           Generic_Tolls.StartDate ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
+
                          arrayGenericToll.concat(@genericTollExpenses)
                     end
 
@@ -119,6 +131,18 @@ if @driver_id > 0
                           driver_expenses."DATE"', @driver_id,  @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
                         arrayDriverExpenses.concat(@driverExpenses)
                     end
+
+                    if InvoicedTrip.all.size
+                      @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."DRIVER_id" = ? and  
+                                invoiced_trips."StartDate" >= ? AND invoiced_trips."StartDate" <= ?',  @driver_id,  @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE])
+  
+
+                       if @invoicedTrips.size>0
+
+                        arrayInvoicedTrips.concat(@invoicedTrips)
+                       end
+                    end
+
                 end
 
 
@@ -134,6 +158,7 @@ if @driver_id > 0
 
 
 elsif @truck_id > 0 && @driver_id == 0
+
  
         @localEvent = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
               and events.DATE BETWEEN ? AND ? ORDER BY events."DATE" ASC', @truck_id, @date_from, @date_to])
@@ -234,8 +259,18 @@ elsif @truck_id > 0 && @driver_id == 0
                           driver_expenses."DATE"', @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
                         arrayDriverExpenses.concat(@driverExpenses)
                     end
+
+                    if InvoicedTrip.all.size
+                      @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."DRIVER_id" = ? and  
+                                invoiced_trips."StartDate" >= ? AND invoiced_trips."StartDate" <= ?',  @truck_id,  @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE])
+                       if @invoicedTrips
+                        arrayInvoicedTrips.concat(@invoicedTrips)
+                       end
+                    end
+
                 
           end
+
 
             if Event.all.size
             @events = Event.find_by_sql(['SELECT * FROM events where Events.truck_id = ? 
@@ -252,6 +287,7 @@ elsif @truck_id > 0 && @driver_id == 0
 
 else
 
+
           if TruckExpense.all.size
            @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM truck_expenses where 
               truck_expenses."DATE" BETWEEN ? AND ? ORDER BY 
@@ -267,14 +303,21 @@ else
             @germanyTollExpenses = DeToll.find_by_sql(["SELECT * FROM de_tolls where 
               de_tolls.date BETWEEN ? AND ? ORDER BY 
               de_tolls.date ASC", @date_from, @date_to ])
-            
+
+
+
+
             0.upto( @germanyTollExpenses.size-1) do |j|
                 @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
             end
 
+
             if @germanyTollExpenses
                arrayGermanyToll.concat(@germanyTollExpenses)
             end
+
+
+
           end
 
           if BelgiumToll.all.size 
@@ -307,7 +350,7 @@ else
 
           if InvoicedTrip.all.size
             @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where   
-                      invoiced_trips."StartDate" >= ? AND invoiced_trips."EndDate" <= ?', @date_from, @date_to])
+                      invoiced_trips."StartDate" >= ? AND invoiced_trips."StartDate" <= ?', @date_from, @date_to])
              if @invoicedTrips
               arrayInvoicedTrips.concat(@invoicedTrips)
              end
@@ -329,29 +372,10 @@ else
           end  
           end
 
-          if InvoicedTrip.all.size
-          @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where  
-                      invoiced_trips."StartDate" >= ? AND invoiced_trips."EndDate" <= ?', @date_from, @date_to])
-            if @invoicedTrips
-            arrayInvoicedTrips.concat(@invoicedTrips)
-            end
-          end    
-
-
-
-
-
   end
 
 
 
-  if InvoicedTrip.all.size
-  @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."DRIVER_id" = ? AND  
-              invoiced_trips."StartDate" > ? AND invoiced_trips."EndDate" < ?', @driver_id, @date_from, @date_to])
-    if @invoicedTrips
-    arrayInvoicedTrips.concat(@invoicedTrips)
-    end
-  end    
 
 @totalTruckExpense = 0
 if  arrayTruckExpense != nil
@@ -363,7 +387,8 @@ end
 @totalGermanyToll = 0
 if  arrayGermanyToll != nil
     1.upto( arrayGermanyToll.count) do |i|
-        @totalGermanyToll = @totalGermanyToll.to_d + arrayGermanyToll[i-1].eur.to_d
+      puts  arrayGermanyToll[i-1].eur.to_s
+        @totalGermanyToll = @totalGermanyToll + arrayGermanyToll[i-1].eur.to_d
     end
 end    
 
@@ -381,12 +406,16 @@ if  arrayFuelExpenses != nil
     end
 end   
 
+
+
+
 @totalGenericToll = 0
 if  arrayGenericToll != nil
     1.upto( arrayGenericToll.count) do |i|
         @totalGenericToll = @totalGenericToll.to_d + arrayGenericToll[i-1].EUR.to_d
     end
 end   
+
 
 @totalDriverExpenses = 0
 if  arrayDriverExpenses != nil
@@ -402,9 +431,13 @@ if  arrayInvoicedTrips != nil
     end
 end  
 
-@total_debit = @totalTruckExpense.to_d + @totalGermanyToll.to_d + @totalBelgiumToll.to_d +
-               @totalGenericToll.to_d + @totalDriverExpenses.to_d + @totalFuelExpenses.to_d
-
+@total_debit = 
+@totalTruckExpense.to_d + 
+@totalGermanyToll.to_d +
+@totalBelgiumToll.to_d +
+@totalGenericToll.to_d + 
+@totalDriverExpenses.to_d + 
+@totalFuelExpenses.to_d
 
 return     arrayEvents,
            arrayTruckExpense,

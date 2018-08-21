@@ -32,7 +32,7 @@
       <tr>
         <td><%= de_toll.platenr %></td>
         <td><%= de_toll.date %></td>
-        <td><%= de_toll.time %></td>
+        <td><%= de_toll.time.strftime("%H:%M") %></td>
         <td><%= de_toll.bookingid %></td>
         <td><%= de_toll.art %></td>
         <td><%= de_toll.road %></td>

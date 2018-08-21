@@ -1,13 +1,23 @@
 class InvoicedTripsController < ApplicationController
   before_action :set_invoiced_trip, only: [:show, :edit, :update, :destroy]
 
-  # GET /invoiced_trips
-  # GET /invoiced_trips.json
+  def import
+    InvoicedTrip.import(params[:file])
+    redirect_to invoiced_trips_url, notice: "Activity Data Imported!"
+  end
+
+  # GET /drivers
+  # GET /drivers.json
   def index
     @invoiced_trips = InvoicedTrip.all
     @trucks = Truck.all
     @clients = Client.all
     @drivers = Driver.all
+    respond_to do |format|
+        format.html
+        format.csv { send_data @invoiced_trips.to_csv }
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      end
   end
 
   # GET /invoiced_trips/1

@@ -22,10 +22,10 @@
     <%= form.date_field :trsdate, id: :fuel_expense_trsdate, :required => 'required' %>
   </div>
 
-  <div class="field">
+<div class="field">
     <%= form.label :product %>
-    <%= form.text_field :product, id: :fuel_expense_product, :required => 'required' %>
-  </div>
+   <%= form.select :product, options_for_select([["Diesel","Diesel"],["AdBlue","AdBlue"]]) %>
+     </div>      
 
   <div class="field">
     <%= form.label :volume %>
@@ -43,8 +43,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :platenr %>
-    <%= form.text_field :platenr, id: :fuel_expense_platenr, :required => 'required' %>
+      <%= form.label :NumberPlate %>
+    <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Number plate"}, :required => 'required' %>
   </div>
 
   <div class="field">

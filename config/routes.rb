@@ -1,22 +1,29 @@
   Rails.application.routes.draw do
-  resources :generic_tolls
-  resources :invoiced_trips
-  resources :clients
-  resources :belgium_tolls
+  
+  resources :generic_tolls do
+  collection { post :import}
+  end
 
+  resources :invoiced_trips do
+  collection { post :import}
+  end
+  
+  resources :clients do
+  collection { post :import}
+  end
+  
+  resources :belgium_tolls do
+  collection { post :import}
+  end
 
   get 'germany_tolls/index'
   get 'germany_tolls/import'
-
-
   get 'fuel_expenses/index'
-
   get 'fuel_expenses/import'
-
   get 'events/extract_out'
-  get 'events/extract_explicit'
-  #resources :fuel_expenses
+  #get 'events/extract_explicit'
 
+  #resources :fuel_expenses
 
   # https://stackoverflow.com/questions/30315498/ruby-on-rails-how-to-link-route-from-one-view-page-to-another-view-page-with-a
   # linking a web page path to another page
@@ -36,38 +43,46 @@
   get "/events/extract_out", as: "mission"
   get "/events/extract_explicit", as: "mission1"
 
+  get "/events/weekly", as: "weekly"
+  
+  get "/events/db", as: "db"
+
   get "/de_tolls/file_import", as: "de_toll_file_import"
   get "/de_tolls/index", as: "de_toll_index_import"
 
   get "/fuel_expenses/file_import", as: "fuel_expense_file_import"
 
-
   resources :fuel_expenses do
   collection { post :import}
   end
-
-  resources :germany_tolls do
-  collection { post :import }
-  end
-
 
   resources :de_tolls do
   collection { post :import }
   end
 
-  #root to: "fuel_expenses#index"
+  resources :trucks do
+  collection { post :import }
+  end
 
-  #root to: "germany_tolls#index"
+  resources :drivers do
+  collection { post :import }
+  end
 
+  resources :events do
+   collection { post :import }
+   collection { post :import_db }
+  end
 
   resources :main_menus
-  resources :events
-  resources :driver_expenses
-  resources :drivers
-  resources :truck_expenses
-  resources :trucks
+
+  resources :driver_expenses do
+  collection { post :import }
+  end
+  
+  resources :truck_expenses do
+  collection { post :import }
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'extra#data_in'
-
 end

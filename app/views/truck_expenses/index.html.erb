@@ -22,8 +22,42 @@ tr:nth-child(even) {
 <body>
 
 <p id="notice"><%= notice %></p>
-
 <h1>Truck Expenses</h1>
+<h4>This page is dedicated to the Truck Expenses description - you can see the existent list of truck expenses, modify them or introduce new ones.</h4>
+<ul>
+ 
+  <li>
+  <p>
+  <h4> Download All Truck Expenses as CSV or Excel file:
+  <%= link_to "CSV", truck_expenses_path(format: "csv") %> |
+  <%= link_to "Excel", truck_expenses_path(format: "xls") %> 
+  </h4> 
+  </p>
+  </li>
+
+
+  <li>
+  <div>
+  <h4> Import Truck Expenses from CSV file: </h4>
+    <%= form_tag import_truck_expenses_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag  "Import CSV"%>
+  <% end %>
+  </div>
+  </li>
+
+  <li>
+  <p>
+  <h4> Create <%= link_to 'New Truck Expense ', new_truck_expense_path %> </h4> 
+  </p>
+  </li>
+
+</ul>
+
+
+
+
+
 
 <table>
   <thead>

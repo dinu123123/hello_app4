@@ -24,12 +24,44 @@ tr:nth-child(even) {
 <p id="notice"><%= notice %></p>
 <h1>Driver Expenses</h1>
 
+<h4>This page is dedicated to the driver expenses description - you can see the existent list of driver expenses, modify them or introduce new ones.</h4>
+<ul>
+ 
+  <li>
+  <p>
+  <h4> Download All Driver Expenses as CSV or Excel file:
+  <%= link_to "CSV", driver_expenses_path(format: "csv") %> |
+  <%= link_to "Excel", driver_expenses_path(format: "xls") %> 
+  </h4> 
+  </p>
+  </li>
+
+  <li>
+  <div>
+  <h4> Import Driver Expenses from CSV file: </h4>
+    <%= form_tag import_driver_expenses_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag  "Import CSV"%>
+  <% end %>
+  </div>
+  </li>
+
+  <li>
+  <p>
+  <h4> Create <%= link_to 'New Driver Expenses ',new_driver_expense_path %> </h4> 
+  </p>
+  </li>
+
+</ul>
+
+
 <table>
   <thead>
     <tr>
       <th>Driver CNP</th>
       <th>Driver First Name</th>
       <th>Driver Second Name</th>
+      <th>Truck Number Plate</th>
       <th>Date</th>
       <th>Amount</th>
       <th>Info</th>
@@ -44,6 +76,7 @@ tr:nth-child(even) {
         <td><%= @drivers.find(driver_expense.DRIVER_id).CNP %></td>
         <td><%= @drivers.find(driver_expense.DRIVER_id).FIRSTNAME %></td>
         <td><%= @drivers.find(driver_expense.DRIVER_id).SECONDNAME %></td>
+        <td><%= @trucks.find(driver_expense.truck_id).NB_PLATE %></td>
         <td><%= driver_expense.DATE %></td>
         <td><%= driver_expense.AMOUNT %></td>
         <td><%= driver_expense.INFO %></td>
@@ -59,5 +92,3 @@ tr:nth-child(even) {
 <br>
 </body>
 </html>
-
-<%= link_to 'New Driver Expense', new_driver_expense_path %>

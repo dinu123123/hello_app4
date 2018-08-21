@@ -21,9 +21,40 @@ tr:nth-child(even) {
 </head>
 <body>
 
-<p id="notice"><%= notice %></p>
 
-<h1>Belgium Tolls</h1>
+
+<p id="notice"><%= notice %></p>
+<h1>Belgium Tools</h1>
+<h4>This page is dedicated to the belgium tolls description - you can see the existent list of belgium tolls, modify them or introduce new ones.</h4>
+<ul>
+ 
+  <li>
+  <p>
+  <h4> Download All Belgium Tolls as CSV or Excel file:
+  <%= link_to "CSV", belgium_tolls_path(format: "csv") %> |
+  <%= link_to "Excel", belgium_tolls_path(format: "xls") %> 
+  </h4> 
+  </p>
+  </li>
+
+
+  <li>
+  <div>
+  <h4> Import Belgium Tolls from CSV file: </h4>
+    <%= form_tag import_belgium_tolls_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag  "Import CSV"%>
+  <% end %>
+  </div>
+  </li>
+
+  <li>
+  <p>
+  <h4> Create <%= link_to 'New Belgium Toll ',new_belgium_toll_path %> </h4> 
+  </p>
+  </li>
+
+</ul>
 
 <table>
   <thead>
@@ -44,9 +75,9 @@ tr:nth-child(even) {
       <tr>
         <td><%= @trucks.find(belgium_toll.truck_id).NB_PLATE %></td>
         <td><%= belgium_toll.StartDate %></td>
-        <td><%= belgium_toll.StartTime %></td>
+        <td><%= belgium_toll.StartTime.strftime("%H:%M") %></td>
         <td><%= belgium_toll.EndDate %></td>
-        <td><%= belgium_toll.EndTime %></td>
+        <td><%= belgium_toll.EndTime.strftime("%H:%M") %></td>
         <td><%= belgium_toll.Km %></td>
         <td><%= belgium_toll.EUR %></td>
         <td><%= link_to 'Show', belgium_toll %></td>

@@ -5,7 +5,18 @@ class TrucksController < ApplicationController
   # GET /trucks.json
   def index
     @trucks = Truck.all
+    @details = Truck.order('NB_PLATE').first(20)
+    respond_to do |format|
+        format.html
+        format.csv { send_data @trucks.to_csv}
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      end
   end
+
+  def import
+    Truck.import(params[:file])
+    redirect_to trucks_url, notice: "Activity Data Imported!"
+  end 
 
   # GET /trucks/1
   # GET /trucks/1.json

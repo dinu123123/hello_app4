@@ -1,11 +1,21 @@
 class TruckExpensesController < ApplicationController
   before_action :set_truck, :set_truck_expense, only: [:show, :edit, :update, :destroy]
 
-  # GET /truck_expenses
-  # GET /truck_expenses.json
+  def import
+    TruckExpense.import(params[:file])
+    redirect_to truck_expenses_url, notice: "Activity Data Imported!"
+  end
+
+  # GET /drivers
+  # GET /drivers.json
   def index
     @truck_expenses = TruckExpense.all
     @trucks = Truck.all
+    respond_to do |format|
+        format.html
+        format.csv { send_data @truck_expenses.to_csv_special }
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      end
   end
 
   def main_menus

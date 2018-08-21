@@ -1,10 +1,20 @@
 class DriversController < ApplicationController
   before_action :set_driver, only: [:show, :edit, :update, :destroy]
 
+  def import
+    Driver.import(params[:file])
+    redirect_to drivers_url, notice: "Activity Data Imported!"
+  end
+
   # GET /drivers
   # GET /drivers.json
   def index
     @drivers = Driver.all
+    respond_to do |format|
+        format.html
+        format.csv { send_data @drivers.to_csv }
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      end
   end
 
   # GET /drivers/1

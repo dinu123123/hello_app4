@@ -6,20 +6,20 @@
 <p id="notice"><%= notice %></p>
 
 <fieldset>
-      <legend> Calculation Interval </legend>
-      <p>Introduce the Event Start/End Date, Driver and Truck to get the cash-flow detailed view</p> 
-        <div class="row">
-          <div class="pull-right range-query">
-            <%= form_tag mission_path, :method => 'get' do %>
-            <%= date_field_tag 'search[date_from]', @search.date_from %>
-            <%= date_field_tag 'search[date_to]', @search.date_to %>
-            <%= collection_select :search, :driver_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
-            <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
-            <%= submit_tag 'Search', class: 'btn search-button' %>  
-            <% end %>
-          </div>
-        </div>
-      </br>
+  <legend> Calculation Interval </legend>
+  <p>Introduce the Event Start/End Date, Driver and Truck to get the cash-flow detailed view</p> 
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission_path, :method => 'get' do %>
+        <%= date_field_tag 'search[date_from]', @search.date_from %>
+        <%= date_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :driver_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
+        <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
+  </br>
 </fieldset>
 
 <% if false %>
@@ -376,7 +376,7 @@
       <td><%= germany_toll.eur %></td>
       <td><%= germany_toll.truck_id %></td>
       <td><%= link_to 'Show', germany_toll %></td>
-      <td><%= link_to 'Edit', edit_germany_toll_path(germany_toll) %></td>
+      <td><%= link_to 'Edit', edit_de_toll_path(germany_toll) %></td>
       <td><%= link_to 'Destroy', germany_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
     <% end %>

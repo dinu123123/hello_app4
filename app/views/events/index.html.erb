@@ -5,6 +5,37 @@
 <body>
   <p id="notice"><%= notice %></p>
  
+ <h1>Drivers</h1>
+<h4>This page is dedicated to the events description - you can see the existent list of events, modify them or introduce new ones.</h4>
+<ul>
+ 
+  <li>
+  <p>
+  <h4> Download All Events as CSV or Excel file:
+  <%= link_to "CSV", events_path(format: "csv") %> |
+  <%= link_to "Excel", events_path(format: "xls") %> 
+  </h4> 
+  </p>
+  </li>
+
+
+  <li>
+  <div>
+  <h4> Import Events from CSV file: </h4>
+    <%= form_tag import_events_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag  "Import CSV"%>
+  <% end %>
+  </div>
+  </li>
+
+  <li>
+  <p>
+  <h4> Create <%= link_to 'New Event ',new_event_path %> </h4> 
+  </p>
+  </li>
+
+</ul>
 
   <table>
     <h1>Driver Events</h1>
@@ -48,5 +79,3 @@
 <br>
 </body>
 </html>
-
-<%= link_to 'New Event', new_event_path %>

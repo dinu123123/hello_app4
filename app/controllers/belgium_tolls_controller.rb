@@ -1,11 +1,21 @@
 class BelgiumTollsController < ApplicationController
   before_action :set_belgium_toll, only: [:show, :edit, :update, :destroy]
 
-  # GET /belgium_tolls
-  # GET /belgium_tolls.json
+  def import
+    BelgiumToll.import(params[:file])
+    redirect_to belgium_tolls_url, notice: "Activity Data Imported!"
+  end
+
+  # GET /drivers
+  # GET /drivers.json
   def index
     @belgium_tolls = BelgiumToll.all
     @trucks = Truck.all
+    respond_to do |format|
+        format.html
+        format.csv { send_data @belgium_tolls.to_csv }
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      end
   end
 
   # GET /belgium_tolls/1

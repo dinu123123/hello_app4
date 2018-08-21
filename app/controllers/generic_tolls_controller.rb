@@ -1,11 +1,21 @@
 class GenericTollsController < ApplicationController
   before_action :set_generic_toll, only: [:show, :edit, :update, :destroy]
 
-  # GET /generic_tolls
-  # GET /generic_tolls.json
+def import
+    GenericToll.import(params[:file])
+    redirect_to generic_tolls_url, notice: "Activity Data Imported!"
+  end
+
+  # GET /drivers
+  # GET /drivers.json
   def index
     @generic_tolls = GenericToll.all
     @trucks = Truck.all
+    respond_to do |format|
+        format.html
+        format.csv { send_data @generic_tolls.to_csv }
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      end
   end
 
   # GET /generic_tolls/1

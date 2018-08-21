@@ -1,10 +1,20 @@
 class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 
-  # GET /clients
-  # GET /clients.json
+  def import
+    Client.import(params[:file])
+    redirect_to clients_url, notice: "Activity Data Imported!"
+  end
+
+  # GET /drivers
+  # GET /drivers.json
   def index
     @clients = Client.all
+    respond_to do |format|
+        format.html
+        format.csv { send_data @clients.to_csv }
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      end
   end
 
   # GET /clients/1

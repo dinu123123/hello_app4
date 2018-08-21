@@ -76,8 +76,10 @@ class FuelExpensesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fuel_expense_params
+      params[:fuel_expense][:platenr] = Truck.all.find(params[:fuel_expense][:truck_id]).NB_PLATE
       params.require(:fuel_expense).permit( :trstime, :trsdate, :product, :volume, :eurnetamount, 
                                             :kminsertion, :platenr, :cardnr, :stationid, :stationname, 
                                             :eurgrossunitprice, :eurgrossamount, :country, :truck_id)
+    
     end
 end

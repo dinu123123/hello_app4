@@ -11,11 +11,11 @@ class DeTollsController < ApplicationController
   # GET /de_tolls
   # GET /de_tolls.json
   def index
-    @de_tolls = DeToll.all
+    @de_tolls = DeToll.all.order("platenr ASC, date ASC, time ASC ")
   end
 
   # GET /de_tolls/1
-  # GET /de_tolls/1.json
+  # GET /de_tolls/1.js 
   def show
   end
 

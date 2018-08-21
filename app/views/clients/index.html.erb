@@ -22,8 +22,36 @@ tr:nth-child(even) {
 <body>
 
 <p id="notice"><%= notice %></p>
-
 <h1>Clients</h1>
+<h4>This page is dedicated to the clients description - you can see the existent list of clients, modify them or introduce new ones.</h4>
+<ul>
+ 
+  <li>
+  <p>
+  <h4> Download All Clients as CSV or Excel file:
+  <%= link_to "CSV", clients_path(format: "csv") %> |
+  <%= link_to "Excel", clients_path(format: "xls") %> 
+  </h4> 
+  </p>
+  </li>
+
+
+  <li>
+  <div>
+  <h4> Import Clients from CSV file: </h4>
+    <%= form_tag import_clients_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag  "Import CSV"%>
+  <% end %>
+  </div>
+  </li>
+
+  <li>
+  <p>
+  <h4> Create <%= link_to 'New Client ',new_client_path %> </h4> 
+  </p>
+  </li>
+</ul>
 
 <table>
   <thead>
@@ -50,7 +78,3 @@ tr:nth-child(even) {
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Client', new_client_path %>

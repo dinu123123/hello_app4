@@ -1,11 +1,22 @@
 class DriverExpensesController < ApplicationController
   before_action :set_driver, :set_driver_expense, only: [:show, :edit, :update, :destroy]
 
-  # GET /driver_expenses
-  # GET /driver_expenses.json
+  def import
+    DriverExpense.import(params[:file])
+    redirect_to driver_expenses_url, notice: "Activity Data Imported!"
+  end
+
+  # GET /drivers
+  # GET /drivers.json
   def index
     @driver_expenses = DriverExpense.all
     @drivers = Driver.all
+    @trucks = Truck.all
+    respond_to do |format|
+        format.html
+        format.csv { send_data @driver_expenses.to_csv }
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      end
   end
 
   # GET /driver_expenses/1
@@ -72,6 +83,7 @@ class DriverExpensesController < ApplicationController
     def set_driver
       @driver_expense = DriverExpense.find(params[:id])
       @driver = Driver.find(@driver_expense.DRIVER_id)
+      @truck = Truck.find(@driver_expense.truck_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -81,6 +93,6 @@ class DriverExpensesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def driver_expense_params
-      params.require(:driver_expense).permit(:DRIVER_id, :DATE, :AMOUNT, :INFO, :DESCRIPTION)
+      params.require(:driver_expense).permit(:truck_id, :DRIVER_id, :DATE, :AMOUNT, :INFO, :DESCRIPTION)
     end
 end
