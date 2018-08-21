@@ -7,12 +7,13 @@ class TrucksController < ApplicationController
     @trucks = Truck.all
     if Truck != nil and Truck.all.size>0 
       @details = Truck.order('NB_PLATE').first(20)
-    end
+ 
     respond_to do |format|
         format.html
         format.csv { send_data @trucks.to_csv}
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
       end
+         end
   end
 
   def import
