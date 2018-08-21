@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="drivers">
+    <Table>
+      <Row>
+      <Cell><Data ss:Type="String">CNP</Data></Cell>
+      <Cell><Data ss:Type="String">FIRSTNAME</Data></Cell>
+      <Cell><Data ss:Type="String">SECONDNAME</Data></Cell>
+      <Cell><Data ss:Type="String">StartDate</Data></Cell>
+      <Cell><Data ss:Type="String">EndDate</Data></Cell>
+      <Cell><Data ss:Type="String">INFO</Data></Cell>
+      <Cell><Data ss:Type="String">DESCRIPTION</Data></Cell>
+      </Row>
+    <% @drivers.each do |driver| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= driver.CNP %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= driver.FIRSTNAME %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= driver.SECONDNAME %></Data></Cell>
+        <Cell><Data ss:Type="Date"><%= driver.StartDate %></Data></Cell>
+        <Cell><Data ss:Type="Date"><%= driver.EndDate %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= driver.INFO %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= driver.DESCRIPTION %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

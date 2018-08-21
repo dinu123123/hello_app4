@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="trucks">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">NB_PLATE</Data></Cell>
+        <Cell><Data ss:Type="String">INFO</Data></Cell>
+        <Cell><Data ss:Type="String">CHASSIS</Data></Cell>
+        <Cell><Data ss:Type="String">FABDATE</Data></Cell>
+      </Row>
+    <% @trucks.each do |truck| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= truck.NB_PLATE %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= truck.INFO %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= truck.CHASSIS %></Data></Cell>
+        <Cell><Data ss:Type="Date"><%= truck.FABDATE %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

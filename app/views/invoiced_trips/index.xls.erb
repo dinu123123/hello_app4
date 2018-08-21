@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="invoiced_trips">
+    <Table>
+      <Row>
+      <Cell><Data ss:Type="String">Invoice Date</Data></Cell>
+      <Cell><Data ss:Type="String">TripStartDate</Data></Cell>
+      <Cell><Data ss:Type="String">TripEndDate</Data></Cell>
+      <Cell><Data ss:Type="String">invoice_id</Data></Cell>
+      <Cell><Data ss:Type="String">client_id</Data></Cell>
+      <Cell><Data ss:Type="String">DRIVER_id</Data></Cell>
+      <Cell><Data ss:Type="String">truck_id</Data></Cell>
+      <Cell><Data ss:Type="String">germany_toll</Data></Cell>
+      <Cell><Data ss:Type="String">belgium_toll</Data></Cell>
+      <Cell><Data ss:Type="String">swiss_toll</Data></Cell>
+      <Cell><Data ss:Type="String">france_toll</Data></Cell>
+      <Cell><Data ss:Type="String">italy_toll</Data></Cell>
+      <Cell><Data ss:Type="String">uk_toll</Data></Cell>
+      <Cell><Data ss:Type="String">netherlands_toll</Data></Cell>
+      <Cell><Data ss:Type="String">km</Data></Cell>
+      <Cell><Data ss:Type="String">km_evogps</Data></Cell>
+      <Cell><Data ss:Type="String">km_driver_route_note</Data></Cell>
+      </Row>
+    <% @invoiced_trips.each do |invoice| %>
+      <Row>
+      <Cell><Data ss:Type="Date"><%= invoice.date  %></Data></Cell>
+      <Cell><Data ss:Type="Date"><%= invoice.StartDate %></Data></Cell>
+      <Cell><Data ss:Type="Date"><%= invoice.EndDate %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.invoice_id %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.client_id %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.DRIVER_id %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.truck_id %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.germany_toll %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.belgium_toll %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.swiss_toll %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.france_toll %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.italy_toll %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.uk_toll %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.netherlands_toll %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.km %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.km_evogps %></Data></Cell>
+      <Cell><Data ss:Type="String"><%= invoice.km_driver_route_note %></Data></Cell>
+        </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="events">
+    <Table>
+      <Row>
+      <Cell><Data ss:Type="String">DATE</Data></Cell>
+      <Cell><Data ss:Type="String">DRIVER_id</Data></Cell>
+      <Cell><Data ss:Type="String">truck_id</Data></Cell>
+      <Cell><Data ss:Type="String">START_END</Data></Cell>
+      <Cell><Data ss:Type="String">client_id</Data></Cell>
+      </Row>
+    <% @events.each do |event| %>
+      <Row>
+        <Cell><Data ss:Type="Date"><%= event.DATE %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= event.DRIVER_id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= event.truck_id %></Data></Cell>
+        <Cell><Data ss:Type="Date"><%= event.START_END %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= event.client_id %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

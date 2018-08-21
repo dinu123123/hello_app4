@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="belgium_tolls">
+    <Table>
+      <Row>
+      <Cell><Data ss:Type="String">StartDate</Data></Cell>
+      <Cell><Data ss:Type="String">StartTime</Data></Cell>
+      <Cell><Data ss:Type="String">EndDate</Data></Cell>
+      <Cell><Data ss:Type="String">EndTime</Data></Cell>
+      <Cell><Data ss:Type="String">Km</Data></Cell>
+      <Cell><Data ss:Type="String">EUR</Data></Cell>
+      <Cell><Data ss:Type="String">truck_id</Data></Cell>
+      </Row>
+    <% @belgium_tolls.each do |toll| %>
+      <Row>
+        <Cell><Data ss:Type="Date"><%= toll.StartDate %></Data></Cell>
+        <Cell><Data ss:Type="Time"><%= toll.StartTime %></Data></Cell>
+        <Cell><Data ss:Type="Date"><%= toll.EndDate %></Data></Cell>
+        <Cell><Data ss:Type="Time"><%= toll.EndTime %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= toll.Km %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= toll.EUR %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= toll.truck_id %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

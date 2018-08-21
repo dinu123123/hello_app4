@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td, th {
+    border: 1px solid #aaaaaa;
+    text-align: left;
+    padding: 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<p id="notice"><%= notice %></p>
+<h1>Import/Export the Application DB</h1>
+<h4>This page is dedicated to serialization of the application database as a CSV file.</h4>
+<ul>
+ 
+  <li>
+  <p>
+  <h4> Download All DB tables as CSV file:
+  <%= link_to "CSV", db_path(format: "csv") %>
+  </h4> 
+  </p>
+  </li>
+
+
+  <li>
+  <div>
+  <h4> Import DB from CSV file: </h4>
+    <%= form_tag import_db_events_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag  "Import CSV"%>
+  <% end %>
+  </div>
+  </li>
+
+</ul>

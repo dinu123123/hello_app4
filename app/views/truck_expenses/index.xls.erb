@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="driver_expenses">
+    <Table>
+      <Row>
+      <Cell><Data ss:Type="String">DRIVER_id</Data></Cell>
+      <Cell><Data ss:Type="String">truck_id</Data></Cell>
+      <Cell><Data ss:Type="String">DATE</Data></Cell>
+      <Cell><Data ss:Type="String">AMOUNT</Data></Cell>
+      <Cell><Data ss:Type="String">INFO</Data></Cell>
+      <Cell><Data ss:Type="String">DESCRIPTION</Data></Cell>      
+      </Row>
+
+    <% @driver_expenses.each do |expense| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= @drivers.find(expense.DRIVER_id).CNP+" "+ @drivers.find(expense.DRIVER_id).FIRSTNAME+" "+@drivers.find(expense.DRIVER_id).SECONDNAME %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= @trucks.find(expense.DRIVER_id).NB_PLATE  %></Data></Cell>
+        <Cell><Data ss:Type="Date"><%= expense.DATE %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= expense.AMOUNT %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= expense.INFO %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= expense.DESCRIPTION %></Data></Cell>
+       </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
