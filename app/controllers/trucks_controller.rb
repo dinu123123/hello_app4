@@ -5,7 +5,9 @@ class TrucksController < ApplicationController
   # GET /trucks.json
   def index
     @trucks = Truck.all
-    @details = Truck.order('NB_PLATE').first(20)
+    if Truck != nil and Truck.all.size>0 
+      @details = Truck.order('NB_PLATE').first(20)
+    end
     respond_to do |format|
         format.html
         format.csv { send_data @trucks.to_csv}
