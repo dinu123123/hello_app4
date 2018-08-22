@@ -6,7 +6,7 @@ class TrucksController < ApplicationController
   def index
     @trucks = Truck.all
     if Truck != nil and Truck.all.size>0 
-      @details = Truck.order("NB_PLATE").first(20)
+      @details = Truck.order(:NB_PLATE).first(20)
  
 
 
