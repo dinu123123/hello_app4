@@ -226,7 +226,7 @@ elsif @truck_id > 0 && @driver_id == 0
                     if TruckExpense.all.size
                           @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM Truck_Expenses where 
                           Truck_Expenses.truck_id = ? AND Truck_Expenses."DATE" BETWEEN ? AND ? ORDER BY 
-                          Truck_Expenses."DATE" ASC', @localEvent[2*(i-1)].truck_id, @date_from, @date_to])
+                          Truck_Expenses."DATE" ASC', @truck_id, @date_from, @date_to])
                           
                         arrayTruckExpense.concat(@truckExpense)
                     end
@@ -252,14 +252,14 @@ elsif @truck_id > 0 && @driver_id == 0
                     if GenericToll.all.size
                         @genericTollExpenses = GenericToll.find_by_sql(['SELECT * FROM Generic_Tolls where 
                             Generic_Tolls.truck_id = ? AND Generic_Tolls."StartDate" BETWEEN ? AND ? ORDER BY 
-                          Generic_Tolls."StartDate" ASC', @localEvent[2*(i-1)].truck_id,  @date_from, @date_to])
+                          Generic_Tolls."StartDate" ASC', @truck_id,  @date_from, @date_to])
                          arrayGenericToll.concat(@genericTollExpenses)
                     end
 
                     if FuelExpense.all.size
                         @fuelExpenses = FuelExpense.find_by_sql(['SELECT * FROM fuel_expenses where 
                           fuel_expenses.truck_id = ? AND fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
-                          fuel_expenses.trsdate ASC', @localEvent[2*(i-1)].truck_id, @date_from, @date_to])
+                          fuel_expenses.trsdate ASC', @truck_id, @date_from, @date_to])
                         arrayFuelExpenses.concat(@fuelExpenses)
                     end
 
