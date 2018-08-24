@@ -217,7 +217,7 @@ elsif @truck_id > 0 && @driver_id == 0
 
                     if InvoicedTrip.all.size
                       @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."truck_id" = ? and  
-                                invoiced_trips."StartDate" >= ? AND invoiced_trips."StartDate" <= ?',  @truck_id, @date_from, @date_to)
+                                invoiced_trips."StartDate" >= ? AND invoiced_trips."StartDate" <= ?',  @truck_id, @date_from, @date_to])
                        if @invoicedTrips
                         arrayInvoicedTrips.concat(@invoicedTrips)
                        end
