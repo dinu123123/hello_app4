@@ -100,9 +100,9 @@ if @driver_id > 0
                     end
 
                     if BelgiumToll.all.size
-                        @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM Belgium_Tolls where 
-                          Belgium_Tolls.truck_id = ? AND Belgium_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
-                          Belgium_Tolls.StartDate ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                        @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM belgium_tolls where 
+                          belgium_tolls.truck_id = ? AND belgium_tolls.StartDate BETWEEN ? AND ? ORDER BY 
+                          belgium_tolls.StartDate ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
                          arrayBelgiumToll.concat(@belgiumTollExpenses)
                     end
@@ -228,9 +228,9 @@ elsif @truck_id > 0 && @driver_id == 0
                     end
 
                     if BelgiumToll.all.size
-                        @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM Belgium_Tolls where 
-                          Belgium_Tolls.truck_id = ? AND Belgium_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
-                          Belgium_Tolls.StartDate ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                        @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM belgium_tolls where 
+                          belgium_tolls.truck_id = ? AND belgium_tolls.StartDate BETWEEN ? AND ? ORDER BY 
+                          belgium_tolls.StartDate ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
                          arrayBelgiumToll.concat(@belgiumTollExpenses)
                     end
