@@ -159,7 +159,7 @@ elsif @truck_id > 0 && @driver_id == 0
 
   if Event != nil and Event.all.size >0
         @localEvent = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
-              and events.DATE BETWEEN ? AND ? ORDER BY events."DATE" ASC', @truck_id, @date_from, @date_to])
+              and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC', @truck_id, @date_from, @date_to])
   
               if @localEvent.count > 0 
                   if @localEvent.count%2 == 1
