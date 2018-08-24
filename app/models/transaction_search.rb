@@ -101,8 +101,8 @@ if @driver_id > 0
 
                     if BelgiumToll.all.size
                         @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM belgium_tolls where 
-                          belgium_tolls.truck_id = ? AND belgium_tolls.StartDate BETWEEN ? AND ? ORDER BY 
-                          belgium_tolls.StartDate ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                          belgium_tolls.truck_id = ? AND belgium_tolls."StartDate" BETWEEN ? AND ? ORDER BY 
+                          belgium_tolls."StartDate" ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
                          arrayBelgiumToll.concat(@belgiumTollExpenses)
                     end
@@ -229,16 +229,16 @@ elsif @truck_id > 0 && @driver_id == 0
 
                     if BelgiumToll.all.size
                         @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM belgium_tolls where 
-                          belgium_tolls.truck_id = ? AND belgium_tolls.StartDate BETWEEN ? AND ? ORDER BY 
-                          belgium_tolls.StartDate ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                          belgium_tolls.truck_id = ? AND belgium_tolls."StartDate" BETWEEN ? AND ? ORDER BY 
+                          belgium_tolls."StartDate" ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
                          arrayBelgiumToll.concat(@belgiumTollExpenses)
                     end
 
                     if GenericToll.all.size
                         @genericTollExpenses = GenericToll.find_by_sql(['SELECT * FROM Generic_Tolls where 
-                            Generic_Tolls.truck_id = ? AND Generic_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
-                          Generic_Tolls.StartDate ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                            Generic_Tolls.truck_id = ? AND Generic_Tolls."StartDate" BETWEEN ? AND ? ORDER BY 
+                          Generic_Tolls."StartDate" ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
                          arrayGenericToll.concat(@genericTollExpenses)
                     end
