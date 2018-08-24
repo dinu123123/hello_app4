@@ -30,12 +30,23 @@ tr:nth-child(even) {
 
 
 
+
 <title>CSS Website Layout</title>
 <meta charset="utf-8">
-<meta name="viewport">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 * {
     box-sizing: border-box;
+}
+
+
+body {
+  padding-top: 60px;
+}
+@media (max-width: 979px) {
+  body {
+    padding-top: 0px;
+  }
 }
 
 
