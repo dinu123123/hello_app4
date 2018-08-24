@@ -28,7 +28,7 @@ arrayEvents = Array.new
 if @driver_id > 0
 
 
-    if Event.all.size
+    if Event.all.size > 0
               @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
               and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC', @driver_id, @date_from, @date_to])
 
@@ -157,7 +157,7 @@ if @driver_id > 0
 
 elsif @truck_id > 0 && @driver_id == 0
 
-  if Event.all.size
+  if Event.all.size >0
         @localEvent = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
               and events.DATE BETWEEN ? AND ? ORDER BY events."DATE" ASC', @truck_id, @date_from, @date_to])
   
@@ -358,7 +358,7 @@ else
               arrayFuelExpenses.concat(@fuelExpenses)
           end
 
-          if Event.all.size
+          if Event.all.size >0
           @events = Event.find_by_sql(['SELECT * FROM events where events."DATE" BETWEEN ? 
             AND ? ORDER BY events."DRIVER_id" ASC, events."DATE" ASC', @date_from, @date_to])
           if @events
