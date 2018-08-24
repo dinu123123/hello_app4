@@ -150,7 +150,9 @@ if @driver_id > 0
 
         @events = Event.find_by_sql(['SELECT * FROM events where Events.driver_id = ? 
           and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC, events."DRIVER_id" ASC', @driver_id, @date_from, @date_to])
-        arrayEvents.concat(@events) 
+        if @events
+            arrayEvents.concat(@events)
+        end 
     end
 
 elsif @truck_id > 0 && @driver_id == 0
@@ -271,7 +273,9 @@ elsif @truck_id > 0 && @driver_id == 0
             @events = Event.find_by_sql(['SELECT * FROM events where Events.truck_id = ? 
               and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC, events."DRIVER_id" ASC', 
               @truck_id, @date_from, @date_to])
-            arrayEvents.concat(@events) 
+            if @events
+              arrayEvents.concat(@events)
+            end 
    end
 
 
