@@ -245,7 +245,7 @@ elsif @truck_id > 0 && @driver_id == 0
                     if BelgiumToll.all.size
                         @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM belgium_tolls where 
                           belgium_tolls.truck_id = ? AND belgium_tolls."StartDate" BETWEEN ? AND ? ORDER BY 
-                          belgium_tolls."StartDate" ASC', @localEvent[2*(i-1)].truck_id, @date_from, @date_to])
+                          belgium_tolls."StartDate" ASC', @truck_id, @date_from, @date_to])
                          arrayBelgiumToll.concat(@belgiumTollExpenses)
                     end
 
