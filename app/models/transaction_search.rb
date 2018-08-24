@@ -28,7 +28,7 @@ arrayEvents = Array.new
 if @driver_id > 0
 
 
-
+    if Event.all.size
               @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
               and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC', @driver_id, @date_from, @date_to])
 
@@ -148,21 +148,17 @@ if @driver_id > 0
 
           end
 
-            if Event.all.size
-            @events = Event.find_by_sql(['SELECT * FROM events where Events.driver_id = ? 
-              and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC, events."DRIVER_id" ASC', @driver_id, @date_from, @date_to])
-            arrayEvents.concat(@events) 
-            end
-
-
-
+        @events = Event.find_by_sql(['SELECT * FROM events where Events.driver_id = ? 
+          and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC, events."DRIVER_id" ASC', @driver_id, @date_from, @date_to])
+        arrayEvents.concat(@events) 
+    end
 
 elsif @truck_id > 0 && @driver_id == 0
 
- 
+  if Event.all.size
         @localEvent = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
               and events.DATE BETWEEN ? AND ? ORDER BY events."DATE" ASC', @truck_id, @date_from, @date_to])
-
+  
               if @localEvent.count > 0 
                   if @localEvent.count%2 == 1
                     if @localEvent[0].START_END == true
@@ -272,17 +268,11 @@ elsif @truck_id > 0 && @driver_id == 0
           end
 
 
-            if Event.all.size
             @events = Event.find_by_sql(['SELECT * FROM events where Events.truck_id = ? 
               and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC, events."DRIVER_id" ASC', 
               @truck_id, @date_from, @date_to])
             arrayEvents.concat(@events) 
-            end
-
-
-
-
-
+   end
 
 
 else
