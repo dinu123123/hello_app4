@@ -79,8 +79,8 @@ if @driver_id > 0
                 if (@truck_id > 0 && @truck_id == @localEvent[2*(i-1)].truck_id) || @truck_id == 0 
                     if TruckExpense.all.size
                           @truckExpense = TruckExpense.find_by_sql(["SELECT * FROM Truck_Expenses where 
-                          Truck_Expenses.truck_id = ? AND Truck_Expenses.DATE BETWEEN ? AND ? ORDER BY 
-                          Truck_Expenses.DATE ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                          Truck_Expenses.truck_id = ? AND Truck_Expenses."DATE" BETWEEN ? AND ? ORDER BY 
+                          Truck_Expenses."DATE" ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
                           
                         arrayTruckExpense.concat(@truckExpense)
@@ -208,8 +208,8 @@ elsif @truck_id > 0 && @driver_id == 0
                 #truck_id = 0 means the truck_id is irrelevant
                     if TruckExpense.all.size
                           @truckExpense = TruckExpense.find_by_sql(["SELECT * FROM Truck_Expenses where 
-                          Truck_Expenses.truck_id = ? AND Truck_Expenses.DATE BETWEEN ? AND ? ORDER BY 
-                          Truck_Expenses.DATE ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                          Truck_Expenses.truck_id = ? AND Truck_Expenses."DATE" BETWEEN ? AND ? ORDER BY 
+                          Truck_Expenses."DATE" ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
                           
                         arrayTruckExpense.concat(@truckExpense)
