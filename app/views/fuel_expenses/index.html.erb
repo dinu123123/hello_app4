@@ -28,6 +28,7 @@ tr:nth-child(even) {
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>TrsTime</th>
       <th>TrsDate</th>
       <th>Product</th>
@@ -45,8 +46,9 @@ tr:nth-child(even) {
   </thead>
 
   <tbody>
-    <% @fuel_expenses.each do |fuel_expense| %>
+    <% @fuel_expenses.each_with_index do |fuel_expense, index| %>
       <tr>
+        <td><%= index %></td>
         <td><%= fuel_expense.trstime.strftime("%H:%M") %></td>
         <td><%= fuel_expense.trsdate %></td>
         <td><%= fuel_expense.product %></td>

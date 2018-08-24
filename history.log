@@ -1,0 +1,1000 @@
+   53  ls
+   54  cd dev
+   55  ls
+   56  cd
+   57  ls
+   58  cd home
+   59  ls
+   60  cd ../
+   61  ls
+   62  cd home
+   63  ls
+   64  cd alex/dev/tranconta/hello_app4
+   65  ls
+   66  rails server
+   67  exit
+   68  pwd
+   69  ls
+   70  cd home
+   71  cd ../home/alex/dev/tranconta/hello_app4
+   72  ls
+   73  rails server -p 3001
+   74  exit
+   75  ls
+   76  pwd
+   77  ls
+   78  cd
+   79  ls
+   80  cd
+   81  ls
+   82  cd ../
+   83  ls
+   84  cd home
+   85  ls
+   86  cd alex/
+   87  ls
+   88  cd dev/
+   89  ls
+   90  cd tranconta/
+   91  ls
+   92  cd new_app1/
+   93  ls
+   94  gvim ../../../commands.txt 
+   95  rais s
+   96  rais -s
+   97  rails -s
+   98  pwd
+   99  ls
+  100  history
+  101  rails server -p 3001
+  102  ls
+  103  cd ../
+  104  ls
+  105  cd new_app
+  106  cd new_app1/
+  107  ls
+  108  rails
+  109  exit
+  110  ls
+  111  pwd
+  112  rails server -p 3001
+  113  ls
+  114  rails server -p 3003
+  115  exit
+  116  pwd
+  117  cd /home/alex/dev/tranconta/hello_app4
+  118  ls
+  119  gvim app/views/truck_expenses/_form.html.erb
+  120  rails -s
+  121  pwd
+  122  cd ../
+  123  ls
+  124  cp -rf hello_app4 hello_app4_2tables
+  125  ls
+  126  pwd
+  127  cd hello_app4
+  128  ls
+  129  sudo rails generate scaffold Drivers        id:integer cnp:text FIRSTNAME:text SECONDNAME:text INFO:text DESCRIPTION:text
+  130  bundle exec rake db:migrate; rails -s
+  131  bundle exec rake db:migrate
+  132  sudo rails generate scaffold Drivers id:integer cnp:text FIRSTNAME:text SECONDNAME:text INFO:text DESCRIPTION:text
+  133  sudo rails generate scaffold Driver id:integer cnp:text FIRSTNAME:text SECONDNAME:text INFO:text DESCRIPTION:text
+  134  bundle exec rake db:migrate
+  135  rails server -p 3003
+  136  ls
+  137  cd ../
+  138  ls
+  139  pwd
+  140  ls
+  141  cd hello_app4
+  142  ls
+  143  grep -r "Number plate" ./
+  144  ls
+  145  find ./ -name "*pense*"
+  146  gvim sudo rails generate scaffold TruckExpense   TRUCK_id:text DATETIME:datetime AMOUNT:integer INFO:text DESCRIPTION:text 
+  147  vim ./app/helpers/truck_expenses_helper.rb
+  148  gvim -O ./app/controllers/driver_expenses_controller.rb ./app/controllers/truck_expenses_controller.rb
+  149  gvim -O ./app/models/driver_expense.rb ./app/models/truck_expense.rb
+  150  ls -ltr ./app/views/truck_expenses/
+  151  vim ./app/views/truck_expenses/show.html.erb 
+  152  su gvim -O ./app/models/driver_expense.rb ./app/models/truck_expense.rb
+  153  ls -ltr ./app/views/truck_expenses/
+  154  pwd
+  155  gvim -O ./app/views/truck_expenses/*.erb
+  156  gvim -O ./app/views/driver_expenses/*.erb
+  157  ls
+  158  cd
+  159  ls
+  160  cd ../../
+  161  ls
+  162  cd  dev
+  163  ls
+  164  cd
+  165  ls
+  166  cd ../
+  167  ls
+  168  cd home
+  169  ls
+  170  cd alex/
+  171  ls
+  172  cd dev
+  173  ls
+  174  de tranconta/
+  175  cd tranconta/
+  176  ls
+  177  mkdir csv
+  178  cd csv
+  179  ls
+  180  rails new importCSV
+  181  rails g model User steps:integer exercise:integer
+  182  ls
+  183  cd importCSV/
+  184  rails g model User steps:integer exercise:integer
+  185  rake db:migrate
+  186  ls
+  187  cd app/models/
+  188  ls
+  189  gvim user.rb 
+  190  gvim ../../../../hello_app4/app/models/fuel_expense.rb 
+  191  pwd
+  192  cd ../../
+  193  ls
+  194  rails g controller Users index import
+  195  pwd
+  196  ls
+  197  cd -
+  198  ls
+  199  cd ../
+  200  ls
+  201  cd controllers/
+  202  ls
+  203  gvim users_controller.rb 
+  204  setxkbmap -layout us
+  205  gvim ../views/users/index.html.erb 
+  206  cd ../../
+  207  rails g migration add_column_user_to_user user:string
+  208  rails s
+  209  rails g migration add_column_user_to_user user:string
+  210  rake db:migrate
+  211  rails s
+  212  owd
+  213  rails s
+  214  bg
+  215  bundle exec rake db:migrate
+  216  rails s
+  217  rails restart
+  218  pwd
+  219  ls
+  220  cd app/
+  221  ls
+  222  cd controllers/
+  223  ls
+  224  cat users_controller.rb 
+  225  rails restart
+  226  ls
+  227  cd ../
+  228  ls
+  229  cd ../db/
+  230  ls
+  231  cd migrate/
+  232  ls
+  233  cat 20180603083601_add_column_user_to_user.rb
+  234  20180603081512_create_users.rb
+  235  cat 20180603081512_create_users.rb
+  236  rake db:migrate 
+  237  cd ../../../
+  238  pwd
+  239  cd ../
+  240  ls
+  241  cd hello_app4
+  242  rails s
+  243  rails restart
+  244  killall -9 rails
+  245  lsof | grep rails
+  246  lsof -wni tcp:3000
+  247  kill -9 5986
+  248  rails s
+  249  pwd
+  250  cd ../
+  251  s
+  252  ls
+  253  cd csv/
+  254  rails s
+  255  rails -s
+  256  pwd
+  257  rails restart
+  258  ls
+  259  cd importCSV/
+  260  rails s
+  261  pwd
+  262  cd ../
+  263  rails s
+  264  ls
+  265  cd importCSV/
+  266  rails -s
+  267  rails s
+  268  bg
+  269  pwd
+  270  ls
+  271  cd db
+  272  ls
+  273  cd migrate/
+  274  ls
+  275  gvim -O *
+  276  pd
+  277  cd ../
+  278  ls
+  279  cd ..
+  280  ls
+  281  cd app/
+  282  ls
+  283  cd models/
+  284  ls
+  285  cd ../../../
+  286  wd
+  287  pwd
+  288  bundle exec rake db:migrate; rails -s
+  289  bundle exec rake db:migrate
+  290  grep migrate ~/commands.txt
+  291  grep migrate  ~/commands.txt
+  292  grep rake  ~/commands.txt
+  293  grep rake  ../../../commands.txt 
+  294  grep db  ../../../commands.txt 
+  295  gvim  ../../../commands.txt 
+  296  rake db:migrate 
+  297  pwd
+  298  ls
+  299  cd importCSV/
+  300  bundle exec rake db:migrate; rails -s
+  301  bundle exec rake db:migrate
+  302  rake db:reset; rake db:migrate
+  303  rails g model fuel_expense TrsTime:time TrsDate:date Product:string Volume:decimal EURNetAmount:integer KmInsertion:integer PlateNr:string CardNr:string StationID:integer StationName:string EURGrossUnitPrice:decimal EURGrossAmount:decimal Country:string
+  304  rake db:reset; rake db:migrate
+  305  ls
+  306  cd app/
+  307  ls
+  308  pwd
+  309  cd ../
+  310  subl 
+  311  subl  ./
+  312  rails g controller fuel_expenses index import
+  313  gvim ../../hello_app4/app/views/fuel_expenses/index.html.erb
+  314  rake db:reset; rake db:migrate
+  315  rails restart
+  316  pwd
+  317  gvim ../../../../commands.txt 
+  318  rake db:reset; rake db:migrate
+  319  rails g migration add_column_TrsTime_to_fuel_expense TrsTime:time
+  320  rake db:reset; rake db:migrate
+  321  pwd
+  322  rails g model fuel TrsTime:time TrsDate:date Product:string Volume:decimal EURNetAmount:integer KmInsertion:integer PlateNr:string CardNr:string StationID:integer StationName:string EURGrossUnitPrice:decimal EURGrossAmount:decimal Country:string
+  323  rake db:reset; rake db:migrate
+  324  rails g destroy add_column_TrsTime_to_fuel_expense 
+  325  rails  destroy add_column_TrsTime_to_fuel_expense 
+  326  rails  destroy migration add_column_TrsTime_to_fuel_expense 
+  327  rake db:reset; rake db:migrate
+  328  rails g controller fuels index import
+  329  rails g migration add_column_fuel_to_fuel fuel:string
+  330  rake db:reset; rake db:migrate
+  331  rails g model fuel TrsTime:time TrsDate:date Product:string Volume:decimal EURNetAmount:integer KmInsertion:integer PlateNr:string CardNr:string StationID:integer StationName:string EURGrossUnitPrice:decimal EURGrossAmount:decimal Country:string
+  332  rake db:reset; rake db:migrate
+  333  rails g migration add_column_fuel_to_fuel Fuel:string
+  334  rails  destroy migration add_column_fuel_to_fuel
+  335  rails g migration add_column_fuel_to_fuel Fuel:string
+  336  rake db:reset; rake db:migrate
+  337  rails  destroy migration add_column_fuel_to_fuel
+  338  rake db:reset; rake db:migrate
+  339  rails g migration add_column_fuel_to_fuel Fuel:string
+  340  rake db:reset; rake db:migrate
+  341  rails g migration add_column_fuel_to_fuel fuel:string
+  342  rake db:reset; rake db:migrate
+  343  rails  destroy migration add_column_fuel_to_fuel
+  344  rake db:reset; rake db:migrate
+  345  rails g migration add_column_fuel_to_fuel fuel:string
+  346  rake db:reset; rake db:migrate
+  347  rails db:migrate
+  348  rails  destroy migration add_column_fuel_to_fuel
+  349  rake db:reset; rake db:migrate
+  350  rake db:migrate
+  351  rails g migration add_column_fuel_to_fuel fuel:string
+  352  rake db:reset; rake db:migrate
+  353  rails  destroy migration add_column_fuel_to_fuel
+  354  rake db:reset; rake db:migrate
+  355  rails restart
+  356  rake db:reset; rake db:migrate
+  357  /home/alex/Downloads/testCSV.csv 
+  358  rails g migration add_column_TrsTime_to_user TrsTime:time
+  359  rake db:reset; rake db:migrate
+  360  rails  destroy migration add_column_TrsTime_to_user
+  361  rake db:reset; rake db:migrate
+  362  rails g migration add_column_time_to_user time:time
+  363  rake db:reset; rake db:migrate
+  364  rails g migration add_column_trstime_to_user trstime:time
+  365  rake db:reset; rake db:migrate
+  366  rails  destroy migration add_column_trstime_to_user
+  367  rake db:reset; rake db:migrate
+  368  rails g migration add_column_vprtime_to_user vprtime:time
+  369  rake db:reset; rake db:migrate
+  370  rails g migration add_column_GprTime_to_user GprTime:time
+  371  rake db:reset; rake db:migrate
+  372  rails g migration add_column_gprtime_to_user gprtime:time
+  373  rake db:reset; rake db:migrate
+  374  rails  destroy migration add_column_GprTime_to_user
+  375  rake db:reset; rake db:migrate
+  376  rails g migration add_column_gprtime_to_user gprtime:time
+  377  rake db:reset; rake db:migrate
+  378  rails  destroy migration add_column_gprtime_to_user
+  379  rake db:reset; rake db:migrate
+  380  rails g migration add_column_gprtime_to_user gprtime:time
+  381  rake db:reset; rake db:migrate
+  382  rails  destroy migration add_column_gprtime_to_user
+  383  rails  destroy migration add_column_GprTime_to_user
+  384  rake db:reset; rake db:migrate
+  385  rails  destroy migration add_column_rptime_to_user
+  386  rake db:reset; rake db:migrate
+  387  rails  destroy migration add_column_rptime_to_user
+  388  rake db:reset; rake db:migrate
+  389  rails restart
+  390  rails g migration add_column_rptime_to_user rptime:time
+  391  rake db:reset; rake db:migrate
+  392  ls
+  393  pwd
+  394  cd ../
+  395  ls
+  396  cd dev
+  397  ls
+  398  cd ../
+  399  ls
+  400  cd ../
+  401  ls
+  402  cd home/alex/
+  403  ls
+  404  cd dev
+  405  ls
+  406  cd tranconta/
+  407  ls
+  408  cd csv/
+  409  ls
+  410  rails s
+  411  rails -s
+  412  rails s
+  413  ls
+  414  cd importCSV/
+  415  rails s
+  416  bg
+  417  ls
+  418  pwd
+  419  rake db:reset; rake db:migrate
+  420  bash
+  421  rake db:reset; rake db:migrate
+  422  rails restart
+  423  rake db:reset; rake db:migrate
+  424  rails restart
+  425  rake db:reset; rake db:migrate
+  426  ls
+  427  cd
+  428  cd ../../
+  429  ls
+  430  cd hom
+  431  cd home
+  432  ls
+  433  cd alex/
+  434  ls
+  435  cd dev
+  436  ls
+  437  cd tranconta/
+  438  ls
+  439  cd csv
+  440  ls
+  441  cd importCSV/
+  442  ls
+  443  rails s
+  444  pwd
+  445  rails s
+  446  bg
+  447  subl
+  448  pwd
+  449  rails g model expense trstime:time trsdate:date product:string volume:decimal eurnetamount:integer kminsertion:integer platenr:string cardnr:string stationid:integer stationname:string eurgrossunitprice:decimal eurgrossamount:decimal country:string
+  450  rake db:reset; rake db:migrate
+  451  rails g controller fuels index import
+  452  rails  destroy g expense
+  453  rails  destroy model expense
+  454  rake db:reset; rake db:migrate
+  455  rails g model Expense trstime:time trsdate:date product:string volume:decimal eurnetamount:integer kminsertion:integer platenr:string cardnr:string stationid:integer stationname:string eurgrossunitprice:decimal eurgrossamount:decimal country:string
+  456  rake db:reset; rake db:migrate
+  457  rails  destroy  expense
+  458  rails  destroy migration fuel
+  459  rails  destroy migration Fuel
+  460  rails  destroy migration expense
+  461  rails  destroy migration expenses
+  462  rake db:reset; rake db:migrate
+  463  rails db:migrate
+  464  rake db:reset; rake db:migrate
+  465  rails db:migrate
+  466  rake db:reset; rake db:migrate
+  467  rails  destroy migration expense
+  468  rails  destroy model expense
+  469  rake db:reset; rake db:migrate
+  470  rails g model Expense trstime:time trsdate:date product:string volume:decimal eurnetamount:integer kminsertion:integer platenr:string cardnr:string stationid:integer stationname:string eurgrossunitprice:decimal eurgrossamount:decimal country:string
+  471  rake db:reset; rake db:migrate
+  472  rails  destroy migration expense
+  473  rails  destroy migration Expense
+  474  rails  destroy migration Expenses
+  475  rake db:reset; rake db:migrate
+  476  rails  destroy model Expenses
+  477  rails  destroy model Expense
+  478  rake db:reset; rake db:migrate
+  479  rails  destroy model Expenses
+  480  rails  destroy model Expense
+  481  rails  destroy migration Expenses
+  482  rails  destroy migration Expense
+  483  rake db:reset; rake db:migrate
+  484  rails  destroy table Expense
+  485  rails  destroy m Expense
+  486  rails  destroy table Expense
+  487  rake db:reset; rake db:migrate
+  488  rails  destroy m Expense
+  489  rake db:reset; rake db:migrate
+  490  rails g model Expense trstime:time trsdate:date product:string volume:decimal eurnetamount:integer kminsertion:integer platenr:string cardnr:string stationid:integer stationname:string eurgrossunitprice:decimal eurgrossamount:decimal country:string
+  491  rake db:reset; rake db:migrate
+  492  rails  destroy m Expense
+  493  rails g model Expense trstime:time trsdate:date product:string volume:decimal eurnetamount:integer kminsertion:integer platenr:string cardnr:string stationid:integer stationname:string eurgrossunitprice:decimal eurgrossamount:decimal country:string
+  494  rake db:reset; rake db:migrate
+  495  rails g model Expense trstime:time trsdate:date product:string volume:decimal eurnetamount:integer kminsertion:integer platenr:string cardnr:string stationid:integer stationname:string eurgrossunitprice:decimal eurgrossamount:decimal country:string
+  496  rake db:reset; rake db:migrate
+  497  pwd
+  498  cd ../
+  499  l
+  500  ls
+  501  rails new importCSV2
+  502  rails g model Expense trstime:time trsdate:date product:string volume:decimal eurnetamount:integer kminsertion:integer platenr:string cardnr:string stationid:integer stationname:string eurgrossunitprice:decimal eurgrossamount:decimal country:string
+  503  ls
+  504  cd importCSV2
+  505  rails g model Expense trstime:time trsdate:date product:string volume:decimal eurnetamount:integer kminsertion:integer platenr:string cardnr:string stationid:integer stationname:string eurgrossunitprice:decimal eurgrossamount:decimal country:string
+  506  rake db:reset; rake db:migrate
+  507  rake db:migrate
+  508  rake db:reset; rake db:migrate
+  509  rake db:reset
+  510  subl
+  511  subl ./
+  512  rails g controller Expenses index import
+  513  rake db:reset; rake db:migrate
+  514  rails g model Expense trstime:time trsdate:date product:string volume:decimal eurnetamount:integer kminsertion:integer platenr:string cardnr:string stationid:integer stationname:string eurgrossunitprice:decimal eurgrossamount:decimal country:string
+  515  pwd
+  516  rails s
+  517  rails g model Expense trstime:time trsdate:date product:string volume:decimal eurnetamount:integer kminsertion:integer platenr:string cardnr:string stationid:integer stationname:string eurgrossunitprice:decimal eurgrossamount:decimal country:string
+  518  rake db:reset; rake db:migrate
+  519  rails s
+  520  rails restart
+  521  rails s
+  522  rails server -p 3001
+  523  bg
+  524  rails g migration add_column_trstime_to_expense trstime:time
+  525  rake db:migrate
+  526  rails g migration add_column_expense_to_expense trstime:time
+  527  rake db:migrate
+  528  rails destroy migration add_column_expense_to_expense 
+  529  rake db:migrate
+  530  rails destroy migration add_column_trstime_to_expense 
+  531  rake db:migrate
+  532  rake db:reset; rake db:migrate
+  533  rails destroy migration add_column_trstime_to_expense 
+  534  rake db:reset; rake db:migrate
+  535  rake rake db:rollback & db:reset
+  536  rake db:rollback & db:reset
+  537  rake db:rollback 
+  538  rake db:reset; rake db:migrate
+  539  rails g migration add_column_expense_to_expense expense:integer
+  540  rake db:reset; rake db:migrate
+  541  rails destory migration add_column_expense_to_expense 
+  542  rails destory --help
+  543  rails destory m add_column_expense_to_expense 
+  544  rails d migration add_column_expense_to_expecnse 
+  545  rails d migration add_column_expense_to_expense 
+  546  rake db:reset; rake db:migrate
+  547  rails stop
+  548  pwc
+  549  pwd
+  550  cd ../
+  551  ls
+  552  cd importCSV
+  553  rails server -p 3002
+  554  rails server -h
+  555  rake db:reset; rake db:migrate
+  556  rails destory m expenses
+  557  rails destory m expense
+  558  rails destory migration expense 
+  559  rails destory model expense 
+  560  rails destory model expenses
+  561  rails destory m expenses
+  562  rails destory m expense
+  563  rake db:reset; rake db:migrate
+  564  rails destory table expense
+  565  drop_table :expense
+  566  rails drop_table :expense
+  567  rake db:reset; rake db:migrate
+  568  cd ../../
+  569  ls
+  570  cd dev
+  571  ls
+  572  cd ../home
+  573  ls
+  574  cd alex/
+  575  ls
+  576  cd dev
+  577  ls
+  578  cd tranconta/
+  579  ls
+  580  cd hello_app4
+  581  ls
+  582  subl .
+  583  rails s
+  584  bg
+  585  pwd
+  586  rake db:reset; rake db:migrate
+  587  pwd
+  588  rake db:reset; rake db:migrate
+  589  rake db:migrate:status
+  590  rake db:reset; rake db:migrate
+  591  rake db:migrate
+  592  rails restart
+  593  setxkbmap -layout us
+  594  rake db:reset; rake db:migrate
+  595  rake db:drop db:create db:migrate
+  596  gvim ../../../commands.txt 
+  597  rake db:drop db:create db:migrate
+  598  cd ../../
+  599  ls
+  600  cd home
+  601  ls
+  602  cd alex/
+  603  ls
+  604  cd dev
+  605  ls
+  606  cd tranconta/
+  607  ls
+  608  cd hello_app4
+  609  ls
+  610  rails s
+  611  bg
+  612  subl .
+  613  gvim
+  614  pwd
+  615  ls
+  616  cd ../
+  617  ls
+  618  cd home
+  619  cd alex/
+  620  ls
+  621  cd dev
+  622  ls
+  623  cd tranconta/
+  624  ls
+  625  cd hello_app4
+  626  ls
+  627  rails s
+  628  bg
+  629  subl
+  630  rails g scafold belgium_tool PlateNr:string StartDate:date StartTime:time EndDate:date EndTime:time Km:decimal EUR:decimal
+  631  rails g scaffold belgium_tool PlateNr:string StartDate:date StartTime:time EndDate:date EndTime:time Km:decimal EUR:decimal
+  632  rake  db:migrate
+  633  find ./ -name ¨Accountancy Main Menu¨ 
+  634  find ./ -name Accountancy
+  635  grep -r  Accountancy
+  636  rake db:drop db:create db:migrate
+  637  c
+  638  rails destory scaffold belgium_tool
+  639  rails destory  belgium_tool
+  640  rails destory scaffold belgium_tool
+  641  rake db:drop db:create db:migrate
+  642  rails destory scaffold belgium_tools
+  643  rails destory scaffold belgium_tool
+  644  rake db:rollback
+  645  rails destory scaffold belgium_tool
+  646  rails destroy scaffold belgium_tool PlateNr:string StartDate:date StartTime:time EndDate:date EndTime:time Km:decimal EUR:decimal
+  647  rails g scaffold belgium_toll PlateNr:string StartDate:date StartTime:time EndDate:date EndTime:time Km:decimal EUR:decimal
+  648  rake db:drop db:create db:migrate
+  649  bg
+  650  rake db:drop db:create db:migrate
+  651  ls
+  652  cd
+  653  cd ../../
+  654  ls
+  655  cd home/alex/
+  656  ls
+  657  gvim commands.txt 
+  658  cd dev
+  659  ls
+  660  cd tranconta/
+  661  ls
+  662  cd hello_app4
+  663  ls
+  664  rails s
+  665  rails -s
+  666  pwd
+  667  ls
+  668  rails s
+  669  lsof | grep rails
+  670  lsof 
+  671  lsof | grep rails
+  672  rails s
+  673  killall -9 rails
+  674  rails -s
+  675  rails s
+  676  /home/alex/dev/tranconta/hello_app4/tmp/pids/server.pid.
+  677  cat /home/alex/dev/tranconta/hello_app4/tmp/pids/server.pid
+  678  lsof -wni tcp:4461
+  679  rails s
+  680  kill -9 $(lsof -i tcp:3000 -t)
+  681  rm /home/alex/dev/tranconta/hello_app4/tmp/pids/server.pid
+  682  rails s
+  683  bg
+  684  ls
+  685  sublime
+  686  subl 
+  687  setxkbmap -layout us
+  688  rake db:drop db:create db:migrate
+  689  ls
+  690  cd ../../
+  691  ls
+  692  cd dev
+  693  ls
+  694  cd ../
+  695  l
+  696  cd home
+  697  ls
+  698  cd alex/dev/tranconta/hello_app4
+  699  ls
+  700  rails s &
+  701  subl
+  702  cat ../../../commands.txt 
+  703  setxkbmap -layout us
+  704  grep -r "collection_select" ./
+  705  subl
+  706  rails s &
+  707  lsof -wni tcp:3000
+  708  kill -9 4647
+  709  lsof -wni tcp:3000
+  710  rails s &
+  711  cd ../../home/alex/dev/tranconta/
+  712  ls
+  713  cd hello_app4
+  714  ls
+  715  subl
+  716  rails s &
+  717  rails s 
+  718  pwd
+  719  cd ../../
+  720  ls
+  721  cd home
+  722  ls
+  723  cd alex/
+  724  ls
+  725  cd dev
+  726  ls
+  727  de tranconts
+  728  de tranconta/
+  729  ls
+  730  cd tranconta/
+  731  ls
+  732  cd hello_app4
+  733  ls
+  734  rails s &
+  735  subl 
+  736  gvim ../../../commands.txt 
+  737  cd ../
+  738  ls
+  739  cp -rf hello_app4 hello_app4_backup_22july
+  740  ls
+  741  cd hello_app4_backup_22july/
+  742  ls
+  743  rails g scaffold toll_germany PlateNr:string Date:date Time:time BookingID:String Art:integer Road:String Via:String Departure:String CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  744  
+  745  rails destroy scaffold toll_germany PlateNr:string Date:date Time:time BookingID:String Art:integer Road:String Via:String Departure:String CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  746  rails g scaffold germany_toll PlateNr:string Date:date Time:time BookingID:String Art:integer Road:String Via:String Departure:String CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  747  rails g scaffold bavaria_toll PlateNr:string Date:date Time:time BookingID:String Art:integer Road:String Via:String Departure:String CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  748  ls
+  749  subl
+  750  pwd
+  751  cd ../
+  752  s
+  753  ls
+  754  cd hello_app4
+  755  subl
+  756  cd ../hello_app4_backup_22july/
+  757  ls
+  758  subl .
+  759  pwd
+  760  cd ../
+  761  ls
+  762  cd hello_app4
+  763  ls
+  764  rails g scaffold de_toll PlateNr:string Date:date Time:time BookingID:String Art:integer Road:String Via:String Departure:String CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  765  pwd
+  766  rake db:create db:migrate
+  767  rake db:drop db:create db:migrate
+  768  rails g scaffold de_toll PlateNr:string Date:date Time:time BookingID:string Art:integer Road:string Via:string Departure:string CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  769  rails destroy scaffold de_germany PlateNr:string Date:date Time:time BookingID:String Art:integer Road:String Via:String Departure:String CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  770  rails g scaffold de_toll PlateNr:string Date:date Time:time BookingID:string Art:integer Road:string Via:string Departure:string CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  771  rails destroy scaffold de_toll PlateNr:string Date:date Time:time BookingID:String Art:integer Road:String Via:String Departure:String CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  772  rake db:drop db:create db:migrate
+  773  bin/rails db:environment:set RAILS_ENV=development
+  774  rake db:drop db:create db:migrate
+  775  rails destroy scaffold de_toll PlateNr:string Date:date Time:time BookingID:string Art:integer Road:string Via:string Departure:string CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  776  rake db:drop db:create db:migrate
+  777  grep -r "collection_select" ./
+  778  rails destroy scaffold de_toll PlateNr:string Date:date Time:time BookingID:string Art:integer Road:string Via:string Departure:string CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  779  rails scaffold de_toll PlateNr:string Date:date Time:time BookingID:string Art:integer Road:string Via:string Departure:string CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  780  rake db:drop db:create db:migrate
+  781  rails scaffold de_toll PlateNr:string Date:date Time:time BookingID:string Art:integer Road:string Via:string Departure:string CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  782  rails g scaffold de_toll PlateNr:string Date:date Time:time BookingID:string Art:integer Road:string Via:string Departure:string CostCentre:integer TariffModel:integer AxelClass:integer WeightClass:integer EmissionCat:integer RoadOperators:integer Ver:string Km:decimal EUR:decimal truck_id:integer
+  783  rake db:drop db:create db:migrate
+  784  grep -r import_de_tolls_path
+  785  grep -r import_germany_tolls_path
+  786  rake db:drop db:create db:migrate
+  787  cd ../
+  788  ls
+  789  cp -rf hello_app4 hello_app4_before_heroku
+  790  pwd
+  791  ls
+  792  cd hello_app4
+  793  ls
+  794  git init
+  795  git add -A
+  796  git status
+  797  git commit -m "Initialize repository"
+  798  git log
+  799  cat ~/.ssh/id_rsa.pub
+  800  pwd
+  801  ls
+  802  ls .git
+  803  pwd
+  804  ls
+  805  git status
+  806  https://at1977@bitbucket.org/at1977/al.git
+  807  git remote add origin at1977@bitbucket.org:at1977/hello_app4.git
+  808  git push -u origin --all
+  809  git remote add origin at1977@bitbucket.org:at1977/hello_app.git
+  810  git push -u origin --all
+  811  git remote -v
+  812  git push -u origin --all
+  813  ls -ltr ../../../.ssh/id_rsa
+  814  ls -ltr ../../../.ssh/
+  815  ssh-agent -s
+  816  ssh-add ~/.ssh/id_rsa
+  817  git push -u origin --all
+  818  git remote add origin git@bitbucket.org:at1977/hello_app.git
+  819  git remote rm origin git@bitbucket.org:at1977/hello_app.git
+  820  git remote remove origin git@bitbucket.org:at1977/hello_app.git
+  821  git remote remove  git@bitbucket.org:at1977/hello_app.git
+  822  git remote remove origin 
+  823  git remote add origin git@bitbucket.org:at1977/hello_app.git
+  824  git push -u origin --all
+  825  git remote add origin at1977@bitbucket.org:at1977/hello_app.git
+  826  git remote remove origin 
+  827  git remote add origin at1977@bitbucket.org:at1977/hello_app.git
+  828  git push -u origin --all
+  829* 
+  830  pwd
+  831  ls
+  832  ls -ltr
+  833  pwd
+  834  ls .git
+  835* 
+  836  find ./ -name hello_app4
+  837  find ./ -name hello_app4.git
+  838  find ./ -name hello*
+  839* 
+  840  find ./ -name hello_app4.git
+  841  find ./ -name hello_app.git
+  842  find ./ -name *.git
+  843  git remote remove  git@bitbucket.org:at1977/hello_app4.git
+  844  git remote add  git@bitbucket.org:at1977/hello_app4.git
+  845  git remote add origin  git@bitbucket.org:at1977/hello_app4.git
+  846  git init hello_app4
+  847  git push -u origin --all
+  848  git remote add origin ssh://at1977@bitbucket.org/at1977/hello_app4
+  849  git remote remove  git@bitbucket.org:at1977/hello_app4.git
+  850  git remote remove origin 
+  851  git remote add origin ssh://at1977@bitbucket.org/at1977/hello_app4
+  852  git push -u origin --all
+  853  https://at1977@bitbucket.org/at1977/hello_app4.git
+  854  git remote remove origin 
+  855  git remote add origin https//at1977@bitbucket.org/at1977/hello_app4
+  856  git push -u origin --all
+  857  git remote remove origin 
+  858  git remote add origin at1977@bitbucket.org/at1977/hello_app4
+  859  git push -u origin --all
+  860  git remote add origin git@bitbucket.org/at1977/hello_app4
+  861  git remote remove origin 
+  862  git remote add origin git@bitbucket.org/at1977/hello_app4
+  863  git push -u origin --all
+  864  git remote add origin git@bitbucket.org/at1977/
+  865  git push -u origin --all
+  866  git remote add origin git@bitbucket.org:at1977/hello_app4.git
+  867  git remote remove origin 
+  868  git remote add origin git@bitbucket.org:at1977/hello_app4.git
+  869  git push -u origin --all
+  870  git status
+  871  git remote add origin git@bitbucket.org:at1977/hello_app4.git
+  872  pwd
+  873  ls ../../../.ssh/
+  874  pwd
+  875  cp -rf ../../../.ssh/ ../../../../
+  876  git push -u origin --all
+  877  git remove rm origin git remote add origin git@bitbucket.org:at1977/hello_app4.git
+  878  git remove rm origin; git remote add origin git@bitbucket.org:at1977/hello_app4.git
+  879  git remove origin git remote add origin git@bitbucket.org:at1977/hello_app4.git
+  880  git remove origin; git remote add origin git@bitbucket.org:at1977/hello_app4.git
+  881  git remote remove origin; git remote add origin git@bitbucket.org:at1977/hello_app4.git
+  882  git push -u origin --all
+  883  cat ~/.ssh/id_rsa.pub
+  884  cd ~/
+  885  pwd
+  886  ls
+  887  pwd
+  888  ls
+  889  pwd
+  890  ssh-keygen
+  891  pwd
+  892  ls
+  893  cat .ssh/id_rsa.pub 
+  894  cat .ssh/id_rsa.pub | xclip -sel clip
+  895  pwd
+  896  cd -
+  897  git push -u origin --all
+  898  pwd
+  899  cd -
+  900  git remove rm origin; git remote add origi
+  901  ls .ssh
+  902  rm -rf .ssh
+  903  pwd
+  904  cd -
+  905  history
+  906  cat .ssh/id_rsa.pub 
+  907  pwd
+  908  cd -
+  909  pwd
+  910  git push -u origin master
+  911  pwd
+  912  cd -
+  913  git remove rm origin
+  914  git remote remove rm origin
+  915  git remote remove  origin
+  916  git remote add origin https://github.com/dinu123123/hello_app4.git
+  917  git push -u origin master
+  918  git status
+  919  ls
+  920  git log
+  921  git status
+  922  git add app/views/truck_expenses/_form.html.erb
+  923  git commit --amend
+  924* 
+  925  git status
+  926  git pull
+  927  git status
+  928  git add app/views/truck_expenses/_form.html.erb
+  929  git push 
+  930  git push -f
+  931  git log
+  932  git checkout -b modify-README
+  933  git branch
+  934  git status
+  935  git commit -a -m "Improve the README file"
+  936  git checkout master
+  937  git merge modify-README
+  938  git branch -d modify-README
+  939  git push
+  940  bundle install --without production
+  941  git commit -a -m "Update Gemfile for Heroku"
+  942  heroky login
+  943  heroku login
+  944  git push heroku master
+  945  heroku keys:add
+  946  heroky create
+  947  heroku create
+  948  git push heroku master
+  949  le
+  950  ls
+  951  cd app
+  952  rvm install "ruby-2.4.4"
+  953  pwd
+  954  heroku logs
+  955  git status
+  956  git checkout -b modify-README
+  957  git branch
+  958  git status
+  959  git commit -a -m "deleted file"
+  960  git checkout master
+  961  it merge modify-README
+  962  git merge modify-README
+  963  git push
+  964  cd ../
+  965  heroku log
+  966  pwd
+  967  cd app
+  968  heroku log
+  969  heroku logs
+  970  git checkout -b modify-README
+  971  git branch
+  972  git commit -a -m "added optional=>true"
+  973  git checkout master
+  974  git merge modify-README
+  975  git push
+  976  heroku create
+  977  heroku apps:destroy
+  978  heroku apps:destroy --confirm protected-harbor-71415
+  979  heroku apps:destroy
+  980  heroku create
+  981  heroku apps:destroy --confirm protected-tundra-45687.git
+  982  git push heroku master
+  983  heroku apps:destroy --confirm protected-tundra-45687.git
+  984  heroku apps:destroy
+  985  pwd
+  986  cd ../
+  987  heroku create
+  988* heroku apps:destroy 
+  989  heroku apps:destroy --confirm afternoon-fortress-65036
+  990  heroku apps:destroy  afternoon-fortress-65036
+  991  heroku apps:destroy  aqueous-citadel-42774
+  992  heroku apps:destroy  cryptic-beyond-70755
+  993  heroku create
+  994  git push heroku master
+  995  heroku apps:destroy  protected-harbor-71415.git
+  996  git push heroku master
+  997  git remote -v
+  998  git remote rm heroku
+  999  git push heroku master
+ 1000  heroku create
+ 1001  git push heroku master
+ 1002  cd app
+ 1003  heroku logs
+ 1004  heroku rake db:reset 
+ 1005  heroku rake db:drop
+ 1006  heroku pg:reset DATABASE
+ 1007  heroku rake db:reset 
+ 1008  heroku pg:reset DATABASE
+ 1009  heroku pg:create DATABASE
+ 1010  heroku create DATABASE
+ 1011  git push heroku master
+ 1012  heroku rake db:drop; heroku rake db:create; heroku sudo rake db:migrate
+ 1013  heroku rake pg:drop; heroku rake pg:create; heroku  rake pg:migrate
+ 1014  heroku pg:drop DATABASE
+ 1015  heroku pg:reset DATABASE
+ 1016  heroku run rake db:version
+ 1017  heroku run rake --trace db:migrate VERSION=0
+ 1018  git push heroku master
+ 1019  heroku create
+ 1020  git push heroku master
+ 1021  git remote rm heroku
+ 1022  heroku create
+ 1023  for app in $(heroku apps); do heroku apps:destroy --app $app --confirm $app; done
+ 1024  heroku create
+ 1025  git push heroku master
+ 1026  for app in $(heroku apps); do heroku apps:destroy --app $app --confirm $app; done
+ 1027  git push heroku master
+ 1028  cd ../
+ 1029  heroku create
+ 1030  git push heroku master
+ 1031  heroku logs
+ 1032  heroku bin/rails db:migrate
+ 1033  heroku rails db:migrate
+ 1034  heroku run rails c
+ 1035  heroku logs
+ 1036  grep -r "truck_expenses.date"
+ 1037  grep -r "truck_expenses"
+ 1038* grep -r "truck_expense" | grep date
+ 1039  heroku logs
+ 1040  grep -r "Truck_Expenses.DATE"
+ 1041  heroku logs
+ 1042  heroku logs >& 1
+ 1043  heroku logs >& 3
+ 1044  heroku logs >& 2.txt
+ 1045  tkidff 1 2.txt
+ 1046  tkdiff 1 2.txt
+ 1047  diff 1 2.txt
+ 1048  heroku logs >& 3.txt
+ 1049  meld 2.txt 3.txt 
+ 1050  heroku logs
+ 1051  heroku logs 
+ 1052  history >& history.log

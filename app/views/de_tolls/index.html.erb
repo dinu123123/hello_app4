@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>Platenr</th>
       <th>Date</th>
       <th>Time</th>
@@ -28,8 +29,9 @@
   </thead>
 
   <tbody>
-    <% @de_tolls.each do |de_toll| %>
+    <% @de_tolls.each_with_index do |de_toll, index| %>
       <tr>
+        <td><%= index %></td>
         <td><%= de_toll.platenr %></td>
         <td><%= de_toll.date %></td>
         <td><%= de_toll.time.strftime("%H:%M") %></td>

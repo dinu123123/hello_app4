@@ -1,0 +1,101 @@
+ ›   Warning: heroku update available from 7.5.11 to 7.7.4
+2018-07-23T02:15:47.937027+00:00 app[web.1]: I, [2018-07-23T02:15:47.936906 #4]  INFO -- : [a9468b5d-b930-4bc1-9fd2-fdfba5336744] Started GET "/" for 85.148.104.220 at 2018-07-23 02:15:47 +0000
+2018-07-23T02:15:47.937889+00:00 app[web.1]: I, [2018-07-23T02:15:47.937795 #4]  INFO -- : [a9468b5d-b930-4bc1-9fd2-fdfba5336744] Processing by ExtraController#data_in as HTML
+2018-07-23T02:15:47.938960+00:00 app[web.1]: I, [2018-07-23T02:15:47.938887 #4]  INFO -- : [a9468b5d-b930-4bc1-9fd2-fdfba5336744]   Rendering extra/data_in.html.erb within layouts/application
+2018-07-23T02:15:47.940695+00:00 app[web.1]: I, [2018-07-23T02:15:47.940626 #4]  INFO -- : [a9468b5d-b930-4bc1-9fd2-fdfba5336744]   Rendered extra/data_in.html.erb within layouts/application (1.6ms)
+2018-07-23T02:15:47.941740+00:00 app[web.1]: I, [2018-07-23T02:15:47.941672 #4]  INFO -- : [a9468b5d-b930-4bc1-9fd2-fdfba5336744] Completed 200 OK in 4ms (Views: 3.0ms | ActiveRecord: 0.0ms)
+2018-07-23T02:15:48.107627+00:00 heroku[router]: at=info method=GET path="/assets/application-16a58583eacfd4b7dc0d1bf7cd6f5b26b93fb51e84d9f844b4a09463e15e0ae2.js" host=nameless-escarpment-97986.herokuapp.com request_id=4290a224-341b-4736-acfc-7963552e7803 fwd="85.148.104.220" dyno=web.1 connect=1ms service=4ms status=304 bytes=48 protocol=https
+2018-07-23T02:15:47.945780+00:00 heroku[router]: at=info method=GET path="/" host=nameless-escarpment-97986.herokuapp.com request_id=a9468b5d-b930-4bc1-9fd2-fdfba5336744 fwd="85.148.104.220" dyno=web.1 connect=1ms service=8ms status=200 bytes=5803 protocol=https
+2018-07-23T02:15:48.100349+00:00 heroku[router]: at=info method=GET path="/assets/application-35729bfbaf9967f119234595ed222f7ab14859f304ab0acc5451afb387f637fa.css" host=nameless-escarpment-97986.herokuapp.com request_id=3f08f822-7e66-4c58-8db8-e4aadd93a1bd fwd="85.148.104.220" dyno=web.1 connect=0ms service=1ms status=304 bytes=48 protocol=https
+2018-07-23T02:16:17.090128+00:00 heroku[router]: at=info method=GET path="/events/extract_out" host=nameless-escarpment-97986.herokuapp.com request_id=caa156e0-88f5-4935-b184-9cbb1f02cb43 fwd="85.148.104.220" dyno=web.1 connect=1ms service=26ms status=500 bytes=1827 protocol=https
+2018-07-23T02:16:17.065957+00:00 app[web.1]: I, [2018-07-23T02:16:17.065840 #4]  INFO -- : [caa156e0-88f5-4935-b184-9cbb1f02cb43] Started GET "/events/extract_out" for 85.148.104.220 at 2018-07-23 02:16:17 +0000
+2018-07-23T02:16:17.066968+00:00 app[web.1]: I, [2018-07-23T02:16:17.066889 #4]  INFO -- : [caa156e0-88f5-4935-b184-9cbb1f02cb43] Processing by EventsController#extract_out as HTML
+2018-07-23T02:16:17.078276+00:00 app[web.1]: D, [2018-07-23T02:16:17.078095 #4] DEBUG -- : [caa156e0-88f5-4935-b184-9cbb1f02cb43]   [1m[36mTruckExpense Load (1.3ms)[0m  [1m[34mSELECT * FROM Truck_Expenses where
+2018-07-23T02:16:17.078280+00:00 app[web.1]: Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23' ORDER BY
+2018-07-23T02:16:17.078281+00:00 app[web.1]: Truck_Expenses.DATE ASC[0m
+2018-07-23T02:16:17.078856+00:00 app[web.1]: I, [2018-07-23T02:16:17.078693 #4]  INFO -- : [caa156e0-88f5-4935-b184-9cbb1f02cb43] Completed 500 Internal Server Error in 12ms (ActiveRecord: 1.3ms)
+2018-07-23T02:16:17.084230+00:00 app[web.1]: F, [2018-07-23T02:16:17.083751 #4] FATAL -- : [caa156e0-88f5-4935-b184-9cbb1f02cb43]
+2018-07-23T02:16:17.084493+00:00 app[web.1]: F, [2018-07-23T02:16:17.084400 #4] FATAL -- : [caa156e0-88f5-4935-b184-9cbb1f02cb43] ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column truck_expenses.date does not exist
+2018-07-23T02:16:17.084496+00:00 app[web.1]: LINE 2:     Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23...
+2018-07-23T02:16:17.084498+00:00 app[web.1]: ^
+2018-07-23T02:16:17.084508+00:00 app[web.1]: : SELECT * FROM Truck_Expenses where
+2018-07-23T02:16:17.084509+00:00 app[web.1]: Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23' ORDER BY
+2018-07-23T02:16:17.084511+00:00 app[web.1]: Truck_Expenses.DATE ASC):
+2018-07-23T02:16:17.084979+00:00 app[web.1]: F, [2018-07-23T02:16:17.084916 #4] FATAL -- : [caa156e0-88f5-4935-b184-9cbb1f02cb43]
+2018-07-23T02:16:17.085357+00:00 app[web.1]: F, [2018-07-23T02:16:17.085284 #4] FATAL -- : [caa156e0-88f5-4935-b184-9cbb1f02cb43] app/models/transaction_search.rb:107:in `scope'
+2018-07-23T02:16:17.085360+00:00 app[web.1]: [caa156e0-88f5-4935-b184-9cbb1f02cb43] app/controllers/events_controller.rb:10:in `extract_out'
+2018-07-23T02:16:18.744468+00:00 app[web.1]: I, [2018-07-23T02:16:18.744254 #4]  INFO -- : [15838a39-ce3d-40e4-a366-af90c2764e19] Started GET "/" for 85.148.104.220 at 2018-07-23 02:16:18 +0000
+2018-07-23T02:16:18.745791+00:00 app[web.1]: I, [2018-07-23T02:16:18.745705 #4]  INFO -- : [15838a39-ce3d-40e4-a366-af90c2764e19] Processing by ExtraController#data_in as HTML
+2018-07-23T02:16:18.747020+00:00 app[web.1]: I, [2018-07-23T02:16:18.746936 #4]  INFO -- : [15838a39-ce3d-40e4-a366-af90c2764e19]   Rendering extra/data_in.html.erb within layouts/application
+2018-07-23T02:16:18.748793+00:00 app[web.1]: I, [2018-07-23T02:16:18.748720 #4]  INFO -- : [15838a39-ce3d-40e4-a366-af90c2764e19]   Rendered extra/data_in.html.erb within layouts/application (1.6ms)
+2018-07-23T02:16:18.749934+00:00 app[web.1]: I, [2018-07-23T02:16:18.749863 #4]  INFO -- : [15838a39-ce3d-40e4-a366-af90c2764e19] Completed 200 OK in 4ms (Views: 3.2ms | ActiveRecord: 0.0ms)
+2018-07-23T02:16:18.753870+00:00 heroku[router]: at=info method=GET path="/" host=nameless-escarpment-97986.herokuapp.com request_id=15838a39-ce3d-40e4-a366-af90c2764e19 fwd="85.148.104.220" dyno=web.1 connect=1ms service=9ms status=200 bytes=5803 protocol=https
+2018-07-23T02:16:18.920581+00:00 heroku[router]: at=info method=GET path="/assets/application-16a58583eacfd4b7dc0d1bf7cd6f5b26b93fb51e84d9f844b4a09463e15e0ae2.js" host=nameless-escarpment-97986.herokuapp.com request_id=2054746c-cc96-40dd-b88b-420f1e4bd039 fwd="85.148.104.220" dyno=web.1 connect=1ms service=2ms status=304 bytes=48 protocol=https
+2018-07-23T02:16:18.918379+00:00 heroku[router]: at=info method=GET path="/assets/application-35729bfbaf9967f119234595ed222f7ab14859f304ab0acc5451afb387f637fa.css" host=nameless-escarpment-97986.herokuapp.com request_id=bc7742fa-c08f-4a6f-9f96-b01d5e68f695 fwd="85.148.104.220" dyno=web.1 connect=0ms service=4ms status=304 bytes=48 protocol=https
+2018-07-23T02:16:20.533502+00:00 heroku[router]: at=info method=GET path="/events/extract_out" host=nameless-escarpment-97986.herokuapp.com request_id=759a09fc-d023-4ef1-b117-7df0258f0778 fwd="85.148.104.220" dyno=web.1 connect=1ms service=34ms status=500 bytes=1827 protocol=https
+2018-07-23T02:16:20.517318+00:00 app[web.1]: I, [2018-07-23T02:16:20.517196 #4]  INFO -- : [759a09fc-d023-4ef1-b117-7df0258f0778] Started GET "/events/extract_out" for 85.148.104.220 at 2018-07-23 02:16:20 +0000
+2018-07-23T02:16:20.518401+00:00 app[web.1]: I, [2018-07-23T02:16:20.518317 #4]  INFO -- : [759a09fc-d023-4ef1-b117-7df0258f0778] Processing by EventsController#extract_out as HTML
+2018-07-23T02:16:20.528788+00:00 app[web.1]: D, [2018-07-23T02:16:20.528676 #4] DEBUG -- : [759a09fc-d023-4ef1-b117-7df0258f0778]   [1m[36mTruckExpense Load (1.3ms)[0m  [1m[34mSELECT * FROM Truck_Expenses where
+2018-07-23T02:16:20.528791+00:00 app[web.1]: Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23' ORDER BY
+2018-07-23T02:16:20.528793+00:00 app[web.1]: Truck_Expenses.DATE ASC[0m
+2018-07-23T02:16:20.529107+00:00 app[web.1]: I, [2018-07-23T02:16:20.529033 #4]  INFO -- : [759a09fc-d023-4ef1-b117-7df0258f0778] Completed 500 Internal Server Error in 11ms (ActiveRecord: 1.3ms)
+2018-07-23T02:16:20.530137+00:00 app[web.1]: F, [2018-07-23T02:16:20.530052 #4] FATAL -- : [759a09fc-d023-4ef1-b117-7df0258f0778]
+2018-07-23T02:16:20.530243+00:00 app[web.1]: F, [2018-07-23T02:16:20.530169 #4] FATAL -- : [759a09fc-d023-4ef1-b117-7df0258f0778] ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column truck_expenses.date does not exist
+2018-07-23T02:16:20.530245+00:00 app[web.1]: LINE 2:     Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23...
+2018-07-23T02:16:20.530247+00:00 app[web.1]: ^
+2018-07-23T02:16:20.530250+00:00 app[web.1]: : SELECT * FROM Truck_Expenses where
+2018-07-23T02:16:20.530251+00:00 app[web.1]: Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23' ORDER BY
+2018-07-23T02:16:20.530253+00:00 app[web.1]: Truck_Expenses.DATE ASC):
+2018-07-23T02:16:20.530347+00:00 app[web.1]: F, [2018-07-23T02:16:20.530279 #4] FATAL -- : [759a09fc-d023-4ef1-b117-7df0258f0778]
+2018-07-23T02:16:20.530448+00:00 app[web.1]: F, [2018-07-23T02:16:20.530382 #4] FATAL -- : [759a09fc-d023-4ef1-b117-7df0258f0778] app/models/transaction_search.rb:107:in `scope'
+2018-07-23T02:16:20.530451+00:00 app[web.1]: [759a09fc-d023-4ef1-b117-7df0258f0778] app/controllers/events_controller.rb:10:in `extract_out'
+2018-07-23T02:16:22.088678+00:00 heroku[router]: at=info method=GET path="/" host=nameless-escarpment-97986.herokuapp.com request_id=39b5469a-891d-40af-8bc8-95d9c1876e2e fwd="85.148.104.220" dyno=web.1 connect=1ms service=15ms status=200 bytes=5803 protocol=https
+2018-07-23T02:16:22.080057+00:00 app[web.1]: I, [2018-07-23T02:16:22.079933 #4]  INFO -- : [39b5469a-891d-40af-8bc8-95d9c1876e2e] Started GET "/" for 85.148.104.220 at 2018-07-23 02:16:22 +0000
+2018-07-23T02:16:22.080936+00:00 app[web.1]: I, [2018-07-23T02:16:22.080856 #4]  INFO -- : [39b5469a-891d-40af-8bc8-95d9c1876e2e] Processing by ExtraController#data_in as HTML
+2018-07-23T02:16:22.082058+00:00 app[web.1]: I, [2018-07-23T02:16:22.081983 #4]  INFO -- : [39b5469a-891d-40af-8bc8-95d9c1876e2e]   Rendering extra/data_in.html.erb within layouts/application
+2018-07-23T02:16:22.083805+00:00 app[web.1]: I, [2018-07-23T02:16:22.083733 #4]  INFO -- : [39b5469a-891d-40af-8bc8-95d9c1876e2e]   Rendered extra/data_in.html.erb within layouts/application (1.6ms)
+2018-07-23T02:16:22.084922+00:00 app[web.1]: I, [2018-07-23T02:16:22.084843 #4]  INFO -- : [39b5469a-891d-40af-8bc8-95d9c1876e2e] Completed 200 OK in 4ms (Views: 3.1ms | ActiveRecord: 0.0ms)
+2018-07-23T02:16:22.245980+00:00 heroku[router]: at=info method=GET path="/assets/application-35729bfbaf9967f119234595ed222f7ab14859f304ab0acc5451afb387f637fa.css" host=nameless-escarpment-97986.herokuapp.com request_id=1684b648-fe44-4574-a485-354ed1e0099e fwd="85.148.104.220" dyno=web.1 connect=0ms service=1ms status=304 bytes=48 protocol=https
+2018-07-23T02:16:22.250670+00:00 heroku[router]: at=info method=GET path="/assets/application-16a58583eacfd4b7dc0d1bf7cd6f5b26b93fb51e84d9f844b4a09463e15e0ae2.js" host=nameless-escarpment-97986.herokuapp.com request_id=001d319b-33ef-459b-94f1-fc36cef3facb fwd="85.148.104.220" dyno=web.1 connect=1ms service=1ms status=304 bytes=48 protocol=https
+2018-07-23T02:16:47.353159+00:00 heroku[router]: at=info method=GET path="/events/extract_out" host=nameless-escarpment-97986.herokuapp.com request_id=a0993025-33ea-405e-b0d3-a7457af606d6 fwd="85.148.104.220" dyno=web.1 connect=1ms service=8ms status=500 bytes=1827 protocol=https
+2018-07-23T02:16:47.343866+00:00 app[web.1]: I, [2018-07-23T02:16:47.343737 #4]  INFO -- : [a0993025-33ea-405e-b0d3-a7457af606d6] Started GET "/events/extract_out" for 85.148.104.220 at 2018-07-23 02:16:47 +0000
+2018-07-23T02:16:47.345002+00:00 app[web.1]: I, [2018-07-23T02:16:47.344918 #4]  INFO -- : [a0993025-33ea-405e-b0d3-a7457af606d6] Processing by EventsController#extract_out as HTML
+2018-07-23T02:16:47.348653+00:00 app[web.1]: Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23' ORDER BY
+2018-07-23T02:16:47.348651+00:00 app[web.1]: D, [2018-07-23T02:16:47.348567 #4] DEBUG -- : [a0993025-33ea-405e-b0d3-a7457af606d6]   [1m[36mTruckExpense Load (1.3ms)[0m  [1m[34mSELECT * FROM Truck_Expenses where
+2018-07-23T02:16:47.348654+00:00 app[web.1]: Truck_Expenses.DATE ASC[0m
+2018-07-23T02:16:47.348925+00:00 app[web.1]: I, [2018-07-23T02:16:47.348850 #4]  INFO -- : [a0993025-33ea-405e-b0d3-a7457af606d6] Completed 500 Internal Server Error in 4ms (ActiveRecord: 1.3ms)
+2018-07-23T02:16:47.349916+00:00 app[web.1]: F, [2018-07-23T02:16:47.349832 #4] FATAL -- : [a0993025-33ea-405e-b0d3-a7457af606d6]
+2018-07-23T02:16:47.350007+00:00 app[web.1]: F, [2018-07-23T02:16:47.349926 #4] FATAL -- : [a0993025-33ea-405e-b0d3-a7457af606d6] ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column truck_expenses.date does not exist
+2018-07-23T02:16:47.350009+00:00 app[web.1]: LINE 2:     Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23...
+2018-07-23T02:16:47.350011+00:00 app[web.1]: ^
+2018-07-23T02:16:47.350013+00:00 app[web.1]: : SELECT * FROM Truck_Expenses where
+2018-07-23T02:16:47.350014+00:00 app[web.1]: Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23' ORDER BY
+2018-07-23T02:16:47.350015+00:00 app[web.1]: Truck_Expenses.DATE ASC):
+2018-07-23T02:16:47.350083+00:00 app[web.1]: F, [2018-07-23T02:16:47.350011 #4] FATAL -- : [a0993025-33ea-405e-b0d3-a7457af606d6]
+2018-07-23T02:16:47.350168+00:00 app[web.1]: F, [2018-07-23T02:16:47.350097 #4] FATAL -- : [a0993025-33ea-405e-b0d3-a7457af606d6] app/models/transaction_search.rb:107:in `scope'
+2018-07-23T02:16:47.350170+00:00 app[web.1]: [a0993025-33ea-405e-b0d3-a7457af606d6] app/controllers/events_controller.rb:10:in `extract_out'
+2018-07-23T02:16:49.059457+00:00 heroku[router]: at=info method=GET path="/" host=nameless-escarpment-97986.herokuapp.com request_id=12bfbf33-bf73-40d3-80fe-f465320d695b fwd="85.148.104.220" dyno=web.1 connect=1ms service=7ms status=200 bytes=5803 protocol=https
+2018-07-23T02:16:49.052063+00:00 app[web.1]: I, [2018-07-23T02:16:49.051946 #4]  INFO -- : [12bfbf33-bf73-40d3-80fe-f465320d695b] Started GET "/" for 85.148.104.220 at 2018-07-23 02:16:49 +0000
+2018-07-23T02:16:49.052878+00:00 app[web.1]: I, [2018-07-23T02:16:49.052805 #4]  INFO -- : [12bfbf33-bf73-40d3-80fe-f465320d695b] Processing by ExtraController#data_in as HTML
+2018-07-23T02:16:49.053815+00:00 app[web.1]: I, [2018-07-23T02:16:49.053741 #4]  INFO -- : [12bfbf33-bf73-40d3-80fe-f465320d695b]   Rendering extra/data_in.html.erb within layouts/application
+2018-07-23T02:16:49.055123+00:00 app[web.1]: I, [2018-07-23T02:16:49.055052 #4]  INFO -- : [12bfbf33-bf73-40d3-80fe-f465320d695b]   Rendered extra/data_in.html.erb within layouts/application (1.2ms)
+2018-07-23T02:16:49.055922+00:00 app[web.1]: I, [2018-07-23T02:16:49.055855 #4]  INFO -- : [12bfbf33-bf73-40d3-80fe-f465320d695b] Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.0ms)
+2018-07-23T02:16:49.207626+00:00 heroku[router]: at=info method=GET path="/assets/application-35729bfbaf9967f119234595ed222f7ab14859f304ab0acc5451afb387f637fa.css" host=nameless-escarpment-97986.herokuapp.com request_id=7d675f09-e89a-46c9-85b7-f71ead7c18e9 fwd="85.148.104.220" dyno=web.1 connect=0ms service=1ms status=304 bytes=48 protocol=https
+2018-07-23T02:16:49.214020+00:00 heroku[router]: at=info method=GET path="/assets/application-16a58583eacfd4b7dc0d1bf7cd6f5b26b93fb51e84d9f844b4a09463e15e0ae2.js" host=nameless-escarpment-97986.herokuapp.com request_id=83053cfa-d6f6-4fb5-a698-84eae0ecaa0f fwd="85.148.104.220" dyno=web.1 connect=1ms service=3ms status=304 bytes=48 protocol=https
+2018-07-23T02:16:50.337884+00:00 app[web.1]: D, [2018-07-23T02:16:50.337796 #4] DEBUG -- : [be10a92e-d917-4171-8a41-df9fabd23ee7]   [1m[36mTruckExpense Load (1.1ms)[0m  [1m[34mSELECT * FROM Truck_Expenses where
+2018-07-23T02:16:50.333604+00:00 app[web.1]: I, [2018-07-23T02:16:50.333501 #4]  INFO -- : [be10a92e-d917-4171-8a41-df9fabd23ee7] Started GET "/events/extract_out" for 85.148.104.220 at 2018-07-23 02:16:50 +0000
+2018-07-23T02:16:50.337888+00:00 app[web.1]: Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23' ORDER BY
+2018-07-23T02:16:50.337890+00:00 app[web.1]: Truck_Expenses.DATE ASC[0m
+2018-07-23T02:16:50.334615+00:00 app[web.1]: I, [2018-07-23T02:16:50.334548 #4]  INFO -- : [be10a92e-d917-4171-8a41-df9fabd23ee7] Processing by EventsController#extract_out as HTML
+2018-07-23T02:16:50.338200+00:00 app[web.1]: I, [2018-07-23T02:16:50.338126 #4]  INFO -- : [be10a92e-d917-4171-8a41-df9fabd23ee7] Completed 500 Internal Server Error in 3ms (ActiveRecord: 1.1ms)
+2018-07-23T02:16:50.339101+00:00 app[web.1]: F, [2018-07-23T02:16:50.339025 #4] FATAL -- : [be10a92e-d917-4171-8a41-df9fabd23ee7]
+2018-07-23T02:16:50.339205+00:00 app[web.1]: F, [2018-07-23T02:16:50.339134 #4] FATAL -- : [be10a92e-d917-4171-8a41-df9fabd23ee7] ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column truck_expenses.date does not exist
+2018-07-23T02:16:50.339207+00:00 app[web.1]: LINE 2:     Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23...
+2018-07-23T02:16:50.339216+00:00 app[web.1]: Truck_Expenses.DATE ASC):
+2018-07-23T02:16:50.339210+00:00 app[web.1]: ^
+2018-07-23T02:16:50.339211+00:00 app[web.1]: : SELECT * FROM Truck_Expenses where
+2018-07-23T02:16:50.339307+00:00 app[web.1]: F, [2018-07-23T02:16:50.339241 #4] FATAL -- : [be10a92e-d917-4171-8a41-df9fabd23ee7]
+2018-07-23T02:16:50.339407+00:00 app[web.1]: F, [2018-07-23T02:16:50.339343 #4] FATAL -- : [be10a92e-d917-4171-8a41-df9fabd23ee7] app/models/transaction_search.rb:107:in `scope'
+2018-07-23T02:16:50.339213+00:00 app[web.1]: Truck_Expenses.DATE BETWEEN '2017-09-26' AND '2018-07-23' ORDER BY
+2018-07-23T02:16:50.339410+00:00 app[web.1]: [be10a92e-d917-4171-8a41-df9fabd23ee7] app/controllers/events_controller.rb:10:in `extract_out'
+2018-07-23T02:16:50.342513+00:00 heroku[router]: at=info method=GET path="/events/extract_out" host=nameless-escarpment-97986.herokuapp.com request_id=be10a92e-d917-4171-8a41-df9fabd23ee7 fwd="85.148.104.220" dyno=web.1 connect=1ms service=8ms status=500 bytes=1827 protocol=https
