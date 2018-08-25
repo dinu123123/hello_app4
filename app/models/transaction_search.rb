@@ -149,7 +149,8 @@ if @driver_id > 0
           end
 
         @events = Event.find_by_sql(['SELECT * FROM events where Events.driver_id = ? 
-          and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC, events."DRIVER_id" ASC', @driver_id, @date_from, @date_to])
+          and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC, events."DRIVER_id" ASC', 
+          @driver_id.to_s, @date_from, @date_to])
         if @events
             arrayEvents.concat(@events)
         end 
