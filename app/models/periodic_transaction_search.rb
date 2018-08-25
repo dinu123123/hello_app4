@@ -194,9 +194,9 @@ if @localEvent != nil
           1.upto( @localEvent.count/2) do |i|
                 #truck_id = 0 means the truck_id is irrelevant
                     if TruckExpense.all.size
-                          @truckExpense = TruckExpense.find_by_sql(["SELECT * FROM Truck_Expenses where 
-                          Truck_Expenses.truck_id = ? AND Truck_Expenses.DATE BETWEEN ? AND ? ORDER BY 
-                          Truck_Expenses.DATE ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                          @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM Truck_Expenses where 
+                          Truck_Expenses.truck_id = ? AND Truck_Expenses."DATE" BETWEEN ? AND ? ORDER BY 
+                          Truck_Expenses."DATE" ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
                           arrayTruckExpense.concat(@truckExpense)
                     end
@@ -210,17 +210,17 @@ if @localEvent != nil
                     end
 
                     if BelgiumToll.all.size
-                        @belgiumTollExpenses = BelgiumToll.find_by_sql(["SELECT * FROM Belgium_Tolls where 
-                          Belgium_Tolls.truck_id = ? AND Belgium_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
-                          Belgium_Tolls.StartDate ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                        @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM Belgium_Tolls where 
+                          Belgium_Tolls.truck_id = ? AND Belgium_Tolls."StartDate" BETWEEN ? AND ? ORDER BY 
+                          Belgium_Tolls."StartDate" ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
                          arrayBelgiumToll.concat(@belgiumTollExpenses)
                     end
 
                     if GenericToll.all.size
-                        @genericTollExpenses = GenericToll.find_by_sql(["SELECT * FROM Generic_Tolls where 
-                            Generic_Tolls.truck_id = ? AND Generic_Tolls.StartDate BETWEEN ? AND ? ORDER BY 
-                          Generic_Tolls.StartDate ASC", @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                        @genericTollExpenses = GenericToll.find_by_sql(['SELECT * FROM Generic_Tolls where 
+                            Generic_Tolls.truck_id = ? AND Generic_Tolls."StartDate" BETWEEN ? AND ? ORDER BY 
+                          Generic_Tolls."StartDate" ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
                          arrayGenericToll.concat(@genericTollExpenses)
                     end
