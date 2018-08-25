@@ -46,6 +46,7 @@
   get "/events/weekly", as: "weekly"
   
   get "/events/db", as: "db"
+  get "/events/help", as: "help"
 
   get "/de_tolls/file_import", as: "de_toll_file_import"
   get "/de_tolls/index", as: "de_toll_index_import"
