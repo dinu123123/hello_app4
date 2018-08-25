@@ -39,33 +39,26 @@
     <h2>Debit/Credit/Profit</h2>
     <thead>
       <tr>
-        <th>Invoiced Trips</th>
         <th>Truck Expenses</th>
         <th>Toll Germany</th>
         <th>Toll Belgium</th>
         <th>Toll Generic</th>
         <th>Driver Expenses</th>
-        <th>Debit</th>
-        <th>Credit</th> 
+        <th>Debit(Total Expenses)</th>
+        <th>Credit(Invoiced Trips)</th> 
          <th>Profit</th> 
       </tr>
     </thead>
 <tbody>    
     <tr>
-      <td><%= @total_invoiced_trips %></td>
       <td><%= @total_truck_expenses %></td>
       <td><%= @total_germany_tolls %></td>
       <td><%= @total_belgium_tolls %></td>
-
-
-
-
       <td><%= @total_generic_tolls %></td>
       <td><%= @total_driver_expeses %></td>
       <td bgcolor="#E8F993"><%= @total_debit %></td>
       <td bgcolor="#E8F993"><%= @total_invoiced_trips %></td>
       <th bgcolor="#E8F993"><%= @total_invoiced_trips - @total_debit %></th>
-      
     </tr>
      </tbody>
 </table>
