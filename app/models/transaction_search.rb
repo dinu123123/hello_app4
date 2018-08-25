@@ -128,7 +128,7 @@ if @driver_id > 0
                     if DriverExpense.all.size
                         @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where 
                           driver_expenses."DRIVER_id" = ? and driver_expenses."DATE" BETWEEN ? AND ? ORDER BY 
-                          driver_expenses."DATE"', @driver_id,  @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
+                          driver_expenses."DATE"', @driver_id.to_s,  @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
                         arrayDriverExpenses.concat(@driverExpenses)
                     end
 
@@ -328,7 +328,8 @@ else
 
 
           if DriverExpense.all.size
-            @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where driver_expenses."DATE" BETWEEN ? AND ?',
+            @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where 
+              driver_expenses."DATE" BETWEEN ? AND ?',
               @date_from, @date_to ])
             if @driverExpenses
             arrayDriverExpenses.concat(@driverExpenses)
