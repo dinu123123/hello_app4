@@ -1,0 +1,53 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  record_number: 1
+  reference_number: MyString
+  date_of_detailed_trip_statement: 2018-08-30
+  identification_of_the_road_network_user: MyString
+  bill_cycle_start_date: 2018-08-30
+  bill_cycle_end_date: 2018-08-30
+  obu_serial_number: MyString
+  internal_obu_identifier: MyString
+  country_code: MyString
+  licence_plate_number: MyString
+  euro_emission_class: MyString
+  gross_combination_weight: MyString
+  payment_method: MyString
+  date_of_processing: 2018-08-30
+  date_of_usage: 2018-08-30
+  toll_charger: MyString
+  road_type: MyString
+  route: MyString
+  entry_time: 2018-08-30 00:02:56
+  charged_distance: 9.99
+  distance_unit: MyString
+  charged_amount_excluding_vat: 9.99
+  currency: MyString
+  vat_indicator: MyString
+
+two:
+  record_number: 1
+  reference_number: MyString
+  date_of_detailed_trip_statement: 2018-08-30
+  identification_of_the_road_network_user: MyString
+  bill_cycle_start_date: 2018-08-30
+  bill_cycle_end_date: 2018-08-30
+  obu_serial_number: MyString
+  internal_obu_identifier: MyString
+  country_code: MyString
+  licence_plate_number: MyString
+  euro_emission_class: MyString
+  gross_combination_weight: MyString
+  payment_method: MyString
+  date_of_processing: 2018-08-30
+  date_of_usage: 2018-08-30
+  toll_charger: MyString
+  road_type: MyString
+  route: MyString
+  entry_time: 2018-08-30 00:02:56
+  charged_distance: 9.99
+  distance_unit: MyString
+  charged_amount_excluding_vat: 9.99
+  currency: MyString
+  vat_indicator: MyString

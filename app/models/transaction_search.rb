@@ -16,7 +16,7 @@ def scope
 
 arrayTruckExpense = Array.new
 arrayGermanyToll = Array.new
-arrayBelgiumToll = Array.new
+arrayBeToll = Array.new
 arrayGenericToll = Array.new
 arrayDriverExpenses = Array.new
 arrayFuelExpenses = Array.new
@@ -99,12 +99,12 @@ if @driver_id > 0
                            arrayGermanyToll.concat(@germanyTollExpenses)
                     end
 
-                    if BelgiumToll.all.size
-                        @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM belgium_tolls where 
-                          belgium_tolls.truck_id = ? AND belgium_tolls."StartDate" BETWEEN ? AND ? ORDER BY 
-                          belgium_tolls."StartDate" ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                    if BeToll.all.size
+                        @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
+                          be_tolls.truck_id = ? AND be_tolls.date_of_usage BETWEEN ? AND ? ORDER BY 
+                          be_tolls.date_of_usage ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
-                         arrayBelgiumToll.concat(@belgiumTollExpenses)
+                         arrayBeToll.concat(@BeTollExpenses)
                     end
 
                     if FuelExpense.all.size
@@ -243,11 +243,11 @@ elsif @truck_id > 0 && @driver_id == 0
                            arrayGermanyToll.concat(@germanyTollExpenses)
                     end
 
-                    if BelgiumToll.all.size
-                        @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM belgium_tolls where 
-                          belgium_tolls.truck_id = ? AND belgium_tolls."StartDate" BETWEEN ? AND ? ORDER BY 
-                          belgium_tolls."StartDate" ASC', @truck_id, @date_from, @date_to])
-                         arrayBelgiumToll.concat(@belgiumTollExpenses)
+                    if BeToll.all.size
+                        @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
+                          be_tolls.truck_id = ? AND be_tolls.date_of_usage BETWEEN ? AND ? ORDER BY 
+                          be_tolls.date_of_usage ASC', @truck_id, @date_from, @date_to])
+                         arrayBeToll.concat(@BeTollExpenses)
                     end
 
                     if GenericToll.all.size
@@ -308,13 +308,13 @@ else
 
           end
 
-          if BelgiumToll.all.size 
-            @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM belgium_tolls where 
-              belgium_tolls."StartDate" BETWEEN ? AND ? ORDER BY 
-              belgium_tolls."StartDate" ASC', @date_from, @date_to ])
+          if BeToll.all.size 
+            @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
+              be_tolls.date_of_usage BETWEEN ? AND ? ORDER BY 
+              be_tolls.date_of_usage ASC', @date_from, @date_to ])
            
-            if @belgiumTollExpenses
-             arrayBelgiumToll.concat(@belgiumTollExpenses)
+            if @BeTollExpenses
+             arrayBeToll.concat(@BeTollExpenses)
             end
           end
 
@@ -381,10 +381,10 @@ if  arrayGermanyToll != nil
     end
 end    
 
-@totalBelgiumToll = 0
-if  arrayBelgiumToll != nil
-    1.upto( arrayBelgiumToll.count) do |i|
-        @totalBelgiumToll = @totalBelgiumToll.to_d + arrayBelgiumToll[i-1].EUR.to_d
+@totalBeToll = 0
+if  arrayBeToll != nil
+    1.upto( arrayBeToll.count) do |i|
+        @totalBeToll = @totalBeToll.to_d + arrayBeToll[i-1].charged_amount_excluding_vat.to_d
     end
 end   
 
@@ -423,7 +423,7 @@ end
 @total_debit = 
 @totalTruckExpense.to_d + 
 @totalGermanyToll.to_d +
-@totalBelgiumToll.to_d +
+@totalBeToll.to_d +
 @totalGenericToll.to_d + 
 @totalDriverExpenses.to_d + 
 @totalFuelExpenses.to_d
@@ -433,8 +433,8 @@ return     arrayEvents,
            @totalTruckExpense,
            arrayGermanyToll,
            @totalGermanyToll,
-           arrayBelgiumToll,
-           @totalBelgiumToll,
+           arrayBeToll,
+           @totalBeToll,
            arrayGenericToll,
            @totalGenericToll,
            arrayDriverExpenses,

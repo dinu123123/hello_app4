@@ -10,7 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180722190229) do
+ActiveRecord::Schema.define(version: 20180829220256) do
+
+  create_table "be_tolls", force: :cascade do |t|
+    t.integer "record_number"
+    t.string "reference_number"
+    t.date "date_of_detailed_trip_statement"
+    t.string "identification_of_the_road_network_user"
+    t.date "bill_cycle_start_date"
+    t.date "bill_cycle_end_date"
+    t.string "obu_serial_number"
+    t.string "internal_obu_identifier"
+    t.string "country_code"
+    t.string "licence_plate_number"
+    t.string "euro_emission_class"
+    t.string "gross_combination_weight"
+    t.string "payment_method"
+    t.date "date_of_processing"
+    t.date "date_of_usage"
+    t.string "toll_charger"
+    t.string "road_type"
+    t.string "route"
+    t.time "entry_time"
+    t.decimal "charged_distance"
+    t.string "distance_unit"
+    t.decimal "charged_amount_excluding_vat"
+    t.string "currency"
+    t.string "vat_indicator"
+    t.integer "truck_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "belgium_tolls", force: :cascade do |t|
     t.date "StartDate"

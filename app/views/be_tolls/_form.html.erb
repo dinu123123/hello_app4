@@ -1,0 +1,137 @@
+<%= form_with(model: be_toll, local: true) do |form| %>
+  <% if be_toll.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(be_toll.errors.count, "error") %> prohibited this be_toll from being saved:</h2>
+
+      <ul>
+      <% be_toll.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :record_number %>
+    <%= form.number_field :record_number, id: :be_toll_record_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :reference_number %>
+    <%= form.text_field :reference_number, id: :be_toll_reference_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date_of_detailed_trip_statement %>
+    <%= form.date_select :date_of_detailed_trip_statement, id: :be_toll_date_of_detailed_trip_statement %>
+  </div>
+
+  <div class="field">
+    <%= form.label :identification_of_the_road_network_user %>
+    <%= form.text_field :identification_of_the_road_network_user, id: :be_toll_identification_of_the_road_network_user %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bill_cycle_start_date %>
+    <%= form.date_select :bill_cycle_start_date, id: :be_toll_bill_cycle_start_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bill_cycle_end_date %>
+    <%= form.date_select :bill_cycle_end_date, id: :be_toll_bill_cycle_end_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :obu_serial_number %>
+    <%= form.text_field :obu_serial_number, id: :be_toll_obu_serial_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :internal_obu_identifier %>
+    <%= form.text_field :internal_obu_identifier, id: :be_toll_internal_obu_identifier %>
+  </div>
+
+  <div class="field">
+    <%= form.label :country_code %>
+    <%= form.text_field :country_code, id: :be_toll_country_code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :licence_plate_number %>
+    <%= form.text_field :licence_plate_number, id: :be_toll_licence_plate_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :euro_emission_class %>
+    <%= form.text_field :euro_emission_class, id: :be_toll_euro_emission_class %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gross_combination_weight %>
+    <%= form.text_field :gross_combination_weight, id: :be_toll_gross_combination_weight %>
+  </div>
+
+  <div class="field">
+    <%= form.label :payment_method %>
+    <%= form.text_field :payment_method, id: :be_toll_payment_method %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date_of_processing %>
+    <%= form.date_select :date_of_processing, id: :be_toll_date_of_processing %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date_of_usage %>
+    <%= form.date_select :date_of_usage, id: :be_toll_date_of_usage %>
+  </div>
+
+  <div class="field">
+    <%= form.label :toll_charger %>
+    <%= form.text_field :toll_charger, id: :be_toll_toll_charger %>
+  </div>
+
+  <div class="field">
+    <%= form.label :road_type %>
+    <%= form.text_field :road_type, id: :be_toll_road_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :route %>
+    <%= form.text_field :route, id: :be_toll_route %>
+  </div>
+
+  <div class="field">
+    <%= form.label :entry_time %>
+    <%= form.time_select :entry_time, id: :be_toll_entry_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :charged_distance %>
+    <%= form.text_field :charged_distance, id: :be_toll_charged_distance %>
+  </div>
+
+  <div class="field">
+    <%= form.label :distance_unit %>
+    <%= form.text_field :distance_unit, id: :be_toll_distance_unit %>
+  </div>
+
+  <div class="field">
+    <%= form.label :charged_amount_excluding_vat %>
+    <%= form.text_field :charged_amount_excluding_vat, id: :be_toll_charged_amount_excluding_vat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :currency %>
+    <%= form.text_field :currency, id: :be_toll_currency %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vat_indicator %>
+    <%= form.text_field :vat_indicator, id: :be_toll_vat_indicator %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

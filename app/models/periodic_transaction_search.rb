@@ -35,7 +35,7 @@ def scope1(date_from1, date_to1)
 
 arrayTruckExpense = Array.new
 arrayGermanyToll = Array.new
-arrayBelgiumToll = Array.new
+arrayBeToll = Array.new
 arrayGenericToll = Array.new
 arrayDriverExpenses = Array.new
 arrayFuelExpenses = Array.new
@@ -45,7 +45,7 @@ arrayEvents = Array.new
 
 @totalTruckExpense = 0
 @totalGermanyToll = 0
-@totalBelgiumToll = 0
+@totalBeToll = 0
 @totalGenericToll = 0
 @totalDriverExpenses = 0
 @totalInvoicedTrips = 0
@@ -82,13 +82,13 @@ if @type == 1
                 end
           end
 
-          if BelgiumToll.all.size 
-                @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM belgium_tolls where Belgium_Tolls.truck_id = ? AND
-                  belgium_tolls."StartDate" BETWEEN ? AND ? ORDER BY 
-                  belgium_tolls."StartDate" ASC', @truck_id, date_from1, date_to1 ])
+          if BeToll.all.size 
+                @belgiumTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where Be_Tolls.truck_id = ? AND
+                  be_tolls.date_of_usage BETWEEN ? AND ? ORDER BY 
+                  be_tolls.date_of_usage ASC', @truck_id, date_from1, date_to1 ])
                
                 if @belgiumTollExpenses
-                 arrayBelgiumToll.concat(@belgiumTollExpenses)
+                 arrayBeToll.concat(@belgiumTollExpenses)
                 end
           end
 
@@ -209,12 +209,12 @@ if @localEvent != nil
                           arrayGermanyToll.concat(@germanyTollExpenses)
                     end
 
-                    if BelgiumToll.all.size
-                        @belgiumTollExpenses = BelgiumToll.find_by_sql(['SELECT * FROM Belgium_Tolls where 
-                          Belgium_Tolls.truck_id = ? AND Belgium_Tolls."StartDate" BETWEEN ? AND ? ORDER BY 
-                          Belgium_Tolls."StartDate" ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                    if BeToll.all.size
+                        @belgiumTollExpenses = BeToll.find_by_sql(['SELECT * FROM Be_Tolls where 
+                          Be_Tolls.truck_id = ? AND Be_Tolls.date_of_usage BETWEEN ? AND ? ORDER BY 
+                          Be_Tolls.date_of_usage ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
                           @localEvent[2*(i-1)+1].DATE ])
-                         arrayBelgiumToll.concat(@belgiumTollExpenses)
+                         arrayBeToll.concat(@belgiumTollExpenses)
                     end
 
                     if GenericToll.all.size
@@ -296,10 +296,10 @@ if  arrayGermanyToll != nil
     end
 end    
 
-@totalBelgiumToll = 0
-if  arrayBelgiumToll != nil
-    1.upto( arrayBelgiumToll.count) do |i|
-        @totalBelgiumToll = @totalBelgiumToll.to_d + arrayBelgiumToll[i-1].EUR.to_d
+@totalBeToll = 0
+if  arrayBeToll != nil
+    1.upto( arrayBeToll.count) do |i|
+        @totalBeToll = @totalBeToll.to_d + arrayBeToll[i-1].charged_amount_excluding_vat.to_d
     end
 end   
 
@@ -334,7 +334,7 @@ if  arrayInvoicedTrips != nil
     end
 end  
 
-@total_debit = @totalInvoicedTrips- (@totalTruckExpense.to_d + @totalGermanyToll.to_d + @totalBelgiumToll.to_d +
+@total_debit = @totalInvoicedTrips- (@totalTruckExpense.to_d + @totalGermanyToll.to_d + @totalBeToll.to_d +
                @totalGenericToll.to_d + @totalDriverExpenses.to_d + @totalFuelExpenses.to_d) 
 
 return     arrayEvents,
@@ -342,8 +342,8 @@ return     arrayEvents,
            @totalTruckExpense,
            arrayGermanyToll,
            @totalGermanyToll,
-           arrayBelgiumToll,
-           @totalBelgiumToll,
+           arrayBeToll,
+           @totalBeToll,
            arrayGenericToll,
            @totalGenericToll,
            arrayDriverExpenses,

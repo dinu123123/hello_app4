@@ -1,5 +1,6 @@
   Rails.application.routes.draw do
   
+  
   resources :generic_tolls do
   collection { post :import}
   end
@@ -21,9 +22,6 @@
   get 'fuel_expenses/index'
   get 'fuel_expenses/import'
   get 'events/extract_out'
-  #get 'events/extract_explicit'
-
-  #resources :fuel_expenses
 
   # https://stackoverflow.com/questions/30315498/ruby-on-rails-how-to-link-route-from-one-view-page-to-another-view-page-with-a
   # linking a web page path to another page
@@ -51,6 +49,9 @@
   get "/de_tolls/file_import", as: "de_toll_file_import"
   get "/de_tolls/index", as: "de_toll_index_import"
 
+  get "/be_tolls/file_import", as: "be_toll_file_import"
+  get "/be_tolls/index", as: "be_toll_index_import"
+
   get "/fuel_expenses/file_import", as: "fuel_expense_file_import"
 
   resources :fuel_expenses do
@@ -58,6 +59,10 @@
   end
 
   resources :de_tolls do
+  collection { post :import }
+  end
+
+  resources :be_tolls do
   collection { post :import }
   end
 
@@ -86,4 +91,14 @@
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'extra#data_in'
+
+  #get 'profiles/charities',   :to => 'profiles#charities_index'
+
+
+  #get 'localhost:3000/#home'
+
+  #get 'localhost:3000/#home', :to => "/events/weekly"
+    
+
+
 end

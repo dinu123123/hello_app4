@@ -13,7 +13,7 @@ class TruckExpensesController < ApplicationController
     @trucks = Truck.all
     respond_to do |format|
         format.html
-        format.csv { send_data @truck_expenses.to_csv_special }
+        format.csv { send_data @truck_expenses.to_csv, filename: "truck_expenses-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
       end
   end

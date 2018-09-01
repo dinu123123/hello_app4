@@ -53,7 +53,7 @@
     <tr>
       <td><%= @total_truck_expenses %></td>
       <td><%= @total_germany_tolls %></td>
-      <td><%= @total_belgium_tolls %></td>
+      <td><%= @total_be_tolls %></td>
       <td><%= @total_generic_tolls %></td>
       <td><%= @total_driver_expeses %></td>
       <td bgcolor="#E8F993"><%= @total_debit %></td>
@@ -141,7 +141,7 @@
         <td><%= @trucks.find(invoiced_trip.truck_id).NB_PLATE %></td>
         <td><%= invoiced_trip.truck_id %></td>
         <td><%= invoiced_trip.germany_toll %></td>
-        <td><%= invoiced_trip.belgium_toll %></td>
+        <td><%= invoiced_trip.be_toll %></td>
         <td><%= invoiced_trip.swiss_toll %></td>
         <td><%= invoiced_trip.france_toll %></td>
         <td><%= invoiced_trip.italy_toll %></td>
@@ -232,27 +232,23 @@
       <th>NumberPlate</th>
       <th>StartDate</th>
       <th>StartTime</th>
-      <th>EndDate</th>
-      <th>EndTime</th>
-      <th>Km</th>
+      <th>Distance</th>
       <th>Eur</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @belgium_tolls.each do |belgium_toll| %>
+    <% @be_tolls.each do |be_toll| %>
       <tr>
-        <td><%= @trucks.find(belgium_toll.truck_id).NB_PLATE %></td>
-        <td><%= belgium_toll.StartDate %></td>
-        <td><%= belgium_toll.StartTime %></td>
-        <td><%= belgium_toll.EndDate %></td>
-        <td><%= belgium_toll.EndTime %></td>
-        <td><%= belgium_toll.Km %></td>
-        <td><%= belgium_toll.EUR %></td>
-        <td><%= link_to 'Show', belgium_toll %></td>
-        <td><%= link_to 'Edit', edit_belgium_toll_path(belgium_toll) %></td>
-        <td><%= link_to 'Destroy', belgium_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= @trucks.find(be_toll.truck_id).NB_PLATE %></td>
+        <td><%= be_toll.date_of_usage %></td>
+        <td><%= be_toll.entry_time.strftime("%H:%M") %></td>
+        <td><%= be_toll.charged_distance     %></td>
+        <td><%= be_toll.charged_amount_excluding_vat %></td>
+        <td><%= link_to 'Show', be_toll %></td>
+        <td><%= link_to 'Edit', edit_be_toll_path(be_toll) %></td>
+        <td><%= link_to 'Destroy', be_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

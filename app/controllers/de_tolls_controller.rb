@@ -12,6 +12,13 @@ class DeTollsController < ApplicationController
   # GET /de_tolls.json
   def index
     @de_tolls = DeToll.all.order("platenr ASC, date ASC, time ASC ")
+
+      respond_to do |format|
+        format.html
+        format.csv  { send_data @de_tolls.to_csv, filename: "de_tolls-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      end
+
   end
 
   # GET /de_tolls/1
@@ -71,6 +78,9 @@ class DeTollsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_de_toll
+
+      asdasasd
+      sadadsadas
       @de_toll = DeToll.find(params[:id])
     end
 

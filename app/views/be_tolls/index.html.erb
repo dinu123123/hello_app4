@@ -1,0 +1,73 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Be Tolls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Record number</th>
+      <th>Reference number</th>
+      <th>Date of detailed trip statement</th>
+      <th>Identification of the road network user</th>
+      <th>Bill cycle start date</th>
+      <th>Bill cycle end date</th>
+      <th>Obu serial number</th>
+      <th>Internal obu identifier</th>
+      <th>Country code</th>
+      <th>Licence plate number</th>
+      <th>Euro emission class</th>
+      <th>Gross combination weight</th>
+      <th>Payment method</th>
+      <th>Date of processing</th>
+      <th>Date of usage</th>
+      <th>Toll charger</th>
+      <th>Road type</th>
+      <th>Route</th>
+      <th>Entry time</th>
+      <th>Charged distance</th>
+      <th>Distance unit</th>
+      <th>Charged amount excluding vat</th>
+      <th>Currency</th>
+      <th>Vat indicator</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @be_tolls.each do |be_toll| %>
+      <tr>
+        <td><%= be_toll.record_number %></td>
+        <td><%= be_toll.reference_number %></td>
+        <td><%= be_toll.date_of_detailed_trip_statement %></td>
+        <td><%= be_toll.identification_of_the_road_network_user %></td>
+        <td><%= be_toll.bill_cycle_start_date %></td>
+        <td><%= be_toll.bill_cycle_end_date %></td>
+        <td><%= be_toll.obu_serial_number %></td>
+        <td><%= be_toll.internal_obu_identifier %></td>
+        <td><%= be_toll.country_code %></td>
+        <td><%= be_toll.licence_plate_number %></td>
+        <td><%= be_toll.euro_emission_class %></td>
+        <td><%= be_toll.gross_combination_weight %></td>
+        <td><%= be_toll.payment_method %></td>
+        <td><%= be_toll.date_of_processing %></td>
+        <td><%= be_toll.date_of_usage %></td>
+        <td><%= be_toll.toll_charger %></td>
+        <td><%= be_toll.road_type %></td>
+        <td><%= be_toll.route %></td>
+        <td><%= be_toll.entry_time %></td>
+        <td><%= be_toll.charged_distance %></td>
+        <td><%= be_toll.distance_unit %></td>
+        <td><%= be_toll.charged_amount_excluding_vat %></td>
+        <td><%= be_toll.currency %></td>
+        <td><%= be_toll.vat_indicator %></td>
+        <td><%= link_to 'Show', be_toll %></td>
+        <td><%= link_to 'Edit', edit_be_toll_path(be_toll) %></td>
+        <td><%= link_to 'Destroy', be_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Be Toll', new_be_toll_path %>

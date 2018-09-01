@@ -12,7 +12,7 @@ class DriversController < ApplicationController
     @drivers = Driver.all
     respond_to do |format|
         format.html
-        format.csv { send_data @drivers.to_csv }
+        format.csv { send_data @drivers.to_csv, filename: "drivers-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
       end
   end

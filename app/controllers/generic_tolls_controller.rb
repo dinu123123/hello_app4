@@ -13,7 +13,7 @@ def import
     @trucks = Truck.all
     respond_to do |format|
         format.html
-        format.csv { send_data @generic_tolls.to_csv }
+        format.csv { send_data @generic_tolls.to_csv, filename: "generic_tolls-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
       end
   end

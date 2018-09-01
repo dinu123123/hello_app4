@@ -6,13 +6,14 @@ class ClientsController < ApplicationController
     redirect_to clients_url, notice: "Activity Data Imported!"
   end
 
+
   # GET /drivers
   # GET /drivers.json
   def index
     @clients = Client.all
     respond_to do |format|
         format.html
-        format.csv { send_data @clients.to_csv }
+        format.csv  { send_data @clients.to_csv, filename: "clients-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
       end
   end

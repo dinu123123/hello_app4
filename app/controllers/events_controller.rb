@@ -37,7 +37,7 @@ individual_import_db(head, 3, TruckExpense)
 individual_import_db(head, 4, DriverExpense)
 individual_import_db(head, 5, Event)
 individual_import_db(head, 6, DeToll)
-individual_import_db(head, 7, BelgiumToll)
+individual_import_db(head, 7, BeToll)
 individual_import_db(head, 8, GenericToll)
 individual_import_db(head, 9, FuelExpense)
 individual_import_db(head, 10, InvoicedTrip)
@@ -98,7 +98,7 @@ individual_import_db(head, 10, InvoicedTrip)
     @clients = Client.all
     respond_to do |format|
         format.html
-        format.csv { send_data @events.to_csv}
+        format.csv { send_data @events.to_csv_special, filename: "events-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
       end
   end
@@ -113,7 +113,7 @@ individual_import_db(head, 10, InvoicedTrip)
     
     @driver_events = Event.all
     @de_tolls = DeToll.all
-    @belgium_tolls = BelgiumToll.all
+    @be_tolls = BeToll.all
 
     @generic_tolls = GenericToll.all
     @fuel_expenses = FuelExpense.all
@@ -132,7 +132,7 @@ individual_import_db(head, 10, InvoicedTrip)
                     
                     @driver_events.size.to_s+"," + 
                     @de_tolls.size.to_s+"," + 
-                    @belgium_tolls.size.to_s+"," + 
+                    @be_tolls.size.to_s+"," + 
 
                     @generic_tolls.size.to_s+"," + 
                     @fuel_expenses.size.to_s+"," + 
@@ -147,11 +147,11 @@ individual_import_db(head, 10, InvoicedTrip)
                     
                     @driver_events.to_csv+
                     @de_tolls.to_csv+
-                    @belgium_tolls.to_csv+
+                    @be_tolls.to_csv+
 
                     @generic_tolls.to_csv+
                     @fuel_expenses.to_csv+
-                    @invoiced_trips.to_csv,filename: "db_#{Date.today.strftime('%d/%m/%Y')}.csv"}
+                    @invoiced_trips.to_csv,filename: "db_#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv"}
       end
   end
 
@@ -238,7 +238,7 @@ for week in @period_start..@period_end do
                 @search1.setDriver(0)
                 @search1.setTruck(truck.id)
                 @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
-                @belgium_tolls,@total_belgium_tolls,@generic_tolls,@total_generic_tolls,
+                @be_tolls,@total_be_tolls,@generic_tolls,@total_generic_tolls,
                 @driver_expenses,@total_driver_expeses,@invoiced_trips,@total_invoiced_trips,
                 @fuel_expenses, @total_fuel_expenses,
                 @total_per_truck = @search1.scope1(@date_from1, @date_to1)
@@ -267,7 +267,7 @@ for week in @period_start..@period_end do
                 @search1.setDriver(driver.id)
                 @search1.setTruck(0)
                 @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
-                @belgium_tolls,@total_belgium_tolls,@generic_tolls,@total_generic_tolls,
+                @be_tolls,@total_be_tolls,@generic_tolls,@total_generic_tolls,
                 @driver_expenses,@total_driver_expeses,@invoiced_trips,@total_invoiced_trips,
                 @fuel_expenses, @total_fuel_expenses,
 
@@ -543,7 +543,7 @@ end
 
     @search = TransactionSearch.new(params[:search])
     @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
-    @belgium_tolls,@total_belgium_tolls,@generic_tolls,@total_generic_tolls,
+    @be_tolls,@total_be_tolls,@generic_tolls,@total_generic_tolls,
     @driver_expenses,@total_driver_expeses,@invoiced_trips,@total_invoiced_trips,
     
     @fuel_expenses, @total_fuel_expenses,
