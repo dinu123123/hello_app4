@@ -16,7 +16,7 @@ validates_uniqueness_of :car_model_name, scope: %i[brand_id fuel_type_id]
                 ) do |row| 
         @my_truck = Truck.find_by NB_PLATE:row.to_a[6][1].try(:gsub,' ', '')
         if @my_truck != nil 
-          if  row.to_a[6][1].to_d > 0
+          if  row.to_a[6][1].to_d > 0.to_d
              #do not register transactions with zero value 
         	   @my_row = row.to_a<<(["truck_id",@my_truck.id]) 
  	 	    	   FuelExpense.create! @my_row.to_h
