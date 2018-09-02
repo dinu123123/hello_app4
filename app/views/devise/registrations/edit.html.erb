@@ -11,16 +11,16 @@
     <% end %>
 
     <%= f.input :password,
-                maxlength: 20,
+                maxlength: 30,
                 hint: "leave it blank if you don't want to change it",
                 required: false,
                 input_html: { autocomplete: "new-password" } %>
     <%= f.input :password_confirmation,
-                maxlength: 20,
+                maxlength: 30,
                 required: false,
                 input_html: { autocomplete: "new-password" } %>
     <%= f.input :current_password,
-                maxlength: 20,
+                maxlength: 30,
                 hint: "we need your current password to confirm your changes",
                 required: true,
                 input_html: { autocomplete: "current-password" } %>

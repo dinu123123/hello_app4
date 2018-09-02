@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-
+<% if user_signed_in? %>
 <div class="row">
   <div class="column">
 <h3>Trucks:</h3>
@@ -22,18 +22,22 @@
   </tr>
 </table>
 
-<h3>Clients:</h3>
-  <table style="width:100%"  border="1">
-  <tr>
-    <th> <%= link_to 'New Client', new_client_path %> </th>
-  </tr>
-  <tr>
-    <th> <%= link_to 'All Clients', clients_path %> </th>
-  </tr>
-</table>
-  </div>
+  <% if   current_user != nil and current_user.admin == true %> 
+      <h3>Clients:</h3>
+        <table style="width:100%"  border="1">
+        <tr>
+          <th> <%= link_to 'New Client', new_client_path %> </th>
+        </tr>
+        <tr>
+          <th> <%= link_to 'All Clients', clients_path %> </th>
+        </tr>
+      </table>
+  <% end %>
+
+</div>
 
   <div class="column">  
+ <% if   current_user != nil and current_user.admin == true %> 
 <h3>Drivers:</h3>
 <table style="width:100%"  border="1">
   <tr>
@@ -43,6 +47,7 @@
     <th> <%= link_to 'All Drivers', drivers_path %> </th>
   </tr>
   </table>
+<% end %>   
 
 <h3>Driver Expenses:</h3>
   <table style="width:100%"  border="1">
@@ -157,4 +162,8 @@
 
 
 </body>
+<% else %>
+<h1>Welcome to FinAdmin!</h1>
+<p>For further usage please login.</p>
+<% end %>
 </html>

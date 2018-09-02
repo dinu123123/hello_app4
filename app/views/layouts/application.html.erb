@@ -152,10 +152,13 @@ input[type=text] {
 
 <div class="topnav">
   <%= link_to "Input", root_path %>
+
+<% if   current_user != nil and current_user.admin == true %> 
   <%= link_to "Weekly", weekly_url %>
   <%= link_to "Group", mission1_url %>
   <%= link_to "Individual", mission_url %>
   <%= link_to "File", db_url %>
+<% end %>
    <%= link_to "Help", help_url %>
 </div>  
 
