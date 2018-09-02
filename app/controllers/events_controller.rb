@@ -239,7 +239,7 @@ for week in @period_start..@period_end do
                 @search1.setTruck(truck.id)
                 @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
                 @be_tolls,@total_be_tolls,@generic_tolls,@total_generic_tolls,
-                @driver_expenses,@total_driver_expeses,@invoiced_trips,@total_invoiced_trips,
+                @driver_expenses,@total_driver_expenses,@invoiced_trips,@total_invoiced_trips,
                 @fuel_expenses, @total_fuel_expenses,
                 @total_per_truck = @search1.scope1(@date_from1, @date_to1)
 
@@ -268,7 +268,7 @@ for week in @period_start..@period_end do
                 @search1.setTruck(0)
                 @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
                 @be_tolls,@total_be_tolls,@generic_tolls,@total_generic_tolls,
-                @driver_expenses,@total_driver_expeses,@invoiced_trips,@total_invoiced_trips,
+                @driver_expenses,@total_driver_expenses,@invoiced_trips,@total_invoiced_trips,
                 @fuel_expenses, @total_fuel_expenses,
 
                 @total_per_truck = @search1.scope1(@date_from1, @date_to1)
@@ -544,13 +544,14 @@ end
     @search = TransactionSearch.new(params[:search])
     @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
     @be_tolls,@total_be_tolls,@generic_tolls,@total_generic_tolls,
-    @driver_expenses,@total_driver_expeses,@invoiced_trips,@total_invoiced_trips,
+    @driver_expenses,@total_driver_expenses,@invoiced_trips,@total_invoiced_trips,
     
     @fuel_expenses, @total_fuel_expenses,
     @total_debit = @search.scope
     @drivers = Driver.all
     @trucks = Truck.all
     @clients = Client.all
+
   end
 
 

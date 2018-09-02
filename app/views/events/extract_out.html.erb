@@ -36,14 +36,16 @@
 
 <fieldset>
 <table>
-    <h2>Debit/Credit/Profit</h2>
+    <h2>Individual Debit/Credit/Profit</h2>
     <thead>
       <tr>
+        <th>Driver Expenses</th>
+        <th>Fuel Expenses</th>
         <th>Truck Expenses</th>
         <th>Toll Germany</th>
         <th>Toll Belgium</th>
         <th>Toll Generic</th>
-        <th>Driver Expenses</th>
+        
         <th>Debit(Total Expenses)</th>
         <th>Credit(Invoiced Trips)</th> 
          <th>Profit</th> 
@@ -51,11 +53,13 @@
     </thead>
 <tbody>    
     <tr>
+      <td><%= @total_driver_expenses %></td>
+      <td><%= @total_fuel_expenses %></td>
       <td><%= @total_truck_expenses %></td>
       <td><%= @total_germany_tolls %></td>
       <td><%= @total_be_tolls %></td>
       <td><%= @total_generic_tolls %></td>
-      <td><%= @total_driver_expeses %></td>
+     
       <td bgcolor="#E8F993"><%= @total_debit %></td>
       <td bgcolor="#E8F993"><%= @total_invoiced_trips %></td>
       <th bgcolor="#E8F993"><%= @total_invoiced_trips - @total_debit %></th>
