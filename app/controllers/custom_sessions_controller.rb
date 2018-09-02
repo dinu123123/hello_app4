@@ -7,7 +7,7 @@ class CustomSessionsController < Devise::SessionsController
   end
 
   def after_login
-    if(current_user.email=="ameropa.logistics@gmail.com")
+    if(current_user.email.eql?  "ameropa.logistics@gmail.com")
   		current_user.update_attribute :admin, true
   	end	
   end
