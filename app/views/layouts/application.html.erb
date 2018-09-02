@@ -111,12 +111,41 @@ input[type=text] {
     background-color: #4CAF50;
     color: white;
 }
+
+
+
+
+.block2 {
+    color: blue;
+    width: 240px;
+    border: 1px solid black;
+     background-color: #dddeec;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+}
+
 </style>
 <body>
+
 <div class="header">
   <h2>FinAdmin</h2>
   <p>Provides detailed overview over the company finance</p>
+
+<div class='block2'>
+<% if user_signed_in? %>
+  <p> Logged in as <strong><%= current_user.email %></strong>.
+ </p>
+  <%= link_to 'Edit profile', edit_user_registration_path %> |
+  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+<% else %>
+  <%= link_to "Sign up", new_user_registration_path %> |
+  <%= link_to "Login", new_user_session_path %>
+<% end %>
 </div>
+</div>
+
+
 
 
 
