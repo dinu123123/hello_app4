@@ -151,7 +151,7 @@ individual_import_db(head, 10, InvoicedTrip)
 
                     @generic_tolls.to_csv+
                     @fuel_expenses.to_csv+
-                    @invoiced_trips.to_csv,filename: "db_#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv"}
+                    @invoiced_trips.to_csv,filename: "db#{Date.today.strftime('%Y%m%d')+Time.now.strftime('%H%M%S')}.csv"}
       end
   end
 
@@ -304,12 +304,6 @@ for week in @period_start..@period_end do
 
 #############################################################
 def weekly
-
-
-
-                     
-
-
       @search1 = PeriodicTransactionSearch.new(params[:search1])
       @nb_weeks = num_weeks
 
@@ -420,23 +414,14 @@ def weekly
 
                                @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses WHERE driver_expenses."DRIVER_id" = ? AND
                                           driver_expenses."DATE" BETWEEN ? AND ? ORDER BY 
-                                          driver_expenses."DATE"', driver.id, date_prev, tmp.date.prev_day])
-
-
-
+                                          driver_expenses."DATE"', driver.id, date_prev, tmp.date])
                                sum = 0
 
-                               
                                for i in 0...@driverExpenses.count do
-
                                  sum += @driverExpenses[i].AMOUNT
-
-                                 
                                end
 
-
-                               tmp.value = (driver.INFO - sum).to_i
-   
+                               tmp.value = (driver.INFO - sum).to_i   
    
                                 @arrayDriverPaymentDates[j][tmp.date.cweek.to_i] = tmp
 
