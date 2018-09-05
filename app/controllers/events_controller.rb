@@ -187,7 +187,11 @@ if @search1.type ==1
     @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Truck.all.size+2,0)}
     @arrayWeeklyTruckExpense[0][0]= "".to_s
       Truck.all.each_with_index do |truck,j|
-        @arrayWeeklyTruckExpense[0][j+1]=Truck.all[j].NB_PLATE
+        imortant_NB_PLATE = Truck.all[j].NB_PLATE
+         if imortant_NB_PLATE[0..1].to_s.eql? "PH"
+          imortant_NB_PLATE= imortant_NB_PLATE[2..6]
+        end
+        @arrayWeeklyTruckExpense[0][j+1]=imortant_NB_PLATE
       end  
 
     if  @search1.time == 1

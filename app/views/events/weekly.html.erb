@@ -64,7 +64,7 @@
                              <% else %>
 
                                       <% if value.is_a?(Struct)  %> 
-                                         <td><%= value.value.to_s+ ' Eur '.to_s+value.date.strftime(" %d/%b/%Y") %></td>
+                                         <td><%= value.value.to_s+ '€ '.to_s+value.date.strftime(" %d/%b/%Y") %></td>
                                       <% else %>
                                          <td><%= value %></td>
                                      <% end %>

@@ -2,6 +2,9 @@ class PeriodicTransactionSearch
   attr_reader :date_from, :date_to, :time, :type, :truck_id, :driver_id, :truck_events, :running, :running_truck_id
 
   def initialize(params)
+
+
+
     params ||= {}
     @date_from = parsed_date(params[:date_from], 30.days.ago.to_date.to_s)
 
@@ -12,8 +15,6 @@ class PeriodicTransactionSearch
 
 
     @type = parsed_trucks_drivers(params[:type], 1)
-
-
 
 
   end

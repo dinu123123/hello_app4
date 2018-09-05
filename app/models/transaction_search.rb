@@ -1,7 +1,7 @@
 class TransactionSearch 
   attr_reader :date_from, :date_to, :truck_id, :driver_id, :truck_events
 
-  def initialize(params)
+  def initialize(params, large =false)
     params ||= {}
     @date_from = parsed_date(params[:date_from],30.days.ago.to_date.to_s)
     @date_to = parsed_date(params[:date_to], Date.today.to_s)

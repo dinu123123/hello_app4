@@ -29,6 +29,8 @@ nr_rows_insterted= 0
                         row_to_skip = 1
                       else                      
                         if(row.drop(1).to_a[0][1] != nil)
+                              row.drop(1).to_a[15][1].try(:gsub!,',', '.')
+                              row.drop(1).to_a[16][1].try(:gsub!,',', '.')
                               @my_truck = Truck.find_by NB_PLATE:row.drop(1).to_a[0][1].gsub(/\s+/, "")
                               @my_row = row.drop(1).to_a<<(["truck_id",@my_truck.id]) 
                               DeToll.create! @my_row.to_h

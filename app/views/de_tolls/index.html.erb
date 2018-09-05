@@ -1,7 +1,28 @@
 <p id="notice"><%= notice %></p>
-
 <h1>De Tolls</h1>
+<fieldset>
+ <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag de_toll_index_import_path, :method => 'get' do %>
+        <%= date_field_tag 'search[date_from]', @search.date_from %>
+        <%= date_field_tag 'search[date_to]', @search.date_to %>
+<% if false %>
+        <%= collection_select :search, :driver_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
+<% end%>
+        <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
 
+<th>Total value: <%= @total_de_tolls %></th>
+
+        <% end %>
+      </div>
+    </div>
+</fieldset>
+
+<br>
+
+<fieldset>
+  <legend> Expenses </legend>
 <table>
   <thead>
     <tr>
@@ -57,9 +78,8 @@
     <% end %>
   </tbody>
 </table>
-
+</fieldset>
 <br>
-
 
 <div>
 <h4> Import that data!</h4>

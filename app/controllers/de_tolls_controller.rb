@@ -11,7 +11,34 @@ class DeTollsController < ApplicationController
   # GET /de_tolls
   # GET /de_tolls.json
   def index
-    @de_tolls = DeToll.all.order("platenr ASC, date ASC, time ASC ")
+
+    @search = TransactionSearch.new(params[:search], true)
+
+    #@de_tolls = DeToll.all.order("platenr ASC, date ASC, time ASC ")
+
+    #@de_tolls = DeToll.all.order("platenr ASC, date ASC, time ASC ")
+
+ if @search.truck_id == 0
+ @de_tolls = DeToll.find_by_sql(["SELECT * FROM de_tolls where  
+                  de_tolls.date BETWEEN ? AND ? ORDER BY 
+                  de_tolls.date ASC", @search.date_from, @search.date_to ])
+else
+
+ @de_tolls = DeToll.find_by_sql(["SELECT * FROM de_tolls where de_tolls.truck_id = ? AND 
+                  de_tolls.date BETWEEN ? AND ? ORDER BY 
+                  de_tolls.date ASC", @search.truck_id, @search.date_from, @search.date_to ])
+ end
+
+@total_de_tolls = 0.to_d
+
+
+@de_tolls.each { |a| @total_de_tolls += a.eur}
+
+
+ #    @de_tolls = DeToll.find_by_sql(["SELECT * FROM de_tolls where 
+  #                de_tolls.date BETWEEN ? AND ? ORDER BY 
+   #               de_tolls.date ASC", @search.date_from, @search.date_to ])
+
 
       respond_to do |format|
         format.html
@@ -78,9 +105,6 @@ class DeTollsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_de_toll
-
-      asdasasd
-      sadadsadas
       @de_toll = DeToll.find(params[:id])
     end
 

@@ -6,6 +6,18 @@ class BeTollsController < ApplicationController
   def index
     @be_tolls = BeToll.all
 
+    @search = TransactionSearch.new(params[:search], true)
+
+    #@de_tolls = DeToll.all.order("platenr ASC, date ASC, time ASC ")
+
+    #@de_tolls = DeToll.all.order("platenr ASC, date ASC, time ASC ")
+
+    @de_tolls = DeToll.find_by_sql(["SELECT * FROM de_tolls where de_tolls.truck_id = ? AND 
+                  de_tolls.date BETWEEN ? AND ? ORDER BY 
+                  de_tolls.date ASC", @search.truck_id, @search.date_from, @search.date_to ])
+
+
+
     respond_to do |format|
         format.html
         format.csv { send_data @be_tolls.to_csv, filename: "be_tolls-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }
