@@ -85,7 +85,7 @@ individual_import_db(head, 10, InvoicedTrip)
 #     DriverExpense.create! row.to_h
 #   end
        
-    redirect_to events_url, notice: "Activity Data Imported!"
+    #redirect_to events_url, notice: "Activity Data Imported!"
   end
 
 
