@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::Base
-  #protect_from_forgery with: :exception
-  def index
+protect_from_forgery
+before_action :authenticate_user!
 
-  	asdasda
-  end
 end

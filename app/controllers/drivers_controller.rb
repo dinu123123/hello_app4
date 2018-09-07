@@ -1,6 +1,18 @@
 class DriversController < ApplicationController
   before_action :set_driver, only: [:show, :edit, :update, :destroy]
 
+
+  def two_user_registered?
+    if User.count == 2
+      if user_signed_in?
+        redirect_to root_path
+      else
+        redirect_to new_user_session_path
+      end
+    end  
+  end
+
+
   def import
     Driver.import(params[:file])
     redirect_to drivers_url, notice: "Activity Data Imported!"
@@ -9,12 +21,18 @@ class DriversController < ApplicationController
   # GET /drivers
   # GET /drivers.json
   def index
+    
+  if(current_user.email.eql?  "ameropa.logistics@gmail.com")
+
     @drivers = Driver.all
     respond_to do |format|
         format.html
         format.csv { send_data @drivers.to_csv, filename: "drivers-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
       end
+    else
+      redirect_to root_path
+    end
   end
 
   # GET /drivers/1

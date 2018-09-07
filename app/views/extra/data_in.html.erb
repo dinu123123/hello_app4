@@ -22,7 +22,7 @@
   </tr>
 </table>
 
-  <% if   current_user != nil and current_user.admin == true %> 
+  <% if   current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
       <h3>Clients:</h3>
         <table style="width:100%"  border="1">
         <tr>
@@ -37,7 +37,7 @@
 </div>
 
   <div class="column">  
- <% if   current_user != nil and current_user.admin == true %> 
+ <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
 <h3>Drivers:</h3>
 <table style="width:100%"  border="1">
   <tr>

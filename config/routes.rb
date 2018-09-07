@@ -1,7 +1,12 @@
   Rails.application.routes.draw do
   
-  devise_for :users, :controllers => { :sessions => "custom_sessions" }, 
+  devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => "registrations"}, 
                      path_names: {sign_in: "login", sign_out: "logout"}
+
+
+devise_scope :user do
+  match '/sign-in', to: "devise/sessions#new", via: :login
+end
 
   resources :generic_tolls do
   collection { post :import}
@@ -42,7 +47,7 @@
   # have an extract_out method to handle the request
   get "/events/extract_out", as: "mission"
 
-  
+
   get "/events/extract_explicit", as: "mission1"
 
   get "/events/weekly", as: "weekly"
@@ -57,6 +62,8 @@
   get "/be_tolls/index", as: "be_toll_index_import"
 
   get "/fuel_expenses/file_import", as: "fuel_expense_file_import"
+
+
 
   resources :fuel_expenses do
   collection { post :import}
@@ -96,6 +103,9 @@
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 #root 'extra#data_in'
 root to: "extra#data_in"
+
+
+#root :controller => 'static', :action => '/' 
 
   #get 'profiles/charities',   :to => 'profiles#charities_index'
 

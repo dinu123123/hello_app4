@@ -85,7 +85,6 @@ individual_import_db(head, 10, InvoicedTrip)
 #     DriverExpense.create! row.to_h
 #   end
        
-    #redirect_to events_url, notice: "Activity Data Imported!"
   end
 
 
@@ -104,6 +103,11 @@ individual_import_db(head, 10, InvoicedTrip)
   end
 
  def db
+
+  if !(current_user.email.eql?  "ameropa.logistics@gmail.com")
+    redirect_to root_path
+  else
+
     @drivers = Driver.all
     @trucks = Truck.all
     @clients = Client.all
@@ -153,6 +157,7 @@ individual_import_db(head, 10, InvoicedTrip)
                     @fuel_expenses.to_csv+
                     @invoiced_trips.to_csv,filename: "db#{Date.today.strftime('%Y%m%d')+Time.now.strftime('%H%M%S')}.csv"}
       end
+    end
   end
 
 def num_weeks(year = Date.today.year)
@@ -163,7 +168,9 @@ end
 
 
 def extract_explicit
-
+ if !(current_user.email.eql?  "ameropa.logistics@gmail.com")
+    redirect_to root_path
+  else
 @search1 = PeriodicTransactionSearch.new(params[:search1])
 @nb_weeks = num_weeks
 
@@ -303,11 +310,14 @@ for week in @period_start..@period_end do
     @trucks = Truck.all
     @clients = Client.all
 
-
+end
   end
 
 #############################################################
 def weekly
+   if !(current_user.email.eql?  "ameropa.logistics@gmail.com")
+    redirect_to root_path
+  else
       @search1 = PeriodicTransactionSearch.new(params[:search1])
       @nb_weeks = num_weeks
 
@@ -523,13 +533,15 @@ end
           @drivers = Driver.all
           @trucks = Truck.all
           @clients = Client.all
-
+end
 
   end
 
 
   def extract_out
-
+ if !(current_user.email.eql?  "ameropa.logistics@gmail.com")
+    redirect_to root_path
+  else
     @search = TransactionSearch.new(params[:search])
     @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
     @be_tolls,@total_be_tolls,@generic_tolls,@total_generic_tolls,
@@ -540,7 +552,7 @@ end
     @drivers = Driver.all
     @trucks = Truck.all
     @clients = Client.all
-
+end
   end
 
 
