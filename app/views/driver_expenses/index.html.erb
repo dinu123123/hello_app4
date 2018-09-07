@@ -72,10 +72,10 @@ tr:nth-child(even) {
 
   <tbody>
     <% @driver_expenses.each do |driver_expense| %>
-<% if  !(current_user.email.eql?  "ameropa.logistics@gmail.com") and (driver_expense.INFO.eql? "Salary" ) %>
+      <% if  !(current_user.email.eql?  "ameropa.logistics@gmail.com") and 
+        (driver_expense.INFO.eql? "Salary" ) %>
       <% next%>
       <% end%>
-
       <tr>
         <td><%= @drivers.find(driver_expense.DRIVER_id).CNP %></td>
         <td><%= @drivers.find(driver_expense.DRIVER_id).FIRSTNAME %></td>

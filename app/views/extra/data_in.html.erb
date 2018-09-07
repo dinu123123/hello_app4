@@ -59,7 +59,7 @@
   </tr>
 </table>
 
-
+ <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
 <h3>Invoiced Trips:</h3>
   <table style="width:100%"  border="1">
   <tr>
@@ -69,8 +69,20 @@
     <th> <%= link_to 'All Invoiced Trips', invoiced_trips_path %> </th>
   </tr>
 </table>
+<% end %>  
 
 
+<% if current_user != nil and !(current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
+<h3>Toll Generic:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Generic Toll', new_generic_toll_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Generic Tolls', generic_tolls_path %> </th>
+  </tr>
+</table>
+<% end %>   
 
 
   </div>
@@ -85,6 +97,8 @@
     <th> <%= link_to 'All Driver Events', events_path %> </th>
   </tr>
 </table>
+
+
 
 
 <h3>Fuel Expense:</h3>
@@ -133,7 +147,7 @@
 </table>
 
 
-<h3>New Toll Belgium:</h3>
+<h3>Toll Belgium:</h3>
   <table style="width:100%"  border="1">
   <tr>
     <th> <%= link_to 'New Belgium Toll', new_be_toll_path %> </th>
@@ -147,6 +161,7 @@
 
 </table>  
 
+<% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
 <h3>Toll Generic:</h3>
   <table style="width:100%"  border="1">
   <tr>
@@ -156,6 +171,8 @@
     <th> <%= link_to 'All Generic Tolls', generic_tolls_path %> </th>
   </tr>
 </table>
+<% end %>   
+
   </div>
 
 <p id="notice"><%= notice %></p>
