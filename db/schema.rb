@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20180902195055) do
   end
 
   create_table "driver_expenses", force: :cascade do |t|
-    t.text "DRIVER_id"
+    t.integer "DRIVER_id"
     t.integer "truck_id"
     t.date "DATE"
     t.decimal "AMOUNT"

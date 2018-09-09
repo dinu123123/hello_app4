@@ -428,7 +428,7 @@ def weekly
 
                                @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses WHERE driver_expenses."DRIVER_id" = ? AND
                                           driver_expenses."DATE" BETWEEN ? AND ? ORDER BY 
-                                          driver_expenses."DATE"', driver.id.to_s, date_prev, tmp.date])
+                                          driver_expenses."DATE"', driver.id, date_prev, tmp.date])
                                sum = 0
 
                                for i in 0...@driverExpenses.count do
