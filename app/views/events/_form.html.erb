@@ -23,7 +23,7 @@
   </div>
 <% end %>
 
-<%= form.collection_select :DRIVER_id, Driver.all, :id, :name_with_cnp, {prompt: "Driver Name and CNP"}%>
+<%= form.collection_select :DRIVER_id, Driver.all, :id, :name_with_cnp, {prompt: "Driver Name and CNP"},:required => 'required'%>
 
 <% if false %>
   <div class="field">
