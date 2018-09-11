@@ -41,6 +41,7 @@
     <h1>Driver Events</h1>
     <thead>
       <tr>
+        <th>ID</th>
         <th>Date</th>
         <th>Driver CNP</th>
         <th>First Name</th>
@@ -52,9 +53,9 @@
       </tr>
     </thead>
 <tbody>    
-    <% @events.each do |event| %>
+    <% @events.each_with_index do |event,i| %>
     <tr>
-      
+      <td><%= i+1.to_i %></td>
       <td><%= event.DATE.strftime("%d %B %Y") %></td>
 <% if event.DRIVER_id? %>
 
