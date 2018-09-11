@@ -54,10 +54,15 @@
 <tbody>    
     <% @events.each do |event| %>
     <tr>
+      
       <td><%= event.DATE.strftime("%d %B %Y") %></td>
+<% if event.DRIVER_id? %>
+
       <td><%= @drivers.find(event.DRIVER_id).CNP %></td>
       <td><%= @drivers.find(event.DRIVER_id).FIRSTNAME %></td>
       <td><%= @drivers.find(event.DRIVER_id).SECONDNAME %></td>
+<% end %>
+
       <td><%= @clients.find(event.client_id).Name %></td>
       <td><%= @trucks.find(event.truck_id).NB_PLATE %></td>
       
