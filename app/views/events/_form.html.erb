@@ -14,14 +14,7 @@
   <div class="field">
     <%= form.label :DATE %>
     <%= form.date_select :DATE, id: :event_DATE, :required => 'required' %>
-  </div>
-
-<% if false %>
-  <div class="field">
-    <%= form.label :DRIVER_id %>
-    <%= form.number_field :DRIVER_id, id: :event_DRIVER_id, :required => 'required' %>
-  </div>
-<% end %>
+ </div>
 
 <%= form.collection_select :DRIVER_id, Driver.all, :id, :name_with_cnp, {prompt: "Driver Name and CNP"},:required => 'required'%>
 
