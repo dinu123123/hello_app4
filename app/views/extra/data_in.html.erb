@@ -59,7 +59,6 @@
   </tr>
 </table>
 
- <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
 <h3>Invoiced Trips:</h3>
   <table style="width:100%"  border="1">
   <tr>
@@ -69,7 +68,6 @@
     <th> <%= link_to 'All Invoiced Trips', invoiced_trips_path %> </th>
   </tr>
 </table>
-<% end %>  
 
 
 <% if current_user != nil and !(current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
