@@ -9,7 +9,7 @@ class InvoicedTripsController < ApplicationController
   # GET /drivers
   # GET /drivers.json
   def index
-    if(current_user.email.eql?  "ameropa.logistics@gmail.com")
+  #  if(current_user.email.eql?  "ameropa.logistics@gmail.com")
 
     @invoiced_trips = InvoicedTrip.all
     @trucks = Truck.all
@@ -20,9 +20,9 @@ class InvoicedTripsController < ApplicationController
         format.csv { send_data @invoiced_trips.to_csv, filename: "invoiced_trips-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
       end
-    else
-      redirect_to root_path
-    end
+   # else
+   #   redirect_to root_path
+   # end
   end
 
   # GET /invoiced_trips/1
