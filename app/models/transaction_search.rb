@@ -67,6 +67,31 @@ if @driver_id > 0
                   end
                   truck_events = true
                else
+               @localEvent = Event.find_by_sql(['SELECT * FROM  events where events."DRIVER_id" = ? 
+              and events."DATE" <= ? ORDER BY events."DATE" DESC', @driver_id, @date_to])
+               if( @localEvent.size >0)
+                if @localEvent[0].START_END == true and  @localEvent[0].DATE <=@date_from
+                  @localEvent = Array.new(2) { Event.new }
+                  @localEvent[0].DRIVER_id = @driver_id
+                  @localEvent[0].truck_id =  @truck_id
+                  @localEvent[0].START_END = true
+                  @localEvent[0].DATE = @date_from
+
+                  @localEvent[1].DRIVER_id = @driver_id
+                  @localEvent[1].truck_id =  @truck_id
+                  @localEvent[1].START_END = false
+                  @localEvent[1].DATE = @date_to
+                  truck_events = false 
+                  
+                elsif @localEvent[0].START_END == true and  @localEvent[0].DATE > @date_from
+                
+                 @localEvent = Array.new(2) { Event.new }
+                  @localEvent[0].START_END = true
+                  @localEvent[0].DATE = @localEvent[0].DATE
+                  @localEvent[1].START_END = false
+                  @localEvent[1].DATE = @date_to
+                  end  
+                end
                   truck_events = false 
                end
 
@@ -138,7 +163,6 @@ if @driver_id > 0
   
 
                        if @invoicedTrips.size>0
-
                         arrayInvoicedTrips.concat(@invoicedTrips)
                        end
                     end
@@ -161,6 +185,8 @@ elsif @truck_id > 0 && @driver_id == 0
   if Event != nil and Event.all.size >0
         @localEvent = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
               and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC', @truck_id, @date_from, @date_to])
+
+
   
               if @localEvent.count > 0 
                   if @localEvent.count%2 == 1
@@ -274,7 +300,7 @@ elsif @truck_id > 0 && @driver_id == 0
 
 
 else
-
+XXXX
 
           if TruckExpense.all.size
            @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM truck_expenses where 
