@@ -539,6 +539,7 @@ end
 
 
   def extract_out
+
  if !(current_user.email.eql?  "ameropa.logistics@gmail.com")
     redirect_to root_path
   else
@@ -552,6 +553,8 @@ end
     @drivers = Driver.all
     @trucks = Truck.all
     @clients = Client.all
+
+
 end
   end
 
@@ -575,8 +578,8 @@ end
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(event_params)
 
+    @event = Event.new(event_params)
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -622,9 +625,6 @@ end
       @event = Event.find(params[:id])
       @driver = Driver.find(@event.DRIVER_id)
       @truck = Truck.find(@event.truck_id)
-  
-
-
     end
 
     def set_client
@@ -633,5 +633,6 @@ end
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
       params.require(:event).permit(:DATE, :DRIVER_id, :truck_id, :client_id, :START_END)
+
     end
 end

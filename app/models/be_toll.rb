@@ -3,6 +3,11 @@ require 'csv'
  belongs_to :truck, :optional => true
 # validates :bookingid, uniqueness: true
  
+def time_convert()
+ entry_time.to_time.strftime("%H %M")
+end
+
+
 #CSV.read(file.path, :quote_char => "\´")
 def self.import(file)
 row_to_skip = 0

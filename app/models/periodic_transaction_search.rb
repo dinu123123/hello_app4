@@ -4,7 +4,6 @@ class PeriodicTransactionSearch
   def initialize(params)
 
 
-
     params ||= {}
     @date_from = parsed_date(params[:date_from], 30.days.ago.to_date.to_s)
 
@@ -77,6 +76,8 @@ if @type == 1
                 0.upto( @germanyTollExpenses.size-1) do |j|
                     @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
                 end
+
+
 
                 if @germanyTollExpenses
                    arrayGermanyToll.concat(@germanyTollExpenses)

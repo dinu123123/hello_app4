@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180902195055) do
+ActiveRecord::Schema.define(version: 20180912195708) do
+
+  create_table "Events", force: :cascade do |t|
+    t.datetime "DATE"
+    t.integer "DRIVER_id"
+    t.integer "truck_id"
+    t.boolean "START_END"
+    t.integer "client_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "be_tolls", force: :cascade do |t|
     t.integer "record_number"
@@ -111,16 +121,6 @@ ActiveRecord::Schema.define(version: 20180902195055) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "events", force: :cascade do |t|
-    t.date "DATE"
-    t.integer "DRIVER_id"
-    t.integer "truck_id"
-    t.boolean "START_END"
-    t.integer "client_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "fuel_expenses", force: :cascade do |t|
     t.time "trstime"
     t.date "trsdate"
@@ -176,8 +176,8 @@ ActiveRecord::Schema.define(version: 20180902195055) do
 
   create_table "invoiced_trips", force: :cascade do |t|
     t.date "date"
-    t.date "StartDate"
-    t.date "EndDate"
+    t.datetime "StartDate"
+    t.datetime "EndDate"
     t.string "invoice_id"
     t.integer "client_id"
     t.integer "DRIVER_id"

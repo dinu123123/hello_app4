@@ -3,10 +3,15 @@ class TransactionSearch
 
   def initialize(params, large =false)
     params ||= {}
-    @date_from = parsed_date(params[:date_from],30.days.ago.to_date.to_s)
-    @date_to = parsed_date(params[:date_to], Date.today.to_s)
+    @date_from = parsed_date(params[:date_from],30.days.ago.to_datetime.strftime('%Y-%m-%dT%H:%M') )
+
+    @date_to = parsed_date(params[:date_to],  DateTime.now.strftime('%Y-%m-%dT%H:%M') )
+    
     @driver_id = parsed_driver_id(params[:driver_id], 1)
     @truck_id = parsed_truck_id(params[:truck_id], 1)
+
+
+
   end
 
 def scope   
@@ -24,13 +29,13 @@ arrayInvoicedTrips = Array.new
 arrayEvents = Array.new
 
 
-
 if @driver_id > 0
 
 
     if Event.all.size > 0
               @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
               and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC', @driver_id, @date_from, @date_to])
+
 
 
 
@@ -66,6 +71,8 @@ if @driver_id > 0
                      end
                   end
                   truck_events = true
+
+
                else
                @localEvent = Event.find_by_sql(['SELECT * FROM  events where events."DRIVER_id" = ? 
               and events."DATE" <= ? ORDER BY events."DATE" DESC', @driver_id, @date_to])
@@ -111,26 +118,41 @@ if @driver_id > 0
                         arrayTruckExpense.concat(@truckExpense)
                     end
 
-                    if DeToll.all.size
 
-                        @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
-                          de_tolls.truck_id = ? AND de_tolls.date BETWEEN ? AND ? ORDER BY 
-                          de_tolls.date ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
-                          @localEvent[2*(i-1)+1].DATE ])
 
-                          0.upto( @germanyTollExpenses.size-1) do |j|
-                            @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
-                          end
-                           arrayGermanyToll.concat(@germanyTollExpenses)
+                   if DeToll.all.size
+                      @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where  de_tolls.truck_id = ? AND
+                          ((de_tolls.date > ?) OR (de_tolls.date == ? AND TIME(de_tolls.time) >= TIME(?) )) 
+                          AND ((de_tolls.date < ?) OR (de_tolls.date == ? AND TIME(de_tolls.time)  <= TIME(?) )) 
+                          ORDER BY de_tolls.date ASC, de_tolls.time ASC',  @localEvent[2*(i-1)].truck_id,
+                                       @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)].DATE,
+                                       @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE])
+                      
+                      0.upto( @germanyTollExpenses.size-1) do |j|
+                          @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
+                      end
+                      if @germanyTollExpenses
+                         arrayGermanyToll.concat(@germanyTollExpenses)
+                      end
                     end
 
-                    if BeToll.all.size
-                        @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
-                          be_tolls.truck_id = ? AND be_tolls.date_of_usage BETWEEN ? AND ? ORDER BY 
-                          be_tolls.date_of_usage ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
-                          @localEvent[2*(i-1)+1].DATE ])
+
+
+
+                     if BeToll.all.size 
+                        @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where be_tolls.truck_id = ? AND
+                        ((be_tolls.date_of_usage > ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time) >= TIME(?) )) 
+                            AND
+                            ((be_tolls.date_of_usage < ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time)  <= TIME(?) )) 
+                            ORDER BY 
+                            be_tolls.date_of_usage ASC, be_tolls.entry_time ASC', @localEvent[2*(i-1)].truck_id,
+                             @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)].DATE,
+                             @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE])
+                        if @BeTollExpenses
                          arrayBeToll.concat(@BeTollExpenses)
-                    end
+                        end
+
+                      end
 
                     if FuelExpense.all.size
 
@@ -157,15 +179,22 @@ if @driver_id > 0
                         arrayDriverExpenses.concat(@driverExpenses)
                     end
 
-                    if InvoicedTrip.all.size
-                      @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."DRIVER_id" = ? and  
-                                invoiced_trips."StartDate" >= ? AND invoiced_trips."StartDate" <= ?',  @driver_id,  @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE])
-  
 
-                       if @invoicedTrips.size>0
-                        arrayInvoicedTrips.concat(@invoicedTrips)
-                       end
-                    end
+
+                     if InvoicedTrip.all.size
+                        @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where  invoiced_trips."DRIVER_id" = ? and
+                        (( DATE(invoiced_trips."StartDate") > ?) OR ( DATE(invoiced_trips."StartDate") == ? AND TIME(invoiced_trips."StartDate") >= TIME(?) )) 
+                        AND
+                        ((DATE(invoiced_trips."EndDate") < ?) OR ( DATE(invoiced_trips."EndDate") == ? AND TIME(invoiced_trips."EndDate") <= TIME(?) )) 
+                        ORDER BY 
+                        invoiced_trips."StartDate" ASC',  @driver_id , @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)].DATE.to_date,
+                         @localEvent[2*(i-1)].DATE,
+                        @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE
+                        ])
+                         if @invoicedTrips
+                          arrayInvoicedTrips.concat(@invoicedTrips)
+                         end
+                      end 
 
                 end
 
@@ -242,13 +271,23 @@ elsif @truck_id > 0 && @driver_id == 0
                     end                
           end
 
-                    if InvoicedTrip.all.size
-                      @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."truck_id" = ? and  
-                                invoiced_trips."StartDate" >= ? AND invoiced_trips."StartDate" <= ?',  @truck_id, @date_from, @date_to])
-                       if @invoicedTrips
-                        arrayInvoicedTrips.concat(@invoicedTrips)
-                       end
-                    end
+                  
+
+
+    if InvoicedTrip.all.size
+            @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where  invoiced_trips."truck_id" = ? and
+            (( DATE(invoiced_trips."StartDate") > ?) OR ( DATE(invoiced_trips."StartDate") == ? AND TIME(invoiced_trips."StartDate") >= TIME(?) )) 
+            AND
+            ((DATE(invoiced_trips."EndDate") < ?) OR ( DATE(invoiced_trips."EndDate") == ? AND TIME(invoiced_trips."EndDate") <= TIME(?) )) 
+            ORDER BY 
+            invoiced_trips."StartDate" ASC',  @truck_id , @date_from.to_date, @date_from.to_date, @date_from,
+            @date_to.to_date, @date_to.to_date, @date_to
+            ])
+             if @invoicedTrips
+              arrayInvoicedTrips.concat(@invoicedTrips)
+             end
+          end 
+
 
                     if TruckExpense.all.size
                           @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM Truck_Expenses where 
@@ -259,22 +298,41 @@ elsif @truck_id > 0 && @driver_id == 0
                     end
 
                     if DeToll.all.size
-                        @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
-                          de_tolls.truck_id = ? AND de_tolls.date BETWEEN ? AND ? ORDER BY 
-                          de_tolls.date ASC', @truck_id,  @date_from, @date_to])
+                      
+                      @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where de_tolls.truck_id = ? AND
+                          ((de_tolls.date > ?) OR (de_tolls.date == ? AND TIME(de_tolls.time) >= TIME(?) )) 
+                          AND ((de_tolls.date < ?) OR (de_tolls.date == ? AND TIME(de_tolls.time)  <= TIME(?) )) 
+                          ORDER BY de_tolls.date ASC, de_tolls.time ASC', @truck_id, @date_from.to_date, @date_from.to_date, @date_from,
+                          @date_to.to_date, @date_to.to_date, @date_to ])
 
-                          0.upto( @germanyTollExpenses.size-1) do |j|
-                            @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
-                          end
-                           arrayGermanyToll.concat(@germanyTollExpenses)
+                      0.upto( @germanyTollExpenses.size-1) do |j|
+                        @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
+                    end
+                    if @germanyTollExpenses
+                       arrayGermanyToll.concat(@germanyTollExpenses)
+                    end
+                  end
+
+
+
+
+                    if BeToll.all.size 
+                      @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where be_tolls.truck_id = ? AND 
+                      ((be_tolls.date_of_usage > ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time) >= TIME(?) )) 
+                          AND
+                          ((be_tolls.date_of_usage < ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time)  <= TIME(?) )) 
+                          ORDER BY 
+                          be_tolls.date_of_usage ASC, be_tolls.entry_time ASC', @truck_id, @date_from.to_date, @date_from.to_date, @date_from,
+                                                      @date_to.to_date, @date_to.to_date, @date_to ])
+                      if @BeTollExpenses
+                       arrayBeToll.concat(@BeTollExpenses)
+                      end
                     end
 
-                    if BeToll.all.size
-                        @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
-                          be_tolls.truck_id = ? AND be_tolls.date_of_usage BETWEEN ? AND ? ORDER BY 
-                          be_tolls.date_of_usage ASC', @truck_id, @date_from, @date_to])
-                         arrayBeToll.concat(@BeTollExpenses)
-                    end
+
+
+
+
 
                     if GenericToll.all.size
                         @genericTollExpenses = GenericToll.find_by_sql(['SELECT * FROM Generic_Tolls where 
@@ -300,7 +358,7 @@ elsif @truck_id > 0 && @driver_id == 0
 
 
 else
-XXXX
+
 
           if TruckExpense.all.size
            @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM truck_expenses where 
@@ -315,30 +373,27 @@ XXXX
 
          if DeToll.all.size
             @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
-              de_tolls.date BETWEEN ? AND ? ORDER BY 
-              de_tolls.date ASC', @date_from, @date_to ])
-
-
-
-
+                ((de_tolls.date > ?) OR (de_tolls.date == ? AND TIME(de_tolls.time) >= TIME(?) )) 
+                AND ((de_tolls.date < ?) OR (de_tolls.date == ? AND TIME(de_tolls.time)  <= TIME(?) )) 
+                ORDER BY de_tolls.date ASC, de_tolls.time ASC', @date_from.to_date, @date_from.to_date, @date_from,
+                @date_to.to_date, @date_to.to_date, @date_to ])
+            
             0.upto( @germanyTollExpenses.size-1) do |j|
                 @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
             end
-
-
             if @germanyTollExpenses
                arrayGermanyToll.concat(@germanyTollExpenses)
             end
-
-
-
           end
 
           if BeToll.all.size 
             @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
-              be_tolls.date_of_usage BETWEEN ? AND ? ORDER BY 
-              be_tolls.date_of_usage ASC', @date_from, @date_to ])
-           
+            ((be_tolls.date_of_usage > ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time) >= TIME(?) )) 
+                AND
+                ((be_tolls.date_of_usage < ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time)  <= TIME(?) )) 
+                ORDER BY 
+                be_tolls.date_of_usage ASC, be_tolls.entry_time ASC', @date_from.to_date, @date_from.to_date, @date_from,
+                                            @date_to.to_date, @date_to.to_date, @date_to ])
             if @BeTollExpenses
              arrayBeToll.concat(@BeTollExpenses)
             end
@@ -365,19 +420,34 @@ XXXX
 
           if InvoicedTrip.all.size
             @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where   
-                      invoiced_trips."StartDate" >= ? AND invoiced_trips."StartDate" <= ?', @date_from, @date_to])
+            (( DATE(invoiced_trips."StartDate") > ?) OR ( DATE(invoiced_trips."StartDate") == ? AND TIME(invoiced_trips."StartDate") >= TIME(?) )) 
+            AND
+            ((DATE(invoiced_trips."EndDate") < ?) OR ( DATE(invoiced_trips."EndDate") == ? AND TIME(invoiced_trips."EndDate") <= TIME(?) )) 
+            ORDER BY 
+            invoiced_trips."StartDate" ASC', @date_from.to_date, @date_from.to_date, @date_from,
+            @date_to.to_date, @date_to.to_date, @date_to
+            ])
              if @invoicedTrips
               arrayInvoicedTrips.concat(@invoicedTrips)
              end
           end 
 
+
           if FuelExpense.all.size
               @fuelExpenses = FuelExpense.find_by_sql(['SELECT * FROM fuel_expenses where 
-                fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
-                fuel_expenses.trsdate ASC', @date_from, 
-                @date_to])
+                ((fuel_expenses.trsdate > ?) OR (fuel_expenses.trsdate == ? AND TIME(fuel_expenses.trstime) >= TIME(?) )) 
+                AND
+                ((fuel_expenses.trsdate < ?) OR (fuel_expenses.trsdate == ? AND TIME(fuel_expenses.trstime) <= TIME(?) )) 
+                ORDER BY 
+                fuel_expenses.trsdate ASC,  fuel_expenses.trstime ASC', @date_from.to_date, @date_from.to_date, @date_from,
+                                            @date_to.to_date, @date_to.to_date, @date_to
+              ])
+
+
+
               arrayFuelExpenses.concat(@fuelExpenses)
           end
+
 
           if Event.all.size >0
           @events = Event.find_by_sql(['SELECT * FROM events where events."DATE" BETWEEN ? 
@@ -488,12 +558,8 @@ end
   end
 
 private
-
-  
-
-
     def parsed_date (date_string, default)
-      Date.parse(date_string)
+      DateTime.parse(date_string).strftime('%Y-%m-%dT%H:%M')
       rescue ArgumentError, TypeError
       default
     end

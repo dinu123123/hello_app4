@@ -56,7 +56,7 @@
     <% @events.each_with_index do |event,i| %>
     <tr>
       <td><%= i+1.to_i %></td>
-      <td><%= event.DATE.strftime("%d %B %Y") %></td>
+      <td><%= event.DATE.strftime("%d %B %Y %H:%M") %></td>
 <% if event.DRIVER_id? %>
 
       <td><%= @drivers.find(event.DRIVER_id).CNP %></td>

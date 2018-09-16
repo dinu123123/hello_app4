@@ -37,7 +37,7 @@
 </div>
 
   <div class="column">  
- <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
+
 <h3>Drivers:</h3>
 <table style="width:100%"  border="1">
   <tr>
@@ -47,7 +47,7 @@
     <th> <%= link_to 'All Drivers', drivers_path %> </th>
   </tr>
   </table>
-<% end %>   
+
 
 <h3>Driver Expenses:</h3>
   <table style="width:100%"  border="1">

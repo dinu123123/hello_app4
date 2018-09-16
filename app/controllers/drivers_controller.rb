@@ -22,17 +22,15 @@ class DriversController < ApplicationController
   # GET /drivers.json
   def index
     
-  if(current_user.email.eql?  "ameropa.logistics@gmail.com")
-
+  
     @drivers = Driver.all
     respond_to do |format|
         format.html
         format.csv { send_data @drivers.to_csv, filename: "drivers-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
       end
-    else
-      redirect_to root_path
-    end
+  
+
   end
 
   # GET /drivers/1

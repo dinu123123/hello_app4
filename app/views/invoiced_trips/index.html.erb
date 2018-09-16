@@ -75,8 +75,8 @@ tr:nth-child(even) {
       <th>Km</th>
       <th>Km EvoGPS</th>
       <th>Km Driver's Route Note</th>
-      <th>Trip Start Date</th>
-      <th>Trip End Date</th>
+      <th>Trip Start DateTime</th>
+      <th>Trip End DateTime</th>
       <th>Invoice Date</th>
       <th>Total amount</th>
       <th colspan="3"></th>
@@ -104,8 +104,8 @@ tr:nth-child(even) {
         <td><%= invoiced_trip.km %></td>
         <td><%= invoiced_trip.km_evogps %></td>
         <td><%= invoiced_trip.km_driver_route_note %></td>
-        <td><%= invoiced_trip.StartDate %></td>
-        <td><%= invoiced_trip.EndDate %></td>
+        <td><%= invoiced_trip.StartDate.strftime("%d %B %Y %H:%M") %></td>
+        <td><%= invoiced_trip.EndDate.strftime("%d %B %Y %H:%M") %></td>
         <td><%= invoiced_trip.date %></td>
         <td><%= invoiced_trip.total_amount %></td>
         <td><%= link_to 'Show', invoiced_trip %></td>

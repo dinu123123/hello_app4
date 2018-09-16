@@ -6,13 +6,16 @@
 <p id="notice"><%= notice %></p>
 
 <fieldset>
-  <legend> Calculation Interval </legend>
+  <legend> Individual Calculation Interval </legend>
   <p>Introduce the Event Start/End Date, Driver and Truck to get the cash-flow detailed view</p> 
     <div class="row">
       <div class="pull-right range-query">
         <%= form_tag mission_path, :method => 'get' do %>
-        <%= date_field_tag 'search[date_from]', @search.date_from %>
-        <%= date_field_tag 'search[date_to]', @search.date_to %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+
+
+
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
         <%= collection_select :search, :driver_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
         <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
         <%= submit_tag 'Display', class: 'btn search-button' %>  
@@ -83,7 +86,7 @@
 <tbody>    
     <% @events.each do |event| %>
     <tr>
-      <td><%= event.DATE.strftime("%d %B %Y") %></td>
+      <td><%= event.DATE.strftime("%d %B %Y %H:%M") %></td>
       <td><%= @drivers.find(event.DRIVER_id).CNP %></td>
       <td><%= @drivers.find(event.DRIVER_id).FIRSTNAME %></td>
       <td><%= @drivers.find(event.DRIVER_id).SECONDNAME %></td>
@@ -294,13 +297,13 @@
 <table>
   <thead>
     <tr>
-      <th>TrsTime</th>
-      <th>TrsDate</th>
+      <th>NbPlate</th>
+      <th>Date</th>
+      <th>Time</th>
       <th>Product</th>
       <th>Volume</th>
       <th>EuroNetAmount</th>
       <th>KmInsertion</th>
-      <th>PlateNr</th>
       <th>CardNr</th>
       <th>StatioNname</th>
       <th>GrossUnitPrice</th>
@@ -313,13 +316,13 @@
   <tbody>
     <% @fuel_expenses.each do |fuel_expense| %>
       <tr>
-        <td><%= fuel_expense.trstime %></td>
-        <td><%= fuel_expense.trsdate %></td>
+        <td><%= fuel_expense.platenr %></td>
+        <td><%= fuel_expense.trsdate.strftime("%d %B %Y ") %></td>
+         <td><%= fuel_expense.trstime.strftime("%H:%M") %></td>
         <td><%= fuel_expense.product %></td>
         <td><%= fuel_expense.volume %></td>
         <td><%= fuel_expense.eurnetamount %></td>
         <td><%= fuel_expense.kminsertion %></td>
-        <td><%= fuel_expense.platenr %></td>
         <td><%= fuel_expense.cardnr %></td>
         <td><%= fuel_expense.stationname %></td>
         <td><%= fuel_expense.eurgrossunitprice %></td>
@@ -337,7 +340,7 @@
 <table>
   <thead>
     <tr>
-      <th>NumberPlate</th>
+      <th>NbPlate</th>
       <th>Date</th>
       <th>Time</th>
       <th>BookingID</th>
@@ -358,7 +361,7 @@
     <% @germany_tolls.each do |germany_toll| %>
     <tr>
       <td><%= germany_toll.platenr %></td>
-      <td><%= germany_toll.date   %></td>
+      <td><%= germany_toll.date.strftime("%d %B %Y")%></td>
       <td><%= germany_toll.time.strftime("%H:%M") %></td>
       <td><%= germany_toll.bookingid %></td>
       <td><%= germany_toll.art %></td>

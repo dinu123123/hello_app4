@@ -26,10 +26,12 @@
     <%= form.text_field :SECONDNAME, id: :driver_SECONDNAME, :required => 'required' %>
   </div>
 
-  <div class="field">
-    <%= form.label :INFO, 'Salary' %>
-    <%= form.text_field :INFO, id: :driver_INFO, :required => 'required' %>
-  </div>
+  <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
+      <div class="field">
+        <%= form.label :INFO, 'Salary' %>
+        <%= form.text_field :INFO, id: :driver_INFO, :required => 'required' %>
+      </div>
+  <% end %> 
 
   <div class="field">
     <%= form.label :DESCRIPTION %>
