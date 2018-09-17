@@ -15,7 +15,7 @@ class TransactionSearch
   end
 
  def to_time (date)
-  Time.parse(date).strftime('%H:%M')
+  Time.parse(date)
  end
 
   def to_date (date)
@@ -393,8 +393,8 @@ else
 
 
            @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
-                (( de_tolls.date > ?  OR (de_tolls.date == ? AND de_tolls.time >= TIME(?) )) 
-                AND ( de_tolls.date < ? OR (de_tolls.date == ? AND de_tolls.time  <= TIME(?) ))) 
+                (( de_tolls.date > ?  OR (de_tolls.date == ? AND de_tolls.time >= ? )) 
+                AND ( de_tolls.date < ? OR (de_tolls.date == ? AND de_tolls.time  <= ? ))) 
                 ORDER BY de_tolls.date ASC, de_tolls.time ASC', to_date(@date_from), to_date(@date_from), to_time(@date_from),
                 to_date(@date_to), to_date(@date_to), to_time(@date_to) ])
             
