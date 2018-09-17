@@ -386,9 +386,11 @@ else
             
           
 
+
             0.upto( @germanyTollExpenses.size-1) do |j|
                 @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
             end
+          
             if @germanyTollExpenses
                arrayGermanyToll.concat(@germanyTollExpenses)
             end
