@@ -15,7 +15,7 @@ class TransactionSearch
   end
 
  def to_time (date)
-  DateTime.parse(date)
+  Time.parse(date)
  end
 
   def to_date (date)
