@@ -19,7 +19,7 @@ class TransactionSearch
  end
 
   def to_date (date)
-  DateTime.parse(date).strftime('%Y-%m-%d')
+  Date.parse(date).strftime('%Y-%m-%d')
  end
 
 
