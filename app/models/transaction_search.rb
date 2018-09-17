@@ -388,10 +388,6 @@ else
             
 
 
-
-
-
-
            @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
                 (( de_tolls.date > ?  OR (de_tolls.date == ? AND de_tolls.time >= ? )) 
                 AND ( de_tolls.date < ? OR (de_tolls.date == ? AND de_tolls.time  <= ? ))) 
