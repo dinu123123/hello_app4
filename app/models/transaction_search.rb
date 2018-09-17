@@ -413,9 +413,9 @@ else
 
           if BeToll.all.size 
             @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
-            ((be_tolls.date_of_usage > ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time) >= TIME(?) )) 
+            (( be_tolls.date_of_usage > ? OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time) >= TIME(?) )) 
                 AND
-                ((be_tolls.date_of_usage < ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time)  <= TIME(?) )) 
+                ((be_tolls.date_of_usage < ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time)  <= TIME(?) )) )
                 ORDER BY 
                 be_tolls.date_of_usage ASC, be_tolls.entry_time ASC', @date_from.to_date, @date_from.to_date, @date_from,
                                             @date_to.to_date, @date_to.to_date, @date_to ])
