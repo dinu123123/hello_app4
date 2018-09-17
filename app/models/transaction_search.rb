@@ -15,7 +15,7 @@ class TransactionSearch
   end
 
  def to_time (date)
-  Time.parse(date)
+  Time.parse(date.strftime('%H:%M'))
  end
 
   def to_date (date)
