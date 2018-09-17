@@ -373,10 +373,10 @@ else
 
          if DeToll.all.size
             @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
-                ((DATE(de_tolls.date) > DATE(?) OR (DATE(de_tolls.date) == DATE(?) AND TIME(de_tolls.time) >= TIME(?) )) 
-                AND ((DATE(de_tolls.date) < DATE(?) OR (DATE(de_tolls.date) == DATE(?) AND TIME(de_tolls.time)  <= TIME(?) )) 
-                ORDER BY de_tolls.date ASC, de_tolls.time ASC', @date_from.to_date, @date_from.to_date, @date_from.to_time,
-                @date_to.to_date, @date_to.to_date, @date_to.to_time ])
+                ((de_tolls.date > ?) OR (de_tolls.date == ? AND TIME(de_tolls.time) >= TIME(?) )) 
+                AND ((de_tolls.date < ?) OR (de_tolls.date == ? AND TIME(de_tolls.time)  <= TIME(?) )) 
+                ORDER BY de_tolls.date ASC, de_tolls.time ASC', @date_from.to_date, @date_from.to_date, @date_from,
+                @date_to.to_date, @date_to.to_date, @date_to ])
             
             0.upto( @germanyTollExpenses.size-1) do |j|
                 @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
