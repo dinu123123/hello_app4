@@ -18,6 +18,10 @@ class TransactionSearch
   DateTime.parse(date).strftime('%H:%M')
  end
 
+  def to_date (date)
+  DateTime.parse(date).strftime('%Y-%m-%d')
+ end
+
 
 def scope   
 # return  Event.where('date BETWEEN ? AND ?', @date_from, @date_to),
@@ -368,7 +372,7 @@ else
           if TruckExpense.all.size
            @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM truck_expenses where 
               truck_expenses."DATE" BETWEEN ? AND ? ORDER BY 
-              truck_expenses."DATE" ASC', @date_from, @date_to ])
+              truck_expenses."DATE" ASC', to_date(@date_from), to_date(@date_to) ])
           
 
              if (@truckExpense  and @truckExpense.size >0 )         
@@ -381,8 +385,8 @@ else
             @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
                 ((de_tolls.date > ?) OR (de_tolls.date == ? AND TIME(de_tolls.time) >= ? )) 
                 AND ((de_tolls.date < ?) OR (de_tolls.date == ? AND TIME(de_tolls.time)  <= ? )) 
-                ORDER BY de_tolls.date ASC, de_tolls.time ASC', @date_from.to_date, @date_from.to_date, to_time(@date_from),
-                @date_to.to_date, @date_to.to_date, to_time(@date_to) ])
+                ORDER BY de_tolls.date ASC, de_tolls.time ASC', to_date(@date_from), to_date(@date_from), to_time(@date_from),
+                to_date(@date_to), to_date(@date_to), to_time(@date_to) ])
             
           
 
