@@ -74,7 +74,7 @@ if @driver_id > 0
                        @localEvent[@localEvent.count-1].START_END = false
                        
 
-                       
+
                     else
                        #append at the beginning the @date_from as it comes from the form interval
                        @localEvent.unshift(@localEvent[0].dup)
@@ -133,6 +133,8 @@ if @driver_id > 0
           #puts @localEvent[2*(i-1)].truck_id
           #puts @localEvent[2*(i-1)+1].truck_id
 
+asdasd
+
                 #truck_id = 0 means the truck_id is irrelevant
                 if (@truck_id > 0 && @truck_id == @localEvent[2*(i-1)].truck_id) || @truck_id == 0 
                     if TruckExpense.all.size
@@ -147,9 +149,9 @@ if @driver_id > 0
 
 
                    if DeToll.all.size
-                      @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where  de_tolls.truck_id = ? AND
-                      ( de_tolls.date > ?  OR (de_tolls.date == ? AND  de_tolls.time <= ?)) 
-          AND ( de_tolls.date < ? OR (de_tolls.date == ? AND de_tolls.time >= ?)) 
+          @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where  de_tolls.truck_id = ? 
+          AND ( de_tolls.date > ?  OR (de_tolls.date == ? AND  de_tolls.time >= ?)) 
+          AND ( de_tolls.date < ? OR (de_tolls.date == ? AND de_tolls.time <= ?)) 
           ORDER BY de_tolls.date ASC, de_tolls.time ASC',  @localEvent[2*(i-1)].truck_id,
           event_to_date(@localEvent[2*(i-1)].DATE),   event_to_date(@localEvent[2*(i-1)].DATE),   event_to_time(@localEvent[2*(i-1)].DATE),
           event_to_date(@localEvent[2*(i-1)+1].DATE), event_to_date(@localEvent[2*(i-1)+1].DATE), event_to_time(@localEvent[2*(i-1)+1].DATE)
