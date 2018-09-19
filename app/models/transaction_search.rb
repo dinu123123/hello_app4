@@ -26,7 +26,19 @@ def event_to_time (date)
 end 
 
 def event_to_date (date)
-  date.strftime('%Y-%m-%d').to_date
+ 
+
+
+  if date.to_s.include? "T" and ! (date.to_s.include? "U" )
+     Date.parse(date).strftime('%Y-%m-%d')
+  else
+    #Time.parse(date).strftime('2000-01-01 %H:%M:00')  
+    Date.parse(date)
+  end
+
+
+
+
 end
 
  def to_time (date)
