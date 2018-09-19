@@ -21,7 +21,10 @@ def event_to_date (date)
   date.strftime('%Y-%m-%d').to_date
 end
 
- 
+ def to_time (date)
+  Time.parse(date).strftime('2000-01-01 %H:%M:00')
+ end
+
   def to_date (date)
   Date.parse(date)
  end
@@ -130,7 +133,6 @@ if @driver_id > 0
                           
                         arrayTruckExpense.concat(@truckExpense)
                     end
-
 
 
 
@@ -403,8 +405,8 @@ else
           @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
                 ( de_tolls.date > ?  OR (de_tolls.date == ? AND de_tolls.time >= ? )) 
                 AND ( de_tolls.date < ? OR (de_tolls.date == ? AND de_tolls.time  <= ? )) 
-                ORDER BY de_tolls.date ASC, de_tolls.time ASC', to_date(@date_from), to_date(@date_from),event_to_time(@date_from),
-                to_date(@date_to), to_date(@date_to),event_to_time(@date_to) ])
+                ORDER BY de_tolls.date ASC, de_tolls.time ASC', to_date(@date_from), to_date(@date_from), to_time(@date_from),
+                to_date(@date_to), to_date(@date_to), to_time(@date_to) ])
             0.upto( @germanyTollExpenses.size-1) do |j|
                 @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
             end
@@ -421,7 +423,7 @@ else
                 (be_tolls.date_of_usage < ? OR (be_tolls.date_of_usage == ? AND be_tolls.entry_time  <= ? )) 
                 ORDER BY 
                 be_tolls.date_of_usage ASC, be_tolls.entry_time ASC', to_date(@date_from), to_date(@date_from), 
-               event_to_time(@date_from), to_date(@date_to), to_date(@date_to),event_to_time(@date_to) ])
+                to_time(@date_from), to_date(@date_to), to_date(@date_to), to_time(@date_to) ])
             if @BeTollExpenses
              arrayBeToll.concat(@BeTollExpenses)
             end
