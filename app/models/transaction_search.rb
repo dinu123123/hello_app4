@@ -30,10 +30,10 @@ def event_to_date (date)
 
 
   if date.to_s.include? "T" and ! (date.to_s.include? "U" )
-     Date.parse(date).strftime('%Y-%m-%d')
+     Date.parse(date).strftime('%Y-%m-%d').to_date
   else
     #Time.parse(date).strftime('2000-01-01 %H:%M:00')  
-    Date.parse(date)
+    Date.parse(date).to_date
   end
 
 
