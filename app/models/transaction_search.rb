@@ -14,10 +14,14 @@ class TransactionSearch
 
   end
 
- def to_time (date)
-  Time.parse(date.strftime('%H:%M'))
- end
+def event_to_time (date)
+  date.strftime('2000-01-01 %H:%M:00').to_time
+end
+def event_to_date (date)
+  date.strftime('%Y-%m-%d').to_date
+end
 
+ 
   def to_date (date)
   Date.parse(date)
  end
@@ -129,14 +133,30 @@ if @driver_id > 0
 
 
 
+
                    if DeToll.all.size
                       @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where  de_tolls.truck_id = ? AND
-                          ((de_tolls.date > ?) OR (de_tolls.date == ? AND TIME(de_tolls.time) >= TIME(?) )) 
-                          AND ((de_tolls.date < ?) OR (de_tolls.date == ? AND TIME(de_tolls.time)  <= TIME(?) )) 
-                          ORDER BY de_tolls.date ASC, de_tolls.time ASC',  @localEvent[2*(i-1)].truck_id,
-                                       @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)].DATE,
-                                       @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE])
-                      
+                      ( de_tolls.date > ?  OR (de_tolls.date == ? AND  de_tolls.time <= ?)) 
+          AND ( de_tolls.date < ? OR (de_tolls.date == ? AND de_tolls.time >= ?)) 
+          ORDER BY de_tolls.date ASC, de_tolls.time ASC',  @localEvent[2*(i-1)].truck_id,
+          event_to_date(@localEvent[2*(i-1)].DATE),   event_to_date(@localEvent[2*(i-1)].DATE),   event_to_time(@localEvent[2*(i-1)].DATE),
+          event_to_date(@localEvent[2*(i-1)+1].DATE), event_to_date(@localEvent[2*(i-1)+1].DATE), event_to_time(@localEvent[2*(i-1)+1].DATE)
+          ])  
+
+
+#if DeToll.all.size
+ #                     @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where  de_tolls.truck_id = ? AND
+  #                      
+   #                     de_tolls.date > ? 
+    #                  ',  @localEvent[2*(i-1)].truck_id,
+     #                 event_to_date(   @localEvent[2*(i-1)].DATE)])
+                                            
+
+
+
+
+
+
                       0.upto( @germanyTollExpenses.size-1) do |j|
                           @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
                       end
@@ -150,13 +170,13 @@ if @driver_id > 0
 
                      if BeToll.all.size 
                         @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where be_tolls.truck_id = ? AND
-                        ((be_tolls.date_of_usage > ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time) >= TIME(?) )) 
-                            AND
-                            ((be_tolls.date_of_usage < ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time)  <= TIME(?) )) 
+                        (be_tolls.date_of_usage > ? OR (be_tolls.date_of_usage == ? AND be_tolls.entry_time >= ? )) 
+                        AND
+                        (be_tolls.date_of_usage < ? OR (be_tolls.date_of_usage == ? AND be_tolls.entry_time  <= ? )) 
                             ORDER BY 
                             be_tolls.date_of_usage ASC, be_tolls.entry_time ASC', @localEvent[2*(i-1)].truck_id,
-                             @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)].DATE,
-                             @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE])
+                            @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)].DATE.to_date, event_to_time(@localEvent[2*(i-1)].DATE),
+                            @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE.to_date, event_to_time(@localEvent[2*(i-1)+1].DATE)])
                         if @BeTollExpenses
                          arrayBeToll.concat(@BeTollExpenses)
                         end
@@ -368,7 +388,6 @@ elsif @truck_id > 0 && @driver_id == 0
 
 else
 
-
           if TruckExpense.all.size
            @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM truck_expenses where 
               truck_expenses."DATE" BETWEEN ? AND ? ORDER BY 
@@ -381,23 +400,11 @@ else
           end
 
          if DeToll.all.size
-
-
- #@germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
-  #              de_tolls.date > ? AND de_tolls.time >= ?', to_date(@date_from), to_time(@date_to)])
-            
-
-
-           @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
-                (( de_tolls.date > ?  OR (de_tolls.date == ? AND de_tolls.time >= ? )) 
-                AND ( de_tolls.date < ? OR (de_tolls.date == ? AND de_tolls.time  <= ? ))) 
-                ORDER BY de_tolls.date ASC, de_tolls.time ASC', to_date(@date_from), to_date(@date_from), to_time(@date_from),
-                to_date(@date_to), to_date(@date_to), to_time(@date_to) ])
-            
-          
-
-
-
+          @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
+                ( de_tolls.date > ?  OR (de_tolls.date == ? AND de_tolls.time >= ? )) 
+                AND ( de_tolls.date < ? OR (de_tolls.date == ? AND de_tolls.time  <= ? )) 
+                ORDER BY de_tolls.date ASC, de_tolls.time ASC', to_date(@date_from), to_date(@date_from),event_to_time(@date_from),
+                to_date(@date_to), to_date(@date_to),event_to_time(@date_to) ])
             0.upto( @germanyTollExpenses.size-1) do |j|
                 @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
             end
@@ -409,12 +416,12 @@ else
 
           if BeToll.all.size 
             @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
-            (( be_tolls.date_of_usage > ? OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time) >= TIME(?) )) 
+                (be_tolls.date_of_usage > ? OR (be_tolls.date_of_usage == ? AND be_tolls.entry_time >= ? )) 
                 AND
-                ((be_tolls.date_of_usage < ?) OR (be_tolls.date_of_usage == ? AND TIME(be_tolls.entry_time)  <= TIME(?) )) 
+                (be_tolls.date_of_usage < ? OR (be_tolls.date_of_usage == ? AND be_tolls.entry_time  <= ? )) 
                 ORDER BY 
-                be_tolls.date_of_usage ASC, be_tolls.entry_time ASC', @date_from.to_date, @date_from.to_date, @date_from,
-                                            @date_to.to_date, @date_to.to_date, @date_to ])
+                be_tolls.date_of_usage ASC, be_tolls.entry_time ASC', to_date(@date_from), to_date(@date_from), 
+               event_to_time(@date_from), to_date(@date_to), to_date(@date_to),event_to_time(@date_to) ])
             if @BeTollExpenses
              arrayBeToll.concat(@BeTollExpenses)
             end
