@@ -15,8 +15,16 @@ class TransactionSearch
   end
 
 def event_to_time (date)
-  date.strftime('2000-01-01 %H:%M:00').to_time
-end
+  if date.to_s.include? "T" and ! (date.to_s.include? "U" )
+    date.strftime('2000-01-01 %H:%M:00').to_time
+  else
+    #Time.parse(date).strftime('2000-01-01 %H:%M:00')  
+    date.strftime('2000-01-01 %H:%M:00')
+  
+  end
+
+end 
+
 def event_to_date (date)
   date.strftime('%Y-%m-%d').to_date
 end
@@ -64,6 +72,8 @@ if @driver_id > 0
                        @localEvent[@localEvent.count-1].id = @localEvent.count
                        @localEvent[@localEvent.count-1].DATE = @date_to
                        @localEvent[@localEvent.count-1].START_END = false
+                       
+
                        
                     else
                        #append at the beginning the @date_from as it comes from the form interval
@@ -177,8 +187,10 @@ if @driver_id > 0
                         (be_tolls.date_of_usage < ? OR (be_tolls.date_of_usage == ? AND be_tolls.entry_time  <= ? )) 
                             ORDER BY 
                             be_tolls.date_of_usage ASC, be_tolls.entry_time ASC', @localEvent[2*(i-1)].truck_id,
-                            @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)].DATE.to_date, event_to_time(@localEvent[2*(i-1)].DATE),
-                            @localEvent[2*(i-1)+1].DATE.to_date, @localEvent[2*(i-1)+1].DATE.to_date, event_to_time(@localEvent[2*(i-1)+1].DATE)])
+                            event_to_date(@localEvent[2*(i-1)].DATE), event_to_date(@localEvent[2*(i-1)].DATE), 
+                            event_to_time(@localEvent[2*(i-1)].DATE),
+                            event_to_date(@localEvent[2*(i-1)+1].DATE),event_to_date(@localEvent[2*(i-1)+1].DATE), 
+                            event_to_time(@localEvent[2*(i-1)+1].DATE)])
                         if @BeTollExpenses
                          arrayBeToll.concat(@BeTollExpenses)
                         end
