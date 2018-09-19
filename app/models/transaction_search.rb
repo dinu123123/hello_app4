@@ -421,8 +421,8 @@ else
           @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
                 ( de_tolls.date > ?  OR (de_tolls.date == ?  )) 
                 AND ( de_tolls.date < ? OR (de_tolls.date == ?  )) 
-                ORDER BY de_tolls.date ASC, de_tolls.time ASC', to_date(@date_from), to_date(@date_from),
-                to_date(@date_to), to_date(@date_to) ])
+                ORDER BY de_tolls.date ASC, de_tolls.time ASC', event_to_date(@date_from), event_to_date(@date_from),
+                event_to_date(@date_to), event_to_date(@date_to) ])
           
             
 
