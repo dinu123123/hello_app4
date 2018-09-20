@@ -427,25 +427,25 @@ else
              end
           end
 
-         if DeToll.all.size
+#         if DeToll.all.size
 
 
-          @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
-                ( de_tolls.date > ?  OR (de_tolls.date == ?  )) 
-                AND ( de_tolls.date < ? OR (de_tolls.date == ?  )) 
-                ORDER BY de_tolls.date ASC, de_tolls.time ASC', to_date(@date_from), to_date(@date_from),
-                to_date(@date_to), to_date(@date_to) ])
+ #         @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
+  #              ( de_tolls.date > ?  OR (de_tolls.date == ?  )) 
+   #             AND ( de_tolls.date < ? OR (de_tolls.date == ?  )) 
+    #            ORDER BY de_tolls.date ASC, de_tolls.time ASC', to_date(@date_from), to_date(@date_from),
+     #           to_date(@date_to), to_date(@date_to) ])
           
             
 
-            0.upto( @germanyTollExpenses.size-1) do |j|
-                @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
-            end
+#            0.upto( @germanyTollExpenses.size-1) do |j|
+ #               @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
+  #          end
           
-            if @germanyTollExpenses
-               arrayGermanyToll.concat(@germanyTollExpenses)
-            end
-          end
+   #         if @germanyTollExpenses
+    #           arrayGermanyToll.concat(@germanyTollExpenses)
+     #       end
+     #     end
 
           if BeToll.all.size 
             @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
