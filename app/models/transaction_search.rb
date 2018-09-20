@@ -479,35 +479,32 @@ else
             end
           end
 
-          if InvoicedTrip.all.size
-            @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where   
-            (( DATE(invoiced_trips."StartDate") > ?) OR ( DATE(invoiced_trips."StartDate") == ? AND TIME(invoiced_trips."StartDate") >= TIME(?) )) 
-            AND
-            ((DATE(invoiced_trips."EndDate") < ?) OR ( DATE(invoiced_trips."EndDate") == ? AND TIME(invoiced_trips."EndDate") <= TIME(?) )) 
-            ORDER BY 
-            invoiced_trips."StartDate" ASC', @date_from.to_date, @date_from.to_date, @date_from,
-            @date_to.to_date, @date_to.to_date, @date_to
-            ])
-             if @invoicedTrips
-              arrayInvoicedTrips.concat(@invoicedTrips)
-             end
-          end 
+   #       if InvoicedTrip.all.size
+  #          @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where   
+  #          (( DATE(invoiced_trips."StartDate") > ?) OR ( DATE(invoiced_trips."StartDate") == ? AND TIME(invoiced_trips."StartDate") >= TIME(?) )) 
+  #          AND
+  #          ((DATE(invoiced_trips."EndDate") < ?) OR ( DATE(invoiced_trips."EndDate") == ? AND TIME(invoiced_trips."EndDate") <= TIME(?) )) 
+  #          ORDER BY 
+  #          invoiced_trips."StartDate" ASC', @date_from.to_date, @date_from.to_date, @date_from,
+  #          @date_to.to_date, @date_to.to_date, @date_to
+  #          ])
+  #           if @invoicedTrips
+  #            arrayInvoicedTrips.concat(@invoicedTrips)
+  #           end
+  #        end 
 
 
-          if FuelExpense.all.size
-              @fuelExpenses = FuelExpense.find_by_sql(['SELECT * FROM fuel_expenses where 
-                ((fuel_expenses.trsdate > ?) OR (fuel_expenses.trsdate == ? AND TIME(fuel_expenses.trstime) >= TIME(?) )) 
-                AND
-                ((fuel_expenses.trsdate < ?) OR (fuel_expenses.trsdate == ? AND TIME(fuel_expenses.trstime) <= TIME(?) )) 
-                ORDER BY 
-                fuel_expenses.trsdate ASC,  fuel_expenses.trstime ASC', @date_from.to_date, @date_from.to_date, @date_from,
-                                            @date_to.to_date, @date_to.to_date, @date_to
-              ])
-
-
-
-              arrayFuelExpenses.concat(@fuelExpenses)
-          end
+  #        if FuelExpense.all.size
+  #            @fuelExpenses = FuelExpense.find_by_sql(['SELECT * FROM fuel_expenses where 
+  #              ((fuel_expenses.trsdate > ?) OR (fuel_expenses.trsdate == ? AND TIME(fuel_expenses.trstime) >= TIME(?) )) 
+  #              AND
+  #              ((fuel_expenses.trsdate < ?) OR (fuel_expenses.trsdate == ? AND TIME(fuel_expenses.trstime) <= TIME(?) )) 
+  #              ORDER BY 
+  #              fuel_expenses.trsdate ASC,  fuel_expenses.trstime ASC', @date_from.to_date, @date_from.to_date, @date_from,
+  #                                          @date_to.to_date, @date_to.to_date, @date_to
+  #            ])
+   #           arrayFuelExpenses.concat(@fuelExpenses)
+   #       end
 
 
           if Event.all.size >0
