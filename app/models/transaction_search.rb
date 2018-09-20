@@ -447,18 +447,18 @@ else
      #       end
      #     end
 
-          if BeToll.all.size 
-            @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
-                (be_tolls.date_of_usage > ? OR (be_tolls.date_of_usage == ? AND be_tolls.entry_time >= ? )) 
-                AND
-                (be_tolls.date_of_usage < ? OR (be_tolls.date_of_usage == ? AND be_tolls.entry_time  <= ? )) 
-                ORDER BY 
-                be_tolls.date_of_usage ASC, be_tolls.entry_time ASC', to_date(@date_from), to_date(@date_from), 
-                to_time(@date_from), to_date(@date_to), to_date(@date_to), to_time(@date_to) ])
-            if @BeTollExpenses
-             arrayBeToll.concat(@BeTollExpenses)
-            end
-          end
+  #        if BeToll.all.size 
+  #          @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
+  #              (be_tolls.date_of_usage > ? OR (be_tolls.date_of_usage == ? AND be_tolls.entry_time >= ? )) 
+  #              AND
+  #              (be_tolls.date_of_usage < ? OR (be_tolls.date_of_usage == ? AND be_tolls.entry_time  <= ? )) 
+  #              ORDER BY 
+  #              be_tolls.date_of_usage ASC, be_tolls.entry_time ASC', to_date(@date_from), to_date(@date_from), 
+  #              to_time(@date_from), to_date(@date_to), to_date(@date_to), to_time(@date_to) ])
+  #          if @BeTollExpenses
+  #           arrayBeToll.concat(@BeTollExpenses)
+  #          end
+  #        end
 
           if GenericToll.all.size
             @genericTollExpenses = GenericToll.find_by_sql(['SELECT * FROM generic_tolls where 
