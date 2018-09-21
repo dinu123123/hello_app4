@@ -345,7 +345,7 @@ elsif @truck_id > 0 && @driver_id == 0
                       
                       @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where de_tolls.truck_id = ? AND
                           de_tolls.date >= ? AND de_tolls.date <= ? ORDER BY de_tolls.date ASC, de_tolls.time ASC', 
-                          @truck_id, @date_from, @date_to])
+                          @truck_id, @date_from.to_datetime, @date_to.to_datetime])
 
                       0.upto( @germanyTollExpenses.size-1) do |j|
                         @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
@@ -412,12 +412,12 @@ else
              end
           end
 
+
+
          if DeToll.all.size
-
-
             @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
-                de_tolls.datetime >= ? AND de_tolls.date <= ? ORDER BY de_tolls.datetime ASC', 
-                @date_from, @date_from ])
+                de_tolls.datetime >= ? AND de_tolls.datetime <= ? ORDER BY de_tolls.datetime ASC', 
+                @date_from.to_datetime, @date_to.to_datetime ])
           
             0.upto( @germanyTollExpenses.size-1) do |j|
                 @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
