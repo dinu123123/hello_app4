@@ -25,6 +25,25 @@ def event_to_time (date)
 
 end 
 
+
+def to_datetime (date)
+ 
+
+
+  if date.to_s.include? "T" and ! (date.to_s.include? "U" )
+     DateTime.parse(date).to_datetime
+
+
+  else
+    #Time.parse(date).strftime('2000-01-01 %H:%M:00')  
+    DateTime.parse(date).to_datetime
+  end
+
+
+
+
+end
+
 def event_to_date (date)
  
 
@@ -415,9 +434,11 @@ else
 
 
          if DeToll.all.size
+
+
             @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
                 de_tolls.datetime >= ? AND de_tolls.datetime <= ? ORDER BY de_tolls.datetime ASC', 
-                @date_from.to_datetime, @date_to.to_datetime ])
+                to_datetime(@date_from), to_datetime(@date_to) ])
           
             0.upto( @germanyTollExpenses.size-1) do |j|
                 @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
