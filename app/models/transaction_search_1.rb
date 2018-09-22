@@ -81,6 +81,7 @@ if @driver_id > 0
 
 
 
+
               if @localEvent.count > 0 
                 
                   if @localEvent.count%2 == 1
@@ -119,24 +120,17 @@ if @driver_id > 0
 
                else
                @localEvent = Event.find_by_sql(['SELECT * FROM  events where events."DRIVER_id" = ? 
-               and events."DATE" <= ? ORDER BY events."DATE" DESC', @driver_id, to_datetime(@date_to)])
-               
-
-
+              and events."DATE" <= ? ORDER BY events."DATE" DESC', @driver_id, @date_to])
                if( @localEvent.size >0)
                 if @localEvent[0].START_END == true and  @localEvent[0].DATE <=@date_from
-                   
-                  @truck_id1  = @localEvent[0].truck_id    
-
                   @localEvent = Array.new(2) { Event.new }
-
                   @localEvent[0].DRIVER_id = @driver_id
-                  @localEvent[0].truck_id =  @truck_id1
+                  @localEvent[0].truck_id =  @truck_id
                   @localEvent[0].START_END = true
                   @localEvent[0].DATE = @date_from
 
                   @localEvent[1].DRIVER_id = @driver_id
-                  @localEvent[1].truck_id =  @truck_id1
+                  @localEvent[1].truck_id =  @truck_id
                   @localEvent[1].START_END = false
                   @localEvent[1].DATE = @date_to
                   truck_events = false 
@@ -159,9 +153,9 @@ if @driver_id > 0
           #puts @localEvent[2*(i-1)+1].truck_id
 
 
+
                 #truck_id = 0 means the truck_id is irrelevant
                 if (@truck_id > 0 && @truck_id == @localEvent[2*(i-1)].truck_id) || @truck_id == 0 
-
                     if TruckExpense.all.size
                           @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM Truck_Expenses where 
                           Truck_Expenses.truck_id = ? AND Truck_Expenses."DATE" BETWEEN ? AND ? ORDER BY 
@@ -170,6 +164,8 @@ if @driver_id > 0
                           
                         arrayTruckExpense.concat(@truckExpense)
                     end
+
+
 
                    if DeToll.all.size
                       @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where  de_tolls.truck_id = ? AND 
@@ -180,8 +176,6 @@ if @driver_id > 0
   puts "s ".to_s + @localEvent[2*(i-1)].DATE.to_s + " => " + to_datetime(@localEvent[2*(i-1)].DATE).to_s
   puts "e ".to_s + @localEvent[2*(i-1)+1].DATE.to_s + " => " + to_datetime(@localEvent[2*(i-1)+1].DATE).to_s
   
-
-
 
                       0.upto( @germanyTollExpenses.size-1) do |j|
                           @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
@@ -366,7 +360,7 @@ elsif @truck_id > 0 && @driver_id == 0
                     if DeToll.all.size
                       
                       @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where de_tolls.truck_id = ? AND
-                          de_tolls.datetime >= ? AND de_tolls.datetime <= ? ORDER BY de_tolls.datetime ASC', 
+                          de_tolls.date >= ? AND de_tolls.date <= ? ORDER BY de_tolls.date ASC, de_tolls.time ASC', 
                           @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
 
 
