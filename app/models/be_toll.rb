@@ -45,7 +45,7 @@ nr_rows_insterted= 0
 
                               @my_row_datetime = row.to_a[15][1]+ "T" + row.to_a[19][1]
                               @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
-
+puts "<<<<".to_s + @my_row.to_h.to_s
                               BeToll.create! @my_row.to_h
                         end
                       end
