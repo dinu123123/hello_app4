@@ -42,6 +42,10 @@ nr_rows_insterted= 0
                               row.drop(1).to_a[21][1].try(:gsub!,',', '.')
                               @my_truck = Truck.find_by NB_PLATE:row.drop(1).to_a[9][1].gsub(/\s+/, "")
                               @my_row = row.drop(1).to_a<<(["truck_id",@my_truck.id]) 
+
+                              @my_row_datetime = row.to_a[15][1]+ "T" + row.to_a[19][1]
+                              @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
+
                               BeToll.create! @my_row.to_h
                         end
                       end

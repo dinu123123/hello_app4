@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180920053638) do
+ActiveRecord::Schema.define(version: 20180923185705) do
 
   create_table "Events", force: :cascade do |t|
     t.datetime "DATE"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20180920053638) do
     t.integer "truck_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "datetime"
   end
 
   create_table "belgium_tolls", force: :cascade do |t|
@@ -139,6 +140,7 @@ ActiveRecord::Schema.define(version: 20180920053638) do
     t.integer "truck_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "datetime"
   end
 
   create_table "generic_tolls", force: :cascade do |t|
