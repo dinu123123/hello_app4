@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Record number</th>
       <th>Reference number</th>
       <th>Date of detailed trip statement</th>
@@ -35,8 +36,9 @@
   </thead>
 
   <tbody>
-    <% @be_tolls.each do |be_toll| %>
+    <% @be_tolls.each_with_index do |be_toll, i| %>
       <tr>
+        <td><%= i+1.to_i %></td>
         <td><%= be_toll.record_number %></td>
         <td><%= be_toll.reference_number %></td>
         <td><%= be_toll.date_of_detailed_trip_statement %></td>
