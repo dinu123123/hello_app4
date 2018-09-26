@@ -102,8 +102,14 @@ individual_import_db(head, 10, InvoicedTrip)
       end
   end
 
- def db
+ def invoice_print 
+  asdad
+    respond_to do |format|
+        format.pdf { head :no_content}
+      end
+  end
 
+ def db
   if !(current_user.email.eql?  "ameropa.logistics@gmail.com")
     redirect_to root_path
   else

@@ -79,7 +79,7 @@ tr:nth-child(even) {
       <th>Trip End DateTime</th>
       <th>Invoice Date</th>
       <th>Total amount</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -98,7 +98,7 @@ tr:nth-child(even) {
         <td><%= invoiced_trip.belgium_toll %></td>
         <td><%= invoiced_trip.swiss_toll %></td>
         <td><%= invoiced_trip.france_toll %></td>
-        <td><%= invoiced_trip.italy_toll %></td>
+        <td><%= invoiced_trip.italy_toll %></td>  
         <td><%= invoiced_trip.uk_toll %></td>
         <td><%= invoiced_trip.netherlands_toll %></td>
         <td><%= invoiced_trip.km %></td>
@@ -110,6 +110,7 @@ tr:nth-child(even) {
         <td><%= invoiced_trip.total_amount %></td>
         <td><%= link_to 'Show', invoiced_trip %></td>
         <td><%= link_to 'Edit', edit_invoiced_trip_path(invoiced_trip) %></td>
+        <td><%= link_to 'Print', invoiced_trips_print_path(:id => invoiced_trip.id), method: :post %></td>
         <td><%= link_to 'Destroy', invoiced_trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

@@ -1,3 +1,6 @@
+require 'json'
+require 'invoice_printer'
+
 class InvoicedTripsController < ApplicationController
   before_action :set_invoiced_trip, only: [:show, :edit, :update, :destroy]
 
@@ -9,8 +12,8 @@ class InvoicedTripsController < ApplicationController
   # GET /drivers
   # GET /drivers.json
   def index
-  #  if(current_user.email.eql?  "ameropa.logistics@gmail.com")
 
+  #  if(current_user.email.eql?  "ameropa.logistics@gmail.com")
     @invoiced_trips = InvoicedTrip.all
     @trucks = Truck.all
     @clients = Client.all
@@ -28,6 +31,115 @@ class InvoicedTripsController < ApplicationController
   # GET /invoiced_trips/1
   # GET /invoiced_trips/1.json
   def show
+  end
+
+#method for invoice printing
+def print
+
+#<InvoicedTrip 
+#id: 1, 
+#date: "2018-09-05", 
+#StartDate: "2018-08-27 07:30:00", 
+#EndDate: "2018-09-04 16:14:00", 
+#invoice_id: "AL2015591_1", 
+#client_id: 2, 
+#DRIVER_id: 8, 
+#truck_id: 8, 
+#germany_toll: 0.38081e3, 
+#belgium_toll: 0.0, 
+#swiss_toll: 0.0, 
+#france_toll: 0.0, 
+#italy_toll: 0.0, 
+#uk_toll: 0.0, 
+#netherlands_toll: 0.0, 
+#km: 3568, 
+#km_evogps: 3767, 
+#km_driver_route_note: 0, 
+#total_amount: 0.348579e4, 
+#created_at: "2018-09-11 22:10:55", 
+#updated_at: "2018-09-13 17:42:56">
+#>>  invoiced_trip.invoice_id
+
+invoiced_trip = InvoicedTrip.find(params[:id])
+
+client = Client.find(invoiced_trip.client_id)
+
+item = InvoicePrinter::Document::Item.new(
+  name: 'Transport  week '.to_s+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+  quantity: nil,
+  unit: "buc".to_s,
+  price: '1',
+  amount: invoiced_trip.total_amount,
+  tax: '0'  
+)
+
+
+
+labels = {
+  name: 'Factura',
+  provider: 'FURNIZOR:',
+  purchaser: 'CLIENT:',
+  tax_id: 'C.I.F.',
+  tax_id2: 'Numar Registrul Comertului',
+  payment: 'Forma uhrady',
+  payment_by_transfer: 'Plata catre urmatorul cont bancar:',
+  account_number: 'IBAN',
+  issue_date: 'Data emiterii (Issue Date):',
+  due_date: 'Data scadenta (Due Date):',
+  item: 'Denumire produse si servicii',
+  quantity: 'U.M.',
+  unit: 'U.M.',
+  price_per_item: 'Cantitatea',
+  amount: 'Valoare',
+  tax: 'Valoare TVA',
+  total: 'TURJAN MIHAIL AS872851             Total de plata'
+}
+
+
+invoice = InvoicePrinter::Document.new(
+  number: invoiced_trip.invoice_id,
+  provider_name: 'Ameropa Logistics S.R.L.',
+  provider_tax_id: 'RO 32274128',
+  provider_tax_id2: '465454',
+  provider_street: 'sat Cioranii de Jos, Nr. 806, Cod 107160, Comuna Ciorani, Judet Prahova, Romania ',
+  provider_street_number: '',
+  provider_postcode: '',
+  provider_city: '',
+  provider_city_part: '',
+  provider_extra_address_line: '',
+  purchaser_name: client.Name,
+  purchaser_tax_id: '',
+  purchaser_tax_id2: '',
+  purchaser_street: client.Address,
+  purchaser_street_number: '',
+  purchaser_postcode: '',
+  purchaser_city: '',
+  purchaser_city_part: '',
+  purchaser_extra_address_line: '',
+  issue_date: invoiced_trip.date.to_s,
+  due_date: (invoiced_trip.date+client.PaymentDelay).to_s,
+  subtotal: 'Eur '+invoiced_trip.total_amount.to_s,
+  tax: 'Eur 0.00',
+  total: 'Eur '+invoiced_trip.total_amount.to_s,
+
+  bank_account_number: 'RO53 RZBR 0000 0600 1753 0734  ',
+  items: [item],
+  note: 'Varianta electronica valabila si fara semnatura si stampila'
+)
+
+
+InvoicePrinter.print(
+  document: invoice,
+  labels: labels,
+  page_size: :a4,
+  file_name:   'wk'.to_s+invoiced_trip.date.strftime("%U").to_s+"_"+
+               client.Name.try(:gsub!,' ', '').to_s+"_"+
+               Truck.find(invoiced_trip.truck_id).NB_PLATE+'.pdf'
+               #,background: 'background.jpg'
+)
+
+
+
   end
 
   # GET /invoiced_trips/new
@@ -49,7 +161,6 @@ class InvoicedTripsController < ApplicationController
         format.html { redirect_to @invoiced_trip, notice: 'Invoiced trip was successfully created.' }
         format.json { render :show, status: :created, location: @invoiced_trip }
       else
-        format.html { render :new }
         format.json { render json: @invoiced_trip.errors, status: :unprocessable_entity }
       end
     end
@@ -90,6 +201,7 @@ class InvoicedTripsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invoiced_trip_params
+      
       params.require(:invoiced_trip).permit(:invoice_id, :date, :StartDate, :EndDate, :client_id, 
         :DRIVER_id, :truck_id, :germany_toll, :belgium_toll, :swiss_toll, :france_toll, 
         :italy_toll, :uk_toll, :netherlands_toll, :km, :km_evogps, :km_driver_route_note, :total_amount)

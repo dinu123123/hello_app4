@@ -53,6 +53,9 @@ end
   get "/events/weekly", as: "weekly"
   
   get "/events/db", as: "db"
+
+  post  'invoiced_trips/print', to: 'invoiced_trips#print' 
+
   get "/events/help", as: "help"
 
   get "/de_tolls/file_import", as: "de_toll_file_import"
@@ -89,6 +92,7 @@ end
    collection { post :import }
    collection { post :import_db }
   end
+
 
   resources :main_menus
 
