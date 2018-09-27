@@ -110,7 +110,7 @@ tr:nth-child(even) {
         <td><%= invoiced_trip.total_amount %></td>
         <td><%= link_to 'Show', invoiced_trip %></td>
         <td><%= link_to 'Edit', edit_invoiced_trip_path(invoiced_trip) %></td>
-        <td><%= link_to 'Print', invoiced_trips_print_path(:id => invoiced_trip.id), method: :post %></td>
+        <td><%= link_to 'Print', invoiced_trips_print_path(:id => invoiced_trip.id, :format => "pdf"), method: :post %></td>
         <td><%= link_to 'Destroy', invoiced_trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

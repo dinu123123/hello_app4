@@ -1,6 +1,3 @@
-lib = File.expand_path('../../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
 require 'json'
 require 'invoice_printer'
 
@@ -21,6 +18,11 @@ class InvoicedTripsController < ApplicationController
     @trucks = Truck.all
     @clients = Client.all
     @drivers = Driver.all
+
+
+
+
+
     respond_to do |format|
         format.html
         format.csv { send_data @invoiced_trips.to_csv, filename: "invoiced_trips-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
@@ -34,6 +36,22 @@ class InvoicedTripsController < ApplicationController
   # GET /invoiced_trips/1
   # GET /invoiced_trips/1.json
   def show
+respond_to do |format|
+        
+        sdfsdf
+
+ format.pdf {
+      @pdf = InvoicePrinter.render(
+        document: invoice
+      )
+      asdasdas
+      send_data @pdf, type: 'application/pdf', disposition: 'inline'
+    }
+
+      end
+
+
+
   end
 
 #method for invoice printing
@@ -140,6 +158,20 @@ InvoicePrinter.print(
                Truck.find(invoiced_trip.truck_id).NB_PLATE+'.pdf'
                #,background: 'background.jpg'
 )
+
+
+respond_to do |format|
+       
+
+ format.pdf {
+      @pdf = InvoicePrinter.render(
+        document: invoice
+      )
+      
+      send_data @pdf, type: 'application/pdf', disposition: 'inline'
+    }
+
+      end
 
 
 

@@ -67,6 +67,8 @@ end
   get "/fuel_expenses/file_import", as: "fuel_expense_file_import"
 
 
+get "home/download_pdf"
+
 
   resources :fuel_expenses do
   collection { post :import}
