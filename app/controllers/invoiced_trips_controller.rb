@@ -85,6 +85,7 @@ labels = {
   payment: 'Forma uhrady',
   payment_by_transfer: 'Plata catre urmatorul cont bancar:',
   account_number: 'IBAN',
+  bank_account_number: '',
   issue_date: 'Data emiterii (Issue Date):',
   due_date: 'Data scadenta (Due Date):',
   item: 'Denumire produse si servicii',
@@ -93,7 +94,7 @@ labels = {
   price_per_item: 'Cantitatea',
   amount: 'Valoare',
   tax: 'Valoare TVA',
-  total: 'TURJAN MIHAIL AS872851             Total de plata'
+  total: 'TURJAN MIHAIL AS872851                     Total de plata'
 }
 
 
@@ -123,7 +124,7 @@ invoice = InvoicePrinter::Document.new(
   tax: 'Eur 0.00',
   total: 'Eur '+invoiced_trip.total_amount.to_s,
 
-  bank_account_number: 'RO53 RZBR 0000 0600 1753 0734  ',
+  bank_account_number: 'RO53 RZBR 0000 0600 1753 0734',
   items: [item],
   note: 'Varianta electronica valabila si fara semnatura si stampila'
 )
@@ -140,14 +141,12 @@ invoice = InvoicePrinter::Document.new(
 
 respond_to do |format|
     format.pdf {
-      @pdf = InvoicePrinter.render(
-        document: invoice,
-      )
-      send_data @pdf, file_name:   'wk'.to_s+invoiced_trip.date.strftime("%U").to_s+"_"+
-               client.Name.try(:gsub!,' ', '').to_s+"_"+
-               Truck.find(invoiced_trip.truck_id).NB_PLATE+'.pdf'
-    }
+
+    send_data InvoicePrinter.render(document: invoice,  labels: labels, page_size: :a4 ), filename: "wk#{invoiced_trip.date.strftime("%U").to_s+
+      "_"+ client.Name.try(:gsub!,' ', '').to_s+"_"+ Truck.find(invoiced_trip.truck_id).NB_PLATE}.pdf",  disposition: 'inline' }
+ 
   end
+
 
 
 
