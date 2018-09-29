@@ -59,12 +59,18 @@ tr:nth-child(even) {
     <tr>
       <th>InvoiceID</th>
       <th>Client Name</th>
+      <% if false %>
       <th>Client ID</th>
+      <% end %>
       <th>Driver Name</th>
       <th>Driver CNP </th>
+      <% if false %>
       <th>Driver ID</th>
+      <% end %>
       <th>Truck</th>
+      <% if false %>
        <th>Truck ID</th>
+      <% end %>
       <th>DE toll</th>
       <th>BE toll</th>
       <th>CH toll</th>
@@ -88,12 +94,18 @@ tr:nth-child(even) {
       <tr>
         <td><%= invoiced_trip.invoice_id %></td>
         <td><%= @clients.find(invoiced_trip.client_id).Name %></td>
+        <% if false %>
         <td><%= invoiced_trip.client_id %></td>
+        <% end %>
         <td><%= @drivers.find(invoiced_trip.DRIVER_id).FIRSTNAME+" "+ @drivers.find(invoiced_trip.DRIVER_id).SECONDNAME %></td>
         <td><%= @drivers.find(invoiced_trip.DRIVER_id).CNP %></td>
+        <% if false %>
         <td><%= invoiced_trip.DRIVER_id %></td>
+        <% end %>
         <td><%= @trucks.find(invoiced_trip.truck_id).NB_PLATE %></td>
+        <% if false %>
         <td><%= invoiced_trip.truck_id %></td>
+        <% end %>
         <td><%= invoiced_trip.germany_toll %></td>
         <td><%= invoiced_trip.belgium_toll %></td>
         <td><%= invoiced_trip.swiss_toll %></td>
