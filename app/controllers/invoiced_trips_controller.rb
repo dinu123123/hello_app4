@@ -78,7 +78,7 @@ item = InvoicePrinter::Document::Item.new(
 
 labels = {
   name: 'Invoice',
-  provider: 'Provider:',
+  provider: 'Supplier:',
   purchaser: 'Purchaser:',
   tax_id: 'VAT',
   tax_id2: 'EUID',
