@@ -68,7 +68,7 @@ client = Client.find(invoiced_trip.client_id)
 item = InvoicePrinter::Document::Item.new(
   name: 'Transport  week '.to_s+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
   quantity: nil,
-  unit: "buc".to_s,
+  unit: "piece".to_s,
   price: '1',
   amount: invoiced_trip.total_amount,
   tax: '0'  
@@ -77,32 +77,32 @@ item = InvoicePrinter::Document::Item.new(
 
 
 labels = {
-  name: 'Factura',
-  provider: 'FURNIZOR:',
-  purchaser: 'CLIENT:',
-  tax_id: 'C.I.F.',
-  tax_id2: 'Numar Registrul Comertului',
+  name: 'Invoice',
+  provider: 'Provider:',
+  purchaser: 'Purchaser:',
+  tax_id: 'VAT',
+  tax_id2: 'EUID',
   payment: 'Forma uhrady',
-  payment_by_transfer: 'Plata catre urmatorul cont bancar:',
-  account_number: 'IBAN',
+  payment_by_transfer: 'Payment by bank transfer on the account bellow:',
+  account_number: 'IBAN:',
   bank_account_number: '',
-  issue_date: 'Data emiterii (Issue Date):',
-  due_date: 'Data scadenta (Due Date):',
-  item: 'Denumire produse si servicii',
+  issue_date: 'Issue Date:',
+  due_date: 'Due Date:',
+  item: 'Service Name',
   quantity: 'U.M.',
   unit: 'U.M.',
-  price_per_item: 'Cantitatea',
-  amount: 'Valoare',
-  tax: 'Valoare TVA',
-  total: 'TURJAN MIHAIL AS872851                     Total de plata'
+  price_per_item: 'Quantity',
+  amount: 'Value',
+  tax: 'VAT (0%)',
+  total: 'TURJAN MIHAIL AS872851                                      Total'
 }
 
 
 invoice = InvoicePrinter::Document.new(
   number: invoiced_trip.invoice_id,
-  provider_name: 'Ameropa Logistics S.R.L.',
-  provider_tax_id: 'RO 32274128',
-  provider_tax_id2: '465454',
+  provider_name: 'Ameropa Logistics SRL',
+  provider_tax_id:'  RO 32274128',
+  provider_tax_id2:'ROONRC.J29/1508/2013 ',
   provider_street: 'sat Cioranii de Jos, Nr. 806, Cod 107160, Comuna Ciorani, Judet Prahova, Romania ',
   provider_street_number: '',
   provider_postcode: '',
@@ -126,7 +126,7 @@ invoice = InvoicePrinter::Document.new(
 
   bank_account_number: 'RO53 RZBR 0000 0600 1753 0734',
   items: [item],
-  note: 'Varianta electronica valabila si fara semnatura si stampila'
+  note: 'Invoice valid in electronic form without stamp and signature'
 )
 
 
