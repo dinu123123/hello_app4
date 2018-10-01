@@ -51,7 +51,13 @@
           <tr>
             <% row.each_with_index do |value, j| %>
                    <% if @arrayWeeklyTruckExpense[0][0].to_s.starts_with?('Wk') and @arrayWeeklyTruckExpense[i][0] == Date.today.cweek.to_i %>
-                             <td bgcolor="#FFA500"><%= value %></td>
+                             <td bgcolor="#FFA500">
+                                      <% if value.is_a?(Struct)  %> 
+                                         <%= value.value.to_s+ '€ '.to_s+value.date.strftime(" %d/%b/%Y") %>
+                                      <% else %>
+                                         <%= value %>
+                                     <% end %>
+                             </td>
                     <% elsif @arrayWeeklyTruckExpense[0][0].to_s.starts_with?('Mo') and @arrayWeeklyTruckExpense[i][0] == Date.today.month.to_i %>
                              <td bgcolor="#FFA500"><%= value %></td>
                    <% else %>      
