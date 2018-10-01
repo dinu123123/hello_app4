@@ -103,6 +103,8 @@ individual_import_db(head, 10, InvoicedTrip)
   end
 
  def invoice_print 
+
+  
   asdad
     respond_to do |format|
         format.pdf { head :no_content}
@@ -418,10 +420,10 @@ def weekly
                          salaryElem = Struct.new(:date, :value)
                          tmp = salaryElem.new(@localEvent[0].DATE.prev_day, 0)
 
-                         @arrayDriverPaymentDates[j][@localEvent[0].DATE.cweek.to_i] = tmp
+                         @arrayDriverPaymentDates[j][@localEvent[0].DATE.to_date.cweek.to_i] = tmp
                          #@arrayWeeklyTruckExpense[@localEvent[0].DATE.cweek.to_i][j] = tmp
 
-                         i = @localEvent[0].DATE.cweek.to_i+1
+                         i = @localEvent[0].DATE.to_date.cweek.to_i+1
                          loop do
 
                                 tmp = salaryElem.new
@@ -443,17 +445,17 @@ def weekly
 
                                tmp.value = (driver.INFO - sum).to_i   
    
-                                @arrayDriverPaymentDates[j][tmp.date.cweek.to_i] = tmp
+                                @arrayDriverPaymentDates[j][tmp.date.to_date.cweek.to_i] = tmp
 
                                 #store only if within the range
                                 
-                                if  @period_start <= tmp.date.cweek.to_i and  tmp.date.cweek.to_i <= @period_end
+                                if  @period_start <= tmp.date.to_date.cweek.to_i and  tmp.date.to_date.cweek.to_i <= @period_end
 
-                                   @arrayWeeklyTruckExpense[tmp.date.cweek.to_i- @period_start+1][j+1] = tmp
+                                   @arrayWeeklyTruckExpense[tmp.date.to_date.cweek.to_i- @period_start+1][j+1] = tmp
                                    
                                 end
 
-                              i = tmp.date.to_date.cweek.to_i+1
+                              i = tmp.date.to_date.to_date.cweek.to_i+1
                               
                             break if tmp.date >= @search1.date_to
 
