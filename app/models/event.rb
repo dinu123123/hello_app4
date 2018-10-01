@@ -65,11 +65,11 @@ def self.to_csv_special(options = {})
           @my_row["DATE"] = row[0]
           @my_row["DRIVER_id"] =  (Driver.find_by CNP:row.to_a[1][1].gsub(/\s+/, "")).id
           @my_row["START_END"] = row[6]
-          @my_row["client_id"] =  (Client.find_by Name:row.to_a[4][1].gsub(/\s+/, "")).id
+          @my_row["client_id"] =  (Client.find_by Name:row.to_a[4][1]).id
           self.create! @my_row.to_h
 	    end
 	end
-
+ 
 
 
 
