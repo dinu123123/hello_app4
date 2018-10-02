@@ -5,7 +5,7 @@
 <body>
   <p id="notice"><%= notice %></p>
  
- <h1>Drivers</h1>
+ <h1>Driver Events</h1>
 <h4>This page is dedicated to the events description - you can see the existent list of events, modify them or introduce new ones.</h4>
 <ul>
  
@@ -38,19 +38,18 @@
 </ul>
 
   <table>
-    <h1>Driver Events</h1>
     <thead>
       <tr>
         <th>ID</th>
-        <th>Date</th>
+        <th><%= link_to "Date", :sort => "DATE" %> </th>
         <th>Driver CNP</th>
         <th>First Name</th>
         <th>Second Name</th>
         <th>Client Name</th>
         <th>Number Plate</th>
         <th>Start/End</th>
-        <th colspan="3"></th>
       </tr>
+        <th colspan="3"></th>
     </thead>
 <tbody>    
     <% @events.each_with_index do |event,i| %>

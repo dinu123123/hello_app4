@@ -91,7 +91,7 @@ individual_import_db(head, 10, InvoicedTrip)
   # GET /drivers
   # GET /drivers.json
   def index
-    @events = Event.all
+    @events = Event.all.order(params[:sort])
     @drivers = Driver.all
     @trucks = Truck.all
     @clients = Client.all
