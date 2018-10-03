@@ -59,6 +59,43 @@ end
  end
 
 
+
+def scope_events_index
+  arrayEvents = Array.new
+
+if @driver_id > 0 and @truck_id == 0
+        @events = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
+          and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC, events."DRIVER_id" ASC', 
+          @driver_id, to_datetime(@date_from), to_datetime(@date_to)])
+        if @events
+            arrayEvents.concat(@events)
+        end 
+elsif @truck_id > 0 && @driver_id == 0
+         @events = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
+              and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC, events."DRIVER_id" ASC', 
+              @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+            if @events
+              arrayEvents.concat(@events)
+            end 
+elsif @truck_id > 0 && @driver_id > 0
+          @events = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? and events.truck_id = ? 
+              and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC, events."DRIVER_id" ASC', 
+              @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+            if @events
+              arrayEvents.concat(@events)
+            end 
+else
+            @events = Event.find_by_sql(['SELECT * FROM events where events."DATE" BETWEEN ? 
+              AND ? ORDER BY events."DRIVER_id" ASC, events."DATE" ASC', to_datetime(@date_from), to_datetime(@date_to)])
+            if @events
+            arrayEvents.concat(@events) 
+            end  
+end
+
+return  arrayEvents
+
+end
+
 def scope   
 # return  Event.where('date BETWEEN ? AND ?', @date_from, @date_to),
 #           TruckExpense.where('date BETWEEN ? AND ?', @date_from, @date_to), 

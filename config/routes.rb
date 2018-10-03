@@ -47,6 +47,7 @@ end
   # have an extract_out method to handle the request
   get "/events/extract_out", as: "mission"
 
+  get "/events/index", as: "mission2"
 
   get "/events/extract_explicit", as: "mission1"
 

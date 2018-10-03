@@ -91,7 +91,15 @@ individual_import_db(head, 10, InvoicedTrip)
   # GET /drivers
   # GET /drivers.json
   def index
-    @events = Event.all.order(params[:sort])
+
+  @search = TransactionSearch.new(params[:search])
+
+
+
+ @events = @search.scope_events_index
+
+
+
     @drivers = Driver.all
     @trucks = Truck.all
     @clients = Client.all
@@ -548,6 +556,7 @@ end
 end
 
   end
+
 
 
   def extract_out
