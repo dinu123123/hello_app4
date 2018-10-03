@@ -1,5 +1,5 @@
 class TransactionSearch 
-  attr_reader :date_from, :date_to, :truck_id, :driver_id, :truck_events
+  attr_reader :date_from, :date_to, :truck_id, :driver_id, :client_id, :truck_events
 
   def initialize(params, large =false)
     params ||= {}
@@ -9,7 +9,7 @@ class TransactionSearch
     
     @driver_id = parsed_driver_id(params[:driver_id], 1)
     @truck_id = parsed_truck_id(params[:truck_id], 1)
-
+    @client_id = parsed_client_id(params[:client_id], 1)
 
 
   end
@@ -63,33 +63,66 @@ end
 def scope_events_index
   arrayEvents = Array.new
 
-if @driver_id > 0 and @truck_id == 0
-        @events = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
-          and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', 
-          @driver_id, to_datetime(@date_from), to_datetime(@date_to)])
-        if @events
-            arrayEvents.concat(@events)
-        end 
-elsif @truck_id > 0 && @driver_id == 0
-         @events = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
-              and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', 
-              @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
-            if @events
-              arrayEvents.concat(@events)
-            end 
-elsif @truck_id > 0 && @driver_id > 0
-          @events = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? and events.truck_id = ? 
-              and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', 
-              @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
-            if @events
-              arrayEvents.concat(@events)
-            end 
-else
-            @events = Event.find_by_sql(['SELECT * FROM events where events."DATE" BETWEEN ? 
-              AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', to_datetime(@date_from), to_datetime(@date_to)])
-            if @events
-            arrayEvents.concat(@events) 
-            end  
+if @client_id > 0 
+
+      if @driver_id > 0 and @truck_id == 0
+                    @events = Event.find_by_sql(['SELECT * FROM events where events.client_id = ? and events."DRIVER_id" = ? 
+                      and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', @client_id,
+                      @driver_id, to_datetime(@date_from), to_datetime(@date_to)])
+                    if @events
+                        arrayEvents.concat(@events)
+                    end 
+            elsif @truck_id > 0 && @driver_id == 0
+                     @events = Event.find_by_sql(['SELECT * FROM events where events.client_id = ? and events.truck_id = ? 
+                          and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', @client_id,
+                          @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                        if @events
+                          arrayEvents.concat(@events)
+                        end 
+            elsif @truck_id > 0 && @driver_id > 0
+                      @events = Event.find_by_sql(['SELECT * FROM events where events.client_id = ? and events."DRIVER_id" = ? and events.truck_id = ? 
+                          and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', @client_id,
+                          @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                        if @events
+                          arrayEvents.concat(@events)
+                        end 
+            else
+                        @events = Event.find_by_sql(['SELECT * FROM events where events.client_id = ? and events."DATE" BETWEEN ? 
+                          AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', @client_id, to_datetime(@date_from), to_datetime(@date_to)])
+                        if @events
+                        arrayEvents.concat(@events) 
+                        end  
+            end
+
+else 
+      if @driver_id > 0 and @truck_id == 0
+              @events = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
+                and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', 
+                @driver_id, to_datetime(@date_from), to_datetime(@date_to)])
+              if @events
+                  arrayEvents.concat(@events)
+              end 
+      elsif @truck_id > 0 && @driver_id == 0
+               @events = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
+                    and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', 
+                    @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                  if @events
+                    arrayEvents.concat(@events)
+                  end 
+      elsif @truck_id > 0 && @driver_id > 0
+                @events = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? and events.truck_id = ? 
+                    and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', 
+                    @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                  if @events
+                    arrayEvents.concat(@events)
+                  end 
+      else
+                  @events = Event.find_by_sql(['SELECT * FROM events where events."DATE" BETWEEN ? 
+                    AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', to_datetime(@date_from), to_datetime(@date_to)])
+                  if @events
+                  arrayEvents.concat(@events) 
+                  end  
+      end
 end
 
 return  arrayEvents
@@ -570,6 +603,12 @@ end
   end
 
   def parsed_truck_id (n1, default)
+    n1.to_i
+    rescue ArgumentError, TypeError
+    default.to_i
+  end
+
+def parsed_client_id (n1, default)
     n1.to_i
     rescue ArgumentError, TypeError
     default.to_i
