@@ -86,7 +86,7 @@ elsif @truck_id > 0 && @driver_id > 0
             end 
 else
             @events = Event.find_by_sql(['SELECT * FROM events where events."DATE" BETWEEN ? 
-              AND ? ORDER BY events."DRIVER_id" ASC, events."DATE" DESC', to_datetime(@date_from), to_datetime(@date_to)])
+              AND ? ORDER BY events."DATE" DESC, events."DRIVER_id" ASC', to_datetime(@date_from), to_datetime(@date_to)])
             if @events
             arrayEvents.concat(@events) 
             end  
