@@ -80,7 +80,14 @@ tr:nth-child(even) {
         <td><%= @drivers.find(driver_expense.DRIVER_id).CNP %></td>
         <td><%= @drivers.find(driver_expense.DRIVER_id).FIRSTNAME %></td>
         <td><%= @drivers.find(driver_expense.DRIVER_id).SECONDNAME %></td>
-        <td><%= @trucks.find(driver_expense.truck_id).NB_PLATE %></td>
+
+        <td>
+           <% if (driver_expense.truck_id != nil) %>
+          <%= @trucks.find(driver_expense.truck_id).NB_PLATE %>
+           <% end%>
+            
+          </td>
+        
         <td><%= driver_expense.DATE %></td>
         <td><%= driver_expense.AMOUNT %></td>
         <td><%= driver_expense.INFO %></td>
