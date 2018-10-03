@@ -39,18 +39,12 @@
   </li>
 
 </ul>
-
-
 <fieldset>
-  <legend> Individual Calculation Interval </legend>
-  <p>Introduce the Event Start/End Date, Driver and Truck to get the cash-flow detailed view</p> 
+  <p>Introduce the Event Start/End date interval, driver and truck:</p>  
     <div class="row">
       <div class="pull-right range-query">
         <%= form_tag mission2_path, :method => 'get' do %>
         <%= datetime_field_tag 'search[date_from]', @search.date_from %>
-
-
-
         <%= datetime_field_tag 'search[date_to]', @search.date_to %>
         <%= collection_select :search, :driver_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
         <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
@@ -64,7 +58,7 @@
 <p> </p> 
 
 <fieldset>
-
+<p>Selected list of events:</p>  
   <table>
     <thead>
       <tr>
