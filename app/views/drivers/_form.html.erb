@@ -28,7 +28,7 @@
 
   <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
       <div class="field">
-        <%= form.label :INFO, 'Salary' %>
+        <%= form.label :INFO, 'Salary', :required => 'required' %>
         <%= form.text_field :INFO, id: :driver_INFO, :required => 'required' %>
       </div>
   <% end %> 

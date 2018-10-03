@@ -443,8 +443,12 @@ def weekly
                                  sum += @driverExpenses[i].AMOUNT
                                end
 
-                               tmp.value = (driver.INFO - sum).to_i   
-   
+                               if driver.INFO == nil
+                                 tmp.value = (2200 - sum).to_i   
+                               else
+                                 tmp.value = (driver.INFO - sum).to_i   
+                               end
+
                                 @arrayDriverPaymentDates[j][tmp.date.to_date.cweek.to_i] = tmp
 
                                 #store only if within the range

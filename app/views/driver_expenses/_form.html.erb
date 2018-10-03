@@ -22,7 +22,7 @@
 
 <%= form.collection_select :DRIVER_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'Driver Name'}, :required => 'required' %>
 
-<%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Number plate"} %>
+<%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Number plate"}, :required => 'required' %>
 
   <div class="field">
     <%= form.label :DATE %>
