@@ -27,7 +27,7 @@ end
                    driver_expenses."DATE" BETWEEN ? AND ? ORDER BY driver_expenses."DATE" DESC, driver_expenses."DRIVER_id" ASC ', 
                    event_to_date(@search.date_from), event_to_date(@search.date_to)])
     else
-         @driver_expenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where driver_expenses.truck_id = ? AND
+         @driver_expenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where driver_expenses."DRIVER_id" = ? AND
                    driver_expenses."DATE" BETWEEN ? AND ? ORDER BY driver_expenses."DATE" DESC, driver_expenses."DRIVER_id" ASC ', 
                   @search.driver_id, event_to_date(@search.date_from), event_to_date(@search.date_to)])
     end
