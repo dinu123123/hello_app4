@@ -41,49 +41,6 @@ individual_import_db(head, 7, BeToll)
 individual_import_db(head, 8, GenericToll)
 individual_import_db(head, 9, FuelExpense)
 individual_import_db(head, 10, InvoicedTrip)
-
-
-
-
-#Drivers
-#   my_header = CSV.readlines(@file_name.path).drop(1).first
-#   CSV.foreach(@file_name.path,headers: my_header).with_index do |row,i|
-#     next if i < 1+1
-#     break if i == 1+head[0].to_i+1
-#     Driver.create! row.to_h
-#   end
-
-#Trucks
-#   my_header = CSV.readlines(@file_name.path).drop(1+1+head[0].to_i).first
-#     CSV.foreach(@file_name.path,headers: my_header).with_index do |row,i|
-#     next if i < 1+1+head[0].to_i+1
-#     break if i == 1+head[0].to_i+1+head[1].to_i+1 
-#     Truck.create! row.to_h
-#   end
-#Clients
-#   my_header = CSV.readlines(@file_name.path).drop(1+1+head[0].to_i+1+head[1].to_i).first
-#   CSV.foreach(@file_name.path,headers: my_header).with_index do |row,i|
-#   next if i < 1+1+head[0].to_i+1+head[1].to_i+1
-#   break if i == 1+head[0].to_i+1+head[1].to_i+1+head[2].to_i+1
-#    Client.create! row.to_h
-#   end
-
-#TruckExpenses
-#   my_header = CSV.readlines(@file_name.path).drop(1+1+head[0].to_i+1+head[1].to_i+1+head[2].to_i).first
-#   CSV.foreach(@file_name.path,headers: my_header).with_index do |row,i|
-#     next if i < 1+1+head[0].to_i+1+head[1].to_i+1+head[2].to_i+1
-#     break if i == 1+head[0].to_i+1+head[1].to_i+1+head[2].to_i+1+head[3].to_i+1
-#     TruckExpense.create! row.to_h
-#   end
-
-
-#DriverExpenses
-#   my_header = CSV.readlines(@file_name.path).drop(1+1+head[0].to_i+1+head[1].to_i+1+head[2].to_i+1+head[3].to_i).first
-#   CSV.foreach(@file_name.path,headers: my_header).with_index do |row,i|
-#     next if i < 1+1+head[0].to_i+1+head[1].to_i+1+head[2].to_i+1+head[3].to_i+1
-#     break if i == 1+head[0].to_i+1+head[1].to_i+1+head[2].to_i+1+head[3].to_i+1+head[4].to_i+1
-#     DriverExpense.create! row.to_h
-#   end
        
   end
 
@@ -92,14 +49,8 @@ individual_import_db(head, 10, InvoicedTrip)
   # GET /drivers.json
   def index
 
-  @search = TransactionSearch.new(params[:search])
-
-
-
- @events = @search.scope_events_index
-
-
-
+    @search = TransactionSearch.new(params[:search])
+    @events = @search.scope_events_index
     @drivers = Driver.all
     @trucks = Truck.all
     @clients = Client.all
@@ -111,9 +62,6 @@ individual_import_db(head, 10, InvoicedTrip)
   end
 
  def invoice_print 
-
-  
-  asdad
     respond_to do |format|
         format.pdf { head :no_content}
       end

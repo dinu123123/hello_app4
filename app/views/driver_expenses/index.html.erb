@@ -53,7 +53,25 @@ tr:nth-child(even) {
   </li>
 
 </ul>
+<fieldset>
+  <p>Introduce the Event Start/End date interval, driver and truck:</p>  
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag dv_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :driver_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
+  </br>
+</fieldset>
+ <p> </p> 
+<p> </p> 
 
+<fieldset>
+<p>Selected list of Driver Expenses:</p> 
 
 <table>
   <thead>
@@ -100,6 +118,7 @@ tr:nth-child(even) {
   </tbody>
 </table>
 
+</fieldset>
 <br>
 </body>
 </html>

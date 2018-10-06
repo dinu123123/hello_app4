@@ -6,10 +6,33 @@ class DriverExpensesController < ApplicationController
     redirect_to driver_expenses_url, notice: "Activity Data Imported!"
   end
 
+
+def event_to_date (date)
+  if date.to_s.include? "T" and ! (date.to_s.include? "U" )
+     Date.parse(date).strftime('%Y-%m-%d').to_date
+  else
+    #Time.parse(date).strftime('2000-01-01 %H:%M:00')  
+    Date.parse(date).to_date
+  end
+end
+
   # GET /drivers
   # GET /drivers.json
   def index
-    @driver_expenses = DriverExpense.all
+
+    @search = TransactionSearch.new(params[:search])
+
+   if @search.driver_id == 0
+         @driver_expenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where 
+                   driver_expenses."DATE" BETWEEN ? AND ? ORDER BY driver_expenses.DATE DESC, driver_expenses.DRIVER_id ASC ', 
+                   event_to_date(@search.date_from), event_to_date(@search.date_to)])
+    else
+         @driver_expenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where driver_expenses.truck_id = ? AND
+                   driver_expenses."DATE" BETWEEN ? AND ? ORDER BY driver_expenses.DATE DESC, driver_expenses.DRIVER_id ASC ', 
+                  @search.driver_id, event_to_date(@search.date_from), event_to_date(@search.date_to)])
+    end
+
+    
     @drivers = Driver.all
     @trucks = Truck.all
     respond_to do |format|
