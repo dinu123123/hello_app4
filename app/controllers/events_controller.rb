@@ -106,7 +106,9 @@ individual_import_db(head, 11, InvoicedTrip)
 
                     @generic_tolls.size.to_s+"," + 
                     @fuel_expenses.size.to_s+"," + 
+                    @invoices.size.to_s+
                     @invoiced_trips.size.to_s+"\n"
+                    "\n"
 
           send_data @header + @drivers.to_csv+
                     @trucks.to_csv+
