@@ -4,7 +4,7 @@ class CreateInvoicedTrips < ActiveRecord::Migration[5.1]
       t.date    :date
       t.date    :StartDate
       t.date    :EndDate
-      t.string  :invoice_id
+      t.integer :invoice_id
       t.integer :client_id
       t.integer :DRIVER_id
       t.integer :truck_id

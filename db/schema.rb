@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 20181007195641) do
     t.date "date"
     t.datetime "StartDate"
     t.datetime "EndDate"
-    t.string "invoice_id"
+    t.integer "invoice_id"
     t.integer "client_id"
     t.integer "DRIVER_id"
     t.integer "truck_id"
