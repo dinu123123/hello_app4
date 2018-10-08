@@ -12,10 +12,14 @@
     </div>
   <% end %>
 
+<% if false %>
  <div class="field">
     <%= form.label :invoice_id, 'Invoice ID' %>
     <%= form.text_field :invoice_id, id: :invoiced_trip_invoice_id, :required => 'required' %>
   </div>
+<% end %>
+
+ <%= form.collection_select :invoice_id, Invoice.all, :id, :name, {prompt: "Invoice"}, :required => 'required' %>
 
  <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
  <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>

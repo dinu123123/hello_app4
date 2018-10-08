@@ -10,17 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180923185705) do
-
-  create_table "Events", force: :cascade do |t|
-    t.datetime "DATE"
-    t.integer "DRIVER_id"
-    t.integer "truck_id"
-    t.boolean "START_END"
-    t.integer "client_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 20181007195641) do
 
   create_table "be_tolls", force: :cascade do |t|
     t.integer "record_number"
@@ -123,6 +113,16 @@ ActiveRecord::Schema.define(version: 20180923185705) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "events", force: :cascade do |t|
+    t.datetime "DATE"
+    t.integer "DRIVER_id"
+    t.integer "truck_id"
+    t.boolean "START_END"
+    t.integer "client_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "fuel_expenses", force: :cascade do |t|
     t.time "trstime"
     t.date "trsdate"
@@ -195,6 +195,17 @@ ActiveRecord::Schema.define(version: 20180923185705) do
     t.integer "km"
     t.integer "km_evogps"
     t.integer "km_driver_route_note"
+    t.decimal "total_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.string "name"
+    t.string "info"
+    t.date "date"
+    t.integer "client_id"
+    t.decimal "vat"
     t.decimal "total_amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

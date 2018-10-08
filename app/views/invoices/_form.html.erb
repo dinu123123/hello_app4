@@ -1,0 +1,53 @@
+<%= form_with(model: invoice, local: true) do |form| %>
+  <% if invoice.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+      <ul>
+      <% invoice.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :"Invoice ID" %>
+    <%= form.text_field :name, id: :invoice_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :"Info (for example: 12gb/304503 or Week34)" %>
+    <%= form.text_field :info, id: :invoice_info %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date, id: :invoice_date %>
+  </div>
+
+<% if false %>
+  <div class="field">
+    <%= form.label :client_id %>
+    <%= form.number_field :client_id, id: :invoice_client_id %>
+  </div>
+<% end %>
+
+ <div class="field">
+<%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
+</div>
+
+  <div class="field">
+    <%= form.label :"vat(%)" %>
+    <%= form.text_field :vat, id: :invoice_vat,  :value => 0  %>
+  </div>
+
+ <div class="field">
+    <%= form.label :"total_amount" %>
+    <%= form.text_field :total_amount, id: :total_amount, :required => 'required' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

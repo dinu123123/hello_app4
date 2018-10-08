@@ -40,8 +40,9 @@ individual_import_db(head, 6, DeToll)
 individual_import_db(head, 7, BeToll)
 individual_import_db(head, 8, GenericToll)
 individual_import_db(head, 9, FuelExpense)
-individual_import_db(head, 10, InvoicedTrip)
-       
+individual_import_db(head, 10, Invoice)
+individual_import_db(head, 11, InvoicedTrip)
+
   end
 
 
@@ -85,6 +86,7 @@ individual_import_db(head, 10, InvoicedTrip)
 
     @generic_tolls = GenericToll.all
     @fuel_expenses = FuelExpense.all
+    @invoices = Invoice.all
     @invoiced_trips = InvoicedTrip.all
 
     respond_to do |format|
@@ -119,6 +121,7 @@ individual_import_db(head, 10, InvoicedTrip)
 
                     @generic_tolls.to_csv+
                     @fuel_expenses.to_csv+
+                    @invoices.to_csv+
                     @invoiced_trips.to_csv,filename: "db#{Date.today.strftime('%Y%m%d')+Time.now.strftime('%H%M%S')}.csv"}
       end
     end

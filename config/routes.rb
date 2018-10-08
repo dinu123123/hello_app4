@@ -1,5 +1,6 @@
   Rails.application.routes.draw do
   
+  resources :invoices
   devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => "registrations"}, 
                      path_names: {sign_in: "login", sign_out: "logout"}
 
@@ -58,6 +59,7 @@ end
   get "/events/db", as: "db"
 
   post  'invoiced_trips/print', to: 'invoiced_trips#print' 
+  post  'invoices/print', to: 'invoices#print' 
 
   get "/events/help", as: "help"
 

@@ -9,12 +9,18 @@ class InvoicedTripsController < ApplicationController
     redirect_to invoiced_trips_url, notice: "Activity Data Imported!"
   end
 
+  def create_multi_invoice
+  end
+
   # GET /drivers
   # GET /drivers.json
   def index
 
   #  if(current_user.email.eql?  "ameropa.logistics@gmail.com")
-    @invoiced_trips = InvoicedTrip.all
+  #  @invoiced_trips = InvoicedTrip.all
+
+    @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips ORDER BY invoiced_trips.date DESC'])
+    @invoices = Invoice.all
     @trucks = Truck.all
     @clients = Client.all
     @drivers = Driver.all

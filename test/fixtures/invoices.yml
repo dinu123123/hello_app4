@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  info: MyString
+  date: 2018-10-07
+  client_id: 1
+  vat: 1
+
+two:
+  name: MyString
+  info: MyString
+  date: 2018-10-07
+  client_id: 1
+  vat: 1

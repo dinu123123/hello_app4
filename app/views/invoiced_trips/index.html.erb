@@ -92,7 +92,15 @@ tr:nth-child(even) {
   <tbody>
     <% @invoiced_trips.each do |invoiced_trip| %>
       <tr>
-        <td><%= invoiced_trip.invoice_id %></td>
+
+        
+        <% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
+          <td><%= @invoices.find(invoiced_trip.invoice_id).name %></td>
+        <% else %>
+          <td><%= invoiced_trip.invoice_id %></td>
+        <% end %>
+
+
         <td><%= @clients.find(invoiced_trip.client_id).Name %></td>
         <% if false %>
         <td><%= invoiced_trip.client_id %></td>
