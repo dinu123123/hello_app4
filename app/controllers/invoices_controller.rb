@@ -95,7 +95,7 @@ invoice = Invoice.find(params[:id])
 
 
 
-invoice_trip_all = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips WHERE invoiced_trips.invoice_id == ? ', invoice.id.to_s])
+invoice_trip_all = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips WHERE invoiced_trips.invoice_id == ? ', invoice.id])
 
 
 invoiced_trip = invoice_trip_all[0]
