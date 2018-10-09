@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th colspan="1"></th>
       <th>Name</th>
       <th>Info</th>
       <th>Date</th>
@@ -16,8 +17,9 @@
   </thead>
 
   <tbody>
-    <% @invoices.each do |invoice| %>
+    <% @invoices.each_with_index do |invoice,j| %>
       <tr>
+        <td><%= j+1 %></td>
         <td><%= invoice.name %></td>
         <td><%= invoice.info %></td>
         <td><%= invoice.date %></td>
