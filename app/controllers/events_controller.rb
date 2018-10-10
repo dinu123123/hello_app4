@@ -52,6 +52,7 @@ individual_import_db(head, 11, InvoicedTrip)
 
     @search = TransactionSearch.new(params[:search])
     @events = @search.scope_events_index
+
     @drivers = Driver.all
     @trucks = Truck.all
     @clients = Client.all
@@ -605,7 +606,7 @@ end
       @client = Client.find(@event.client_id)
     end
     # Never trust parameters from the scary internet, only allow the white list through.
-    def event_params
+    def event_paramss
       params.require(:event).permit(:DATE, :DRIVER_id, :truck_id, :client_id, :START_END)
 
     end

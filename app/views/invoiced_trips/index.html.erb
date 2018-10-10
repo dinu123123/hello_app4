@@ -54,6 +54,30 @@ tr:nth-child(even) {
 
 </ul>
 
+<fieldset>
+  <p>Introduce the Event Start/End date interval, driver and truck:</p>  
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission3_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :driver_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
+        <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
+        <%= collection_select :search, :client_id, Client.all, :id, :Name, {:include_blank => 'All Clients'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
+  </br>
+</fieldset>
+ <p> </p> 
+<p> </p> 
+
+<fieldset>
+<p>Selected list of events:</p>  
+
+
+
 <table>
   <thead>
     <tr>
@@ -125,8 +149,8 @@ tr:nth-child(even) {
         <td><%= invoiced_trip.km %></td>
         <td><%= invoiced_trip.km_evogps %></td>
         <td><%= invoiced_trip.km_driver_route_note %></td>
-        <td><%= invoiced_trip.StartDate.strftime("%d %B %Y %H:%M") %></td>
-        <td><%= invoiced_trip.EndDate.strftime("%d %B %Y %H:%M") %></td>
+        <td><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
+        <td><%= invoiced_trip.EndDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
         <td><%= invoiced_trip.date %></td>
         <td><%= invoiced_trip.total_amount %></td>
         <td><%= link_to 'Show', invoiced_trip %></td>
@@ -141,6 +165,8 @@ tr:nth-child(even) {
     <% end %>
   </tbody>
 </table>
+
+</fieldset>
 
 <br>
 

@@ -18,8 +18,11 @@ class InvoicedTripsController < ApplicationController
 
   #  if(current_user.email.eql?  "ameropa.logistics@gmail.com")
   #  @invoiced_trips = InvoicedTrip.all
+    @search = TransactionSearch.new(params[:search])
+    @invoiced_trips = @search.scope_invoiced_trips_index
+    #@invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips ORDER BY invoiced_trips.date DESC'])
+   
 
-    @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips ORDER BY invoiced_trips.date DESC'])
     @invoices = Invoice.all
     @trucks = Truck.all
     @clients = Client.all
@@ -211,6 +214,7 @@ respond_to do |format|
     # Use callbacks to share common setup or constraints between actions.
     def set_invoiced_trip
       @invoiced_trip = InvoicedTrip.find(params[:id])
+      asdasd
       @truck  = Truck.find(@invoiced_trip.truck_id)
       @driver = Driver.find(@invoiced_trip.DRIVER_id)
       @client = Client.find(@invoiced_trip.client_id)
@@ -218,7 +222,6 @@ respond_to do |format|
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invoiced_trip_params
-      
       params.require(:invoiced_trip).permit(:invoice_id, :date, :StartDate, :EndDate, :client_id, 
         :DRIVER_id, :truck_id, :germany_toll, :belgium_toll, :swiss_toll, :france_toll, 
         :italy_toll, :uk_toll, :netherlands_toll, :km, :km_evogps, :km_driver_route_note, :total_amount)

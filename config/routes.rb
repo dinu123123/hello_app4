@@ -13,9 +13,6 @@ end
   collection { post :import}
   end
 
-  resources :invoiced_trips do
-  collection { post :import}
-  end
   
   resources :clients do
   collection { post :import}
@@ -49,6 +46,8 @@ end
   get "/events/extract_out", as: "mission"
 
   get "/events/index", as: "mission2"
+  get "/invoiced_trips/index", as: "mission3"
+
 
   get "/driver_expenses/index", as: "dv"
 
@@ -100,6 +99,10 @@ get "home/download_pdf"
    collection { post :import_db }
   end
 
+
+  resources :invoiced_trips do
+  collection { post :import}
+  end
 
   resources :main_menus
 
