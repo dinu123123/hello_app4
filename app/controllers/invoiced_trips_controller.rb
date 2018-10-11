@@ -214,7 +214,6 @@ respond_to do |format|
     # Use callbacks to share common setup or constraints between actions.
     def set_invoiced_trip
       @invoiced_trip = InvoicedTrip.find(params[:id])
-      asdasd
       @truck  = Truck.find(@invoiced_trip.truck_id)
       @driver = Driver.find(@invoiced_trip.DRIVER_id)
       @client = Client.find(@invoiced_trip.client_id)
