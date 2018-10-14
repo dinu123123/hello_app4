@@ -64,6 +64,9 @@
     <thead>
       <tr>
         <th>ID</th>
+        <th>created_at</th>
+        <th>updated_at</th>
+        
         <th><%= link_to "Date", :sort => "\"DATE\"" %> </th>
         <th>Driver CNP</th>
         <th>First Name</th>
@@ -79,6 +82,9 @@
     <% @events.each_with_index do |event,i| %>
     <tr>
       <td><%= i+1.to_i %></td>
+      <td><%= event.created_at %></td>
+      <td><%= event.updated_at %></td>
+
       <td><%= event.DATE.strftime("%d %B %Y %H:%M") %></td>
 <% if event.DRIVER_id? %>
 
