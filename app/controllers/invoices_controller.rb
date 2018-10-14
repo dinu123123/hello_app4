@@ -5,7 +5,7 @@ class InvoicesController < ApplicationController
   # GET /invoices.json
   def index
     #@invoices = Invoice.all
-    @invoices = Invoice.find_by_sql(['SELECT * FROM invoices ORDER BY invoices.client_id ASC, invoices.info DESC '])
+    @invoices = Invoice.find_by_sql(['SELECT * FROM invoices ORDER BY  invoices.date DESC, invoices.client_id ASC, invoices.info DESC '])
     @clients = Client.all
   end
 
