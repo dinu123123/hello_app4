@@ -53,12 +53,14 @@ individual_import_db(head, 11, InvoicedTrip)
     @search = TransactionSearch.new(params[:search])
     @events = @search.scope_events_index
 
+
+
     @drivers = Driver.all
     @trucks = Truck.all
     @clients = Client.all
     respond_to do |format|
         format.html
-        format.csv { send_data @events.to_csv_special, filename: "events-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
+        format.csv { send_data Event.all.to_csv_special, filename: "events-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
       end
   end
