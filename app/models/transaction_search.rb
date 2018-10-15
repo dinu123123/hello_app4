@@ -3,7 +3,7 @@ class TransactionSearch
 
   def initialize(params, large =false)
     params ||= {}
-    @date_from = parsed_date(params[:date_from],30.days.ago.to_datetime.strftime('%Y-%m-%dT%H:%M') )
+    @date_from = parsed_date(params[:date_from],(DateTime.now - 2.month).strftime('%Y-%m-%dT%H:%M') )
 
     @date_to = parsed_date(params[:date_to],  (DateTime.now+1.day).strftime('%Y-%m-%dT%H:%M') )
     @driver_id = parsed_driver_id(params[:driver_id], 1)

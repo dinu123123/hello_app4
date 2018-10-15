@@ -5,7 +5,7 @@ class PeriodicTransactionSearch
 
 
     params ||= {}
-    @date_from = parsed_date(params[:date_from], 30.days.ago.to_date.to_s)
+    @date_from = parsed_date(params[:date_from], (DateTime.now - 2.month).to_s)
 
     @date_to = parsed_date(params[:date_to],  (Date.today+1.month).to_s)
     
