@@ -7,7 +7,7 @@
         <%= date_field_tag 'search[date_from]', @search.date_from %>
         <%= date_field_tag 'search[date_to]', @search.date_to %>
 <% if false %>
-        <%= collection_select :search, :driver_id, Driver.all, :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
+        <%= collection_select :search, :driver_id, Driver.all.order('"FIRSTNAME" ASC'), :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
 <% end%>
         <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
         <%= submit_tag 'Display', class: 'btn search-button' %>  
