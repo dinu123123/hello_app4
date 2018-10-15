@@ -4,7 +4,7 @@ class BeTollsController < ApplicationController
   # GET /be_tolls
   # GET /be_tolls.json
   def index
-    @be_tolls = BeToll.all
+    @be_tolls = BeToll.all.order(' date_of_usage DESC').order(' licence_plate_number ASC')
 
     @search = TransactionSearch.new(params[:search], true)
 
