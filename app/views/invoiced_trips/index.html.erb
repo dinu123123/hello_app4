@@ -117,15 +117,92 @@ tr:nth-child(even) {
   <tbody>
     <% @invoiced_trips.each_with_index do |invoiced_trip, j| %>
       <tr>
+<% if invoiced_trip.created_at.to_date == Time.now.utc.to_date%>
+<td bgcolor="#b6f666" style="font-weight:bold"><%= (j+"1".to_i).to_s %></td>
+<% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).name %></td>
+<% else %>
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.invoice_id %></td>
+<% end %>
+<td bgcolor="#b6f666" style="font-weight:bold"><%= @clients.find(invoiced_trip.client_id).Name %></td>
+<% if false %>
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.client_id %></td>
+<% end %>
+<td bgcolor="#b6f666" style="font-weight:bold"><%= @drivers.find(invoiced_trip.DRIVER_id).FIRSTNAME+" "+ @drivers.find(invoiced_trip.DRIVER_id).SECONDNAME %></td>
+<td bgcolor="#b6f666" style="font-weight:bold"><%= @drivers.find(invoiced_trip.DRIVER_id).CNP %></td>
+<% if false %>
+    <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.DRIVER_id %></td>
+<% end %>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= @trucks.find(invoiced_trip.truck_id).NB_PLATE %></td>
+<% if false %>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.truck_id %></td>
+<% end %>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.germany_toll %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.belgium_toll %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.swiss_toll %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.france_toll %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.italy_toll %></td>  
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.uk_toll %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.netherlands_toll %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km_evogps %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km_driver_route_note %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.EndDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.date %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.total_amount %></td>
 
+<% elsif invoiced_trip.created_at.to_date == Time.now.utc.to_date-1%>
+
+
+<td bgcolor="#8bf0f8" style="font-weight:bold"><%= (j+"1".to_i).to_s %></td>
+
+<% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
+  <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).name %></td>
+<% else %>
+  <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.invoice_id %></td>
+<% end %>
+
+<td bgcolor="#8bf0f8" style="font-weight:bold"><%= @clients.find(invoiced_trip.client_id).Name %></td>
+
+<% if false %>
+  <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.client_id %></td>
+<% end %>
+
+<td bgcolor="#8bf0f8" style="font-weight:bold"><%= @drivers.find(invoiced_trip.DRIVER_id).FIRSTNAME+" "+ @drivers.find(invoiced_trip.DRIVER_id).SECONDNAME %></td>
+<td bgcolor="#8bf0f8" style="font-weight:bold"><%= @drivers.find(invoiced_trip.DRIVER_id).CNP %></td>
+<% if false %>
+    <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.DRIVER_id %></td>
+<% end %>
+
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @trucks.find(invoiced_trip.truck_id).NB_PLATE %></td>
+
+<% if false %>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.truck_id %></td>
+<% end %>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.germany_toll %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.belgium_toll %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.swiss_toll %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.france_toll %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.italy_toll %></td>  
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.uk_toll %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.netherlands_toll %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km_evogps %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km_driver_route_note %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.EndDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.date %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.total_amount %></td>
+
+
+<% else %>
          <td><%= (j+"1".to_i).to_s %></td>
         <% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
           <td><%= @invoices.find(invoiced_trip.invoice_id).name %></td>
         <% else %>
           <td><%= invoiced_trip.invoice_id %></td>
         <% end %>
-
-
         <td><%= @clients.find(invoiced_trip.client_id).Name %></td>
         <% if false %>
         <td><%= invoiced_trip.client_id %></td>
@@ -153,6 +230,10 @@ tr:nth-child(even) {
         <td><%= invoiced_trip.EndDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
         <td><%= invoiced_trip.date %></td>
         <td><%= invoiced_trip.total_amount %></td>
+<% end %>
+
+
+
         <td><%= link_to 'Show', invoiced_trip %></td>
         <td><%= link_to 'Edit', edit_invoiced_trip_path(invoiced_trip) %></td>
 
