@@ -19,13 +19,31 @@
   <tbody>
     <% @invoices.each_with_index do |invoice,j| %>
       <tr>
+<% if invoice.created_at.to_date == Date.today%>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.name %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.info %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%=  invoice.vat %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.total_amount %></td>
+<% elsif invoice.created_at.to_date == Date.today-1%>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoice.name %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoice.info %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%=  invoice.vat %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoice.total_amount %></td>
+<% else %>
         <td><%= j+1 %></td>
         <td><%= invoice.name %></td>
         <td><%= invoice.info %></td>
         <td><%= invoice.date %></td>
         <td><%= @clients.find(invoice.client_id).Name %></td>
         <td><%=  invoice.vat %></td>
-         <td><%= invoice.total_amount %></td>
+        <td><%= invoice.total_amount %></td>
+<% end %>
         <td><%= link_to 'Show', invoice %></td>
         <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
         <td><%= link_to 'Print', invoices_print_path(:id => invoice.id, :format => "pdf"), method: :post %></td>
