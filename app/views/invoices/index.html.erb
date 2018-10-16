@@ -19,7 +19,7 @@
   <tbody>
     <% @invoices.each_with_index do |invoice,j| %>
       <tr>
-<% if invoice.created_at.to_date == Date.today%>
+<% if invoice.created_at.to_date == Time.now.utc.to_date%>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= j+1 %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.name %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.info %></td>
@@ -27,7 +27,7 @@
         <td bgcolor="#b6f666" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%=  invoice.vat %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.total_amount %></td>
-<% elsif invoice.created_at.to_date == Date.today-1%>
+<% elsif invoice.created_at.to_date == Time.now.utc.to_date-1%>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= j+1 %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoice.name %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoice.info %></td>
