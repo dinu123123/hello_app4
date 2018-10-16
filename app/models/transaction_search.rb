@@ -74,8 +74,7 @@ if @client_id > 0
                      
             else
                         @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.client_id = ? and invoiced_trips.date BETWEEN ? 
-                          AND ? ORDER BY invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', @client_id, to_datetime(@date_from), to_datetime(@date_to)])
-                      
+                          AND ? ORDER BY invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', @client_id, to_datetime(@date_from), to_datetime(@date_to)])            
             end
 
 else 
@@ -94,8 +93,7 @@ else
                     and invoiced_trips.date BETWEEN ? AND ? ORDER BY invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', 
                     @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
                
-      else
-        
+      else       
                   @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.date BETWEEN ? 
                     AND ? ORDER BY invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', to_datetime(@date_from), to_datetime(@date_to)])
                 
