@@ -320,6 +320,10 @@ def weekly
       @arrayWeeklyTruckExpense = nil
 
       if @search1.type ==1 
+
+
+
+
             @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Client.all.size+2,0)}
             @arrayWeeklyTruckExpense[0][0]= "".to_s
 
@@ -363,7 +367,7 @@ def weekly
 
 
          if @search1.type ==2 and @search1.time == 2
-           
+           #for the time being not worth implemented
          elsif @search1.type ==2 and @search1.time == 1
  
 ##################################
@@ -374,8 +378,6 @@ def weekly
                  
                  @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
                             and events."DATE" <= ? ORDER BY events."DATE" DESC LIMIT 1', driver.id, Date.today])
-
-                  
 
                    if @localEvent.size>0 and @localEvent[0].START_END == true
                    #it means the driver is in service
@@ -443,7 +445,6 @@ else
 
 
 
-
   @totalAll = 0
   for week in @period_start..@period_end do
         @week_total = 0
@@ -474,18 +475,16 @@ else
         
 
         if @search1.type ==1 
+
               Client.all.each_with_index do |client,j|
                      @totalInvoicedTrips = 0
                      @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.client_id = ? AND
                           invoiced_trips.date >= ? AND invoiced_trips.date <= ?', client.id, 
                           @date_from1-client.PaymentDelay, @date_to1-client.PaymentDelay])
-       
+      
                      if  @invoicedTrips != nil
                          1.upto( @invoicedTrips.count) do |i|
-                             @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoicedTrips[i-1].total_amount.to_d
-                             if @invoicedTrips[i-1].total_amount.to_d ==200
-                              
-                            end
+                             @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoicedTrips[i-1].total_amount.to_d 
                          end
                      end  
                     
@@ -503,8 +502,6 @@ else
    end           
 end
     end
-
-
 
           @drivers = Driver.all
           @trucks = Truck.all
