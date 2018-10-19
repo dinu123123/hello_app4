@@ -83,6 +83,7 @@ tr:nth-child(even) {
     <tr>
       <th colspan="1"></th>
       <th>InvoiceID</th>
+      <th>InvoiceInfo</th>
       <th>Client Name</th>
       <% if false %>
       <th>Client ID</th>
@@ -121,8 +122,10 @@ tr:nth-child(even) {
 <td bgcolor="#b6f666" style="font-weight:bold"><%= (j+"1".to_i).to_s %></td>
 <% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
   <td bgcolor="#b6f666" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).name %></td>
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).info %></td>
 <% else %>
   <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.invoice_id %></td>
+  <td bgcolor="#8bf0f8" style="font-weight:bold"><%= "-".to_s %></td>
 <% end %>
 <td bgcolor="#b6f666" style="font-weight:bold"><%= @clients.find(invoiced_trip.client_id).Name %></td>
 <% if false %>
@@ -159,8 +162,10 @@ tr:nth-child(even) {
 
 <% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
   <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).name %></td>
+  <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).info %></td>
 <% else %>
   <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.invoice_id %></td>
+  <td bgcolor="#8bf0f8" style="font-weight:bold"><%= "-".to_s %></td>
 <% end %>
 
 <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @clients.find(invoiced_trip.client_id).Name %></td>
@@ -199,9 +204,13 @@ tr:nth-child(even) {
 <% else %>
          <td><%= (j+"1".to_i).to_s %></td>
         <% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
+
           <td><%= @invoices.find(invoiced_trip.invoice_id).name %></td>
+          <td><%= @invoices.find(invoiced_trip.invoice_id).info %></td>
+                  
         <% else %>
           <td><%= invoiced_trip.invoice_id %></td>
+          <td><%= invoiced_trip.info %></td>
         <% end %>
         <td><%= @clients.find(invoiced_trip.client_id).Name %></td>
         <% if false %>

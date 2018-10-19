@@ -110,13 +110,6 @@ return  arrayInvoicedTrips
 end
 
 
-
-
-
-
-
-
-
 def scope_events_index
   arrayEvents = Array.new
 
