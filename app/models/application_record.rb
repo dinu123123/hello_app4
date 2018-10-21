@@ -4,7 +4,7 @@ class ApplicationRecord < ActiveRecord::Base
     def self.to_csv(options = {})
 	  CSV.generate(options) do |csv|
 	    @column_names_local = column_names
-	    @column_names_local.delete('id')
+	#   @column_names_local.delete('id')
 	    csv << @column_names_local
 	    all.each do |element|
 	      csv << element.attributes.values_at(*@column_names_local)
