@@ -428,7 +428,7 @@ elsif @truck_id > 0 && @driver_id == 0
                       if DriverExpense.all.size
                           @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where 
                             driver_expenses."DRIVER_id" = ? AND driver_expenses."DATE" BETWEEN ? AND ? ORDER BY 
-                            driver_expenses."DATE"', @localEvent[2*(i-1)].DRIVER_id, @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
+                            driver_expenses."DATE"', @localEvent[2*(i-1)].DRIVER_id, @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)+1].DATE.to_date ])
                           arrayDriverExpenses.concat(@driverExpenses)
                       end                
                     end
