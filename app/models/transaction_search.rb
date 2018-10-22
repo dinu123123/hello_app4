@@ -368,6 +368,9 @@ elsif @truck_id > 0 && @driver_id == 0
               and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC', 
               @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
   
+
+
+
               if @localEvent.count > 0 
                   if @localEvent.count%2 == 1
                     if @localEvent[0].START_END == true
@@ -399,20 +402,33 @@ elsif @truck_id > 0 && @driver_id == 0
                   end
                   truck_events = true
                else
+
+              @localEvent = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
+              and events."DATE" <= ? ORDER BY events."DATE" ASC', 
+              @truck_id, to_datetime(@date_from)])
+ 
+
+               if (@localEvent.size >= 1 and  @localEvent.to_a[@localEvent.size-1].START_END == true)
+
+                  @DRIVER_id = @localEvent.to_a[@localEvent.size-1].DRIVER_id 
+
                  @localEvent = Array.new(2) { Event.new }
                   @localEvent[0].START_END = true
                   @localEvent[0].DATE = @date_from
+                  @localEvent[0].DRIVER_id = @DRIVER_id
                   @localEvent[1].START_END = false
                   @localEvent[1].DATE = @date_to
-                  truck_events = false 
+                  truck_events = false
+                 end
+
                end
 
                     1.upto( @localEvent.count/2) do |i|
 
                       if DriverExpense.all.size
                           @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where 
-                            driver_expenses."DATE" BETWEEN ? AND ? ORDER BY 
-                            driver_expenses."DATE"', @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
+                            driver_expenses."DRIVER_id" = ? AND driver_expenses."DATE" BETWEEN ? AND ? ORDER BY 
+                            driver_expenses."DATE"', @localEvent[2*(i-1)].DRIVER_id, @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
                           arrayDriverExpenses.concat(@driverExpenses)
                       end                
                     end
