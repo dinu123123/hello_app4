@@ -4,24 +4,49 @@
   xmlns:x="urn:schemas-microsoft-com:office:excel"
   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:html="http://www.w3.org/TR/REC-html40">
+
+
+
+ <Styles>
+<Style ss:ID="s23">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Font />
+   <Interior ss:Color="#000000" ss:Pattern="Solid"/>
+  </Style>
+</Styles>
+ 
   <Worksheet ss:Name="events">
     <Table>
       <Row>
-      <Cell><Data ss:Type="String">DATE</Data></Cell>
-      <Cell><Data ss:Type="String">DRIVER_id</Data></Cell>
-      <Cell><Data ss:Type="String">truck_id</Data></Cell>
-      <Cell><Data ss:Type="String">START_END</Data></Cell>
-      <Cell><Data ss:Type="String">client_id</Data></Cell>
+      <Cell><Data ss:Type="String">Date</Data></Cell>
+      <Cell><Data ss:Type="String">CNP</Data></Cell>
+      <Cell><Data ss:Type="String">First Name</Data></Cell>
+      <Cell><Data ss:Type="String">Second Name</Data></Cell>
+      <Cell><Data ss:Type="String">Client</Data></Cell>
+      <Cell><Data ss:Type="String">Number Plate</Data></Cell>
+      <Cell><Data ss:Type="String">Start/End</Data></Cell>
       </Row>
-    <% @events.each do |event| %>
-      <Row>
-        <Cell><Data ss:Type="Date"><%= event.DATE %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= event.DRIVER_id %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= event.truck_id %></Data></Cell>
-        <Cell><Data ss:Type="Date"><%= event.START_END %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= event.client_id %></Data></Cell>
-      </Row>
-    <% end %>
+
+<% @trucks1 = Truck.all %>
+<% @drivers1 = Driver.all %>
+<% @clients1 = Client.all %>
+<% @events1 = Event.find_by_sql(['SELECT * FROM events ORDER BY events."DRIVER_id" ASC, events."DATE" ASC']) %>
+<% @events1.each_with_index do |element,i| %>
+          
+    
+<Row>
+<Cell><Data ss:Type="Date" ss:Color="#E22828" ss:Pattern="Solid">  <%= element.attributes.values_at("DATE")[0].to_date %></Data></Cell>
+<Cell><Data ss:Type="String"><%= ((@drivers.find(element.attributes.values_at("DRIVER_id")[0])).CNP) %>      </Data></Cell>
+<Cell><Data ss:Type="String"><%= ((@drivers.find(element.attributes.values_at("DRIVER_id")[0])).FIRSTNAME) %></Data></Cell>
+<Cell><Data ss:Type="String"><%= ((@drivers.find(element.attributes.values_at("DRIVER_id")[0])).SECONDNAME) %></Data></Cell>
+<Cell><Data ss:Type="String"><%= ((@clients.find(element.attributes.values_at("client_id")[0])).Name) %>      </Data></Cell>
+<Cell><Data ss:Type="String"><%= ((@trucks.find(element.attributes.values_at("truck_id")[0])).NB_PLATE) %>    </Data></Cell>
+<Cell><Data ss:Type="String"><%= element.attributes.values_at("START_END")[0] %>                              </Data></Cell>
+</Row>
+<% end %>
+
+ 
+
     </Table>
   </Worksheet>
 </Workbook>

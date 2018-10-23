@@ -19,13 +19,16 @@ def self.to_csv_special(options = {})
     @clients = Client.all
 
 
+    @events = all.find_by_sql(['SELECT * FROM events ORDER BY events."DRIVER_id" ASC, events."DATE" ASC'])
+ 
+
 	  CSV.generate(options) do |csv|
-	    csv << ["Date","Driver CNP","First Name","Second Name","Client Name","Number Plate","Start/End"]
-	    all.each_with_index do |element,i|
+	    csv << ["Date","Driver CNP","First Name","Second Name","Client","Number Plate","Start/End"]
+	    @events.each_with_index do |element,i|
           array = Array.new
           
           #Date 
-          array[0] = element.attributes.values_at("DATE")[0]
+          array[0] = element.attributes.values_at("DATE")[0].to_date
          
           #Driver CNP
           array[1] = 
