@@ -35,7 +35,7 @@
           
     
 <Row>
-<Cell><Data ss:Type="Date" ss:Color="#E22828" ss:Pattern="Solid">  <%= element.attributes.values_at("DATE")[0].to_date %></Data></Cell>
+<Cell><Data ss:Type="Date">  <%= element.attributes.values_at("DATE")[0].to_date %></Data></Cell>
 <Cell><Data ss:Type="String"><%= ((@drivers.find(element.attributes.values_at("DRIVER_id")[0])).CNP) %>      </Data></Cell>
 <Cell><Data ss:Type="String"><%= ((@drivers.find(element.attributes.values_at("DRIVER_id")[0])).FIRSTNAME) %></Data></Cell>
 <Cell><Data ss:Type="String"><%= ((@drivers.find(element.attributes.values_at("DRIVER_id")[0])).SECONDNAME) %></Data></Cell>
