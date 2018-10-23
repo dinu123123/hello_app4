@@ -23,7 +23,7 @@ def self.to_csv_special(options = {})
  
 
 	  CSV.generate(options) do |csv|
-	    csv << ["Date","Driver CNP","First Name","Second Name","Client","Number Plate","Start/End"]
+	    csv << ["Date","Driver CNP","First Name","Second Name","client","Number Plate","Start/End"]
 	    @events.each_with_index do |element,i|
           array = Array.new
           
