@@ -30,7 +30,7 @@
 <% @events1.each_with_index do |element,i| %>
 <% if element.attributes.values_at("START_END")[0] ==true %> 
 <ss:Row>
-  <ss:Cell ss:Color="red"><ss:Data ss:Type="String"><%= ((@drivers1.find(element.attributes.values_at("DRIVER_id")[0])).CNP) %></ss:Data></ss:Cell>
+  <ss:Cell><ss:Data ss:Type="String"><%= ((@drivers1.find(element.attributes.values_at("DRIVER_id")[0])).CNP) %></ss:Data></ss:Cell>
   <ss:Cell><ss:Data ss:Type="String"><%= ((@drivers1.find(element.attributes.values_at("DRIVER_id")[0])).FIRSTNAME) %></ss:Data></ss:Cell>
   <ss:Cell><ss:Data ss:Type="String"><%= ((@drivers1.find(element.attributes.values_at("DRIVER_id")[0])).SECONDNAME) %></ss:Data></ss:Cell>
   <ss:Cell><ss:Data ss:Type="String"><%= ((@clients1.find(element.attributes.values_at("client_id")[0])).Name) %></ss:Data></ss:Cell>
