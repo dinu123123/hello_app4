@@ -1,53 +1,50 @@
 <?xml version="1.0"?>
-<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
-  xmlns:o="urn:schemas-microsoft-com:office:office"
-  xmlns:x="urn:schemas-microsoft-com:office:excel"
-  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
-  xmlns:html="http://www.w3.org/TR/REC-html40">
+<ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+
+<ss:Styles>
+    <ss:Style ss:ID="1">
+      <ss:Font ss:Color="red" ss:Bold="1"/>
+        
+      </ss:Style>
+
+    </ss:Styles>
 
 
 
- <Styles>
-<Style ss:ID="s23">
-   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
-   <Font />
-   <Interior ss:Color="#000000" ss:Pattern="Solid"/>
-  </Style>
-</Styles>
- 
-  <Worksheet ss:Name="events">
-    <Table>
-      <Row>
-      <Cell><Data ss:Type="String">CNP</Data></Cell>
-      <Cell><Data ss:Type="String">First Name</Data></Cell>
-      <Cell><Data ss:Type="String">Second Name</Data></Cell>
-      <Cell><Data ss:Type="String">Client</Data></Cell>
-      <Cell><Data ss:Type="String">Number Plate</Data></Cell>
-      <Cell><Data ss:Type="String">Start Date</Data></Cell>
-      <Cell><Data ss:Type="String">End Date</Data></Cell>
-      </Row>
+
+  <ss:Worksheet ss:Name="events">
+    <ss:Table>
+      <ss:Row ss:StyleID="1">
+      <ss:Cell><ss:Data ss:Type="String">CNP</ss:Data></ss:Cell>
+      <ss:Cell><ss:Data ss:Type="String">First Name</ss:Data></ss:Cell>
+      <ss:Cell><ss:Data ss:Type="String">Second Name</ss:Data></ss:Cell>
+      <ss:Cell><ss:Data ss:Type="String">Client</ss:Data></ss:Cell>
+      <ss:Cell><ss:Data ss:Type="String">Number Plate</ss:Data></ss:Cell>
+      <ss:Cell><ss:Data ss:Type="String">Start Date</ss:Data></ss:Cell>
+      <ss:Cell><ss:Data ss:Type="String">End Date</ss:Data></ss:Cell>
+      </ss:Row>
 <% @trucks1 = Truck.all %>
 <% @drivers1 = Driver.all %>
 <% @clients1 = Client.all %>
 <% @events1 = Event.find_by_sql(['SELECT * FROM events ORDER BY events."DRIVER_id" ASC, events."DATE" ASC']) %>
 <% @events1.each_with_index do |element,i| %>
 <% if element.attributes.values_at("START_END")[0] ==true %> 
-<Row>
-  <Cell><Data ss:Type="String"><%= ((@drivers.find(element.attributes.values_at("DRIVER_id")[0])).CNP) %>      </Data></Cell>
-  <Cell><Data ss:Type="String"><%= ((@drivers.find(element.attributes.values_at("DRIVER_id")[0])).FIRSTNAME) %></Data></Cell>
-  <Cell><Data ss:Type="String"><%= ((@drivers.find(element.attributes.values_at("DRIVER_id")[0])).SECONDNAME) %></Data></Cell>
-  <Cell><Data ss:Type="String"><%= ((@clients.find(element.attributes.values_at("client_id")[0])).Name) %>      </Data></Cell>
-  <Cell><Data ss:Type="String"><%= ((@trucks.find(element.attributes.values_at("truck_id")[0])).NB_PLATE) %>    </Data></Cell>
-  <Cell><Data ss:Type="Date"><%= element.attributes.values_at("DATE")[0].to_date %></Data></Cell>
+<ss:Row>
+  <ss:Cell ss:Color="red"><ss:Data ss:Type="String"><%= ((@drivers1.find(element.attributes.values_at("DRIVER_id")[0])).CNP) %></ss:Data></ss:Cell>
+  <ss:Cell><ss:Data ss:Type="String"><%= ((@drivers1.find(element.attributes.values_at("DRIVER_id")[0])).FIRSTNAME) %></ss:Data></ss:Cell>
+  <ss:Cell><ss:Data ss:Type="String"><%= ((@drivers1.find(element.attributes.values_at("DRIVER_id")[0])).SECONDNAME) %></ss:Data></ss:Cell>
+  <ss:Cell><ss:Data ss:Type="String"><%= ((@clients1.find(element.attributes.values_at("client_id")[0])).Name) %></ss:Data></ss:Cell>
+  <ss:Cell><ss:Data ss:Type="String"><%= ((@trucks1.find(element.attributes.values_at("truck_id")[0])).NB_PLATE) %></ss:Data></ss:Cell>
+  <ss:Cell><ss:Data ss:Type="Date"><%= element.attributes.values_at("DATE")[0].to_date %></ss:Data></ss:Cell>
 <% if (@events1[i+1] and @events1[i+1].START_END == true) or  !@events1[i+1] %>
-  <Cell><Data ss:Type="Date">  <%= "-".to_s %></Data></Cell> 
-</Row>
+  <ss:Cell><ss:Data ss:Type="Date">  <%= "-".to_s %></ss:Data></ss:Cell> 
+</ss:Row>
 <% end %>
 <% else %>
-  <Cell><Data ss:Type="Date"><%= element.attributes.values_at("DATE")[0].to_date %></Data></Cell>
-</Row>
+  <ss:Cell><ss:Data ss:Type="Date"><%= element.attributes.values_at("DATE")[0].to_date %></ss:Data></ss:Cell>
+</ss:Row>
 <% end %>
 <% end %>
-    </Table>
-  </Worksheet>
-</Workbook>
+    </ss:Table>
+  </ss:Worksheet>
+</ss:Workbook>
