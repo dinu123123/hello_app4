@@ -48,6 +48,9 @@ individual_import_db(head, 2, Client)
  #             Invoice.all.size+InvoicedTrip.all.size
 #flash[:success] = "DB sucessfully imported #@total_size lines!"
 
+
+redirect_to events_url, notice: "Activity Data Imported!"
+
   end
 
 
