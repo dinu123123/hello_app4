@@ -31,17 +31,40 @@ end
 
 
 individual_import_db(head, 0, Driver)
+#flash[:success] = "Drivers tbl sucessfully imported #Driver.all.size lines!"
+
 individual_import_db(head, 1, Truck)
+#flash[:success] = "Trucks tbl sucessfully imported #Truck.all.size lines!"
+
 individual_import_db(head, 2, Client)
+#flash[:success] = "Clients tbl sucessfully imported #Client.all.size lines!"
+
 individual_import_db(head, 3, TruckExpense)
+#flash[:success] = "TruckExpenses tbl sucessfully imported #TruckExpenses.all.size lines!"
+
 individual_import_db(head, 4, DriverExpense)
+#flash[:success] = "DriverExpenses tbl sucessfully imported #DriverExpense.all.size lines!"
+
 individual_import_db(head, 5, Event)
+#flash[:success] = "Events tbl sucessfully imported #Event.all.size lines!"
+
 individual_import_db(head, 6, DeToll)
+#flash[:success] = "DeToll tbl sucessfully imported #DeToll.all.size lines!"
+
 individual_import_db(head, 7, BeToll)
+#flash[:success] = "BeToll tbl sucessfully imported #BeToll.all.size lines!"
+
 individual_import_db(head, 8, GenericToll)
+#flash[:success] = "GenericTolls tbl sucessfully imported #GenericToll.all.size lines!"
+
 individual_import_db(head, 9, FuelExpense)
+#flash[:success] = "FuelExpenses tbl sucessfully imported #FuelExpense.all.size lines!"
+
 individual_import_db(head, 10, Invoice)
+#flash[:success] = "Invoices tbl sucessfully imported #Invoice.all.size lines!"
+
 individual_import_db(head, 11, InvoicedTrip)
+#flash[:success] = "InvoicedTrip tbl sucessfully imported #InvoicedTrip.all.size lines!"
 
 @total_size = Driver.all.size+Truck.all.size+Client.all.size+TruckExpense.all.size+DriverExpense.all.size+
              Event.all.size+DeToll.all.size+BeToll.all.size+GenericToll.all.size+FuelExpense.all.size+
