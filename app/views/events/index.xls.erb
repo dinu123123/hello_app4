@@ -35,13 +35,13 @@
   <ss:Cell><ss:Data ss:Type="String"><%= ((@drivers1.find(element.attributes.values_at("DRIVER_id")[0])).SECONDNAME) %></ss:Data></ss:Cell>
   <ss:Cell><ss:Data ss:Type="String"><%= ((@clients1.find(element.attributes.values_at("client_id")[0])).Name) %></ss:Data></ss:Cell>
   <ss:Cell><ss:Data ss:Type="String"><%= ((@trucks1.find(element.attributes.values_at("truck_id")[0])).NB_PLATE) %></ss:Data></ss:Cell>
-  <ss:Cell><ss:Data ss:Type="Date"><%= element.attributes.values_at("DATE")[0].to_date %></ss:Data></ss:Cell>
+  <ss:Cell><ss:Data ss:Type="String"><%= element.attributes.values_at("DATE")[0].to_date %></ss:Data></ss:Cell>
 <% if (@events1[i+1] and @events1[i+1].START_END == true) or  !@events1[i+1] %>
-  <ss:Cell><ss:Data ss:Type="Date">  <%= "-".to_s %></ss:Data></ss:Cell> 
+  <ss:Cell><ss:Data ss:Type="String">  <%= "-".to_s %></ss:Data></ss:Cell> 
 </ss:Row>
 <% end %>
 <% else %>
-  <ss:Cell><ss:Data ss:Type="Date"><%= element.attributes.values_at("DATE")[0].to_date %></ss:Data></ss:Cell>
+  <ss:Cell><ss:Data ss:Type="String"><%= element.attributes.values_at("DATE")[0].to_date %></ss:Data></ss:Cell>
 </ss:Row>
 <% end %>
 <% end %>
