@@ -36,9 +36,9 @@ individual_import_db(head, 2, Client)
 individual_import_db(head, 3, TruckExpense)
 individual_import_db(head, 4, DriverExpense)
 individual_import_db(head, 5, Event)
-#individual_import_db(head, 6, DeToll)
-#individual_import_db(head, 7, BeToll)
-#individual_import_db(head, 8, GenericToll)
+individual_import_db(head, 6, DeToll)
+individual_import_db(head, 7, BeToll)
+individual_import_db(head, 8, GenericToll)
 #individual_import_db(head, 9, FuelExpense)
 #individual_import_db(head, 10, Invoice)
 #individual_import_db(head, 11, InvoicedTrip)
@@ -46,8 +46,7 @@ individual_import_db(head, 5, Event)
 @total_size = Driver.all.size+Truck.all.size+Client.all.size+TruckExpense.all.size+DriverExpense.all.size+
              Event.all.size+DeToll.all.size+BeToll.all.size+GenericToll.all.size+FuelExpense.all.size+
               Invoice.all.size+InvoicedTrip.all.size
-flash[:success] = "DB sucessfully imported #@total_size lines!"
-redirect_to events_url, notice: "Activity Data Imported!"
+redirect_to events_url, notice: "DB sucessfully imported #@total_size lines!"
 
   end
 
