@@ -43,6 +43,9 @@ individual_import_db(head, 9, FuelExpense)
 individual_import_db(head, 10, Invoice)
 individual_import_db(head, 11, InvoicedTrip)
 
+@total_size = Driver.all.size
+redirect_to root_path, notice: "Activity Data SUCESSFULLY Imported !"+@total_size.to_s
+
   end
 
 
