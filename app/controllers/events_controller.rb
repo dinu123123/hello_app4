@@ -43,10 +43,10 @@ individual_import_db(head, 9, FuelExpense)
 individual_import_db(head, 10, Invoice)
 individual_import_db(head, 11, InvoicedTrip)
 
-@total_size = Driver.all.size+Truck.all.size+Client.all.size+TruckExpense.all.size+DriverExpense.all.size+
-              Event.all.size+DeToll.all.size+BeToll.all.size+GenericToll.all.size+FuelExpense.all.size+
-              Invoice.all.size+InvoicedTrip.all.size
-flash[:success] = "DB sucessfully imported #@total_size lines!"
+#@total_size = Driver.all.size+Truck.all.size+Client.all.size+TruckExpense.all.size+DriverExpense.all.size+
+ #             Event.all.size+DeToll.all.size+BeToll.all.size+GenericToll.all.size+FuelExpense.all.size+
+ #             Invoice.all.size+InvoicedTrip.all.size
+#flash[:success] = "DB sucessfully imported #@total_size lines!"
 
   end
 
