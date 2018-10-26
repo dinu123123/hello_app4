@@ -57,7 +57,7 @@ individual_import_db(head, 5, Event)
 individual_import_db(head, 8, GenericToll)
 #flash[:success] = "GenericTolls tbl sucessfully imported #GenericToll.all.size lines!"
 
-individual_import_db(head, 9, FuelExpense)
+#individual_import_db(head, 9, FuelExpense)
 #flash[:success] = "FuelExpenses tbl sucessfully imported #FuelExpense.all.size lines!"
 
 individual_import_db(head, 10, Invoice)
