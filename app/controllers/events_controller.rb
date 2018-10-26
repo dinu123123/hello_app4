@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   before_action :set_driver_truck, :set_event, :set_client,
    only: [:show, :edit, :update, :destroy]
 
-def individual_import_db (head, rank, appRecord)
+def individual_import_db (input_head, rank, appRecord)
    
   head = input_head.first.to_a
   drop_until_header_line =1
@@ -11,7 +11,7 @@ def individual_import_db (head, rank, appRecord)
      drop_until_header_line +=  1+head[i].to_i
   end
   
-  my_header = head.drop(drop_until_header_line).first
+  my_header = input_head.drop(drop_until_header_line).first
    
   CSV.foreach(@file_name.path,headers: my_header).with_index do |row,i|
        next if i < 1+drop_until_header_line
