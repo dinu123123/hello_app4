@@ -48,7 +48,7 @@ individual_import_db(head, 4, DriverExpense)
 individual_import_db(head, 5, Event)
 #flash[:success] = "Events tbl sucessfully imported #Event.all.size lines!"
 
-individual_import_db(head, 6, DeToll)
+#individual_import_db(head, 6, DeToll)
 #flash[:success] = "DeToll tbl sucessfully imported #DeToll.all.size lines!"
 
 #individual_import_db(head, 7, BeToll)
