@@ -3,13 +3,15 @@ class EventsController < ApplicationController
    only: [:show, :edit, :update, :destroy]
 
 def individual_import_db (head, rank, appRecord)
+   
+  head = input_head.first.to_a
   drop_until_header_line =1
   
   for i in 0..rank-1 do
      drop_until_header_line +=  1+head[i].to_i
   end
   
-  my_header = CSV.readlines(@file_name.path).drop(drop_until_header_line).first
+  my_header = head.drop(drop_until_header_line).first
    
   CSV.foreach(@file_name.path,headers: my_header).with_index do |row,i|
        next if i < 1+drop_until_header_line
@@ -27,7 +29,7 @@ end
     
   @file_name = params[:file]
 
-  head = CSV.readlines(@file_name.path).first.to_a
+  head = CSV.readlines(@file_name.path)
 
 
 individual_import_db(head, 0, Driver)
@@ -48,16 +50,16 @@ individual_import_db(head, 4, DriverExpense)
 individual_import_db(head, 5, Event)
 #flash[:success] = "Events tbl sucessfully imported #Event.all.size lines!"
 
-#individual_import_db(head, 6, DeToll)
+individual_import_db(head, 6, DeToll)
 #flash[:success] = "DeToll tbl sucessfully imported #DeToll.all.size lines!"
 
-#individual_import_db(head, 7, BeToll)
+individual_import_db(head, 7, BeToll)
 #flash[:success] = "BeToll tbl sucessfully imported #BeToll.all.size lines!"
 
 individual_import_db(head, 8, GenericToll)
 #flash[:success] = "GenericTolls tbl sucessfully imported #GenericToll.all.size lines!"
 
-#individual_import_db(head, 9, FuelExpense)
+individual_import_db(head, 9, FuelExpense)
 #flash[:success] = "FuelExpenses tbl sucessfully imported #FuelExpense.all.size lines!"
 
 individual_import_db(head, 10, Invoice)
@@ -66,9 +68,9 @@ individual_import_db(head, 10, Invoice)
 individual_import_db(head, 11, InvoicedTrip)
 #flash[:success] = "InvoicedTrip tbl sucessfully imported #InvoicedTrip.all.size lines!"
 
-#@total_size = Driver.all.size+Truck.all.size+Client.all.size+TruckExpense.all.size+DriverExpense.all.size+
- #            Event.all.size+DeToll.all.size+BeToll.all.size+GenericToll.all.size+FuelExpense.all.size+
-  #            Invoice.all.size+InvoicedTrip.all.size
+@total_size = Driver.all.size+Truck.all.size+Client.all.size+TruckExpense.all.size+DriverExpense.all.size+
+             Event.all.size+DeToll.all.size+BeToll.all.size+GenericToll.all.size+FuelExpense.all.size+
+              Invoice.all.size+InvoicedTrip.all.size
 redirect_to events_url, notice: "DB sucessfully imported  lines!"
 
   end
