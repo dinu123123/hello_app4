@@ -66,10 +66,10 @@ individual_import_db(head, 10, Invoice)
 individual_import_db(head, 11, InvoicedTrip)
 #flash[:success] = "InvoicedTrip tbl sucessfully imported #InvoicedTrip.all.size lines!"
 
-@total_size = Driver.all.size+Truck.all.size+Client.all.size+TruckExpense.all.size+DriverExpense.all.size+
-             Event.all.size+DeToll.all.size+BeToll.all.size+GenericToll.all.size+FuelExpense.all.size+
-              Invoice.all.size+InvoicedTrip.all.size
-redirect_to events_url, notice: "DB sucessfully imported #@total_size lines!"
+#@total_size = Driver.all.size+Truck.all.size+Client.all.size+TruckExpense.all.size+DriverExpense.all.size+
+ #            Event.all.size+DeToll.all.size+BeToll.all.size+GenericToll.all.size+FuelExpense.all.size+
+  #            Invoice.all.size+InvoicedTrip.all.size
+#redirect_to events_url, notice: "DB sucessfully imported #@total_size lines!"
 
   end
 
