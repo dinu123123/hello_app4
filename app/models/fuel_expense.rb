@@ -3,7 +3,7 @@ class FuelExpense < ApplicationRecord
  belongs_to :truck, :optional => true
 
 
-validates :trstime, uniqueness: {scope: [:product, :truck_id, :trsdate, :stationname]}
+#validates :trstime, uniqueness: {scope: [:product, :truck_id, :trsdate, :stationname]}
 
  #CSV.read(file.path, :quote_char => "\´")
  def self.import(file)
