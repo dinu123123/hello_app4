@@ -51,7 +51,7 @@ individual_import_db(head, 5, Event)
 #individual_import_db(head, 6, DeToll)
 #flash[:success] = "DeToll tbl sucessfully imported #DeToll.all.size lines!"
 
-individual_import_db(head, 7, BeToll)
+#individual_import_db(head, 7, BeToll)
 #flash[:success] = "BeToll tbl sucessfully imported #BeToll.all.size lines!"
 
 individual_import_db(head, 8, GenericToll)
