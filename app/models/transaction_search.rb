@@ -52,6 +52,7 @@ end
   Date.parse(date)
  end
 
+##changed
 def scope_invoiced_trips_index 
   arrayInvoicedTrips = Array.new
 if @client_id > 0 
