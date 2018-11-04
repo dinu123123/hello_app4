@@ -1,6 +1,6 @@
   Rails.application.routes.draw do
   
-  resources :invoices
+  
   devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => "registrations"}, 
                      path_names: {sign_in: "login", sign_out: "logout"}
 
@@ -47,7 +47,7 @@ end
 
   get "/events/index", as: "mission2"
   get "/invoiced_trips/index", as: "mission3"
-
+  get "/invoices/index", as: "mission4"
 
   get "/driver_expenses/index", as: "dv"
 
@@ -99,8 +99,11 @@ get "home/download_pdf"
    collection { post :import_db }
   end
 
-
   resources :invoiced_trips do
+  collection { post :import}
+  end
+
+  resources :invoices do
   collection { post :import}
   end
 

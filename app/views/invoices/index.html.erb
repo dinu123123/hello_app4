@@ -2,6 +2,28 @@
 
 <h1>Invoices</h1>
 
+<fieldset>
+  <p>Introduce the start/end date interval and client:</p>  
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission4_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :client_id, Client.all, :id, :Name, {:include_blank => 'All Clients'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
+  </br>
+</fieldset>
+ <p> </p> 
+<p> </p> 
+
+<fieldset>
+<p>Selected list of trips:</p>  
+
+
+
 <table>
   <thead>
     <tr>

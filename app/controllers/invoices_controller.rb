@@ -4,8 +4,17 @@ class InvoicesController < ApplicationController
   # GET /invoices
   # GET /invoices.json
   def index
+
+
+
+    @search = TransactionSearch.new(params[:search])
+    
+    @invoices = @search.scope_invoices_index
+
+
+    
     #@invoices = Invoice.all
-    @invoices = Invoice.find_by_sql(['SELECT * FROM invoices ORDER BY  invoices.date DESC, invoices.client_id ASC, invoices.info DESC '])
+    #@invoices = Invoice.find_by_sql(['SELECT * FROM invoices ORDER BY  invoices.date DESC, invoices.client_id ASC, invoices.info DESC '])
     @clients = Client.all
   end
 
@@ -92,13 +101,7 @@ class InvoicesController < ApplicationController
 #>>  invoiced_trip.invoice_id
 
 invoice = Invoice.find(params[:id])
-
-
-
-
 invoice_trip_all = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips WHERE invoiced_trips.invoice_id = ? ', invoice.id])
-
-
 invoiced_trip = invoice_trip_all[0]
 
 client = Client.find(invoice.client_id)
@@ -191,7 +194,8 @@ respond_to do |format|
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice
-      @invoice = Invoice.find(params[:id])
+      #@invoice = Invoice.find(params[:id])
+      #@client = Client.find(@invoice.client_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

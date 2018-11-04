@@ -16,21 +16,16 @@ class FuelExpense < ApplicationRecord
           if  row.to_a[3][1].to_d > 0.to_d
              #do not register transactions with zero value 
         	   @my_row = row.to_a<<(["truck_id",@my_truck.id]) 
-
              @my_row_datetime = row.to_a[1][1].try(:gsub!,'/', '-')+ "T" + row.to_a[0][1]
              @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
-                            
-
-
  	 	    	   FuelExpense.create! @my_row.to_h
            end
  	 	    else
- 	 		    @my_row = row.to_a<<(["truck_id",17.to_i]) 
-
+          #hope one day we will have 1001 trucks
+          #but then that wont be a problem 
+ 	 		    @my_row = row.to_a<<(["truck_id",23.to_i]) 
           @my_row_datetime = row.to_a[1][1].try(:gsub!,'/', '-')+ "T" + row.to_a[0][1]
           @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
-             
-
  	 		    FuelExpense.create! @my_row.to_h
  	 	    end	
      end

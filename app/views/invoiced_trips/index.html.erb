@@ -35,7 +35,6 @@ tr:nth-child(even) {
   </p>
   </li>
 
-
   <li>
   <div>
   <h4> Import Invoiced Trips from CSV file: </h4>
@@ -47,15 +46,15 @@ tr:nth-child(even) {
   </li>
 
   <li>
-  <p>
-  <h4> Create <%= link_to 'New Invoiced Trip ',new_invoiced_trip_path %> </h4> 
-  </p>
+    <p>
+      <h4> Create <%= link_to 'New Invoiced Trip ',new_invoiced_trip_path %> </h4> 
+    </p>
   </li>
 
 </ul>
 
 <fieldset>
-  <p>Introduce the Event Start/End date interval, driver and truck:</p>  
+  <p>Introduce the start/end date interval, driver and truck:</p>  
     <div class="row">
       <div class="pull-right range-query">
         <%= form_tag mission3_path, :method => 'get' do %>
@@ -74,9 +73,7 @@ tr:nth-child(even) {
 <p> </p> 
 
 <fieldset>
-<p>Selected list of events:</p>  
-
-
+<p>Selected list of trips:</p>  
 
 <table>
   <thead>

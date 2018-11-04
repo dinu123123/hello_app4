@@ -265,25 +265,6 @@ end
 
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @totalTruckExpense = 0
 if  arrayTruckExpense != nil
     1.upto( arrayTruckExpense.count) do |i|

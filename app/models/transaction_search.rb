@@ -9,8 +9,6 @@ class TransactionSearch
     @driver_id = parsed_driver_id(params[:driver_id], 1)
     @truck_id = parsed_truck_id(params[:truck_id], 1)
     @client_id = parsed_client_id(params[:client_id], 1)
-
-
   end
 
 def event_to_time (date)
@@ -19,9 +17,7 @@ def event_to_time (date)
   else
     #Time.parse(date).strftime('2000-01-01 %H:%M:00')  
     date.strftime('2000-01-01 %H:%M:00')
-  
   end
-
 end 
 
 
@@ -52,11 +48,20 @@ end
   Date.parse(date)
  end
 
+def scope_invoices_index
+  if @client_id > 0
+      @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? and invoices.date >= ? and invoices.date <= ? 
+                  ORDER BY  invoices.date DESC, invoices.client_id ASC, invoices.info DESC ', @client_id ,to_datetime(@date_from), to_datetime(@date_to)]) 
+  else
+      @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.date >= ? and invoices.date <= ? 
+                  ORDER BY  invoices.date DESC, invoices.client_id ASC, invoices.info DESC ', to_datetime(@date_from), to_datetime(@date_to) ])
+  end  
+end
+
 ##changed
 def scope_invoiced_trips_index 
   arrayInvoicedTrips = Array.new
 if @client_id > 0 
-
             if @driver_id > 0 and @truck_id == 0
                 @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.client_id = ? 
                    and invoiced_trips."DRIVER_id" = ? and invoiced_trips."StartDate" >= ? and invoiced_trips."EndDate" <= ? 
@@ -210,9 +215,6 @@ if @driver_id > 0
                        @localEvent[@localEvent.count-1].id = @localEvent.count
                        @localEvent[@localEvent.count-1].DATE = @date_to
                        @localEvent[@localEvent.count-1].START_END = false
-                       
-
-
                     else
                        #append at the beginning the @date_from as it comes from the form interval
                        @localEvent.unshift(@localEvent[0].dup)
@@ -317,6 +319,9 @@ if @driver_id > 0
                           fuel_expenses.truck_id = ? AND fuel_expenses.datetime >= ? AND fuel_expenses.datetime <= ? ORDER BY 
                           fuel_expenses.datetime ASC', @localEvent[2*(i-1)].truck_id, to_datetime(@localEvent[2*(i-1)].DATE), 
                           to_datetime(@localEvent[2*(i-1)+1].DATE) ])
+
+
+
                         arrayFuelExpenses.concat(@fuelExpenses)
                     end
 

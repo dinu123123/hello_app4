@@ -58,6 +58,7 @@ tr:nth-child(even) {
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Nb Plate</th>
       <th>Chassis</th>
       <th>Fabrication</th>
@@ -69,6 +70,7 @@ tr:nth-child(even) {
   <tbody>
     <% @trucks.each do |truck| %>
       <tr>
+        <td><%= truck.id %></td>
         <td><%= truck.NB_PLATE %></td>
         <td><%= truck.CHASSIS %></td>
         <td><%= truck.FABDATE %></td>

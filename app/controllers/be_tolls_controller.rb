@@ -4,19 +4,20 @@ class BeTollsController < ApplicationController
   # GET /be_tolls
   # GET /be_tolls.json
   def index
-    @be_tolls = BeToll.all.order(' date_of_usage DESC').order(' licence_plate_number ASC')
+   @search = TransactionSearch.new(params[:search], true)
 
-    @search = TransactionSearch.new(params[:search], true)
+   if @search.truck_id == 0
+      @be_tolls = BeToll.find_by_sql(["SELECT * FROM be_tolls where  
+                    be_tolls.date_of_usage BETWEEN ? AND ? ORDER BY 
+                    be_tolls.date_of_usage ASC", @search.date_from, @search.date_to ])
+   else
+      @be_tolls = BeToll.find_by_sql(["SELECT * FROM be_tolls where be_tolls.truck_id = ? AND 
+                    be_tolls.date_of_usage BETWEEN ? AND ? ORDER BY 
+                    be_tolls.date_of_usage ASC", @search.truck_id, @search.date_from, @search.date_to ])
+   end
 
-    #@de_tolls = DeToll.all.order("platenr ASC, date ASC, time ASC ")
-
-    #@de_tolls = DeToll.all.order("platenr ASC, date ASC, time ASC ")
-
-    @de_tolls = DeToll.find_by_sql(["SELECT * FROM de_tolls where de_tolls.truck_id = ? AND 
-                  de_tolls.date BETWEEN ? AND ? ORDER BY 
-                  de_tolls.date ASC", @search.truck_id, @search.date_from, @search.date_to ])
-
-
+   @total_be_tolls = 0.to_d
+   @be_tolls.each { |a| @total_be_tolls += a.charged_amount_excluding_vat}
 
     respond_to do |format|
         format.html
