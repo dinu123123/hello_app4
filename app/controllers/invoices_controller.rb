@@ -194,8 +194,8 @@ respond_to do |format|
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice
-      #@invoice = Invoice.find(params[:id])
-      #@client = Client.find(@invoice.client_id)
+      @invoice = Invoice.find(params[:id])
+      @client = Client.find(@invoice.client_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
