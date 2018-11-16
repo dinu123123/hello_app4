@@ -1,6 +1,8 @@
 class TransactionSearch 
   attr_reader :date_from, :date_to, :truck_id, :driver_id, :client_id, :truck_events
 
+  
+
   def initialize(params, large =false)
     params ||= {}
     @date_from = parsed_date(params[:date_from],(DateTime.now - 2.month).strftime('%Y-%m-%dT%H:%M') )
@@ -198,6 +200,7 @@ arrayDriverExpenses = Array.new
 arrayFuelExpenses = Array.new
 arrayInvoicedTrips = Array.new
 arrayEvents = Array.new
+
 
 if @driver_id > 0
 

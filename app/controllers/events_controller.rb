@@ -174,12 +174,11 @@ def extract_explicit
     redirect_to root_path
   else
 @search1 = PeriodicTransactionSearch.new(params[:search1])
-@nb_weeks = num_weeks
 
+@nb_weeks = num_weeks
 
 @period_start = @search1.date_from.to_date.cweek.to_i
 @period_end = @search1.date_to.to_date.cweek.to_i
-
 
 if @search1.time == 2
   @period_start = @search1.date_from.to_date.month.to_i
@@ -204,23 +203,32 @@ if @search1.type ==1
       end  
 
     if  @search1.time == 1
-       @arrayWeeklyTruckExpense[0][0] = "Wk/Truck".to_s
-       @arrayWeeklyTruckExpense[0][Truck.all.size+1] = "Total/Wk".to_s
+       @arrayWeeklyTruckExpense[0][0] = "Week".to_s
+       @arrayWeeklyTruckExpense[0][Truck.all.size+1] = "Total".to_s
     else
-       @arrayWeeklyTruckExpense[0][0] = "Mo/Truck".to_s
-       @arrayWeeklyTruckExpense[0][Truck.all.size+1] = "Total/Mo".to_s
+       @arrayWeeklyTruckExpense[0][0] = "Month".to_s
+       @arrayWeeklyTruckExpense[0][Truck.all.size+1] = "Total".to_s
     end
 
-    @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total/Truck".to_s
+
+
+    @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
 else
     @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Driver.all.size+2,0)}
     @arrayWeeklyTruckExpense[0][0]= "".to_s
     Driver.all.each_with_index do |driver,j|
       @arrayWeeklyTruckExpense[0][j+1]=driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
     end  
-    @arrayWeeklyTruckExpense[0][0] = "Wk/Driver".to_s
-    @arrayWeeklyTruckExpense[0][Driver.all.size+1] = "Total/Wk".to_s
-    @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total/Driver".to_s
+
+
+    if  @search1.time == 1
+       @arrayWeeklyTruckExpense[0][0] = "Week".to_s
+    else
+       @arrayWeeklyTruckExpense[0][0] = "Month".to_s
+    end
+
+    @arrayWeeklyTruckExpense[0][Driver.all.size+1] = "Total".to_s
+    @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
 end
 
 
@@ -321,6 +329,8 @@ def weekly
     redirect_to root_path
   else
       @search1 = PeriodicTransactionSearch.new(params[:search1])
+
+
       @nb_weeks = num_weeks
 
 
@@ -349,7 +359,7 @@ def weekly
 
       @arrayWeeklyTruckExpense = nil
 
-      if @search1.type ==1 
+      if @search1.type2 ==1 
 
 
 
@@ -362,25 +372,30 @@ def weekly
             end
 
             if @search1.time == 1
-              @arrayWeeklyTruckExpense[0][0] = "Wk/Invoices".to_s
-              @arrayWeeklyTruckExpense[0][Client.all.size+1] = "Total/Wk".to_s
+              @arrayWeeklyTruckExpense[0][0] = "Week".to_s
+              @arrayWeeklyTruckExpense[0][Client.all.size+1] = "Total".to_s
             end
 
             if @search1.time == 2
-              @arrayWeeklyTruckExpense[0][0] = "Mo/Invoices".to_s
-              @arrayWeeklyTruckExpense[0][Client.all.size+1] = "Total/Mo".to_s
+              @arrayWeeklyTruckExpense[0][0] = "Month".to_s
+              @arrayWeeklyTruckExpense[0][Client.all.size+1] = "Total".to_s
             end
 
-            @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total/Client".to_s
+
+            asdasd
+
+            @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
       else
           @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Driver.all.size+2,0)}
           @arrayWeeklyTruckExpense[0][0]= "".to_s
           Driver.all.each_with_index do |driver,j|
             @arrayWeeklyTruckExpense[0][j+1]=driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
           end  
-          @arrayWeeklyTruckExpense[0][0] = "Wk/Driver".to_s
-          @arrayWeeklyTruckExpense[0][Driver.all.size+1] = "Total/Wk".to_s
-          @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total/Driver".to_s
+          
+          @arrayWeeklyTruckExpense[0][0] = "Week".to_s
+
+          @arrayWeeklyTruckExpense[0][Driver.all.size+1] = "Total".to_s
+          @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
       end
 
 
@@ -396,9 +411,9 @@ def weekly
 
 
 
-         if @search1.type ==2 and @search1.time == 2
+         if @search1.type2 ==2 and @search1.time == 2
            #for the time being not worth implemented
-         elsif @search1.type ==2 and @search1.time == 1
+         elsif @search1.type2 ==2 and @search1.time == 1
  
 ##################################
 ##################################                          
@@ -504,7 +519,7 @@ else
         end  
         
 
-        if @search1.type ==1 
+        if @search1.type2 ==1 
 
               Client.all.each_with_index do |client,j|
                      @totalInvoicedTrips = 0

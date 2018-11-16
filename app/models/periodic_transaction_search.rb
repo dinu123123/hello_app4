@@ -1,21 +1,45 @@
+class Element
+   attr_reader :name, :id
+
+   def initialize (a,b)
+    @name = a
+    @id = b
+  end
+end
+
 class PeriodicTransactionSearch 
-  attr_reader :date_from, :date_to, :time, :type, :truck_id, :driver_id, :truck_events, :running, :running_truck_id
+  attr_reader :date_from, :date_to, :time, :time2, :type, :type2, :truck_id, :driver_id, 
+  :truck_events, :running, :running_truck_id, :arrayH, :arrayT, :arrayC
 
   def initialize(params)
-
-
     params ||= {}
-    @date_from = parsed_date(params[:date_from], (DateTime.now - 2.month).to_s)
-
-    @date_to = parsed_date(params[:date_to],  (Date.today+1.month).to_s)
-    
-
+    @date_from = parsed_date(params[:date_from], (DateTime.now - 2.month).strftime('%Y-%m-%d'))
+    @date_to = parsed_date(params[:date_to],  (Date.today+1.month).strftime('%Y-%m-%d'))
     @time = parsed_time_interval(params[:interval], 1)
 
-
+    @time = parsed_period(params[:time2], 1)
     @type = parsed_trucks_drivers(params[:type], 1)
+    
 
 
+    
+    a =Element.new("Drivers",2)
+    b =Element.new("Trucks",1)    
+    @arrayH = []
+    @arrayH.push(a)
+    @arrayH.push(b)
+        
+    a1 =Element.new("Weeks",1)
+    b1 =Element.new("Months",2)    
+    @arrayT = []
+    @arrayT.push(a1)
+    @arrayT.push(b1)
+
+    a2 =Element.new("Invoices",1)
+    b2 =Element.new("Salaries",2)    
+    @arrayC = []
+    @arrayC.push(a2)
+    @arrayC.push(b2)
   end
 
 
@@ -347,16 +371,31 @@ end
   def parsed_trucks_drivers (n1, default)
     n1.to_i
     rescue ArgumentError, TypeError
-    default.to_i
+    default
+
+  end
+
+def parsed_period (n1, default)
+    n1.to_i
+    rescue ArgumentError, TypeError
+    default
+
+  end
+
+def parsed_invoices_salaries (n1, default)
+    n1.to_i
+    rescue ArgumentError, TypeError
+    default
+
   end
 
 private
 
-    def parsed_date (date_string, default)
-      Date.parse(date_string)
-      rescue ArgumentError, TypeError
-      default
-    end
+  def parsed_date (date_string, default)
+    Date.parse(date_string).strftime('%Y-%m-%d')
+    rescue ArgumentError, TypeError
+    default
+  end
 
 end 
   
