@@ -167,7 +167,12 @@ def num_weeks(year = Date.today.year)
 end
 
 
+def oil
 
+
+# sleep 1
+
+end
 
 def extract_explicit
  if !(current_user.email.eql?  "ameropa.logistics@gmail.com")
