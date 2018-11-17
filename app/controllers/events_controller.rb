@@ -169,7 +169,7 @@ end
 
 def oil
 
-
+render("events/oil")
 # sleep 1
 
 end

@@ -126,11 +126,33 @@ input[type=text] {
 }
 
 </style>
-<body>
+
+
+
+
+
+
+
+
+<script>
+function pagereload(t) {
+
+setTimeout('location.reload(true)', t);
+//  if(window.location.href.indexOf("oil") > -1){
+//      setTimeout('location.reload(true)', t);
+  }
+
+}
+</script>
+
+<body onload="javascript:pagereload(8000);">
+
+
 
 <div class="header">
   <h2>FinAdmin</h2>
   <p>Provides detailed overview over the company finance</p>
+
 <div class='block2'>
 <% if user_signed_in? %>
   <p> Logged in as <strong><%= current_user.email %></strong>.
@@ -157,6 +179,10 @@ input[type=text] {
 <% end %>
    <%= link_to "Help", help_url %>
 </div>  
+
+
+<p id="notice"><%= notice %></p>
+
 
 
     <%= yield %>
