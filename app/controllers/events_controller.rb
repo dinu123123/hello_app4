@@ -169,9 +169,7 @@ end
 
 def oil
 
-render("events/oil")
-# sleep 1
-
+redirect_to ("https://gentle-ocean-84384.herokuapp.com/events/oil")
 end
 
 def extract_explicit
