@@ -331,6 +331,8 @@ def weekly
       @search1 = PeriodicTransactionSearch.new(params[:search1])
 
 
+
+
       @nb_weeks = num_weeks
 
 
@@ -359,7 +361,7 @@ def weekly
 
       @arrayWeeklyTruckExpense = nil
 
-      if @search1.type2 ==1 
+      if @search1.type ==1 
 
 
 
@@ -380,9 +382,6 @@ def weekly
               @arrayWeeklyTruckExpense[0][0] = "Month".to_s
               @arrayWeeklyTruckExpense[0][Client.all.size+1] = "Total".to_s
             end
-
-
-            asdasd
 
             @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
       else
@@ -411,9 +410,9 @@ def weekly
 
 
 
-         if @search1.type2 ==2 and @search1.time == 2
+         if @search1.type ==2 and @search1.time == 2
            #for the time being not worth implemented
-         elsif @search1.type2 ==2 and @search1.time == 1
+         elsif @search1.type ==2 and @search1.time == 1
  
 ##################################
 ##################################                          
@@ -519,7 +518,7 @@ else
         end  
         
 
-        if @search1.type2 ==1 
+        if @search1.type ==1 
 
               Client.all.each_with_index do |client,j|
                      @totalInvoicedTrips = 0

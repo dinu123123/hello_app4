@@ -61,6 +61,7 @@ end
   post  'invoices/print', to: 'invoices#print' 
 
   get "/events/help", as: "help"
+  get "/events/oil", as: "oil"
 
   get "/de_tolls/file_import", as: "de_toll_file_import"
   get "/de_tolls/index", as: "de_toll_index_import"

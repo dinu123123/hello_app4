@@ -11,6 +11,7 @@ class TransactionSearch
     @driver_id = parsed_driver_id(params[:driver_id], 1)
     @truck_id = parsed_truck_id(params[:truck_id], 1)
     @client_id = parsed_client_id(params[:client_id], 1)
+
   end
 
 def event_to_time (date)

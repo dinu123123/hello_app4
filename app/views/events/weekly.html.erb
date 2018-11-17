@@ -20,8 +20,8 @@
             <%= select_tag 'search1[type]', options_for_select([["Invoice Credits",1],["Salary Debits",2]]) %>
 <% end %>
 
-            <%= collection_select :search1, :time2, @search1.arrayT, :id, :name %>
-            <%= collection_select :search1, :type2, @search1.arrayC, :id, :name %>
+            <%= collection_select :search1, :time, @search1.arrayT, :id, :name %>
+            <%= collection_select :search1, :type, @search1.arrayC, :id, :name %>
 
             <%= submit_tag 'Display', class: 'btn search-button' %>  
             <% end %>

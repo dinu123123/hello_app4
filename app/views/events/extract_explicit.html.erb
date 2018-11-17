@@ -32,7 +32,7 @@
     <%= collection_select :search1, :type, ["1","2"], :to_s, :to_s,  :selected=> params[:type] %>
 <% end %>   
 
-            <%= collection_select :search1, :time2, @search1.arrayT, :id, :name %>
+            <%= collection_select :search1, :time, @search1.arrayT, :id, :name %>
             <%= collection_select :search1, :type, @search1.arrayH, :id, :name %>
 
             <%= submit_tag 'Display', class: 'btn search-button' %>  
@@ -81,7 +81,7 @@
                             <% else %>
                                 <%= value %> 
                             <% end %>     
-                            
+
                           </span> </td>
                         <% else %>
                           <td bgcolor="#E8F993">

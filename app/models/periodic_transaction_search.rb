@@ -8,7 +8,7 @@ class Element
 end
 
 class PeriodicTransactionSearch 
-  attr_reader :date_from, :date_to, :time, :time2, :type, :type2, :truck_id, :driver_id, 
+  attr_reader :date_from, :date_to, :time, :type, :type2, :truck_id, :driver_id, 
   :truck_events, :running, :running_truck_id, :arrayH, :arrayT, :arrayC
 
   def initialize(params)
@@ -17,11 +17,8 @@ class PeriodicTransactionSearch
     @date_to = parsed_date(params[:date_to],  (Date.today+1.month).strftime('%Y-%m-%d'))
     @time = parsed_time_interval(params[:interval], 1)
 
-    @time = parsed_period(params[:time2], 1)
+    @time = parsed_period(params[:time], 1)
     @type = parsed_trucks_drivers(params[:type], 1)
-    
-
-
     
     a =Element.new("Drivers",2)
     b =Element.new("Trucks",1)    
