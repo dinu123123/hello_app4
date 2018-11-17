@@ -169,7 +169,7 @@ end
 
 def oil
 
-redirect_to ("https://gentle-ocean-84384.herokuapp.com/events/oil")
+redirect_to ("https://gentle-ocean-84384.herokuapp.com/invoices/oil")
 end
 
 def extract_explicit
