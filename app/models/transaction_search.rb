@@ -599,7 +599,7 @@ end
 @totalGermanyToll = 0
 if  arrayGermanyToll != nil
     1.upto( arrayGermanyToll.count) do |i|
-      puts  arrayGermanyToll[i-1].eur.to_s
+    #  puts  arrayGermanyToll[i-1].eur.to_s
         @totalGermanyToll = @totalGermanyToll + arrayGermanyToll[i-1].eur.to_d
     end
 end    
