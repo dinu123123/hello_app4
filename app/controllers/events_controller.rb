@@ -167,10 +167,16 @@ def num_weeks(year = Date.today.year)
 end
 
 
-def oil
+#def oil
 
-redirect_to ("https://gentle-ocean-84384.herokuapp.com/invoices/oil")
-end
+#render "events/oil"
+#render file: "app/views/events/oil.erb"
+#redirect_back fallback_location: root_path
+#the following works
+#redirect_to(de_toll_file_import_path)
+#sleep 5
+
+#end
 
 def extract_explicit
  if !(current_user.email.eql?  "ameropa.logistics@gmail.com")

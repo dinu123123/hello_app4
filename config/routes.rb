@@ -121,8 +121,9 @@ get "home/download_pdf"
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 #root 'extra#data_in'
-root to: "extra#data_in"
+#root to: "extra#data_in"
 
+root to: "extra#data_in"
 
 #root :controller => 'static', :action => '/' 
 
