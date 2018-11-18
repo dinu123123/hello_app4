@@ -293,6 +293,9 @@ for week in @period_start..@period_end do
    
    elsif @search1.type ==2
 
+
+
+
             Driver.all.each_with_index do |driver,j|
                 @search1.setDriver(driver.id)
                 @search1.setTruck(0)
@@ -300,8 +303,8 @@ for week in @period_start..@period_end do
                 @be_tolls,@total_be_tolls,@generic_tolls,@total_generic_tolls,
                 @driver_expenses,@total_driver_expenses,@invoiced_trips,@total_invoiced_trips,
                 @fuel_expenses, @total_fuel_expenses,
-
                 @total_per_truck = @search1.scope1(@date_from1, @date_to1)
+
 
 
                 @arrayWeeklyTruckExpense[(week-@period_start+1).to_i][j+1]=@total_per_truck

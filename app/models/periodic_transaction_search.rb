@@ -76,6 +76,8 @@ arrayEvents = Array.new
  @localEvent = nil
 
 
+
+
 if @type == 1
 
          if TruckExpense.all.size
@@ -158,6 +160,7 @@ if @type == 1
           end
 
 else
+#drivers
               @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
               and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC', @driver_id, date_from1, date_to1])
 
@@ -192,13 +195,12 @@ else
                   end
               else
                 
-
-
-
                   #In this case it is still possible that the interval has started before @date_from. 
                   @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
                      and events."DATE" <= ? ORDER BY events."DATE" DESC', @driver_id, date_from1])
                       if  @localEvent.size >0 and @localEvent[0].START_END == true
+
+
                             truck_id_l = @localEvent[0].truck_id
                             @localEvent = Array.new(2) { Event.new }
                             @localEvent[0].START_END = true
@@ -206,14 +208,16 @@ else
                             @localEvent[0].DATE = date_from1
                             @localEvent[1].START_END = false
                             @localEvent[1].DATE = date_to1   
+
+
+
                       else
                          @localEvent = nil
                       end
                 end
        
-if @localEvent != nil
+    if @localEvent != nil
 
-  
           1.upto( @localEvent.count/2) do |i|
                 #truck_id = 0 means the truck_id is irrelevant
                     if TruckExpense.all.size
@@ -231,6 +235,7 @@ if @localEvent != nil
                           @localEvent[2*(i-1)+1].DATE ])
                           arrayGermanyToll.concat(@germanyTollExpenses)
                     end
+
 
                     if BeToll.all.size
                         @belgiumTollExpenses = BeToll.find_by_sql(['SELECT * FROM Be_Tolls where 
@@ -258,16 +263,14 @@ if @localEvent != nil
 
                     if DriverExpense.all.size
                         @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where 
+                          driver_expenses.truck_id = ? AND 
                           driver_expenses."DATE" BETWEEN ? AND ? ORDER BY 
-                          driver_expenses."DATE"', @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
+                          driver_expenses."DATE"',  @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
                         arrayDriverExpenses.concat(@driverExpenses)
                     end
 
-          end
-
-
-
-end
+              end
+    end
 
           if InvoicedTrip.all.size > 0
          #   @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.truck_id = ? AND
@@ -285,6 +288,8 @@ end
           end 
 
 end
+
+
 
 @totalTruckExpense = 0
 if  arrayTruckExpense != nil
@@ -328,9 +333,6 @@ if  arrayDriverExpenses != nil
     end
 end  
 
-
-
-
 @totalInvoicedTrips = 0
 if  arrayInvoicedTrips != nil
     1.upto( arrayInvoicedTrips.count) do |i|
@@ -338,8 +340,11 @@ if  arrayInvoicedTrips != nil
     end
 end  
 
+
 @total_debit = @totalInvoicedTrips- (@totalTruckExpense.to_d + @totalGermanyToll.to_d + @totalBeToll.to_d +
                @totalGenericToll.to_d + @totalDriverExpenses.to_d + @totalFuelExpenses.to_d) 
+
+
 
 return     arrayEvents,
            arrayTruckExpense,
