@@ -68,9 +68,9 @@ tr:nth-child(even) {
   </thead>
 
   <tbody>
-    <% @trucks.each do |truck| %>
+    <% @trucks.each_with_index do |truck, i| %>
       <tr>
-        <td><%= truck.id %></td>
+        <td><%= i+1 %></td>
         <td><%= truck.NB_PLATE %></td>
         <td><%= truck.CHASSIS %></td>
         <td><%= truck.FABDATE %></td>

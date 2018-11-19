@@ -55,13 +55,31 @@ tr:nth-child(even) {
 </ul>
 
 
+<fieldset>
+  <p>Introduce the Start/End date interval and truck:</p>  
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag tr_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :truck_id, Truck.all.order('"NB_PLATE" ASC'), :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
+  </br>
+</fieldset>
+ <p> </p> 
+<p> </p> 
 
 
-
+<fieldset>
+<p>Selected list of Truck Expenses:</p> 
 
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>Truck</th>
       <th>Date</th>
       <th>Amount</th>
@@ -72,8 +90,9 @@ tr:nth-child(even) {
   </thead>
 
   <tbody>
-    <% @truck_expenses.each do |truck_expense| %>
+    <% @truck_expenses.each_with_index do |truck_expense,j| %>
       <tr>
+         <td><%= j+1 %></td>
         <td><%= @trucks.find(truck_expense.truck_id).NB_PLATE %></td>
         <td><%= truck_expense.DATE %></td>
         <td><%= truck_expense.AMOUNT %></td>
@@ -86,6 +105,8 @@ tr:nth-child(even) {
     <% end %>
   </tbody>
 </table>
+
+</fieldset>
 <br>
 </body>
 </html>

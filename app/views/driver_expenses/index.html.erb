@@ -53,8 +53,10 @@ tr:nth-child(even) {
   </li>
 
 </ul>
+
+
 <fieldset>
-  <p>Introduce the Event Start/End date interval, driver and truck:</p>  
+  <p>Introduce Start/End date interval and driver:</p>  
     <div class="row">
       <div class="pull-right range-query">
         <%= form_tag dv_path, :method => 'get' do %>
@@ -98,7 +100,7 @@ tr:nth-child(even) {
       <% next%>
       <% end%>
       <tr>
-        <td><%= j %></td>
+        <td><%= j+1 %></td>
         <td><%= @drivers.find(driver_expense.DRIVER_id).CNP %></td>
         <td><%= @drivers.find(driver_expense.DRIVER_id).FIRSTNAME %></td>
         <td><%= @drivers.find(driver_expense.DRIVER_id).SECONDNAME %></td>

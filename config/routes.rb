@@ -51,6 +51,9 @@ end
 
   get "/driver_expenses/index", as: "dv"
 
+  get "/truck_expenses/index", as: "tr"
+
+
   get "/events/extract_explicit", as: "mission1"
 
   get "/events/weekly", as: "weekly"

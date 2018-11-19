@@ -4,7 +4,7 @@ class TrucksController < ApplicationController
   # GET /trucks
   # GET /trucks.json
   def index
-    @trucks = Truck.all
+    @trucks = Truck.all.order(:NB_PLATE)
     if Truck != nil and Truck.all.size>0 
       @details = Truck.order(:NB_PLATE).first(20)
  
