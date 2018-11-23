@@ -61,6 +61,21 @@
   </div>
 
   <div class="field">
+    <%= form.label :bridge %>
+    <%= form.text_field :bridge, id: :invoiced_trip_bridge, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :parking %>
+    <%= form.text_field :parking, id: :invoiced_trip_parking, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tunnel %>
+    <%= form.text_field :tunnel, id: :invoiced_trip_tunnel, :required => 'required' %>
+  </div>
+
+  <div class="field">
     <%= form.label :km %>
     <%= form.text_field :km, id: :invoiced_trip_km, :required => 'required' %>
   </div>

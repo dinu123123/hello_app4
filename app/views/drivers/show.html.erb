@@ -25,17 +25,17 @@
   <%= @driver.EndDate %>
 </p>
 
-<p>
-  <strong>Salary:</strong>
-  <%= @driver.INFO %>
-</p>
+<% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
+    <p>
+      <strong>Salary:</strong>
+      <%= @driver.INFO %>
+    </p>
+<% end %>
 
 <p>
   <strong>Description:</strong>
   <%= @driver.DESCRIPTION %>
 </p>
-
-
 
 <%= link_to 'Edit', edit_driver_path(@driver) %> |
 <%= link_to 'Back', drivers_path %>

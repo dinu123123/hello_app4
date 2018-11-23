@@ -30,6 +30,8 @@ tr:nth-child(even) {
   <%= @client.Name %>
 </p>
 
+
+<% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
 <p>
   <strong>Address:</strong>
   <%= @client.Address %>
@@ -40,10 +42,16 @@ tr:nth-child(even) {
   <%= @client.BankAccount %>
 </p>
 
+    <p>
+      <strong>(€)/Km:</strong>
+      <%= @client.kprice %>
+    </p>
+
 <p>
   <strong>Paymentdelay:</strong>
   <%= @client.PaymentDelay %>
 </p>
+<% end %>
 
 <%= link_to 'Edit', edit_client_path(@client) %> |
 <%= link_to 'Back', clients_path %>

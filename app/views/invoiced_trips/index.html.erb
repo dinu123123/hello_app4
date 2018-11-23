@@ -101,6 +101,9 @@ tr:nth-child(even) {
       <th>IT toll</th>
       <th>UK toll</th>
       <th>NL toll</th>
+      <th>Bridge</th>
+      <th>Parking</th>
+      <th>Tunnel</th>
       <th>Km</th>
       <th>Km EvoGPS</th>
       <th>Km Driver's Route Note</th>
@@ -144,6 +147,11 @@ tr:nth-child(even) {
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.italy_toll %></td>  
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.uk_toll %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.netherlands_toll %></td>
+
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.bridge %></td>  
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.parking %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.tunnel %></td>
+
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km_evogps %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km_driver_route_note %></td>
@@ -189,6 +197,9 @@ tr:nth-child(even) {
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.italy_toll %></td>  
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.uk_toll %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.netherlands_toll %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.bridge %></td>  
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.parking %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.tunnel %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km_evogps %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km_driver_route_note %></td>
@@ -229,6 +240,9 @@ tr:nth-child(even) {
         <td><%= invoiced_trip.italy_toll %></td>  
         <td><%= invoiced_trip.uk_toll %></td>
         <td><%= invoiced_trip.netherlands_toll %></td>
+        <td><%= invoiced_trip.bridge %></td>  
+        <td><%= invoiced_trip.parking %></td>
+        <td><%= invoiced_trip.tunnel %></td>
         <td><%= invoiced_trip.km %></td>
         <td><%= invoiced_trip.km_evogps %></td>
         <td><%= invoiced_trip.km_driver_route_note %></td>

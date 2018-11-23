@@ -1,6 +1,8 @@
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy]
 
+attr_accessor :total_price_calculated
+
   # GET /invoices
   # GET /invoices.json
   def index
@@ -104,13 +106,180 @@ invoice = Invoice.find(params[:id])
 invoice_trip_all = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips WHERE invoiced_trips.invoice_id = ? ', invoice.id])
 invoiced_trip = invoice_trip_all[0]
 
+
+ary = Array.new
+
+@total_price_calculated = 0
+
+
+@total_amount = 0
+
+invoice_trip_all.each {
+ |a| 
+
+client = Client.find(a.client_id)
+driver = Driver.find(a.DRIVER_id)
+truck = Truck.all.find(a.truck_id)
+
+@total_amount += a.total_amount
+
+
+item = InvoicePrinter::Document::Item.new(
+  name: invoice.info+"  "+truck.NB_PLATE+"/"+ driver.FIRSTNAME+" "+driver.SECONDNAME, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+  quantity: nil,
+  unit: "km".to_s,
+  price: a.km,
+  amount: a.km*client.kprice, # client_id.price_per_km,
+  tax: '0'  
+)
+
+@total_price_calculated += a.km*client.kprice
+ary << item
+
+if (a.germany_toll > 0)
+    item = InvoicePrinter::Document::Item.new(
+      name: invoice.info+"  "++truck.NB_PLATE+"/"+'Germany Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      quantity: nil,
+      unit: "piece".to_s,
+      price: '1',
+      amount: a.germany_toll, # client_id.price_per_km,
+      tax: '0')
+    ary << item
+
+    @total_price_calculated +=a.germany_toll
+
+end
+
+if (a.belgium_toll > 0)
+    item = InvoicePrinter::Document::Item.new(
+      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Belgium Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      quantity: nil,
+      unit: "piece".to_s,
+      price: '1',
+      amount: a.belgium_toll, # client_id.price_per_km,
+      tax: '0')
+    ary << item
+
+    @total_price_calculated +=a.belgium_toll
+
+end
+
+if (a.swiss_toll > 0)
+    item = InvoicePrinter::Document::Item.new(
+      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Swiss Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      quantity: nil,
+      unit: "piece".to_s,
+      price: '1',
+      amount: a.swiss_toll, # client_id.price_per_km,
+      tax: '0')
+    ary << item
+
+    @total_price_calculated +=a.swiss_toll
+
+end
+
+
+if (a.france_toll > 0)
+    item = InvoicePrinter::Document::Item.new(
+      name: invoice.info+"  "+truck.NB_PLATE+"/"+'France Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      quantity: nil,
+      unit: "piece".to_s,
+      price: '1',
+      amount: a.france_toll, # client_id.price_per_km,
+      tax: '0')
+
+    @total_price_calculated +=a.france_toll
+
+    ary << item
+end
+
+
+if (a.italy_toll > 0)
+    item = InvoicePrinter::Document::Item.new(
+      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Italy Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      quantity: nil,
+      unit: "piece".to_s,
+      price: '1',
+      amount: a.italy_toll, # client_id.price_per_km,
+      tax: '0')
+    ary << item
+
+    @total_price_calculated +=a.italy_toll
+
+end
+
+
+if (a.uk_toll > 0)
+    item = InvoicePrinter::Document::Item.new(
+      name: invoice.info+"  "+truck.NB_PLATE+"/"+'UK Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      quantity: nil,
+      unit: "piece".to_s,
+      price: '1',
+      amount: a.uk_toll, # client_id.price_per_km,
+      tax: '0')
+    ary << item
+    @total_price_calculated +=a.uk_toll
+end
+
+
+if (a.netherlands_toll > 0)
+    item = InvoicePrinter::Document::Item.new(
+      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Netherlands Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      quantity: nil,
+      unit: "piece".to_s,
+      price: '1',
+      amount: a.netherlands_toll, # client_id.price_per_km,
+      tax: '0')
+    ary << item
+    @total_price_calculated +=a.netherlands_toll
+end
+
+
+if (a.bridge != nil and a.bridge > 0)
+    item = InvoicePrinter::Document::Item.new(
+      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Bridge crossing costs'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      quantity: nil,
+      unit: "piece".to_s,
+      price: '1',
+      amount: a.bridge, # client_id.price_per_km,
+      tax: '0')
+    ary << item
+    @total_price_calculated +=a.bridge
+end
+
+if (a.parking != nil and a.parking > 0)
+    item = InvoicePrinter::Document::Item.new(
+      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Parking Costs'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      quantity: nil,
+      unit: "piece".to_s,
+      price: '1',
+      amount: a.parking, # client_id.price_per_km,
+      tax: '0')
+    ary << item
+    @total_price_calculated +=a.parking
+end
+
+if (a.tunnel != nil and a.tunnel > 0)
+    item = InvoicePrinter::Document::Item.new(
+      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Tunnel Costs'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      quantity: nil,
+      unit: "piece".to_s,
+      price: '1',
+      amount: a.tunnel, # client_id.price_per_km,
+      tax: '0')
+    ary << item
+    @total_price_calculated +=a.tunnel
+end
+
+}
+
 client = Client.find(invoice.client_id)
 
 total_amount = 0
 invoice_trip_all.each { |a| total_amount+=a.total_amount }
 
 
-item = InvoicePrinter::Document::Item.new(
+item1 = InvoicePrinter::Document::Item.new(
   name: 'Transport '.to_s + invoice.info, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
   quantity: nil,
   unit: "piece".to_s,
@@ -118,7 +287,6 @@ item = InvoicePrinter::Document::Item.new(
   amount: invoice.total_amount,
   tax: '0'  
 )
-
 
 
 labels = {
@@ -137,7 +305,7 @@ labels = {
   quantity: 'U.M.',
   unit: 'U.M.',
   price_per_item: 'Quantity',
-  amount: 'Value',
+  amount: 'Value (€)',
   tax: 'VAT (0%)',
   total: 'TURJAN MIHAIL AS872851                                      Total'
 }
@@ -170,12 +338,13 @@ invoice_inline = InvoicePrinter::Document.new(
   total: 'Eur '+invoice.total_amount.to_s,
 
   bank_account_number: 'RO53 RZBR 0000 0600 1753 0734',
-  items: [item],
+  items: ary,
   note: 'Invoice valid in electronic form without stamp and signature'
 )
+  
+if( @total_price_calculated == invoice.total_amount and @total_amount ==  invoice.total_amount )
 
-
-respond_to do |format|
+  respond_to do |format|
     format.pdf {
 
     send_data InvoicePrinter.render(document: invoice_inline,  labels: labels, page_size: :a4 ), filename: invoice.info+
@@ -183,13 +352,14 @@ respond_to do |format|
  
   end
 
-
-
-
-
+  else
+  render html: "<script>alert('The invoiced amount different than the sum of the component trips!')</script>".to_s.html_safe +
+  "<b>".to_s.html_safe +  @total_price_calculated.to_s + " €</b>".to_s.html_safe + " - the total amout invoiced (suma totala facturata): ".to_s + "<p>".to_s.html_safe + 
+  "<b>".to_s.html_safe + invoice.total_amount.to_s + " €</b>".to_s.html_safe + " - the sum of the individal trips (suma tripurilor individuale) ".to_s + 
+  "</p>".to_s.html_safe +  "<p>".to_s.html_safe + "<b>".to_s.html_safe +  @total_amount.to_s.html_safe + " €</b>".to_s.html_safe + " - the sum of the individual trips CALCULATED using price/km (Suma tripurilor individuale CALCULATE ca folosind pret/km) ".to_s + "</p>".to_s.html_safe
   end
 
-
+end
 
   private
     # Use callbacks to share common setup or constraints between actions.

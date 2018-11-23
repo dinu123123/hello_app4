@@ -26,6 +26,14 @@
     <%= form.text_field :BankAccount, id: :client_BankAccount %>
   </div>
 
+
+ <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
+      <div class="field">
+        <%= form.label :kprice, "€/Km", :required => 'required' %>
+        <%= form.text_field :kprice, id: :client_kprice, :required => 'required' %>
+      </div>
+  <% end %> 
+
   <div class="field">
     <%= form.label :PaymentDelay %>
     <%= form.number_field :PaymentDelay, id: :client_PaymentDelay %>
