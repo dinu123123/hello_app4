@@ -112,7 +112,7 @@ ary = Array.new
 @total_price_calculated = 0
 
 
-@total_amount = 0
+@sum_individual_invoices = 0
 
 invoice_trip_all.each {
  |a| 
@@ -121,15 +121,21 @@ client = Client.find(a.client_id)
 driver = Driver.find(a.DRIVER_id)
 truck = Truck.all.find(a.truck_id)
 
-@total_amount += a.total_amount
+@sum_individual_invoices += a.total_amount
 
+@price_distance = 0
+if client.kprice>0 
+  @price_distance = a.km*client.kprice
+else
+  @price_distance =   a.total_amount
+end
 
 item = InvoicePrinter::Document::Item.new(
   name: invoice.info+"  "+truck.NB_PLATE+"/"+ driver.FIRSTNAME+" "+driver.SECONDNAME, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
   quantity: nil,
   unit: "km".to_s,
   price: a.km,
-  amount: a.km*client.kprice, # client_id.price_per_km,
+  amount: @price_distance, # client_id.price_per_km,
   tax: '0'  
 )
 
@@ -211,7 +217,7 @@ end
 
 if (a.uk_toll > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "+truck.NB_PLATE+"/"+'UK Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: invoice.info+"  "+truck.NB_PLATE+"/"+'United Kingdom Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -224,7 +230,7 @@ end
 
 if (a.netherlands_toll > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Netherlands Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: invoice.info+"  "+truck.NB_PLATE+"/"+'The Netherlands Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -274,10 +280,6 @@ end
 }
 
 client = Client.find(invoice.client_id)
-
-total_amount = 0
-invoice_trip_all.each { |a| total_amount+=a.total_amount }
-
 
 item1 = InvoicePrinter::Document::Item.new(
   name: 'Transport '.to_s + invoice.info, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
@@ -341,22 +343,22 @@ invoice_inline = InvoicePrinter::Document.new(
   items: ary,
   note: 'Invoice valid in electronic form without stamp and signature'
 )
-  
-if( @total_price_calculated == invoice.total_amount and @total_amount ==  invoice.total_amount )
 
-  respond_to do |format|
-    format.pdf {
+  #if (@total_price_calculated - invoice.total_amount).abs<5 
 
-    send_data InvoicePrinter.render(document: invoice_inline,  labels: labels, page_size: :a4 ), filename: invoice.info+
-      "_"+ client.Name.try(:gsub!,' ', '').to_s+".pdf",  disposition: 'inline' }
+  if( @sum_individual_invoices ==  invoice.total_amount)
  
-  end
+      respond_to do |format|
+        format.pdf {
+        send_data InvoicePrinter.render(document: invoice_inline,  labels: labels, page_size: :a4 ), filename: invoice.info+
+          "_"+ client.Name.try(:gsub!,' ', '').to_s+".pdf",  disposition: 'inline' }
+      end
 
   else
-  render html: "<script>alert('The invoiced amount different than the sum of the component trips!')</script>".to_s.html_safe +
-  "<b>".to_s.html_safe +  @total_price_calculated.to_s + " €</b>".to_s.html_safe + " - the total amout invoiced (suma totala facturata): ".to_s + "<p>".to_s.html_safe + 
-  "<b>".to_s.html_safe + invoice.total_amount.to_s + " €</b>".to_s.html_safe + " - the sum of the individal trips (suma tripurilor individuale) ".to_s + 
-  "</p>".to_s.html_safe +  "<p>".to_s.html_safe + "<b>".to_s.html_safe +  @total_amount.to_s.html_safe + " €</b>".to_s.html_safe + " - the sum of the individual trips CALCULATED using price/km (Suma tripurilor individuale CALCULATE ca folosind pret/km) ".to_s + "</p>".to_s.html_safe
+        render html: "<script>alert('The invoiced amount different than the sum of the component trips!')</script>".to_s.html_safe +
+        "<b>".to_s.html_safe +  @total_price_calculated.to_s + " €</b>".to_s.html_safe + " - the total amout invoiced (suma totala facturata): ".to_s + "<p>".to_s.html_safe + 
+        "<b>".to_s.html_safe + invoice.total_amount.to_s + " €</b>".to_s.html_safe + " - the sum of the individal trips (suma tripurilor individuale) ".to_s + 
+        "</p>".to_s.html_safe +  "<p>".to_s.html_safe + "<b>".to_s.html_safe +  @sum_individual_invoices.to_s.html_safe + " €</b>".to_s.html_safe + " - the sum of the individual trips CALCULATED using price/km (Suma tripurilor individuale CALCULATE ca folosind pret/km) ".to_s + "</p>".to_s.html_safe
   end
 
 end
