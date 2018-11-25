@@ -335,9 +335,9 @@ invoice_inline = InvoicePrinter::Document.new(
   purchaser_extra_address_line: '',
   issue_date: invoice.date.to_s,
   due_date: (invoice.date+client.PaymentDelay).to_s,
-  subtotal: 'Eur '+invoice.total_amount.to_s,
-  tax: 'Eur 0.00',
-  total: 'Eur '+invoice.total_amount.to_s,
+  subtotal: '€ '+invoice.total_amount.to_s,
+  tax: '€ 0.00',
+  total: '€ '+invoice.total_amount.to_s,
 
   bank_account_number: 'RO53 RZBR 0000 0600 1753 0734',
   items: ary,
