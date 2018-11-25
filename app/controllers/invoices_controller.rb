@@ -341,7 +341,7 @@ invoice_inline = InvoicePrinter::Document.new(
 
   bank_account_number: 'RO53 RZBR 0000 0600 1753 0734',
   items: ary,
-  note: 'Invoice valid in electronic form without stamp and signature'
+  note: 'This is computer generated invoice. No signature required.'
 )
 
   #if (@total_price_calculated - invoice.total_amount).abs<5 
