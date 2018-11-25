@@ -316,7 +316,7 @@ labels = {
 invoice_inline = InvoicePrinter::Document.new(
   number: invoice.name,
   provider_name: 'Ameropa Logistics SRL',
-  provider_tax_id:'  RO 32274128',
+  provider_tax_id:'  RO32274128',
   provider_tax_id2:'ROONRC.J29/1508/2013 ',
   provider_street: 'sat Cioranii de Jos, Nr. 806,                                                                   Cod 107160,                                                                      Comuna Ciorani,                                                                          Judet Prahova,                                                Romania ',
   provider_street_number: '',
