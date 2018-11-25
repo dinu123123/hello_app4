@@ -355,10 +355,19 @@ invoice_inline = InvoicePrinter::Document.new(
       end
 
   else
+
+    if @total_price_calculated > 0
         render html: "<script>alert('The invoiced amount different than the sum of the component trips!')</script>".to_s.html_safe +
         "<b>".to_s.html_safe +  @total_price_calculated.to_s + " €</b>".to_s.html_safe + " - the total amout invoiced (suma totala facturata): ".to_s + "<p>".to_s.html_safe + 
+        "<b>".to_s.html_safe + invoice.total_amount.to_s + " €</b>".to_s.html_safe + " - the sum of the individal trips (suma tripurilor individuale) ".to_s +
+        "</p>".to_s.html_safe +  "<p>".to_s.html_safe + "<b>".to_s.html_safe +  @sum_individual_invoices.to_s.html_safe + " €</b>".to_s.html_safe + " - the sum of the individual trips CALCULATED using price/km (Suma tripurilor individuale CALCULATE ca folosind pret/km) ".to_s + "</p>".to_s.html_safe 
+    else
+        render html: "<script>alert('The invoiced amount different than the sum of the component trips!')</script>".to_s.html_safe +
+        "<b>".to_s.html_safe + client.Name.to_s.html_safe + " is a fix rate client.".to_s.html_safe + "<p>".to_s.html_safe + 
         "<b>".to_s.html_safe + invoice.total_amount.to_s + " €</b>".to_s.html_safe + " - the sum of the individal trips (suma tripurilor individuale) ".to_s + 
         "</p>".to_s.html_safe +  "<p>".to_s.html_safe + "<b>".to_s.html_safe +  @sum_individual_invoices.to_s.html_safe + " €</b>".to_s.html_safe + " - the sum of the individual trips CALCULATED using price/km (Suma tripurilor individuale CALCULATE ca folosind pret/km) ".to_s + "</p>".to_s.html_safe
+    end
+   
   end
 
 end
