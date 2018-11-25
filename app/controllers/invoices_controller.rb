@@ -314,7 +314,7 @@ labels = {
 
 
 invoice_inline = InvoicePrinter::Document.new(
-  number: invoice.name,
+  number: invoice.name+"\n"+invoice.info,
   provider_name: 'Ameropa Logistics SRL',
   provider_tax_id:'  RO32274128',
   provider_tax_id2:'ROONRC.J29/1508/2013 ',
