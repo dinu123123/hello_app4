@@ -534,16 +534,29 @@ else
 
               Client.all.each_with_index do |client,j|
                      @totalInvoicedTrips = 0
-                     @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.client_id = ? AND
-                          invoiced_trips.date >= ? AND invoiced_trips.date <= ?', client.id, 
+      
+                   #  @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.client_id = ? AND
+                   #       invoiced_trips.date >= ? AND invoiced_trips.date <= ?', client.id, 
+                   #       @date_from1-client.PaymentDelay, @date_to1-client.PaymentDelay])
+      
+                   #  if  @invoicedTrips != nil
+                   #      1.upto( @invoicedTrips.count) do |i|
+                   #          @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoicedTrips[i-1].total_amount.to_d 
+                   #      end
+                   #  end  
+      
+                     @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
+                          invoices.date >= ? AND invoices.date <= ?', client.id, 
                           @date_from1-client.PaymentDelay, @date_to1-client.PaymentDelay])
       
-                     if  @invoicedTrips != nil
-                         1.upto( @invoicedTrips.count) do |i|
-                             @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoicedTrips[i-1].total_amount.to_d 
+                     if  @invoices != nil
+                         1.upto( @invoices.count) do |i|
+                             @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoices[i-1].total_amount.to_d 
                          end
                      end  
-                    
+
+
+
                      @arrayWeeklyTruckExpense[week-@period_start+1][j+1]=@totalInvoicedTrips
                     
                      @arrayWeeklyTruckExpense[@period_end-@period_start+2][j+1] += @totalInvoicedTrips
