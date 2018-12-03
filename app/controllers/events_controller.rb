@@ -413,18 +413,10 @@ def weekly
           @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
       end
 
-
-
       for week in @period_start..@period_end do
-        if week%52>0
-          @arrayWeeklyTruckExpense[week-@period_start+1][0] = week%52
-        else
-          @arrayWeeklyTruckExpense[week-@period_start+1][0] = 52
-        end
+          @arrayWeeklyTruckExpense[week-@period_start+1][0] = 
+           (Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.cweek, 1) +(week-1)*7).cweek
       end
-
-
-
 
          if @search1.type ==2 and @search1.time == 2
            #for the time being not worth implemented
