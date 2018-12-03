@@ -204,7 +204,6 @@ arrayFuelExpenses = Array.new
 arrayInvoicedTrips = Array.new
 arrayEvents = Array.new
 
-
 if @driver_id > 0
 
     if Event.all.size > 0
@@ -520,7 +519,7 @@ else
              end
           end
 
-         if DeToll.all.size
+          if DeToll.all.size
             @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where 
                 de_tolls.datetime >= ? AND de_tolls.datetime <= ? ORDER BY de_tolls.datetime ASC', 
                 to_datetime(@date_from), to_datetime(@date_to) ])
@@ -537,7 +536,8 @@ else
           if BeToll.all.size 
             @BeTollExpenses = BeToll.find_by_sql(['SELECT * FROM be_tolls where 
                  be_tolls.datetime >= ? AND be_tolls.datetime <= ? ORDER BY be_tolls.datetime ASC',
-                 to_datetime(@date_from), to_datetime(@date_from)])
+                 to_datetime(@date_from), to_datetime(@date_to)])
+
             if @BeTollExpenses
              arrayBeToll.concat(@BeTollExpenses)
             end

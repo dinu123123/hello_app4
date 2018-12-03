@@ -200,7 +200,8 @@ end
 
 @arrayWeeklyTruckExpense = nil
 
-if @search1.type ==1 
+if @search1.type ==1
+
     @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Truck.all.size+2,0)}
     @arrayWeeklyTruckExpense[0][0]= "".to_s
       Truck.all.each_with_index do |truck,j|
@@ -218,11 +219,10 @@ if @search1.type ==1
        @arrayWeeklyTruckExpense[0][0] = "Month".to_s
        @arrayWeeklyTruckExpense[0][Truck.all.size+1] = "Total".to_s
     end
-
-
-
     @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
+
 else
+
     @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Driver.all.size+2,0)}
     @arrayWeeklyTruckExpense[0][0]= "".to_s
     Driver.all.each_with_index do |driver,j|
@@ -238,6 +238,7 @@ else
 
     @arrayWeeklyTruckExpense[0][Driver.all.size+1] = "Total".to_s
     @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
+
 end
 
 
@@ -366,6 +367,9 @@ def weekly
             @period_end = @search1.date_to.to_date.month.to_i+12- @search1.date_from.to_date.month.to_i+1
          end
       end
+
+
+
 
       if (@period_end- @period_start)<0
         @period_start = 1
@@ -506,6 +510,8 @@ else
         @week_total = 0
 
 
+
+
         week1 = week%52
         if week1 == 0
           week1 = 52
@@ -521,8 +527,19 @@ else
 
 
 
-        @date_from1 = Date.commercial(year, week1, 1)
-        @date_to1 = Date.commercial(year, week1, 7)
+        #@date_from1 = Date.commercial(year, week1, 1)
+        #@date_to1 = Date.commercial(year, week1, 7)
+
+##Last repair
+
+        @date_start =  Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.cweek, 1) 
+
+        @date_from1 =  @date_start+(week-1)*7
+        @date_to1 =  @date_from1+6
+
+
+
+
 
         if @search1.time == 2
           @date_from1 =  Date.new(year, week1, 1)
