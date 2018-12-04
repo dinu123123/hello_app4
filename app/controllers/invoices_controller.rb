@@ -145,7 +145,7 @@ if a.info !=nil and invoice.info != a.info
 end
 
 if @service_name.length>0
- @service_name = @service_name + " - "
+ @service_name = " - " + @service_name
 end
 
 item = InvoicePrinter::Document::Item.new(
