@@ -144,6 +144,10 @@ if a.info !=nil and invoice.info != a.info
   @service_name = invoice.info
 end
 
+if @service_name.length>0
+ @service_name = @service_name + " - "
+end
+
 item = InvoicePrinter::Document::Item.new(
   name: @info+"  "+truck.NB_PLATE+"/"+ driver.FIRSTNAME+" "+driver.SECONDNAME, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
   quantity: nil,
@@ -317,7 +321,7 @@ labels = {
   bank_account_number: '',
   issue_date: 'Issue Date:',
   due_date: 'Due Date:',
-  item: 'Service Name - '+ @service_name,
+  item: 'Service Name'+ @service_name,
   quantity: 'U.M.',
   unit: 'U.M.',
   price_per_item: 'Quantity',
