@@ -23,7 +23,13 @@
 
  <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
  <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
+
  <%= form.collection_select :DRIVER_id, Driver.all, :id, :name_with_cnp, {prompt: "Driver Name and CNP"}, :required => 'required'%>
+
+ <div class="field">
+    <%= form.label :info %>
+    <%= form.text_field :info, id: :invoiced_trip_info, :required => 'required' %>
+  </div>
 
   <div class="field">
     <%= form.label :germany_toll %>

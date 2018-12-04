@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181121232852) do
+ActiveRecord::Schema.define(version: 20181204204531) do
 
   create_table "be_tolls", force: :cascade do |t|
     t.integer "record_number"
@@ -202,6 +202,7 @@ ActiveRecord::Schema.define(version: 20181121232852) do
     t.decimal "bridge"
     t.decimal "parking"
     t.decimal "tunnel"
+    t.string "info"
   end
 
   create_table "invoices", force: :cascade do |t|

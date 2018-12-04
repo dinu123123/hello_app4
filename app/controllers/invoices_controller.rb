@@ -130,8 +130,22 @@ else
   @price_distance =   a.total_amount
 end
 
+
+@info = ""
+if a.info != nil and a.info.length >0
+  @info = a.info
+else 
+  @info = invoice.info
+end
+
+@service_name = ""
+
+if a.info !=nil and invoice.info != a.info
+  @service_name = invoice.info
+end
+
 item = InvoicePrinter::Document::Item.new(
-  name: invoice.info+"  "+truck.NB_PLATE+"/"+ driver.FIRSTNAME+" "+driver.SECONDNAME, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+  name: @info+"  "+truck.NB_PLATE+"/"+ driver.FIRSTNAME+" "+driver.SECONDNAME, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
   quantity: nil,
   unit: "km".to_s,
   price: a.km,
@@ -144,7 +158,7 @@ ary << item
 
 if (a.germany_toll > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "++truck.NB_PLATE+"/"+'Germany Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: @info+"  "++truck.NB_PLATE+"/"+'Germany Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -158,7 +172,7 @@ end
 
 if (a.belgium_toll > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Belgium Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: @info+"  "+truck.NB_PLATE+"/"+'Belgium Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -172,7 +186,7 @@ end
 
 if (a.swiss_toll > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Swiss Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: @info+"  "+truck.NB_PLATE+"/"+'Swiss Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -187,7 +201,7 @@ end
 
 if (a.france_toll > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "+truck.NB_PLATE+"/"+'France Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: @info+"  "+truck.NB_PLATE+"/"+'France Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -202,7 +216,7 @@ end
 
 if (a.italy_toll > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Italy Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: @info+"  "+truck.NB_PLATE+"/"+'Italy Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -217,7 +231,7 @@ end
 
 if (a.uk_toll > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "+truck.NB_PLATE+"/"+'United Kingdom Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: @info+"  "+truck.NB_PLATE+"/"+'United Kingdom Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -230,7 +244,7 @@ end
 
 if (a.netherlands_toll > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "+truck.NB_PLATE+"/"+'The Netherlands Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: @info+"  "+truck.NB_PLATE+"/"+'The Netherlands Toll Road'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -243,7 +257,7 @@ end
 
 if (a.bridge != nil and a.bridge > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Bridge crossing costs'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: @info+"  "+truck.NB_PLATE+"/"+'Bridge crossing costs'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -255,7 +269,7 @@ end
 
 if (a.parking != nil and a.parking > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Parking Costs'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: @info+"  "+truck.NB_PLATE+"/"+'Parking Costs'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -267,7 +281,7 @@ end
 
 if (a.tunnel != nil and a.tunnel > 0)
     item = InvoicePrinter::Document::Item.new(
-      name: invoice.info+"  "+truck.NB_PLATE+"/"+'Tunnel Costs'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+      name: @info+"  "+truck.NB_PLATE+"/"+'Tunnel Costs'.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
@@ -282,7 +296,7 @@ end
 client = Client.find(invoice.client_id)
 
 item1 = InvoicePrinter::Document::Item.new(
-  name: 'Transport '.to_s + invoice.info, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+  name: 'Transport '.to_s + @info, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
   quantity: nil,
   unit: "piece".to_s,
   price: '1',
@@ -303,7 +317,7 @@ labels = {
   bank_account_number: '',
   issue_date: 'Issue Date:',
   due_date: 'Due Date:',
-  item: 'Service Name',
+  item: 'Service Name - '+ @service_name,
   quantity: 'U.M.',
   unit: 'U.M.',
   price_per_item: 'Quantity',
