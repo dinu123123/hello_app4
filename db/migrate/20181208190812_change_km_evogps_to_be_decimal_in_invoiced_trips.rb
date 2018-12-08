@@ -1,5 +1,11 @@
 class ChangeKmEvogpsToBeDecimalInInvoicedTrips < ActiveRecord::Migration[5.1]
-  def change
-  	  	   change_column :invoiced_trips, :km_evogps, :decimal  
+  
+  def up
+    change_column :invoiced_trips, :km_evogps, :decimal
   end
+
+  def down
+    change_column :invoiced_trips, :km_evogps, :integer
+  end
+
 end
