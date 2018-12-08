@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181208190828) do
+ActiveRecord::Schema.define(version: 20181208213820) do
 
   create_table "be_tolls", force: :cascade do |t|
     t.integer "record_number"
@@ -193,9 +193,9 @@ ActiveRecord::Schema.define(version: 20181208190828) do
     t.decimal "italy_toll"
     t.decimal "uk_toll"
     t.decimal "netherlands_toll"
-    t.integer "km"
-    t.integer "km_evogps"
-    t.integer "km_driver_route_note"
+    t.decimal "km"
+    t.decimal "km_evogps"
+    t.decimal "km_driver_route_note"
     t.decimal "total_amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
