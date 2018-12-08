@@ -15,9 +15,9 @@ class CreateInvoicedTrips < ActiveRecord::Migration[5.1]
       t.decimal  :italy_toll
       t.decimal  :uk_toll
       t.decimal  :netherlands_toll
-      t.integer  :km
-      t.integer  :km_evogps
-      t.integer  :km_driver_route_note
+      t.decimal  :km
+      t.decimal  :km_evogps
+      t.decimal  :km_driver_route_note
       t.decimal  :total_amount
 
       t.timestamps
