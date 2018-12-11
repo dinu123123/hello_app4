@@ -166,16 +166,14 @@ def num_weeks(year = Date.today.year)
   Date.new(year, 12, 28).cweek # magick date!
 end
 
-
 #def oil
-
 #render "events/oil"
 #render file: "app/views/events/oil.erb"
 #redirect_back fallback_location: root_path
 #the following works
 #redirect_to(de_toll_file_import_path)
 #sleep 5
-
+ #redirect_to :back
 #end
 
 def extract_explicit
