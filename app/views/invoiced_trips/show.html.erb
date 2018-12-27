@@ -122,5 +122,55 @@
   <%= @invoiced_trip.total_amount %>
 </p>
 
+<table>
+  <% @invoiced_trip.images.each_with_index do |image,index| %>
+
+    <% if (index)%6 == 0 %>
+       <tr>
+        </tr>
+    <% end %>
+
+    <td>
+
+    <% if false %>
+     <%= image_tag(url_for(image), height: '200', width: '200') %>
+    <% end %>
+
+      <% if  (image.blob!=nil and image.previewable?) %>
+        
+
+        <%= image_tag(url_for(image.preview(resize: "200x200>")), height: '200', width: '200') %>
+        
+        <% if false %>
+        <%= link_to(image_tag(image.preview(resize: "200x200>")),rails_blob_path(image, disposition: "attachment"))%>
+        <% end %>
+
+      <% elsif (image.blob !=nil and image.variable?)  %>
+      
+        
+        <%= image_tag(url_for(image.variant(resize: "200x200>")), height: '200', width: '200') %>
+         
+        <% if false %>
+        <%= link_to(image_tag(image.variant(resize: "200x200")),rails_blob_path(image, disposition: "attachment"))%>
+        <% end %>
+      <% end %>
+
+      <br>
+
+       <%if image.blob !=nil  %>
+      
+     <%= link_to 'Download', image, download: image %>
+     <br>
+     <%= link_to 'Remove', delete_image_invoiced_trip_path(image.id), method: :delete, data: { confirm: 'Are you sure?' }%>
+    <% end %>
+        
+
+    </td>
+
+     
+    <% end %>
+
+</table>
+<br>
 <%= link_to 'Edit', edit_invoiced_trip_path(@invoiced_trip) %> |
 <%= link_to 'Back', invoiced_trips_path %>

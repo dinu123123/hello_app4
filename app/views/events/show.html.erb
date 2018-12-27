@@ -31,6 +31,7 @@ tr:nth-child(even) {
     <th>Second Name</th>
     <th>Client</th>
     <th>Truck Number Plate</th>
+    <th>Trailer Number Plate</th>
     <th>Start/End</th>
   </tr>
   <tr>
@@ -40,6 +41,13 @@ tr:nth-child(even) {
     <td><%= @driver.SECONDNAME %></td>
     <td><%= @client.Name %></td>
     <td><%= @truck.NB_PLATE %></td>
+    
+    <% if  @trailer %>
+      <td><%= @trailer.NB_PLATE %></td>
+      <% else %>
+      <td><%=  %></td>
+    <% end %>
+
     <% if @event.START_END? %>
       <td><%= 'Start' %></td>
       <% else %>
@@ -47,6 +55,68 @@ tr:nth-child(even) {
       <% end %>
   </tr> 
 </table>
+
+
+<% if false %>
+<!-- ADD THIS LINE -->
+        <td><%= image_tag url_for(@event.picture) %></td>
+        <!-- / ADD THIS LINE -->
+<% end %>
+
+<br>
+
+<table>
+
+<% @event.images.each_with_index do |image,index| %>
+
+<% if (index+1)%6 == 0 %>
+     <tr>
+<% end %>
+
+<td> 
+<% if false %>
+  <%= image_tag(url_for(image), height: '200', width: '200') %>
+<% end %>
+        
+        <% if  (image.blob!=nil and image.previewable?) %>
+          <%= image_tag(url_for(image.preview(resize: "200x200>")), height: '200', width: '200') %>
+        
+        <% if false %>
+        <%= link_to(image_tag(image.preview(resize: "200x200>")),rails_blob_path(image, disposition: "attachment"))%>
+        <% end %>
+
+       <% elsif (image.blob !=nil and image.variable?)  %> 
+         <%= image_tag(url_for(image.variant(resize: "200x200>")), height: '200', width: '200') %>
+     
+       <% if false %>
+       <%= link_to(image_tag(image.variant(resize: "200x200")),rails_blob_path(image, disposition: "attachment"))%>
+       <% end %>
+
+      <% end %>
+  <br>
+
+  <%if image.blob !=nil  %>     
+   <%= link_to 'Download', image, download: image %>
+   <br>
+   <%= link_to 'Remove', delete_image_event_path(image.id), method: :delete, data: { confirm: 'Are you sure?' }%>
+ <% end %>
+
+</td>
+
+
+<% if (index+1)%6 == 0 %>
+     </tr>
+<% end %>
+
+
+<% end %>
+
+
+
+</table>
+
+
+
 <br>
 <p id="notice"><%= notice %></p>
 <%= link_to 'Edit', edit_event_path(@event) %> |

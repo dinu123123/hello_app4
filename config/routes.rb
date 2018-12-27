@@ -1,6 +1,7 @@
   Rails.application.routes.draw do
   
   
+  resources :trailers
   devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => "registrations"}, 
                      path_names: {sign_in: "login", sign_out: "logout"}
 
@@ -27,6 +28,7 @@ end
   get 'fuel_expenses/index'
   get 'fuel_expenses/import'
   get 'events/extract_out'
+  #get '/events/delete_upload'
 
   # https://stackoverflow.com/questions/30315498/ruby-on-rails-how-to-link-route-from-one-view-page-to-another-view-page-with-a
   # linking a web page path to another page
@@ -44,8 +46,9 @@ end
   # The button all clicks from any page inside events are intercepted by the events controler which should 
   # have an extract_out method to handle the request
   get "/events/extract_out", as: "mission"
-
+ 
   get "/events/index", as: "mission2"
+
   get "/invoiced_trips/index", as: "mission3"
   get "/invoices/index", as: "mission4"
 
@@ -104,8 +107,20 @@ get "home/download_pdf"
    collection { post :import_db }
   end
 
+  resources :events do
+    member do
+      delete :delete_image
+    end
+  end
+
   resources :invoiced_trips do
   collection { post :import}
+  end
+
+  resources :invoiced_trips do
+    member do
+      delete :delete_image
+    end
   end
 
   resources :invoices do

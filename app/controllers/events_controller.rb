@@ -68,9 +68,11 @@ individual_import_db(head, 10, Invoice)
 individual_import_db(head, 11, InvoicedTrip)
 #flash[:success] = "InvoicedTrip tbl sucessfully imported #InvoicedTrip.all.size lines!"
 
+individual_import_db(head, 12, Trailer)
+
 @total_size = Driver.all.size+Truck.all.size+Client.all.size+TruckExpense.all.size+DriverExpense.all.size+
              Event.all.size+DeToll.all.size+BeToll.all.size+GenericToll.all.size+FuelExpense.all.size+
-              Invoice.all.size+InvoicedTrip.all.size
+              Invoice.all.size+InvoicedTrip.all.size+Trailer.all.size
 redirect_to events_url, notice: "DB sucessfully imported  lines!"
 
   end
@@ -87,6 +89,7 @@ redirect_to events_url, notice: "DB sucessfully imported  lines!"
 
     @drivers = Driver.all
     @trucks = Truck.all
+    @trailers = Trailer.all
     @clients = Client.all
     respond_to do |format|
         format.html
@@ -108,6 +111,8 @@ redirect_to events_url, notice: "DB sucessfully imported  lines!"
 
     @drivers = Driver.all
     @trucks = Truck.all
+    @trailers = Trailer.all
+    
     @clients = Client.all
 
     @truck_expenses = TruckExpense.all
@@ -140,7 +145,8 @@ redirect_to events_url, notice: "DB sucessfully imported  lines!"
                     @generic_tolls.size.to_s+"," + 
                     @fuel_expenses.size.to_s+"," + 
                     @invoices.size.to_s+"," +
-                    @invoiced_trips.size.to_s+"\n"
+                    @invoiced_trips.size.to_s+","+
+                    @trailers.size.to_s+"\n"
                     
 
           send_data @header + @drivers.to_csv+
@@ -157,7 +163,8 @@ redirect_to events_url, notice: "DB sucessfully imported  lines!"
                     @generic_tolls.to_csv+
                     @fuel_expenses.to_csv+
                     @invoices.to_csv+
-                    @invoiced_trips.to_csv,filename: "db#{Date.today.strftime('%Y%m%d')+Time.now.strftime('%H%M%S')}.csv"}
+                    @invoiced_trips.to_csv+
+                    @trailers.to_csv,filename: "db#{Date.today.strftime('%Y%m%d')+Time.now.strftime('%H%M%S')}.csv"}
       end
     end
   end
@@ -630,6 +637,11 @@ end
   def create
 
     @event = Event.new(event_params)
+
+    if @event.images.count>0
+     @event.images.attach(params[:event][:images])
+    end
+
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -641,8 +653,12 @@ end
     end
   end
 
-  # PATCH/PUT /events/1
-  # PATCH/PUT /events/1.json
+  def delete_image
+    @image = ActiveStorage::Attachment.find(params[:id])
+    @image.purge
+    redirect_back(fallback_location: events_path)
+  end
+
   def update
     respond_to do |format|
       if @event.update(event_params)
@@ -675,6 +691,13 @@ end
       @event = Event.find(params[:id])
       @driver = Driver.find(@event.DRIVER_id)
       @truck = Truck.find(@event.truck_id)
+
+      if @event.trailer_id
+        @trailer = Trailer.find(@event.trailer_id)
+      else
+        @trailer = nil
+      end
+
     end
 
     def set_client
@@ -682,7 +705,10 @@ end
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:DATE, :DRIVER_id, :truck_id, :client_id, :START_END)
-
+      #params.require(:event).permit(:DATE, :DRIVER_id, :truck_id, :client_id, :START_END, :picture)
+      params.require(:event).permit(:DATE, :DRIVER_id, :truck_id, :trailer_id, :client_id, :START_END, images: [] )
     end
+
+
+
 end

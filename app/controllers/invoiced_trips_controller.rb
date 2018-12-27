@@ -175,6 +175,10 @@ respond_to do |format|
   def create
     @invoiced_trip = InvoicedTrip.new(invoiced_trip_params)
 
+     if @invoiced_trip.images.count>0
+     @invoiced_trip.images.attach(params[:event][:images])
+    end
+    
     respond_to do |format|
       if @invoiced_trip.save
         format.html { redirect_to @invoiced_trip, notice: 'Invoiced trip was successfully created.' }
@@ -185,8 +189,12 @@ respond_to do |format|
     end
   end
 
-  # PATCH/PUT /invoiced_trips/1
-  # PATCH/PUT /invoiced_trips/1.json
+  def delete_image
+     @image = ActiveStorage::Attachment.find(params[:id])
+     @image.purge
+     redirect_back(fallback_location: invoiced_trips_path)
+  end
+
   def update
     respond_to do |format|
       if @invoiced_trip.update(invoiced_trip_params)
@@ -223,6 +231,6 @@ respond_to do |format|
       params.require(:invoiced_trip).permit(:invoice_id, :date, :StartDate, :EndDate, :client_id, 
         :DRIVER_id, :truck_id, :info, :germany_toll, :belgium_toll, :swiss_toll, :france_toll, 
         :italy_toll, :uk_toll, :netherlands_toll, :bridge, :parking, :tunnel, :trailer_cost, :km, 
-        :km_evogps, :km_driver_route_note, :total_amount)
+        :km_evogps, :km_driver_route_note, :total_amount, images: [])
     end
 end

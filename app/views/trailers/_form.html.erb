@@ -1,0 +1,37 @@
+<%= form_with(model: trailer, local: true) do |form| %>
+  <% if trailer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(trailer.errors.count, "error") %> prohibited this trailer from being saved:</h2>
+
+      <ul>
+      <% trailer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :NB_PLATE %>
+    <%= form.text_field :NB_PLATE %>
+  </div>
+
+  <div class="field">
+    <%= form.label :INFO %>
+    <%= form.text_field :INFO %>
+  </div>
+
+  <div class="field">
+    <%= form.label :CHASSIS %>
+    <%= form.text_field :CHASSIS %>
+  </div>
+
+  <div class="field">
+    <%= form.label :FABDATE %>
+    <%= form.date_select :FABDATE %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

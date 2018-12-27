@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nb plate:</strong>
+  <%= @trailer.NB_PLATE %>
+</p>
+
+<p>
+  <strong>Info:</strong>
+  <%= @trailer.INFO %>
+</p>
+
+<p>
+  <strong>Chassis:</strong>
+  <%= @trailer.CHASSIS %>
+</p>
+
+<p>
+  <strong>Fabdate:</strong>
+  <%= @trailer.FABDATE %>
+</p>
+
+<%= link_to 'Edit', edit_trailer_path(@trailer) %> |
+<%= link_to 'Back', trailers_path %>

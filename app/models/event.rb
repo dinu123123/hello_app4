@@ -1,8 +1,13 @@
 class Event < ApplicationRecord
 belongs_to :driver, :optional => true
 belongs_to :truck, :optional => true
+belongs_to :trailer, :optional => true
 belongs_to :client, :required => true
 validates_uniqueness_of :DRIVER_id, scope: %i[DATE START_END]
+
+#has_one_attached :picture
+
+has_many_attached :images
 
 
 
@@ -58,8 +63,6 @@ def self.to_csv_special(options = {})
 	  end
 	end
 
-	 
-
 	def self.import(file)
 	    CSV.foreach(file.path,:headers => true) do |row|
 	      @my_row = Hash.new
@@ -73,15 +76,4 @@ def self.to_csv_special(options = {})
 	    end
 	end
  
-
-
-
-
-
-
-
-
-
-
-
 end

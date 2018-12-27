@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  NB_PLATE: MyString
+  INFO: MyString
+  CHASSIS: MyString
+  FABDATE: 2018-12-26
+
+two:
+  NB_PLATE: MyString
+  INFO: MyString
+  CHASSIS: MyString
+  FABDATE: 2018-12-26
