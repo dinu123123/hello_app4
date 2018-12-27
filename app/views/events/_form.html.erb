@@ -29,13 +29,26 @@
 <% end %>
 
 <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
-<%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Number plate"}, :required => 'required' %>
-
+<%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
+<%= form.collection_select :trailer_id, Trailer.all, :id, :NB_PLATE, {prompt: "Trailer Nb Plate"}, :required => 'required' %>
 
 <div class="field">
   <%= form.label :START_END, 'Mark if Start event'  %>
   <%= form.check_box :START_END, id: :event_START_END%>
 </div>
+
+<% if false %>
+  <div class="field">
+    <%= form.label :picture %>
+    <%= form.file_field :picture %>
+  </div>
+<% end %>
+
+<div class="form_group">
+  <%= form.label :name, 'You can introduce multiple pdf/jpg files at once.' %>
+  <%= form.file_field :images, multiple: true %>
+</div>
+<br></br>
 
 <div class="actions">
   <%= form.submit %>

@@ -72,7 +72,9 @@
         <th>First Name</th>
         <th>Second Name</th>
         <th>Client Name</th>
-        <th>Number Plate</th>
+        <th>Truck</th>
+        <th>Trailer</th>
+        <th>Photos</th>
         <th>Start/End</th>
       
         <th colspan="3"></th>
@@ -86,7 +88,7 @@
       <td><%= event.updated_at %></td>
 
       <td><%= event.DATE.strftime("%d %B %Y %H:%M") %></td>
-<% if event.DRIVER_id? %>
+<% if event.DRIVER_id %>
 
       <td><%= @drivers.find(event.DRIVER_id).CNP %></td>
       <td><%= @drivers.find(event.DRIVER_id).FIRSTNAME %></td>
@@ -94,8 +96,16 @@
 <% end %>
 
       <td><%= @clients.find(event.client_id).Name %></td>
+
       <td><%= @trucks.find(event.truck_id).NB_PLATE %></td>
-      
+
+<% if event.trailer_id %>      
+      <td><%= @trailers.find(event.trailer_id).NB_PLATE %></td>
+<% else %>
+      <td><%= %></td>
+<% end %>
+
+      <td><%= event.images.count %></td>
       <% if event.START_END? %>
       <td><%= 'Start' %></td>
       <% else %>
