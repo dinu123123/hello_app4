@@ -146,13 +146,16 @@
         <% end %>
 
       <% elsif (image.blob !=nil and image.variable?)  %>
-      
         
         <%= image_tag(url_for(image.variant(resize: "200x200>")), height: '200', width: '200') %>
          
         <% if false %>
         <%= link_to(image_tag(image.variant(resize: "200x200")),rails_blob_path(image, disposition: "attachment"))%>
         <% end %>
+
+      <% else  %> 
+        <%= image_tag ("/assets/download.jpeg"), class: "img-responsive",  height: '200', width: '200' %>
+      
       <% end %>
 
       <br>
