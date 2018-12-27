@@ -16,7 +16,7 @@ gem 'jbuilder',     '2.7.0'
 gem 'simple_form',   '4.0.0'
 gem 'devise'
 
-gem 'mini_magick', '~> 4.8'
+gem 'mini_magick', '4.8'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
