@@ -6,7 +6,6 @@ belongs_to :client, :required => true
 validates_uniqueness_of :DRIVER_id, scope: %i[DATE START_END]
 
 #has_one_attached :picture
-
 has_many_attached :images
 
 
