@@ -153,7 +153,7 @@ item = InvoicePrinter::Document::Item.new(
   quantity: nil,
   unit: "km".to_s,
   price: a.km,
-  amount: @price_distance, # client_id.price_per_km,
+  amount: @price_distance.round(2), # client_id.price_per_km,
   tax: '0'  
 )
 
@@ -166,7 +166,7 @@ if (a.germany_toll > 0)
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
-      amount: a.germany_toll, # client_id.price_per_km,
+      amount: a.germany_toll.round(2), # client_id.price_per_km,
       tax: '0')
     ary << item
 
@@ -180,7 +180,7 @@ if (a.belgium_toll > 0)
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
-      amount: a.belgium_toll, # client_id.price_per_km,
+      amount: a.belgium_toll.round(2), # client_id.price_per_km,
       tax: '0')
     ary << item
 
@@ -194,7 +194,7 @@ if (a.swiss_toll > 0)
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
-      amount: a.swiss_toll, # client_id.price_per_km,
+      amount: a.swiss_toll.round(2), # client_id.price_per_km,
       tax: '0')
     ary << item
 
@@ -209,7 +209,7 @@ if (a.france_toll > 0)
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
-      amount: a.france_toll, # client_id.price_per_km,
+      amount: a.france_toll.round(2), # client_id.price_per_km,
       tax: '0')
 
     @total_price_calculated +=a.france_toll
@@ -224,7 +224,7 @@ if (a.italy_toll > 0)
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
-      amount: a.italy_toll, # client_id.price_per_km,
+      amount: a.italy_toll.round(2), # client_id.price_per_km,
       tax: '0')
     ary << item
 
@@ -239,7 +239,7 @@ if (a.uk_toll > 0)
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
-      amount: a.uk_toll, # client_id.price_per_km,
+      amount: a.uk_toll.round(2), # client_id.price_per_km,
       tax: '0')
     ary << item
     @total_price_calculated +=a.uk_toll
@@ -252,7 +252,7 @@ if (a.netherlands_toll > 0)
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
-      amount: a.netherlands_toll, # client_id.price_per_km,
+      amount: a.netherlands_toll.round(2), # client_id.price_per_km,
       tax: '0')
     ary << item
     @total_price_calculated +=a.netherlands_toll
@@ -265,7 +265,7 @@ if (a.bridge != nil and a.bridge > 0)
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
-      amount: a.bridge, # client_id.price_per_km,
+      amount: a.bridge.round(2), # client_id.price_per_km,
       tax: '0')
     ary << item
     @total_price_calculated +=a.bridge
@@ -277,7 +277,7 @@ if (a.parking != nil and a.parking > 0)
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
-      amount: a.parking, # client_id.price_per_km,
+      amount: a.parking.round(2), # client_id.price_per_km,
       tax: '0')
     ary << item
     @total_price_calculated +=a.parking
@@ -289,7 +289,7 @@ if (a.tunnel != nil and a.tunnel > 0)
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
-      amount: a.tunnel, # client_id.price_per_km,
+      amount: a.tunnel.round(2), # client_id.price_per_km,
       tax: '0')
     ary << item
     @total_price_calculated +=a.tunnel
@@ -301,7 +301,7 @@ if (a.trailer_cost != nil and a.trailer_cost > 0)
       quantity: nil,
       unit: "piece".to_s,
       price: '1',
-      amount: -a.trailer_cost, # client_id.price_per_km,
+      amount: -a.trailer_cost.round(2), # client_id.price_per_km,
       tax: '0')
     ary << item
     @total_price_calculated -=a.trailer_cost
@@ -316,7 +316,7 @@ item1 = InvoicePrinter::Document::Item.new(
   quantity: nil,
   unit: "piece".to_s,
   price: '1',
-  amount: invoice.total_amount,
+  amount: invoice.total_amount.round(2),
   tax: '0'  
 )
 
@@ -365,9 +365,9 @@ invoice_inline = InvoicePrinter::Document.new(
   purchaser_extra_address_line: '',
   issue_date: invoice.date.to_s,
   due_date: (invoice.date+client.PaymentDelay).to_s,
-  subtotal: '€ '+invoice.total_amount.to_s,
+  subtotal: '€ '+invoice.total_amount.round(2).to_s,
   tax: '€ 0.00',
-  total: '€ '+invoice.total_amount.to_s,
+  total: '€ '+invoice.total_amount.round(2).to_s,
 
   bank_account_number: 'RO53 RZBR 0000 0600 1753 0734',
   items: ary,
