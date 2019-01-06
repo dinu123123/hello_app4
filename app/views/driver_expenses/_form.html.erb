@@ -44,6 +44,12 @@
     <%= form.text_area :DESCRIPTION, id: :driver_expense_DESCRIPTION, :required => 'required' %>
   </div>
 
+  <div class="form_group">
+    <%= form.label :name, 'You can introduce multiple pdf/jpg files at once.' %>
+    <%= form.file_field :images, multiple: true %>
+  </div>
+  <br></br>
+
   <div class="actions">
     <%= form.submit %>
   </div>

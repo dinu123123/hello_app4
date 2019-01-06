@@ -60,6 +60,11 @@ end
   # POST /driver_expenses.json
   def create
     @driver_expense = DriverExpense.new(driver_expense_params)
+
+    if @driver_expense.images.count>0
+     @driver_expense.images.attach(params[:driver_expense][:images])
+    end
+
     respond_to do |format|
       if @driver_expense.save
         format.html { redirect_to @driver_expense, notice: 'Driver expense was successfully created.' }
@@ -95,6 +100,12 @@ end
     end
   end
 
+  def delete_image
+    @image = ActiveStorage::Attachment.find(params[:id])
+    @image.purge
+    redirect_back(fallback_location: driver_expenses_path)
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -116,6 +127,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def driver_expense_params
-      params.require(:driver_expense).permit(:truck_id, :DRIVER_id, :DATE, :AMOUNT, :INFO, :DESCRIPTION)
+      params.require(:driver_expense).permit(:truck_id, :DRIVER_id, :DATE, :AMOUNT, :INFO, :DESCRIPTION, images: [])
     end
 end

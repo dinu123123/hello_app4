@@ -67,46 +67,46 @@ def scope_invoiced_trips_index
 if @client_id > 0 
             if @driver_id > 0 and @truck_id == 0
                 @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.client_id = ? 
-                   and invoiced_trips."DRIVER_id" = ? and invoiced_trips."StartDate" >= ? and invoiced_trips."EndDate" <= ? 
+                   and invoiced_trips."DRIVER_id" = ? and invoiced_trips."StartDate" >= ? and invoiced_trips."StartDate" <= ? 
                    ORDER BY  invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id"', @client_id,
                    @driver_id, to_datetime(@date_from), to_datetime(@date_to)])
                      
             elsif @truck_id > 0 && @driver_id == 0
                 @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.client_id = ? and invoiced_trips.truck_id = ? 
-                          and invoiced_trips."StartDate" >= ? and invoiced_trips."EndDate" <= ? and ORDER BY 
+                          and invoiced_trips."StartDate" >= ? and invoiced_trips."StartDate" <= ? and ORDER BY 
                            invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id', @client_id,
                           @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
                      
             elsif @truck_id > 0 && @driver_id > 0
                 @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.client_id = ? and invoiced_trips."DRIVER_id" = ? 
-                        and invoiced_trips.truck_id = ? and invoiced_trips."StartDate" >= ? and invoiced_trips."EndDate" <= ? ORDER BY
+                        and invoiced_trips.truck_id = ? and invoiced_trips."StartDate" >= ? and invoiced_trips."StartDate" <= ? ORDER BY
                          invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id', 
                         @client_id, @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
                      
             else
                 @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.client_id = ? 
-                  and invoiced_trips."StartDate" >= ? and invoiced_trips."EndDate" <= ?
+                  and invoiced_trips."StartDate" >= ? and invoiced_trips."StartDate" <= ?
                   ORDER BY  invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', @client_id, to_datetime(@date_from), to_datetime(@date_to)])            
             end
 
 else 
       if @driver_id > 0 and @truck_id == 0
               @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."DRIVER_id" = ? 
-                and invoiced_trips."StartDate" >= ? and invoiced_trips."EndDate" <= ? ORDER BY invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', 
+                and invoiced_trips."StartDate" >= ? and invoiced_trips."StartDate" <= ? ORDER BY invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', 
                 @driver_id, to_datetime(@date_from), to_datetime(@date_to)])
                
       elsif @truck_id > 0 && @driver_id == 0
                @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.truck_id = ? 
-                    and invoiced_trips."StartDate" >= ? and invoiced_trips."EndDate" <= ? ORDER BY  invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', 
+                    and invoiced_trips."StartDate" >= ? and invoiced_trips."StartDate" <= ? ORDER BY  invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', 
                     @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
                
       elsif @truck_id > 0 && @driver_id > 0
                 @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."DRIVER_id" = ? and invoiced_trips.truck_id = ? 
-                    and invoiced_trips."StartDate" >= ? and invoiced_trips."EndDate" <= ? ORDER BY  invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', 
+                    and invoiced_trips."StartDate" >= ? and invoiced_trips."StartDate" <= ? ORDER BY  invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', 
                     @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])          
       else       
                   @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where 
-                  invoiced_trips."StartDate" >= ? and invoiced_trips."EndDate" <= ? ORDER BY  invoiced_trips."StartDate" DESC, 
+                  invoiced_trips."StartDate" >= ? and invoiced_trips."StartDate" <= ? ORDER BY  invoiced_trips."StartDate" DESC, 
                   invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', to_datetime(@date_from), to_datetime(@date_to)])
       end
 end
@@ -290,7 +290,7 @@ if @driver_id > 0
                     if TruckExpense.all.size
                           @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM Truck_Expenses where 
                           Truck_Expenses.truck_id = ? AND Truck_Expenses."DATE" BETWEEN ? AND ? ORDER BY 
-                          Truck_Expenses."DATE" ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE, 
+                          Truck_Expenses."DATE" ASC', @localEvent[2*(i-1)].truck_id, @localEvent[2*(i-1)].DATE-1, 
                           @localEvent[2*(i-1)+1].DATE ])
                           
                         arrayTruckExpense.concat(@truckExpense)
@@ -301,6 +301,7 @@ if @driver_id > 0
                         de_tolls.datetime >= ? AND de_tolls.datetime <= ? ORDER BY de_tolls.datetime ASC',  
                         @localEvent[2*(i-1)].truck_id, to_datetime(@localEvent[2*(i-1)].DATE),
                         to_datetime(@localEvent[2*(i-1)+1].DATE) ])  
+
                       0.upto( @germanyTollExpenses.size-1) do |j|
                           @germanyTollExpenses[j].via =  @germanyTollExpenses[j].via[0,10]
                       end
@@ -343,20 +344,26 @@ if @driver_id > 0
                     if DriverExpense.all.size
                         @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where 
                           driver_expenses."DRIVER_id" = ? and driver_expenses."DATE" BETWEEN ? AND ? ORDER BY 
-                          driver_expenses."DATE"', @driver_id.to_s,  @localEvent[2*(i-1)].DATE, @localEvent[2*(i-1)+1].DATE ])
+                          driver_expenses."DATE"', @driver_id.to_s,  @localEvent[2*(i-1)].DATE-1, @localEvent[2*(i-1)+1].DATE ])
                         arrayDriverExpenses.concat(@driverExpenses)
+
+
+
+
                     end
 
 
 
                      if InvoicedTrip.all.size
                         @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where  invoiced_trips."DRIVER_id" = ? and
-                        invoiced_trips."StartDate" >= ? AND invoiced_trips."EndDate" <= ? ORDER BY 
-                        invoiced_trips."StartDate" ASC', @driver_id, to_datetime(@localEvent[2*(i-1)].DATE), 
-                        to_datetime(@localEvent[2*(i-1)+1].DATE)])
+                        invoiced_trips."StartDate" >= ? AND invoiced_trips."StartDate" < ? ORDER BY 
+                        invoiced_trips."StartDate" ASC', @driver_id, @localEvent[2*(i-1)].DATE, 
+                        @localEvent[2*(i-1)+1].DATE])
                          if @invoicedTrips
                           arrayInvoicedTrips.concat(@invoicedTrips)
                          end
+
+
                       end 
 
                 end
@@ -447,8 +454,8 @@ elsif @truck_id > 0 && @driver_id == 0
                     if InvoicedTrip.all.size
                           @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where  
                           invoiced_trips."truck_id" = ? and invoiced_trips."StartDate" >= ? AND 
-                          invoiced_trips."EndDate" <= ? ORDER BY invoiced_trips."StartDate" ASC', 
-                          @truck_id , to_datetime(@date_from), to_datetime(@date_to)])
+                          invoiced_trips."StartDate" <= ? ORDER BY invoiced_trips."StartDate" ASC', 
+                          @truck_id , @date_from, @date_to])
                          if @invoicedTrips
                           arrayInvoicedTrips.concat(@invoicedTrips)
                          end
@@ -460,6 +467,7 @@ elsif @truck_id > 0 && @driver_id == 0
                           Truck_Expenses."DATE" ASC', @truck_id, @date_from, @date_to])
                         arrayTruckExpense.concat(@truckExpense)
                     end
+
 
                     if DeToll.all.size                      
                       @germanyTollExpenses = DeToll.find_by_sql(['SELECT * FROM de_tolls where de_tolls.truck_id = ? AND
@@ -511,7 +519,7 @@ else
           if TruckExpense.all.size
            @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM truck_expenses where 
               truck_expenses."DATE" BETWEEN ? AND ? ORDER BY 
-              truck_expenses."DATE" ASC', to_date(@date_from), to_date(@date_to) ])
+              truck_expenses."DATE" ASC', to_date(@date_from)-1, to_date(@date_to) ])
           
 
              if (@truckExpense  and @truckExpense.size >0)         
@@ -564,7 +572,7 @@ else
 
          if InvoicedTrip.all.size
             @invoicedTrips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where   
-            invoiced_trips."StartDate" >= ? AND invoiced_trips."EndDate" <= ? 
+            invoiced_trips."StartDate" >= ? AND invoiced_trips."StartDate" <= ? 
             ORDER BY invoiced_trips."StartDate" ASC', to_datetime(@date_from), to_datetime(@date_to)])
              if @invoicedTrips
               arrayInvoicedTrips.concat(@invoicedTrips)

@@ -85,6 +85,7 @@ tr:nth-child(even) {
       <th>Amount</th>
       <th>Info</th>
       <th>Description</th>
+      <th>Photos</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -98,6 +99,7 @@ tr:nth-child(even) {
         <td><%= truck_expense.AMOUNT %></td>
         <td><%= truck_expense.INFO %></td>
         <td><%= truck_expense.DESCRIPTION %></td>
+        <td><%= truck_expense.images.count %></td>
         <td><%= link_to 'Show', truck_expense %></td>
         <td><%= link_to 'Edit', edit_truck_expense_path(truck_expense) %></td>
         <td><%= link_to 'Destroy', truck_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>

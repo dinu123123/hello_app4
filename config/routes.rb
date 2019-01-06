@@ -133,8 +133,20 @@ get "home/download_pdf"
   collection { post :import }
   end
   
+  resources :driver_expenses do
+    member do
+      delete :delete_image
+    end
+  end
+
   resources :truck_expenses do
   collection { post :import }
+  end
+
+  resources :truck_expenses do
+    member do
+      delete :delete_image
+    end
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
