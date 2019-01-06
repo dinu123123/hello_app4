@@ -66,6 +66,10 @@ end
   def create
     @truck_expense = TruckExpense.new(truck_expense_params)
 
+    if @truck_expense.images.count>0
+     @truck_expense.images.attach(params[:truck_expense][:images])
+    end
+
     respond_to do |format|
       if @truck_expense.save
         format.html { redirect_to @truck_expense, notice: 'Truck expense was successfully created.' }
@@ -101,6 +105,12 @@ end
     end
   end
 
+  def delete_image
+    @image = ActiveStorage::Attachment.find(params[:id])
+    @image.purge
+    redirect_back(fallback_location: truck_expenses_path)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_truck_expense
@@ -120,6 +130,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def truck_expense_params
-      params.require(:truck_expense).permit(:truck_id, :DATE, :AMOUNT, :INFO, :DESCRIPTION)
+      params.require(:truck_expense).permit(:truck_id, :DATE, :AMOUNT, :INFO, :DESCRIPTION, images: [])
     end
 end

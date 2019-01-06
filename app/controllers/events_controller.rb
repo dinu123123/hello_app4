@@ -207,7 +207,7 @@ end
 
 if @search1.type ==1
 
-    @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Truck.all.size+2,0)}
+    @arrayWeeklyTruckExpense = Array.new(@period_end-@period_start+3){Array.new(Truck.all.size+2,0)}
     @arrayWeeklyTruckExpense[0][0]= "".to_s
       Truck.all.each_with_index do |truck,j|
         imortant_NB_PLATE = Truck.all[j].NB_PLATE
@@ -259,16 +259,16 @@ for week in @period_start..@period_end do
 
 
   @date_from1 = Date.commercial(@search1.date_from.to_date.strftime("%Y").to_i, week, 1)
-  @date_to1 = Date.commercial(@search1.date_from.to_date.strftime("%Y").to_i, week, 7)
+  @date_to1 = Date.commercial(@search1.date_to.to_date.strftime("%Y").to_i, week, 7)
 
   if @search1.time == 2
     @date_from1 =  Date.new(@search1.date_from.to_date.strftime("%Y").to_i, week, 1)
     @date_to1 =  @date_from1.to_date.end_of_month
-  end  
-
+  end   
 
   if @search1.type ==1 
   
+
 
           Truck.all.each_with_index do |truck,j|
                 @search1.setDriver(0)
@@ -278,6 +278,7 @@ for week in @period_start..@period_end do
                 @driver_expenses,@total_driver_expenses,@invoiced_trips,@total_invoiced_trips,
                 @fuel_expenses, @total_fuel_expenses,
                 @total_per_truck = @search1.scope1(@date_from1, @date_to1)
+
 
 
                 @arrayWeeklyTruckExpense[(week-@period_start+1).to_i][j+1]=@total_per_truck
@@ -310,6 +311,7 @@ for week in @period_start..@period_end do
                 @driver_expenses,@total_driver_expenses,@invoiced_trips,@total_invoiced_trips,
                 @fuel_expenses, @total_fuel_expenses,
                 @total_per_truck = @search1.scope1(@date_from1, @date_to1)
+
 
 
 
@@ -604,6 +606,7 @@ end
     @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
     @be_tolls,@total_be_tolls,@generic_tolls,@total_generic_tolls,
     @driver_expenses,@total_driver_expenses,@invoiced_trips,@total_invoiced_trips,
+    
     
     @fuel_expenses, @total_fuel_expenses,
     @total_debit = @search.scope
