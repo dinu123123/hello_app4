@@ -119,6 +119,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :"surcharge" %>
+    <%= form.text_field :surcharge, id: :surcharge,  :value => 0  %>
+  </div>
+
+  <div class="field">
     <%= form.label :total_amount %>
     <%= form.text_field :total_amount, id: :invoiced_trip_total_amount, :required => 'required' %>
   </div>
