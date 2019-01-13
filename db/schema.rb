@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_26_141154) do
+ActiveRecord::Schema.define(version: 2019_01_12_231859) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -226,6 +226,7 @@ ActiveRecord::Schema.define(version: 2018_12_26_141154) do
     t.decimal "tunnel"
     t.string "info"
     t.decimal "trailer_cost"
+    t.decimal "surcharge"
   end
 
   create_table "invoices", force: :cascade do |t|

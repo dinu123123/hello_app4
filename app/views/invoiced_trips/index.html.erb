@@ -112,7 +112,9 @@ tr:nth-child(even) {
       <th>Trip Start DateTime</th>
       <th>Trip End DateTime</th>
       <th>Invoice Date</th>
+      <th>Diesel Surcharge</th>
       <th>Total amount</th>
+      <th>Calculated Total amount</th>
       <th>Fotos</th>
       <th colspan="3"></th>
     </tr>
@@ -161,6 +163,7 @@ tr:nth-child(even) {
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.EndDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.date %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.surcharge %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.total_amount %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.images.count %></td>
 
@@ -212,6 +215,7 @@ tr:nth-child(even) {
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.EndDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.date %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.surcharge %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.total_amount %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.images.count %></td>
 
@@ -257,7 +261,21 @@ tr:nth-child(even) {
         <td><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
         <td><%= invoiced_trip.EndDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
         <td><%= invoiced_trip.date %></td>
+        <td><%= invoiced_trip.surcharge %></td>
+
         <td><%= invoiced_trip.total_amount %></td>
+        <td><%= (@clients.find(invoiced_trip.client_id).kprice*invoiced_trip.km*(100+invoiced_trip.surcharge.to_s.to_d)/100+
+          invoiced_trip.germany_toll.to_s.to_d+
+          invoiced_trip.belgium_toll.to_s.to_d+
+          invoiced_trip.swiss_toll.to_s.to_d +
+          invoiced_trip.france_toll.to_s.to_d + 
+          invoiced_trip.italy_toll.to_s.to_d + 
+          invoiced_trip.uk_toll.to_s.to_d + 
+          invoiced_trip.netherlands_toll.to_s.to_d + 
+          invoiced_trip.bridge.to_s.to_d + 
+          invoiced_trip.parking.to_s.to_d + 
+          invoiced_trip.tunnel.to_s.to_d + 
+          invoiced_trip.trailer_cost.to_s.to_d).round(2)  %></td>
         <td><%= invoiced_trip.images.count %></td>
 <% end %>
 
