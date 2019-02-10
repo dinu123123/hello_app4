@@ -70,9 +70,11 @@ individual_import_db(head, 11, InvoicedTrip)
 
 individual_import_db(head, 12, Trailer)
 
+individual_import_db(head, 13, Pricing)
+
 @total_size = Driver.all.size+Truck.all.size+Client.all.size+TruckExpense.all.size+DriverExpense.all.size+
              Event.all.size+DeToll.all.size+BeToll.all.size+GenericToll.all.size+FuelExpense.all.size+
-              Invoice.all.size+InvoicedTrip.all.size+Trailer.all.size
+              Invoice.all.size+InvoicedTrip.all.size+Trailer.all.size+Pricing.all.size
 redirect_to events_url, notice: "DB sucessfully imported  lines!"
 
   end
@@ -126,6 +128,7 @@ redirect_to events_url, notice: "DB sucessfully imported  lines!"
     @fuel_expenses = FuelExpense.all
     @invoices = Invoice.all
     @invoiced_trips = InvoicedTrip.all
+    @pricings = Pricing.all
 
     respond_to do |format|
        format.html
@@ -146,7 +149,8 @@ redirect_to events_url, notice: "DB sucessfully imported  lines!"
                     @fuel_expenses.size.to_s+"," + 
                     @invoices.size.to_s+"," +
                     @invoiced_trips.size.to_s+","+
-                    @trailers.size.to_s+"\n"
+                    @trailers.size.to_s+","+
+                    @pricings.size.to_s+"\n"
                     
 
           send_data @header + @drivers.to_csv+
@@ -164,7 +168,8 @@ redirect_to events_url, notice: "DB sucessfully imported  lines!"
                     @fuel_expenses.to_csv+
                     @invoices.to_csv+
                     @invoiced_trips.to_csv+
-                    @trailers.to_csv,filename: "db#{Date.today.strftime('%Y%m%d')+Time.now.strftime('%H%M%S')}.csv"}
+                    @trailers.to_csv+
+                    @pricings.to_csv,filename: "db#{Date.today.strftime('%Y%m%d')+Time.now.strftime('%H%M%S')}.csv"}
       end
     end
   end
@@ -193,6 +198,9 @@ def extract_explicit
 
 @period_start = @search1.date_from.to_date.cweek.to_i
 @period_end = @search1.date_to.to_date.cweek.to_i
+
+
+
 
 if @search1.time == 2
   @period_start = @search1.date_from.to_date.month.to_i
@@ -261,7 +269,11 @@ for week in @period_start..@period_end do
   @date_from1 = Date.commercial(@search1.date_from.to_date.strftime("%Y").to_i, week, 1)
   @date_to1 = Date.commercial(@search1.date_to.to_date.strftime("%Y").to_i, week, 7)
 
+
+
   if @search1.time == 2
+
+   
     @date_from1 =  Date.new(@search1.date_from.to_date.strftime("%Y").to_i, week, 1)
     @date_to1 =  @date_from1.to_date.end_of_month
   end   
@@ -271,6 +283,11 @@ for week in @period_start..@period_end do
 
 
           Truck.all.each_with_index do |truck,j|
+
+
+  
+
+
                 @search1.setDriver(0)
                 @search1.setTruck(truck.id)
                 @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
@@ -282,7 +299,9 @@ for week in @period_start..@period_end do
 
 
                 @arrayWeeklyTruckExpense[(week-@period_start+1).to_i][j+1]=@total_per_truck
-                @week_total += @total_per_truck            
+                @week_total += @total_per_truck  
+
+
           end
           @arrayWeeklyTruckExpense[(week-@period_start+1).to_i][Truck.all.size+1]=@week_total  
            # Truck.all.each_with_index do |truck,j|
@@ -294,11 +313,14 @@ for week in @period_start..@period_end do
                     @total_per_truck +=  @arrayWeeklyTruckExpense[week-@period_start+1][j]
                end
 
+               
+
 
               @arrayWeeklyTruckExpense[@period_end-@period_start+2][j]=@total_per_truck 
             end
    
    elsif @search1.type ==2
+
 
 
 

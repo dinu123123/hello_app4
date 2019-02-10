@@ -13,7 +13,7 @@ class PeriodicTransactionSearch
 
   def initialize(params)
     params ||= {}
-    @date_from = parsed_date(params[:date_from], (DateTime.now - 2.month).strftime('%Y-%m-%d'))
+    @date_from = parsed_date(params[:date_from], (DateTime.now.beginning_of_year()).strftime('%Y-%m-%d'))
     @date_to = parsed_date(params[:date_to],  (Date.today+1.month).strftime('%Y-%m-%d'))
     @time = parsed_time_interval(params[:interval], 1)
 
@@ -83,6 +83,7 @@ arrayEvents = Array.new
 @localEvent = nil
 
 if @type == 1
+
 
          if TruckExpense.all.size
                  @truckExpense = TruckExpense.find_by_sql(['SELECT * FROM truck_expenses where truck_expenses.truck_id = ? and
@@ -282,8 +283,6 @@ else
 #asdasd1
 
 # end
-
-
 
                     end
 

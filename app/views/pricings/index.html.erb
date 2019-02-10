@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Pricings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Datetime</th>
+      <th>Client</th>
+      <th>Price/km</th>
+      <th>Price/day</th>
+      <th>Surcharge (extra %percent)</th>
+      <th>PaymentDelay (PaymentDate - InvoiceDate)</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pricings.each do |pricing| %>
+      <tr>
+        <td><%= pricing.DATETIME %></td>
+        <td><%= @clients.find(pricing.client_id).Name %></td>
+        <td><%= pricing.price_per_km %></td>
+        <td><%= pricing.price_per_day %></td>
+        <td><%= pricing.surcharge %></td>
+        <td><%= pricing.PaymentDelay %></td>
+        <td><%= pricing.DESCRIPTION %></td>
+        <td><%= link_to 'Show', pricing %></td>
+        <td><%= link_to 'Edit', edit_pricing_path(pricing) %></td>
+        <td><%= link_to 'Destroy', pricing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pricing', new_pricing_path %>
