@@ -19,6 +19,23 @@ class InvoicedTripsController < ApplicationController
   #  @invoiced_trips = InvoicedTrip.all
     @search = TransactionSearch.new(params[:search])
     @invoiced_trips = @search.scope_invoiced_trips_index
+
+
+@invoiced_trips.each_with_index do |invoiced_trip, j|
+
+ @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
+  and pricings.DATETIME <= ? order by pricings.DATETIME desc", invoiced_trip.client_id, invoiced_trip.StartDate ]) 
+
+#invoiced_trip.price_per_km = @pricing[0].price_per_km 
+#invoiced_trip.surcharge = @pricing[0].surcharge
+
+
+invoiced_trip.update_attribute(:price_per_km, @pricing[0].price_per_km)
+invoiced_trip.update_attribute(:surcharge, @pricing[0].surcharge)
+end
+
+
+
     #@invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips ORDER BY invoiced_trips.date DESC'])
    
 
@@ -175,6 +192,12 @@ respond_to do |format|
   def create
     @invoiced_trip = InvoicedTrip.new(invoiced_trip_params)
 
+  @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
+  and pricings.DATETIME <= ? order by pricings.DATETIME desc", @invoiced_trip.client_id, @invoiced_trip.StartDate ])
+  @invoiced_trip.surcharge = @pricing[0].surcharge
+  @invoiced_trip.price_per_km = @pricing[0].price_per_km
+
+
      if @invoiced_trip.images.count>0
      @invoiced_trip.images.attach(params[:event][:images])
     end
@@ -231,6 +254,6 @@ respond_to do |format|
       params.require(:invoiced_trip).permit(:invoice_id, :date, :StartDate, :EndDate, :client_id, 
         :DRIVER_id, :truck_id, :info, :germany_toll, :belgium_toll, :swiss_toll, :france_toll, 
         :italy_toll, :uk_toll, :netherlands_toll, :bridge, :parking, :tunnel, :trailer_cost, :km, 
-        :km_evogps, :km_driver_route_note, :surcharge, :total_amount, images: [])
+        :km_evogps, :km_driver_route_note, :surcharge, :price_per_km, :total_amount, images: [])
     end
 end

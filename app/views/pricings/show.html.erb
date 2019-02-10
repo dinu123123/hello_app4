@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Datetime:</strong>
+  <%= @pricing.DATETIME %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+
+   <%= @client.Name %>
+</p>
+
+<p>
+  <strong>Price per km:</strong>
+  <%= @pricing.price_per_km %>
+</p>
+
+<p>
+  <strong>Price per day:</strong>
+  <%= @pricing.price_per_day %>
+</p>
+
+<p>
+  <strong>Surcharge:</strong>
+  <%= @pricing.surcharge %>
+</p>
+
+<p>
+  <strong>Payment Delay:</strong>
+  <%= @pricing.PaymentDelay %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @pricing.DESCRIPTION %>
+</p>
+
+<%= link_to 'Edit', edit_pricing_path(@pricing) %> |
+<%= link_to 'Back', pricings_path %>

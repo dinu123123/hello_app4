@@ -1,0 +1,57 @@
+<%= form_with(model: pricing, local: true) do |form| %>
+  <% if pricing.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(pricing.errors.count, "error") %> prohibited this pricing from being saved:</h2>
+
+      <ul>
+      <% pricing.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :DATETIME %>
+    <%= form.datetime_select :DATETIME %>
+  </div>
+
+<% if false %>
+  <div class="field">
+    <%= form.label :CLIENT_id %>
+    <%= form.number_field :CLIENT_id %>
+  </div>
+<% end %>
+
+<%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
+
+
+  <div class="field">
+    <%= form.label :price_per_km %>
+    <%= form.text_field :price_per_km %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price_per_day %>
+    <%= form.text_field :price_per_day %>
+  </div>
+
+  <div class="field">
+    <%= form.label :surcharge %>
+    <%= form.text_field :surcharge %>
+  </div>
+
+  <div class="field">
+    <%= form.label :PaymentDelay %>
+    <%= form.text_field :PaymentDelay %>
+  </div>
+
+  <div class="field">
+    <%= form.label :DESCRIPTION %>
+    <%= form.text_area :DESCRIPTION %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

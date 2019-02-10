@@ -123,6 +123,21 @@ tr:nth-child(even) {
   <tbody>
     <% @invoiced_trips.each_with_index do |invoiced_trip, j| %>
       <tr>
+
+
+
+<% if false %>
+
+<% @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
+  and pricings.DATETIME <= ? order by pricings.DATETIME desc", invoiced_trip.client_id, invoiced_trip.StartDate ]) %>
+
+
+<%invoiced_trip.update_attribute(:price_per_km, @pricing[0].price_per_km) %>
+<%invoiced_trip.update_attribute(:surcharge, @pricing[0].surcharge) %>
+
+<% end %>
+
+
 <% if invoiced_trip.created_at.to_date == Time.now.utc.to_date%>
 <td bgcolor="#b6f666" style="font-weight:bold"><%= (j+"1".to_i).to_s %></td>
 <% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
@@ -165,7 +180,7 @@ tr:nth-child(even) {
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.date %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.surcharge %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.total_amount %></td>
-
+<% if false %>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= (@clients.find(invoiced_trip.client_id).kprice*invoiced_trip.km*
           (100+invoiced_trip.surcharge.to_s.to_d)/100+
           invoiced_trip.germany_toll.to_s.to_d+
@@ -179,7 +194,20 @@ tr:nth-child(even) {
           invoiced_trip.parking.to_s.to_d + 
           invoiced_trip.tunnel.to_s.to_d + 
           invoiced_trip.trailer_cost.to_s.to_d).round(2)%></td>
-
+<% end %>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= (invoiced_trip.price_per_km*invoiced_trip.km*
+          (100+invoiced_trip.surcharge)/100+
+          invoiced_trip.germany_toll.to_s.to_d+
+          invoiced_trip.belgium_toll.to_s.to_d+
+          invoiced_trip.swiss_toll.to_s.to_d +
+          invoiced_trip.france_toll.to_s.to_d + 
+          invoiced_trip.italy_toll.to_s.to_d + 
+          invoiced_trip.uk_toll.to_s.to_d + 
+          invoiced_trip.netherlands_toll.to_s.to_d + 
+          invoiced_trip.bridge.to_s.to_d + 
+          invoiced_trip.parking.to_s.to_d + 
+          invoiced_trip.tunnel.to_s.to_d + 
+          invoiced_trip.trailer_cost.to_s.to_d).round(2)%></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.images.count %></td>
 
 <% elsif invoiced_trip.created_at.to_date == Time.now.utc.to_date-1%>
@@ -232,8 +260,8 @@ tr:nth-child(even) {
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.date %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.surcharge %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.total_amount %></td>
-        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= (@clients.find(invoiced_trip.client_id).kprice*invoiced_trip.km*
-          (100+invoiced_trip.surcharge.to_s.to_d)/100+
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= (invoiced_trip.price_per_km*invoiced_trip.km*
+          (100+invoiced_trip.surcharge)/100+
           invoiced_trip.germany_toll.to_s.to_d+
           invoiced_trip.belgium_toll.to_s.to_d+
           invoiced_trip.swiss_toll.to_s.to_d +
@@ -293,7 +321,11 @@ tr:nth-child(even) {
         <td><%= invoiced_trip.surcharge %></td>
 
         <td><%= invoiced_trip.total_amount %></td>
-        <td><%= (@clients.find(invoiced_trip.client_id).kprice*invoiced_trip.km*(100+invoiced_trip.surcharge.to_s.to_d)/100+
+
+
+
+
+        <td><%= (invoiced_trip.price_per_km*invoiced_trip.km*(100+invoiced_trip.surcharge)/100+
           invoiced_trip.germany_toll.to_s.to_d+
           invoiced_trip.belgium_toll.to_s.to_d+
           invoiced_trip.swiss_toll.to_s.to_d +

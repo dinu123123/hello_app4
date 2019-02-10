@@ -80,6 +80,22 @@
 </table>
 
 
+
+  <% if   current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
+      <h3>Pricing Events:</h3>
+        <table style="width:100%"  border="1">
+        <tr>
+          <th> <%= link_to 'New Pricing Change', new_pricing_path %> </th>
+        </tr>
+        <tr>
+          <th> <%= link_to 'Pricing History', pricings_path %> </th>
+        </tr>
+      </table>
+  <% end %>
+
+
+
+
 <% if current_user != nil and !(current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
 <h3>Toll Generic:</h3>
   <table style="width:100%"  border="1">

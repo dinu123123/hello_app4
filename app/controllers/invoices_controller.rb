@@ -117,6 +117,7 @@ ary = Array.new
 invoice_trip_all.each {
  |a| 
 
+
 client = Client.find(a.client_id)
 driver = Driver.find(a.DRIVER_id)
 truck = Truck.all.find(a.truck_id)
@@ -125,9 +126,9 @@ truck = Truck.all.find(a.truck_id)
 
 @price_distance = 0
 if client.kprice>0 
-  @price_distance = a.km*client.kprice
+  @price_distance = a.km*a.price_per_km
 else
-  @price_distance =   a.total_amount
+  @price_distance = a.total_amount
 end
 
 
@@ -157,8 +158,25 @@ item = InvoicePrinter::Document::Item.new(
   tax: '0'  
 )
 
-@total_price_calculated += a.km*client.kprice
+@total_price_calculated += a.km*a.price_per_km
 ary << item
+
+
+if (a.surcharge > 0)
+item = InvoicePrinter::Document::Item.new(
+  name: @info+"  "+truck.NB_PLATE+"/ Diesel Surcharge = "+ a.surcharge.to_s+ "%", #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+  quantity: nil,
+  unit: "piece".to_s,
+  price: 1,
+  amount: (@price_distance*a.surcharge/100).round(2), # client_id.price_per_km,
+  tax: '0'  
+)
+end
+
+
+@total_price_calculated += (@price_distance*a.surcharge/100)
+ary << item
+
 
 if (a.germany_toll > 0)
     item = InvoicePrinter::Document::Item.new(
@@ -306,6 +324,8 @@ if (a.trailer_cost != nil and a.trailer_cost > 0)
     ary << item
     @total_price_calculated -=a.trailer_cost
 end
+
+
 
 }
 

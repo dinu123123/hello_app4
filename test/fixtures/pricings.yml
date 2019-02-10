@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  DATETIME: 2019-02-03 13:13:08
+  CLIENT_id: 1
+  price_per_km: 9.99
+  price_per_day: 9.99
+  surcharge: 9.99
+  DESCRIPTION: MyText
+
+two:
+  DATETIME: 2019-02-03 13:13:08
+  CLIENT_id: 1
+  price_per_km: 9.99
+  price_per_day: 9.99
+  surcharge: 9.99
+  DESCRIPTION: MyText

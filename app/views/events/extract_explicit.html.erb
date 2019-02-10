@@ -8,7 +8,8 @@
 
 <fieldset>
       <legend>Group Calculation Interval </legend>
-      <p>Introduce the Event Start/End Date, Driver and Truck to get the cash-flow detailed view</p> 
+      <p>Introduce the Event Start/End Date, Driver and Truck to get the cash-flow detailed view.</p> 
+      <p>Start/End Date must belong to the same year!</p> 
         <div class="row">
           <div class="pull-right range-query">
             <%= form_tag mission1_path, :method => 'get' do %>
@@ -63,17 +64,31 @@
 <table>
 <tbody>
   <% @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose() %>
+  <% @t=0 %>
   <% @arrayWeeklyTruckExpense.each_with_index do |row, i| %>
     <tr>
+<% if  i== 0 or (i>0 and @arrayWeeklyTruckExpense[i][ @arrayWeeklyTruckExpense[0].size-1].to_s.to_i >0) %>
+ 
+ <% if  i> 0  and i< @arrayWeeklyTruckExpense.size-1 %>
+  <td><%= @t=@t+1 %></td>
+<% else %>
+  <td></td>
+<%end%>
 
-      <% row.each_with_index do |value, j| %>      
+      <% row.each_with_index do |value, j| %>    
+
+
+
         <% if @arrayWeeklyTruckExpense[0][0].to_s.starts_with?('Week') and @arrayWeeklyTruckExpense[0][j] == Date.today.cweek.to_i %>
                                  <td bgcolor="#FFA500"><%= value %></td>
         <% elsif @arrayWeeklyTruckExpense[0][0].to_s.starts_with?('Month') and @arrayWeeklyTruckExpense[0][j] == Date.today.month.to_i %>
                         <td bgcolor="#FFA500"><%= value %></td>
         <% else %>
 
-                      <% if i== @arrayWeeklyTruckExpense.size-1 or j== @arrayWeeklyTruckExpense[0].size-1 %>
+
+ 
+
+                      <%  if i== @arrayWeeklyTruckExpense.size-1 or j== @arrayWeeklyTruckExpense[0].size-1 %>
                         <% if i== @arrayWeeklyTruckExpense.size-1 and j== @arrayWeeklyTruckExpense[0].size-1 %>
                           <td bgcolor="#A8F993" style="font-weight:bold"><span class="font-weight:bold">                            
                             <% if ((value.is_a? Numeric)==true) %>
@@ -102,6 +117,7 @@
                       <% end %>
         <% end %>
 
+  <% end %>
   <% end %>
     </tr>
   <% end %>

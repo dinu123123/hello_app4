@@ -1,6 +1,7 @@
   Rails.application.routes.draw do
   
   
+  resources :pricings
   resources :trailers
   devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => "registrations"}, 
                      path_names: {sign_in: "login", sign_out: "logout"}

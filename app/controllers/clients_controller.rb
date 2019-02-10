@@ -11,6 +11,9 @@ class ClientsController < ApplicationController
   # GET /drivers.json
   def index
     @clients = Client.all
+   
+    
+
     respond_to do |format|
         format.html
         format.csv  { send_data @clients.to_csv, filename: "clients-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
