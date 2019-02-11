@@ -118,10 +118,12 @@
     <%= form.date_select :date, id: :invoiced_trip_date, :required => 'required' %>
   </div>
 
+<% if false %>
   <div class="field">
     <%= form.label :"surcharge" %>
     <%= form.text_field :surcharge, id: :surcharge, :required => 'required' %>
   </div>
+<% end %>
 
   <div class="field">
     <%= form.label :total_amount %>
