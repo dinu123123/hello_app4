@@ -161,22 +161,20 @@ item = InvoicePrinter::Document::Item.new(
 @total_price_calculated += a.km*a.price_per_km
 ary << item
 
-
+#in case surcharge applies
 if (a.surcharge > 0)
-item = InvoicePrinter::Document::Item.new(
-  name: @info+"  "+truck.NB_PLATE+"/ Diesel Surcharge = "+ a.surcharge.to_s+ "%", #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
-  quantity: nil,
-  unit: "piece".to_s,
-  price: 1,
-  amount: (@price_distance*a.surcharge/100).round(2), # client_id.price_per_km,
-  tax: '0'  
-)
+  item = InvoicePrinter::Document::Item.new(
+    name: @info+"  "+truck.NB_PLATE+"/ Diesel Surcharge = "+ a.surcharge.to_s+ "%", #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+    quantity: nil,
+    unit: "piece".to_s,
+    price: 1,
+    amount: (@price_distance*a.surcharge/100).round(2), # client_id.price_per_km,
+    tax: '0'  
+  )
+
+  @total_price_calculated += (@price_distance*a.surcharge/100)
+  ary << item
 end
-
-
-@total_price_calculated += (@price_distance*a.surcharge/100)
-ary << item
-
 
 if (a.germany_toll > 0)
     item = InvoicePrinter::Document::Item.new(
