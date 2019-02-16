@@ -14,7 +14,7 @@ class PeriodicTransactionSearch
   def initialize(params)
     params ||= {}
     @date_from = parsed_date(params[:date_from], (DateTime.now.beginning_of_year()).strftime('%Y-%m-%d'))
-    @date_to = parsed_date(params[:date_to],  (Date.today+1.month).strftime('%Y-%m-%d'))
+    @date_to = parsed_date(params[:date_to],  (Date.today+2.month).strftime('%Y-%m-%d'))
     @time = parsed_time_interval(params[:interval], 1)
 
     @time = parsed_period(params[:time], 1)
