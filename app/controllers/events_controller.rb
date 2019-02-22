@@ -631,7 +631,11 @@ end
     
     
     @fuel_expenses, @total_fuel_expenses,
-    @total_debit = @search.scope
+    @total_debit,
+    @total_km_evogps,
+    @total_km_invoiced,
+    @total_toll_invoiced = @search.scope
+
     @drivers = Driver.all
     @trucks = Truck.all
     @clients = Client.all

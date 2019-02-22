@@ -50,7 +50,7 @@
         
         <th>Debit(Total Expenses)</th>
         <th>Credit(Invoiced Trips)</th> 
-         <th>Profit</th> 
+        <th>Profit</th> 
       </tr>
     </thead>
 <tbody>    
@@ -61,10 +61,60 @@
       <td><%= @total_germany_tolls %></td>
       <td><%= @total_be_tolls %></td>
       <td><%= @total_generic_tolls %></td>
-     
       <td bgcolor="#E8F993"><%= @total_debit %></td>
       <td bgcolor="#E8F993"><%= @total_invoiced_trips %></td>
       <th bgcolor="#E8F993"><%= @total_invoiced_trips - @total_debit %></th>
+    </tr>
+     </tbody>
+</table>
+<br />
+<table>
+    <thead>
+      <tr>
+    <th>total_km_evogps</th> 
+    <th>total_km_invoiced</th> 
+    <th>NOT PAID KMs</th>  
+    
+      </tr>
+    </thead>
+<tbody>    
+    <tr>
+      <td bgcolor="#E8F993"><%= @total_km_evogps.round(2) %></td>
+      <td bgcolor="#E8F993"><%= @total_km_invoiced.round(2) %></td>
+       <td bgcolor="#E8F993"><%= (@total_km_evogps-@total_km_invoiced).round(2)%></td>
+    </tr>
+     </tbody>
+</table>
+
+<br />
+<table>
+    <thead>
+      <tr>
+    <th>total_toll_costs</th> 
+    <th>total_toll_invoiced</th> 
+     <th>NOT PAID TOLLs</th> 
+      </tr>
+    </thead>
+<tbody>    
+    <tr>
+      <td bgcolor="#E8F993"><%= (@total_germany_tolls+@total_be_tolls).round(2) %></td>
+      <td bgcolor="#E8F993"><%= (@total_toll_invoiced).round(2) %></td>
+         <td bgcolor="#E8F993"><%= (@total_germany_tolls+@total_be_tolls-@total_toll_invoiced).round(2)%></td>
+    </tr>
+     </tbody>
+</table>
+<br />
+
+<table>
+    <thead>
+      <tr>
+   
+    <th>avg TOLL/KM</th> 
+      </tr>
+    </thead>
+<tbody>    
+    <tr>  
+      <td bgcolor="#E8F993"><%= ((@total_germany_tolls+@total_be_tolls)/@total_km_invoiced).round(4) %></td>
     </tr>
      </tbody>
 </table>

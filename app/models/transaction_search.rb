@@ -653,6 +653,45 @@ if  arrayInvoicedTrips != nil
     end
 end  
 
+############################################################################################
+############################################################################################
+@total_km_evogps = 0
+if  arrayInvoicedTrips != nil
+    1.upto( arrayInvoicedTrips.count) do |i|
+        @total_km_evogps = @total_km_evogps.to_d + arrayInvoicedTrips[i-1].km_evogps.to_d
+    end
+end  
+
+@total_km_invoiced = 0
+if  arrayInvoicedTrips != nil
+    1.upto( arrayInvoicedTrips.count) do |i|
+        @total_km_invoiced = @total_km_invoiced.to_d + arrayInvoicedTrips[i-1].km.to_d
+    end
+end  
+
+#@total_km_invoiced = 0
+#if  arrayInvoicedTrips != nil
+#    1.upto( arrayInvoicedTrips.count) do |i|
+#        @total_km_invoiced = @total_km_invoiced.to_d + arrayInvoicedTrips[i-1].km.to_d
+#    end
+#end  
+
+@total_toll_invoiced = 0
+if  arrayInvoicedTrips != nil
+    1.upto( arrayInvoicedTrips.count) do |i|
+        @total_toll_invoiced = @total_toll_invoiced.to_d + 
+        arrayInvoicedTrips[i-1].germany_toll.to_d +
+        arrayInvoicedTrips[i-1].belgium_toll.to_d +
+        arrayInvoicedTrips[i-1].swiss_toll.to_d +
+        arrayInvoicedTrips[i-1].france_toll.to_d +
+        arrayInvoicedTrips[i-1].italy_toll.to_d +
+        arrayInvoicedTrips[i-1].uk_toll.to_d +
+        arrayInvoicedTrips[i-1].netherlands_toll.to_d
+    end
+end  
+############################################################################################
+############################################################################################
+
 @total_debit = 
 @totalTruckExpense.to_d + 
 @totalGermanyToll.to_d +
@@ -660,6 +699,7 @@ end
 @totalGenericToll.to_d + 
 @totalDriverExpenses.to_d + 
 @totalFuelExpenses.to_d
+
 
 return     arrayEvents,
            arrayTruckExpense,
@@ -676,9 +716,10 @@ return     arrayEvents,
            @totalInvoicedTrips,
            arrayFuelExpenses,
            @totalFuelExpenses,
-           @total_debit
-
-
+           @total_debit,
+           @total_km_evogps,
+           @total_km_invoiced,
+           @total_toll_invoiced
 
 end 
 
