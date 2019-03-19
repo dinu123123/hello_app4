@@ -415,6 +415,12 @@ invoice_inline = InvoicePrinter::Document.new(
         "<b>".to_s.html_safe + invoice.total_amount.to_s + " €</b>".to_s.html_safe + " - the sum of the individal trips (suma tripurilor individuale) ".to_s + 
         "</p>".to_s.html_safe +  "<p>".to_s.html_safe + "<b>".to_s.html_safe +  @sum_individual_invoices.to_s.html_safe + " €</b>".to_s.html_safe + " - the sum of the individual trips CALCULATED using price/km (Suma tripurilor individuale CALCULATE ca folosind pret/km) ".to_s + "</p>".to_s.html_safe
     end
+
+     respond_to do |format|
+        format.pdf {
+        send_data InvoicePrinter.render(document: invoice_inline,  labels: labels, page_size: :a4 ), filename: invoice.info+
+          "_"+ client.Name.try(:gsub!,' ', '').to_s+".pdf",  disposition: 'inline' }
+      end
    
   end
 
