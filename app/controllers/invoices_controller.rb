@@ -394,7 +394,7 @@ invoice_inline = InvoicePrinter::Document.new(
 
   #if (@total_price_calculated - invoice.total_amount).abs<5 
 
-  if( @sum_individual_invoices ==  invoice.total_amount and @sum_individual_invoices == @total_price_calculated)
+  if(invoice.total_amount == @total_price_calculated)
  
       respond_to do |format|
         format.pdf {
