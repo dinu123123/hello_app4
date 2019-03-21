@@ -394,7 +394,11 @@ invoice_inline = InvoicePrinter::Document.new(
 
   #if (@total_price_calculated - invoice.total_amount).abs<5 
 
-  if(invoice.total_amount == @total_price_calculated)
+  # @total_price_calculated - the sum of client_price_per_km times nb_of_km plus toll_costs
+  # invoice.total_amount - the total invoice amount
+  # sum_individual_invoices - the sum of the individual trips amount
+
+  if (invoice.total_amount == @total_price_calculated).abs < 2
  
       respond_to do |format|
         format.pdf {
