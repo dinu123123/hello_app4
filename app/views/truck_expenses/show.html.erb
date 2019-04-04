@@ -43,17 +43,16 @@ tr:nth-child(even) {
 <br>
 
 <table>
+  <% @truck_expense.images.each_with_index do |image,index| %>
 
-<% @truck_expense.images.each_with_index do |image,index| %>
-
-<% if (index+1)%6 == 0 %>
+  <% if (index+1)%6 == 0 %>
      <tr>
-<% end %>
+  <% end %>
 
-<td> 
-<% if false %>
-  <%= image_tag(url_for(image), height: '200', width: '200') %>
-<% end %>
+  <td> 
+  <% if false %>
+    <%= image_tag(url_for(image), height: '200', width: '200') %>
+  <% end %>
         
         <% if  (image.blob!=nil and image.previewable?) %>
           <%= image_tag(url_for(image.preview(resize: "200x200>")), height: '200', width: '200') %>
@@ -74,10 +73,6 @@ tr:nth-child(even) {
       <% end %>
   <br>
 
-
-    
-
-
   <%if image.blob !=nil  %>     
    <%= link_to 'Download', image, download: image %>
    <br>
@@ -86,15 +81,11 @@ tr:nth-child(even) {
 
 </td>
 
-
 <% if (index+1)%6 == 0 %>
      </tr>
 <% end %>
 
-
 <% end %>
-
-
 
 </table>
 

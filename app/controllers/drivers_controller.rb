@@ -52,6 +52,10 @@ class DriversController < ApplicationController
   def create
     @driver = Driver.new(driver_params)
 
+    if @driver.images.count>0
+     @driver.images.attach(params[:driver][:images])
+    end
+
     respond_to do |format|
       if @driver.save
         format.html { redirect_to @driver, notice: 'Driver was successfully created.' }
@@ -95,6 +99,6 @@ class DriversController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def driver_params
-      params.require(:driver).permit(:CNP, :FIRSTNAME, :SECONDNAME, :StartDate, :EndDate, :INFO, :DESCRIPTION)
+      params.require(:driver).permit(:CNP, :FIRSTNAME, :SECONDNAME, :StartDate, :EndDate, :INFO, :DESCRIPTION, images: [])
     end
 end

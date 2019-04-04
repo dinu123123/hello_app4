@@ -5,6 +5,8 @@ has_many :events
 has_many :invoiced_trips
 validates :CNP, uniqueness: true
 
+has_many_attached :images
+
 def name_with_cnp
 self.FIRSTNAME + " " + self.SECONDNAME + " CNP:"+ self.CNP.to_s
 end

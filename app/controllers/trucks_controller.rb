@@ -42,6 +42,10 @@ class TrucksController < ApplicationController
   def create
     @truck = Truck.new(truck_params)
 
+    if @truck.images.count>0
+     @truck.images.attach(params[:truck][:images])
+    end
+
     respond_to do |format|
       if @truck.save
         format.html { redirect_to @truck, notice: 'Truck was successfully created.' }
@@ -85,6 +89,6 @@ class TrucksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def truck_params
-      params.require(:truck).permit(:NB_PLATE, :INFO, :CHASSIS, :FABDATE)
+      params.require(:truck).permit(:NB_PLATE, :INFO, :CHASSIS, :FABDATE, images: [])
     end
 end
