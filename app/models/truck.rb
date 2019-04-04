@@ -5,6 +5,8 @@ class Truck < ApplicationRecord
 	#validates :NB_PLATE, uniqueness: { scope: :CHASSIS,
 	#    message: "should happen once per year" }
 
+    has_many_attached :images
+
 	has_many :truck_expenses
 	has_many :belgium_tolls
 	has_many :germany_tolls
