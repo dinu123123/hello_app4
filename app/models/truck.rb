@@ -15,4 +15,5 @@ class Truck < ApplicationRecord
 	has_many :events
 	has_many :invoiced_trips
 
+
 end

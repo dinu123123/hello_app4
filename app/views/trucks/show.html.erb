@@ -20,12 +20,14 @@
      <tr>
   <% end %>
 
+ <%=  image.filename.to_s %>
   <td> 
   <% if false %>
     <%= image_tag(url_for(image), height: '200', width: '200') %>
   <% end %>
         
         <% if  (image.blob!=nil and image.previewable?) %>
+
           <%= image_tag(url_for(image.preview(resize: "200x200>")), height: '200', width: '200') %>
         
         <% if false %>
@@ -43,6 +45,7 @@
         <%= image_tag ("/assets/download.jpeg"), class: "img-responsive",  height: '200', width: '200' %>
       <% end %>
   <br>
+
 
   <%if image.blob !=nil  %>     
    <%= link_to 'Download', image, download: image %>
