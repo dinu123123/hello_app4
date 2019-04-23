@@ -99,7 +99,7 @@ nr_rows_insterted= 0
                            #Also you can use the more standard encoding name 'ISO-8859-1'
                            #CSV.read('/..', {:headers => true, :col_sep => ';', :encoding => 'ISO-8859-1'})
                            #encoding: "windows-1251:utf-8", 
-                           encoding: "ISO-8859-1,windows-1251:utf-8", 
+                           encoding: "ISO-8859-1", 
                            :col_sep => ";", 
                            :quote_char => "|", 
                            :header_converters => lambda { |h| h.try(:gsub,' ', '') }
