@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_09_192941) do
+ActiveRecord::Schema.define(version: 2019_04_21_140747) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -31,6 +31,34 @@ ActiveRecord::Schema.define(version: 2019_02_09_192941) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "as24_germany_tolls", force: :cascade do |t|
+    t.string "contract"
+    t.integer "vehicle_card"
+    t.string "driver_card"
+    t.string "product_code"
+    t.string "product"
+    t.decimal "volume"
+    t.date "date"
+    t.time "time"
+    t.string "country"
+    t.string "site_nbr"
+    t.string "station"
+    t.date "invoice_date"
+    t.integer "invoice_nbr"
+    t.decimal "vat_rate"
+    t.string "transation_currency"
+    t.decimal "transaction_excl_vat"
+    t.decimal "transaction_vat"
+    t.decimal "transaction_incl_vat"
+    t.string "payment_currency"
+    t.decimal "payment_excl_vat"
+    t.decimal "miles"
+    t.string "immatriculation"
+    t.string "document_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "be_tolls", force: :cascade do |t|

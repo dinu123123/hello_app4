@@ -30,5 +30,127 @@ class FuelExpense < ApplicationRecord
  	 	    end	
      end
  end
+
+
+
+
+
+
+
+def self.import_as24(file)
  
+    row_to_skip = 0
+        # a block that runs through a loop in our CSV data
+         CSV.foreach(file.path,  headers: [
+    'Contract',
+    'Vehicle_card',
+    'Driver_card',
+    'Product_code',
+    'Product',
+    'Volume',
+    'Date',
+    'Time',
+    'Country',
+    'Site_nbr',
+    'Station',
+    'Invoice_date',
+    'Invoice_nbr',
+    'VAT_rate',
+    'Transation_currency',
+    'Excl_VAT',
+    'VAT',
+    'Incl_VAT',
+    'Payment_currency',
+    'Excl_VAT',
+    'VAT',
+    'Incl_VAT',
+    'Miles',
+    'Immatriculation',
+    'Document_type'],
+     encoding: "ISO-8859-1",  
+                               :col_sep => ";", 
+                               :quote_char => "\"", 
+                               :header_converters => lambda { |h| h.try(:gsub,' ', '').try(:gsub,'ï»¿', '') }
+                    ) do |row| 
+
+     if row_to_skip ==0
+                            row_to_skip = 1
+                          else  
+      @my_trstime = row["Date"].to_date
+
+      @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, row["Time"][0,2].to_i , row["Time"][2,2].to_i, 0.to_i, DateTime.now.zone)
+
+
+      @my_trsdate = @my_trsdatetime.to_time
+      @my_product = row["Product"].to_s.try(:gsub,' ', '')
+
+      @my_volume = row["Volume"].to_d
+      @my_eurnetamount = row["Incl_VAT"].to_d
+      @my_kminsertion = row["Miles"].to_d
+      @my_truck = row["Immatriculation"].to_s.try(:gsub,' ', '')
+      @my_cardnr = row["Vehicle_card"].to_s.try(:gsub,' ', '')
+      @my_stationid = row["Site_nbr"].to_s.try(:gsub,' ', '')
+      @my_stationname = row["stationname"].to_s.try(:gsub,' ', '')
+      @my_eurgrossunitprice = 0.to_d
+      @my_eurgrossamount = row["Incl_VAT"].to_d
+      @my_country = row["Country"].to_s.try(:gsub,' ', '')
+      @my_truck_all_data = Truck.find_by NB_PLATE:@my_truck.try(:gsub,' ', '')
+      @my_truck_id = @my_truck_all_data.id
+
+
+      @my_row = Hash.new
+      @my_row = @my_row.to_a<<(["trstime",@my_trsdatetime.to_time])
+      @my_row = @my_row.to_a<<(["trsdate",@my_trsdatetime.to_date])
+      @my_row = @my_row.to_a<<(["product",@my_product])
+      @my_row = @my_row.to_a<<(["volume",@my_volume])
+      @my_row = @my_row.to_a<<(["eurnetamount",@my_eurnetamount])
+      @my_row = @my_row.to_a<<(["kminsertion",@my_kminsertion])
+      @my_row = @my_row.to_a<<(["platenr",@my_truck])
+      @my_row = @my_row.to_a<<(["cardnr",@my_cardnr])
+      @my_row = @my_row.to_a<<(["stationid",@my_stationid])
+      @my_row = @my_row.to_a<<(["stationname",@stationname])
+      @my_row = @my_row.to_a<<(["eurgrossunitprice",@my_eurgrossunitprice])
+      @my_row = @my_row.to_a<<(["eurgrossamount",@my_eurgrossamount])
+      @my_row = @my_row.to_a<<(["country",@my_country])
+      @my_row = @my_row.to_a<<(["truck_id",@my_truck_id])
+
+
+
+
+
+      @my_row_datetime =@my_trsdate.to_s + "T" + @my_trstime.to_s
+
+
+
+
+
+
+
+            if @my_truck != nil 
+              if  @my_eurgrossamount > 0.to_d
+                 #do not register transactions with zero value 
+                 @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
+                 #@my_row_datetime = row.to_a[1][1].try(:gsub!,'/', '-')+ "T" + row.to_a[0][1]
+
+
+
+                 @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
+                 FuelExpense.create! @my_row.to_h
+
+
+               end
+            else
+              #hope one day we will have 1001 trucks
+              #but then that wont be a problem 
+              @my_row = @my_row.to_a<<(["truck_id",23.to_i]) 
+              #@my_row_datetime = row.to_a[1][1].try(:gsub!,'/', '-')+ "T" + row.to_a[0][1]
+              @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
+              FuelExpense.create! @my_row.to_h
+            end 
+         end
+     end
+    end
+ 
+
+
 end

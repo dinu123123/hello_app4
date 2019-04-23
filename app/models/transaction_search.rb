@@ -204,6 +204,11 @@ arrayFuelExpenses = Array.new
 arrayInvoicedTrips = Array.new
 arrayEvents = Array.new
 
+
+
+
+
+
 if @driver_id > 0
 
     if Event.all.size > 0
@@ -380,6 +385,10 @@ if @driver_id > 0
     end
 
 elsif @truck_id > 0 && @driver_id == 0
+
+
+
+
 
   if Event != nil and Event.all.size >0
               @localEvent = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 

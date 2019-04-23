@@ -8,6 +8,11 @@ class DeTollsController < ApplicationController
   end 
 
 
+  def import_as24
+    DeToll.import_as24(params[:file])
+    redirect_to de_tolls_url, notice: "Activity Data Imported!"
+  end 
+
   # GET /de_tolls
   # GET /de_tolls.json
   def index

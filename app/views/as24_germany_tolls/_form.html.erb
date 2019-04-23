@@ -1,0 +1,132 @@
+<%= form_with(model: as24_germany_toll, local: true) do |form| %>
+  <% if as24_germany_toll.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(as24_germany_toll.errors.count, "error") %> prohibited this as24_germany_toll from being saved:</h2>
+
+      <ul>
+      <% as24_germany_toll.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :contract %>
+    <%= form.text_field :contract %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vehicle_card %>
+    <%= form.number_field :vehicle_card %>
+  </div>
+
+  <div class="field">
+    <%= form.label :driver_card %>
+    <%= form.text_field :driver_card %>
+  </div>
+
+  <div class="field">
+    <%= form.label :product_code %>
+    <%= form.text_field :product_code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :product %>
+    <%= form.text_field :product %>
+  </div>
+
+  <div class="field">
+    <%= form.label :volume %>
+    <%= form.text_field :volume %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :time %>
+    <%= form.time_select :time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :country %>
+    <%= form.text_field :country %>
+  </div>
+
+  <div class="field">
+    <%= form.label :site_nbr %>
+    <%= form.text_field :site_nbr %>
+  </div>
+
+  <div class="field">
+    <%= form.label :station %>
+    <%= form.text_field :station %>
+  </div>
+
+  <div class="field">
+    <%= form.label :invoice_date %>
+    <%= form.date_select :invoice_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :invoice_nbr %>
+    <%= form.number_field :invoice_nbr %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vat_rate %>
+    <%= form.text_field :vat_rate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :transation_currency %>
+    <%= form.text_field :transation_currency %>
+  </div>
+
+  <div class="field">
+    <%= form.label :transaction_excl_vat %>
+    <%= form.text_field :transaction_excl_vat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :transaction_vat %>
+    <%= form.text_field :transaction_vat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :transaction_incl_vat %>
+    <%= form.text_field :transaction_incl_vat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :payment_currency %>
+    <%= form.text_field :payment_currency %>
+  </div>
+
+  <div class="field">
+    <%= form.label :payment_excl_vat %>
+    <%= form.text_field :payment_excl_vat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :miles %>
+    <%= form.text_field :miles %>
+  </div>
+
+  <div class="field">
+    <%= form.label :immatriculation %>
+    <%= form.text_field :immatriculation %>
+  </div>
+
+  <div class="field">
+    <%= form.label :document_type %>
+    <%= form.text_field :document_type %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

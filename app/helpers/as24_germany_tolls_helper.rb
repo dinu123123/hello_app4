@@ -1,0 +1,2 @@
+module As24GermanyTollsHelper
+end
