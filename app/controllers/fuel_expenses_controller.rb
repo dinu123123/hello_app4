@@ -18,6 +18,12 @@ class FuelExpensesController < ApplicationController
     redirect_to fuel_expenses_url, notice: "Activity Data Imported!"
   end 
 
+
+  def import_as24
+    FuelExpense.import_as24(params[:file])
+    redirect_to fuel_expenses_url, notice: "Activity Data Imported!"
+  end 
+
   # GET /fuel_expenses/1
   # GET /fuel_expenses/1.json
   def show

@@ -82,6 +82,7 @@ arrayEvents = Array.new
 
 @localEvent = nil
 
+
 if @type == 1
 
 

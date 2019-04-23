@@ -1,0 +1,71 @@
+<p id="notice"><%= notice %></p>
+
+<h1>As24 Germany Tolls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Contract</th>
+      <th>Vehicle card</th>
+      <th>Driver card</th>
+      <th>Product code</th>
+      <th>Product</th>
+      <th>Volume</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Country</th>
+      <th>Site nbr</th>
+      <th>Station</th>
+      <th>Invoice date</th>
+      <th>Invoice nbr</th>
+      <th>Vat rate</th>
+      <th>Transation currency</th>
+      <th>Transaction excl vat</th>
+      <th>Transaction vat</th>
+      <th>Transaction incl vat</th>
+      <th>Payment currency</th>
+      <th>Payment excl vat</th>
+      <th>Miles</th>
+      <th>Immatriculation</th>
+      <th>Document type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @as24_germany_tolls.each do |as24_germany_toll| %>
+      <tr>
+        <td><%= as24_germany_toll.contract %></td>
+        <td><%= as24_germany_toll.vehicle_card %></td>
+        <td><%= as24_germany_toll.driver_card %></td>
+        <td><%= as24_germany_toll.product_code %></td>
+        <td><%= as24_germany_toll.product %></td>
+        <td><%= as24_germany_toll.volume %></td>
+        <td><%= as24_germany_toll.date %></td>
+        <td><%= as24_germany_toll.time %></td>
+        <td><%= as24_germany_toll.country %></td>
+        <td><%= as24_germany_toll.site_nbr %></td>
+        <td><%= as24_germany_toll.station %></td>
+        <td><%= as24_germany_toll.invoice_date %></td>
+        <td><%= as24_germany_toll.invoice_nbr %></td>
+        <td><%= as24_germany_toll.vat_rate %></td>
+        <td><%= as24_germany_toll.transation_currency %></td>
+        <td><%= as24_germany_toll.transaction_excl_vat %></td>
+        <td><%= as24_germany_toll.transaction_vat %></td>
+        <td><%= as24_germany_toll.transaction_incl_vat %></td>
+        <td><%= as24_germany_toll.payment_currency %></td>
+        <td><%= as24_germany_toll.payment_excl_vat %></td>
+        <td><%= as24_germany_toll.miles %></td>
+        <td><%= as24_germany_toll.immatriculation %></td>
+        <td><%= as24_germany_toll.document_type %></td>
+        <td><%= link_to 'Show', as24_germany_toll %></td>
+        <td><%= link_to 'Edit', edit_as24_germany_toll_path(as24_germany_toll) %></td>
+        <td><%= link_to 'Destroy', as24_germany_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New As24 Germany Toll', new_as24_germany_toll_path %>

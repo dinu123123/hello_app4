@@ -1,0 +1,2 @@
+json.extract! as24_germany_toll, :id, :contract, :vehicle_card, :driver_card, :product_code, :product, :volume, :date, :time, :country, :site_nbr, :station, :invoice_date, :invoice_nbr, :vat_rate, :transation_currency, :transaction_excl_vat, :transaction_vat, :transaction_incl_vat, :payment_currency, :payment_excl_vat, :miles, :immatriculation, :document_type, :created_at, :updated_at
+json.url as24_germany_toll_url(as24_germany_toll, format: :json)

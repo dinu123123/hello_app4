@@ -1,8 +1,16 @@
 <p id="notice"><%= notice %></p>
 <h1>Germany Tolls Import File</h1>
 <div>
-<h4> Import that data!</h4>
+<h4> Import from Toll Collect</h4>
   <%= form_tag import_de_tolls_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag  "Import CSV"%>
+<% end %>
+</div>
+
+<div>
+<h4> Import from AS24</h4>
+  <%= form_tag import_as24_de_tolls_path, multipart: true do %>
   <%= file_field_tag :file %>
   <%= submit_tag  "Import CSV"%>
 <% end %>

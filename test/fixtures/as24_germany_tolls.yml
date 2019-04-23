@@ -1,0 +1,51 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  contract: MyString
+  vehicle_card: 1
+  driver_card: MyString
+  product_code: MyString
+  product: MyString
+  volume: 9.99
+  date: 2019-04-21
+  time: 2019-04-21 16:07:47
+  country: MyString
+  site_nbr: MyString
+  station: MyString
+  invoice_date: 2019-04-21
+  invoice_nbr: 1
+  vat_rate: 9.99
+  transation_currency: MyString
+  transaction_excl_vat: 9.99
+  transaction_vat: 9.99
+  transaction_incl_vat: 9.99
+  payment_currency: MyString
+  payment_excl_vat: 9.99
+  miles: 9.99
+  immatriculation: MyString
+  document_type: MyString
+
+two:
+  contract: MyString
+  vehicle_card: 1
+  driver_card: MyString
+  product_code: MyString
+  product: MyString
+  volume: 9.99
+  date: 2019-04-21
+  time: 2019-04-21 16:07:47
+  country: MyString
+  site_nbr: MyString
+  station: MyString
+  invoice_date: 2019-04-21
+  invoice_nbr: 1
+  vat_rate: 9.99
+  transation_currency: MyString
+  transaction_excl_vat: 9.99
+  transaction_vat: 9.99
+  transaction_incl_vat: 9.99
+  payment_currency: MyString
+  payment_excl_vat: 9.99
+  miles: 9.99
+  immatriculation: MyString
+  document_type: MyString

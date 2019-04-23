@@ -24,6 +24,9 @@ end
   collection { post :import}
   end
 
+
+
+
   get 'germany_tolls/index'
   get 'germany_tolls/import'
   get 'fuel_expenses/index'
@@ -71,8 +74,11 @@ end
   get "/events/oil", as: "oil"
 
 
+
   get "/de_tolls/file_import", as: "de_toll_file_import"
   get "/de_tolls/index", as: "de_toll_index_import"
+
+
 
   get "/be_tolls/file_import", as: "be_toll_file_import"
   get "/be_tolls/index", as: "be_toll_index_import"
@@ -85,11 +91,14 @@ get "home/download_pdf"
 
   resources :fuel_expenses do
   collection { post :import}
+  collection { post :import_as24}
   end
 
   resources :de_tolls do
   collection { post :import }
+  collection { post :import_as24 }  
   end
+
 
   resources :be_tolls do
   collection { post :import }
