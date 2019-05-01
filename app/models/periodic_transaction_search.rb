@@ -373,7 +373,7 @@ end
 @totalFuelExpenses = 0
 if  arrayFuelExpenses != nil
     1.upto(arrayFuelExpenses.count) do |i|
-        @totalFuelExpenses = @totalFuelExpenses.to_d + arrayFuelExpenses[i-1].eurnetamount.to_d
+        @totalFuelExpenses = @totalFuelExpenses.to_d + arrayFuelExpenses[i-1].EuroNetAmountInclVATFreeCharges.to_d
     end
 end   
 
@@ -441,7 +441,7 @@ end
 @totalFuelExpenses = 0
 if  arrayFuelExpenses != nil
     1.upto(arrayFuelExpenses.count) do |i|
-        @totalFuelExpenses = @totalFuelExpenses.to_d + arrayFuelExpenses[i-1].eurnetamount.to_d
+        @totalFuelExpenses = @totalFuelExpenses.to_d + arrayFuelExpenses[i-1].EuroNetAmountInclVATFreeCharges.to_d
     end
 end   
 
