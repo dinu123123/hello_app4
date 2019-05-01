@@ -7,7 +7,7 @@ class FuelExpensesController < ApplicationController
 
 FuelExpense.all.each_with_index do |fuelexpense,i|
  
-if false
+if true
  @BELVAT_FREE = false
     @BELVAT_FREE_CHARGES = "0.07".to_d
     @BELVAT = "0.21".to_d
@@ -27,7 +27,7 @@ if false
         fuelexpense.EuroNetAmountInclVATFreeCharges = (fuelexpense.eurgrossamount/(1+@BELVAT))+(fuelexpense.eurgrossamount - (fuelexpense.eurgrossamount/(1+@BELVAT))  )*@BELVAT_FREE_CHARGES
 
         fuelexpense.eurnetamount = (fuelexpense.eurgrossamount/(1+@BELVAT))
-      fuelexpense.update_attribute(:eurnetamount, fuelexpense.eurnetamount) #this persists the entities to the DB
+      fuelexpense.update_attribute(:eurnetamount, fuelexpense.eurnetamount.round(2)) #this persists the entities to the DB
 
       end
 
@@ -35,7 +35,7 @@ if false
         fuelexpense.EuroNetAmountInclVATFreeCharges = (fuelexpense.eurgrossamount/(1+@DEUVAT))+(fuelexpense.eurgrossamount- (fuelexpense.eurgrossamount/(1+@DEUVAT)))  *@DEUVAT_FREE_CHARGES
 
         fuelexpense.eurnetamount = (fuelexpense.eurgrossamount/(1+@DEUVAT))
-      fuelexpense.update_attribute(:eurnetamount, fuelexpense.eurnetamount) #this persists the entities to the DB
+      fuelexpense.update_attribute(:eurnetamount, fuelexpense.eurnetamount.round(2)) #this persists the entities to the DB
 
       end
 
@@ -43,11 +43,11 @@ if false
         fuelexpense.EuroNetAmountInclVATFreeCharges = (fuelexpense.eurgrossamount/(1+@NLDVAT))+(fuelexpense.eurgrossamount-  (fuelexpense.eurgrossamount/(1+@NLDVAT)) )  *@NLDVAT_FREE_CHARGES
 
         fuelexpense.eurnetamount = (fuelexpense.eurgrossamount/(1+@NLDVAT))
-      fuelexpense.update_attribute(:eurnetamount, fuelexpense.eurnetamount) #this persists the entities to the DB
+      fuelexpense.update_attribute(:eurnetamount, fuelexpense.eurnetamount.round(2)) #this persists the entities to the DB
 
       end
 
-      fuelexpense.update_attribute(:EuroNetAmountInclVATFreeCharges, fuelexpense.EuroNetAmountInclVATFreeCharges) #this persists the entities to the DB
+      fuelexpense.update_attribute(:EuroNetAmountInclVATFreeCharges, fuelexpense.EuroNetAmountInclVATFreeCharges.round(2)) #this persists the entities to the DB
 
   end
 
