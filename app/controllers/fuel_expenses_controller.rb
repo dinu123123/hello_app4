@@ -7,7 +7,7 @@ class FuelExpensesController < ApplicationController
 
 FuelExpense.all.each_with_index do |fuelexpense,i|
  
-if true
+if false
  @BELVAT_FREE = false
     @BELVAT_FREE_CHARGES = "0.07".to_d
     @BELVAT = "0.21".to_d
