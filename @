@@ -7,7 +7,7 @@ class FuelExpensesController < ApplicationController
 
 FuelExpense.all.each_with_index do |fuelexpense,i|
  
-if true
+if 1
  @BELVAT_FREE = false
     @BELVAT_FREE_CHARGES = "0.07".to_d
     @BELVAT = "0.21".to_d
@@ -24,7 +24,7 @@ if true
       fuelexpense.EuroNetAmountInclVATFreeCharges = fuelexpense.eurnetamount+fuelexpense.volume*0.0152
      
       if fuelexpense.country== "BEL"
-        fuelexpense.EuroNetAmountInclVATFreeCharges = (fuelexpense.eurgrossamount/(1+@BELVAT))+(fuelexpense.eurgrossamount - (fuelexpense.eurgrossamount/(1+@BELVAT))  )*@BELVAT_FREE_CHARGES
+        fuelexpense.EuroNetAmountInclVATFreeCharges = (fuelexpense.eurgrossamount/(1+@BELVAT))+fuelexpense.eurgrossamount*(@BELVAT/(1+@BELVAT))*@BELVAT_FREE_CHARGES
 
         fuelexpense.eurnetamount = (fuelexpense.eurgrossamount/(1+@BELVAT))
       fuelexpense.update_attribute(:eurnetamount, fuelexpense.eurnetamount) #this persists the entities to the DB
@@ -32,7 +32,7 @@ if true
       end
 
       if fuelexpense.country== "DEU"
-        fuelexpense.EuroNetAmountInclVATFreeCharges = (fuelexpense.eurgrossamount/(1+@DEUVAT))+(fuelexpense.eurgrossamount- (fuelexpense.eurgrossamount/(1+@DEUVAT)))  *@DEUVAT_FREE_CHARGES
+        fuelexpense.EuroNetAmountInclVATFreeCharges = (fuelexpense.eurgrossamount/(1+@DEUVAT))+fuelexpense.eurgrossamount*(@DEUVAT/(1+@DEUVAT))*@DEUVAT_FREE_CHARGES
 
         fuelexpense.eurnetamount = (fuelexpense.eurgrossamount/(1+@DEUVAT))
       fuelexpense.update_attribute(:eurnetamount, fuelexpense.eurnetamount) #this persists the entities to the DB
@@ -40,7 +40,7 @@ if true
       end
 
       if fuelexpense.country== "NLD"
-        fuelexpense.EuroNetAmountInclVATFreeCharges = (fuelexpense.eurgrossamount/(1+@NLDVAT))+(fuelexpense.eurgrossamount-  (fuelexpense.eurgrossamount/(1+@NLDVAT)) )  *@NLDVAT_FREE_CHARGES
+        fuelexpense.EuroNetAmountInclVATFreeCharges = (fuelexpense.eurgrossamount/(1+@NLDVAT))+fuelexpense.eurgrossamount*(@NLDVAT/(1+@NLDVAT))*@NLDVAT_FREE_CHARGES
 
         fuelexpense.eurnetamount = (fuelexpense.eurgrossamount/(1+@NLDVAT))
       fuelexpense.update_attribute(:eurnetamount, fuelexpense.eurnetamount) #this persists the entities to the DB
@@ -49,14 +49,19 @@ if true
 
       fuelexpense.update_attribute(:EuroNetAmountInclVATFreeCharges, fuelexpense.EuroNetAmountInclVATFreeCharges) #this persists the entities to the DB
 
-  end
+end
 
   #the code here is called once for each user
   # user is accessible by 'user' variable
 end
 
-
     @fuel_expenses = FuelExpense.all
+
+
+
+
+
+
     respond_to do |format|
         format.html
         format.csv { send_data @fuel_expenses.to_csv, filename: "fuel_expenses-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
