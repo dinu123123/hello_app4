@@ -99,7 +99,7 @@
     <tr>
       <td bgcolor="#E8F993"><%= (@total_germany_tolls+@total_be_tolls+@total_generic_tolls).round(2) %></td>
       <td bgcolor="#E8F993"><%= (@total_toll_invoiced).round(2) %></td>
-      <td bgcolor="#E8F993"><%= (@total_germany_tolls+@total_be_tolls-@total_toll_invoiced).round(2)%></td>
+      <td bgcolor="#E8F993"><%= (@total_germany_tolls+@total_be_tolls+@total_generic_tolls-@total_toll_invoiced).round(2)%></td>
     </tr>
      </tbody>
 </table>
