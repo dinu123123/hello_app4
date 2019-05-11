@@ -37,6 +37,17 @@
   <%= form.check_box :START_END, id: :event_START_END%>
 </div>
 
+<div class="field">
+        <%= form.label :volume, 'Volume (Litters of diesel in the tank at the moment of the event - ask this info from driver!!! )', :required => 'required' %>
+        <%= form.text_field :volume, id: :volume, :required => 'required' %>
+</div>
+
+
+<div class="field">
+        <%= form.label :km, 'Km (Number of km on the odometer at the moment of the event - ask this info from driver!!! )', :required => 'required' %>
+        <%= form.text_field :km, id: :km, :required => 'required' %>
+</div>
+
 <% if false %>
   <div class="field">
     <%= form.label :picture %>
