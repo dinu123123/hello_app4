@@ -32,6 +32,8 @@ tr:nth-child(even) {
     <th>Client</th>
     <th>Truck Number Plate</th>
     <th>Trailer Number Plate</th>
+    <th>Volume</th>
+    <th>Km</th>
     <th>Start/End</th>
   </tr>
   <tr>
@@ -48,6 +50,9 @@ tr:nth-child(even) {
       <td><%=  %></td>
     <% end %>
 
+    <td><%= @event.volume %></td>
+    <td><%= @event.km %></td>
+    
     <% if @event.START_END? %>
       <td><%= 'Start' %></td>
       <% else %>
