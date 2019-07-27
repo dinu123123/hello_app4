@@ -132,7 +132,7 @@
 <% end %>
 
   </legend>
-  <table>
+  <table> 
       <tbody>
         <% @arrayWeeklyTruckExpense.each_with_index do |row, i| %>
           <tr>
@@ -144,15 +144,15 @@
 
                                       <% @pInvoices[i][j].each_with_index do |inv, k| %>
                                          <% if inv != 0 %>
-                                             <p><small>
+                                             <small>
                                               <%= inv.name.to_s +  '|'.to_s + inv.date.to_s + '|'.to_s+  (Date.today-inv.date).to_i.to_s+ '|'.to_s+  inv.total_amount.to_s  %>
                                               <% @sizeN = inv.name.length + inv.date.to_s.length-3  %>
-                                              </small><p>
+                                              </small>
                                          <% end %>
                                       <% end %> 
 
                                          <% if value != nil  %>
-                                         <p><small> 
+                                         <small> 
                                             <%=  ("total=".to_s)+value.to_s %>
                                          <% end %>
 
@@ -167,18 +167,19 @@
 
                                       <% @pInvoices[i][j].each_with_index do |inv, k| %>
                                          <% if inv != 0 %>
-                                         <p><small>
+                                         <small>
                                               <%= inv.name.to_s +  '|'.to_s + inv.date.to_s + '|'.to_s+   (Date.today-inv.date).to_i>to_s+ '|'.to_s+ inv.total_amount.to_s  %>
                                               <% @sizeN = inv.name.length + inv.date.to_s.length-3  %>
-                                          </small><p>
+                                          </small>
                                               
                                          <% end %>
 
                                       <% end %> 
 
                                          <% if value != nil  %>
-                                         <p><small> 
+                                         <small> 
                                             <%=  ("total=".to_s)+value.to_s %>
+                                         </small> 
                                          <% end %>
 
                                       
@@ -189,18 +190,19 @@
 
                                       <% @pInvoices[i][j].each_with_index do |inv, k| %>
                                          <% if inv != 0 %>
-                                         <p><small>
+                                         <small>
                                           
                                               <%= inv.name.to_s +  '|'.to_s + inv.date.to_s + '|'.to_s+  (Date.today-inv.date).to_i.to_s+ '|'.to_s+  inv.total_amount.to_s  %>
                                               <% @sizeN = inv.name.length + inv.date.to_s.length-3  %>
-                                         </small><p>
+                                         </small>
                                           
                                          <% end %>
                                       <% end %> 
 
                                          <% if value != nil  %> 
-                                         <p><small>
+                                         <small>
                                             <%=  ("total=".to_s)+value.to_s %>
+                                         </small>
                                          <% end %>
 
                                      </td>
@@ -211,22 +213,22 @@
                                           <% @sizeN = 1 %>
                                         <% @pInvoices[i][j].each_with_index do |inv, k| %>
                                           <% if inv != 0 %>
-                                          <p><small>
+                                          <small>
                                                <%= inv.name.to_s +  '|'.to_s + inv.date.to_s + '|'.to_s+   (Date.today-inv.date).to_i.to_s+ '|'.to_s+ inv.total_amount.to_s  %>
                                                <% @sizeN = inv.name.length + inv.date.to_s.length-3  %>
-                                          </small><p>
+                                          </small>
                                           <% end %>
                                         <% end %> 
 
                                         <% if value != nil  %> 
                                            <% if i != 0 and j !=0  %>
-                                           <p><small> 
+                                            <small> 
                                                <%=  ("total=".to_s)+value.to_s %>
-                                             </small><p>
+                                            </small>
                                            <% else %>
-                                           <p><small> 
+                                            <small> 
                                                <%=  value.to_s %>
-                                            </small></p>
+                                            </small>
                                            <% end %>
                                         <% end %>
                                       </td>
