@@ -405,6 +405,7 @@ def weekly
       end
 
       @arrayWeeklyTruckExpense = nil
+      @pInvoices = nil
 
       if @search1.type ==1 
 
@@ -412,6 +413,9 @@ def weekly
 
 
             @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Client.all.size+2,0)}
+            #up to max 30 invoices per client
+            @pInvoices = Array.new(@period_end- @period_start+3){Array.new(Client.all.size+2,0) {Array.new(30,0)}}
+                        
             @arrayWeeklyTruckExpense[0][0]= "".to_s
 
             Client.all.each_with_index do |client,j|
@@ -430,7 +434,10 @@ def weekly
 
             @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
       else
+      
           @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Driver.all.size+2,0)}
+          
+
           @arrayWeeklyTruckExpense[0][0]= "".to_s
           Driver.all.each_with_index do |driver,j|
             @arrayWeeklyTruckExpense[0][j+1]=driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
@@ -587,12 +594,15 @@ else
                           invoices.date >= ? AND invoices.date <= ?', client.id, 
                           @date_from1-client.PaymentDelay, @date_to1-client.PaymentDelay])
       
+     
+
                      if  @invoices != nil
-                         1.upto( @invoices.count) do |i|
-                             @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoices[i-1].total_amount.to_d 
+                         1.upto( @invoices.count) do |k|
+                             @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoices[k-1].total_amount.to_d 
+                             @pInvoices[week-@period_start+1][j+1][k-1]=@invoices[k-1]
+                      
                          end
                      end  
-
 
 
                      @arrayWeeklyTruckExpense[week-@period_start+1][j+1]=@totalInvoicedTrips
