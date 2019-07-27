@@ -151,9 +151,10 @@
                                          <% end %>
                                       <% end %> 
 
-                                         <% if value != nil  %>
+                                         <% if value != nil and value.to_i>0  %>
                                          <small> 
                                             <%=  ("total=".to_s)+value.to_s %>
+                                          </small>
                                          <% end %>
 
                              </td>
@@ -176,7 +177,7 @@
 
                                       <% end %> 
 
-                                         <% if value != nil  %>
+                                         <% if value != nil and value.to_i>0 %>
                                          <small> 
                                             <%=  ("total=".to_s)+value.to_s %>
                                          </small> 
@@ -199,7 +200,7 @@
                                          <% end %>
                                       <% end %> 
 
-                                         <% if value != nil  %> 
+                                         <% if value != nil and value.to_i>0 %> 
                                          <small>
                                             <%=  ("total=".to_s)+value.to_s %>
                                          </small>
@@ -222,9 +223,12 @@
 
                                         <% if value != nil  %> 
                                            <% if i != 0 and j !=0  %>
-                                            <small> 
-                                               <%=  ("total=".to_s)+value.to_s %>
-                                            </small>
+                                            <% if value.to_i >0  %>
+                                              <small> 
+                                                 <%=  ("total=".to_s)+value.to_s %>
+                                              </small>
+                                            <% end %>
+                                            
                                            <% else %>
                                             <small> 
                                                <%=  value.to_s %>
