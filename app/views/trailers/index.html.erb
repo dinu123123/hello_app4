@@ -5,20 +5,24 @@
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>Nb plate</th>
       <th>Info</th>
       <th>Chassis</th>
+      <th>Active</th>
       <th>Fabdate</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @trailers.each do |trailer| %>
+    <% @trailers.each_with_index do |trailer,i| %>
       <tr>
+        <td><%= i+1 %></td>
         <td><%= trailer.NB_PLATE %></td>
         <td><%= trailer.INFO %></td>
         <td><%= trailer.CHASSIS %></td>
+        <td><%= trailer.active %></td>
         <td><%= trailer.FABDATE %></td>
         <td><%= link_to 'Show', trailer %></td>
         <td><%= link_to 'Edit', edit_trailer_path(trailer) %></td>
