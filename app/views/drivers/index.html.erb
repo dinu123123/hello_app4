@@ -51,8 +51,20 @@ tr:nth-child(even) {
   <h4> Create <%= link_to 'New Driver ',new_driver_path %> </h4> 
   </p>
   </li>
-
 </ul>
+
+<fieldset>
+  Select drivers:
+      <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag drivers_index_import_path, :method => 'get' do %>
+        <%= collection_select :search1, :active, @search1.arrayC, :id, :name %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
+</fieldset>
+<fieldset>
 <table>
   <thead>
     <tr>
@@ -95,3 +107,4 @@ tr:nth-child(even) {
     <% end %>
   </tbody>
 </table>
+</fieldset>
