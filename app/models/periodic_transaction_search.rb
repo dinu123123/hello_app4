@@ -9,7 +9,7 @@ end
 
 class PeriodicTransactionSearch 
   attr_reader :date_from, :date_to, :time, :type, :type2, :truck_id, :driver_id, 
-  :truck_events, :running, :running_truck_id, :arrayH, :arrayT, :arrayC
+  :truck_events, :running, :running_truck_id, :arrayH, :arrayT, :arrayC, :active
 
   def initialize(params)
     params ||= {}
@@ -20,6 +20,8 @@ class PeriodicTransactionSearch
     @time = parsed_period(params[:time], 1)
     @type = parsed_trucks_drivers(params[:type], 1)
     
+    @active = parsed_active(params[:active], 1)
+
     a =Element.new("Drivers",2)
     b =Element.new("Trucks",1)    
     @arrayH = []
@@ -37,6 +39,16 @@ class PeriodicTransactionSearch
     @arrayC = []
     @arrayC.push(a2)
     @arrayC.push(b2)
+
+    a3 =Element.new("Active",1)
+    b3 =Element.new("Inactive",2)    
+    c3 =Element.new("All",3)
+    @arrayC = []
+    @arrayC.push(a3)
+    @arrayC.push(b3)
+    @arrayC.push(c3)
+
+
   end
 
 def to_datetime (date)
@@ -503,14 +515,20 @@ end
 
   end
 
-def parsed_period (n1, default)
+  def parsed_period (n1, default)
+    n1.to_i
+    rescue ArgumentError, TypeError
+    default
+  end
+
+  def parsed_active (n1, default)
     n1.to_i
     rescue ArgumentError, TypeError
     default
 
   end
 
-def parsed_invoices_salaries (n1, default)
+  def parsed_invoices_salaries (n1, default)
     n1.to_i
     rescue ArgumentError, TypeError
     default

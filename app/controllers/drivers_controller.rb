@@ -20,10 +20,19 @@ class DriversController < ApplicationController
 
   # GET /drivers
   # GET /drivers.json
-  def index
-    
-  
+  def index    
+  @search1 = PeriodicTransactionSearch.new(params[:search1])
+
+  if @search1.active == 1
+   @drivers = Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ? 
+                    ORDER BY drivers.created_at ASC', true])             
+  elsif @search1.active == 2
+    @drivers = Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ? 
+                    ORDER BY drivers.created_at ASC',false])
+  else 
     @drivers = Driver.all
+  end
+
     respond_to do |format|
         format.html
         format.csv { send_data @drivers.to_csv, filename: "drivers-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   

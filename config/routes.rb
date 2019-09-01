@@ -67,8 +67,8 @@ end
   
   get "/events/db", as: "db"
 
-  post  'invoiced_trips/print', to: 'invoiced_trips#print' 
-  post  'invoices/print', to: 'invoices#print' 
+  post 'invoiced_trips/print', to: 'invoiced_trips#print' 
+  post 'invoices/print', to: 'invoices#print' 
 
   get "/events/help", as: "help"
   get "/events/oil", as: "oil"
@@ -78,7 +78,7 @@ end
   get "/de_tolls/file_import", as: "de_toll_file_import"
   get "/de_tolls/index", as: "de_toll_index_import"
 
-
+  get "/drivers/index", as: "drivers_index_import"
 
   get "/be_tolls/file_import", as: "be_toll_file_import"
   get "/be_tolls/index", as: "be_toll_index_import"
