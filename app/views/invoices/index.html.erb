@@ -50,13 +50,61 @@
         <td bgcolor="#b6f666" style="font-weight:bold"><%=  invoice.vat %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.total_amount %></td>
 <% elsif invoice.created_at.to_date == Time.now.utc.to_date-1%>
-        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= j+1 %></td>
-        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoice.name %></td>
-        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoice.info %></td>
-        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoice.date %></td>
-        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
-        <td bgcolor="#8bf0f8" style="font-weight:bold"><%=  invoice.vat %></td>
-        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoice.total_amount %></td>
+        <td bgcolor="#00f9fe" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#00f9fe" style="font-weight:bold"><%= invoice.name %></td>
+        <td bgcolor="#00f9fe" style="font-weight:bold"><%= invoice.info %></td>
+        <td bgcolor="#00f9fe" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00f9fe" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
+        <td bgcolor="#00f9fe" style="font-weight:bold"><%=  invoice.vat %></td>
+        <td bgcolor="#00f9fe" style="font-weight:bold"><%= invoice.total_amount %></td>
+<% elsif invoice.created_at.to_date == Time.now.utc.to_date-2%>
+        <td bgcolor="#00eeed" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#00eeed" style="font-weight:bold"><%= invoice.name %></td>
+        <td bgcolor="#00eeed" style="font-weight:bold"><%= invoice.info %></td>
+        <td bgcolor="#00eeed" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00eeed" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
+        <td bgcolor="#00eeed" style="font-weight:bold"><%=  invoice.vat %></td>
+        <td bgcolor="#00eeed" style="font-weight:bold"><%= invoice.total_amount %></td>
+<% elsif invoice.created_at.to_date == Time.now.utc.to_date-3%>
+        <td bgcolor="#00dbdd" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#00dbdd" style="font-weight:bold"><%= invoice.name %></td>
+        <td bgcolor="#00dbdd" style="font-weight:bold"><%= invoice.info %></td>
+        <td bgcolor="#00dbdd" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00dbdd" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
+        <td bgcolor="#00dbdd" style="font-weight:bold"><%=  invoice.vat %></td>
+        <td bgcolor="#00dbdd" style="font-weight:bold"><%= invoice.total_amount %></td>
+<% elsif invoice.created_at.to_date == Time.now.utc.to_date-4%>
+        <td bgcolor="#00cbcd" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#00cbcd" style="font-weight:bold"><%= invoice.name %></td>
+        <td bgcolor="#00cbcd" style="font-weight:bold"><%= invoice.info %></td>
+        <td bgcolor="#00cbcd" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00cbcd" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
+        <td bgcolor="#00cbcd" style="font-weight:bold"><%=  invoice.vat %></td>
+        <td bgcolor="#00cbcd" style="font-weight:bold"><%= invoice.total_amount %></td>
+<% elsif invoice.created_at.to_date == Time.now.utc.to_date-5%>
+        <td bgcolor="#00bdbf" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#00bdbf" style="font-weight:bold"><%= invoice.name %></td>
+        <td bgcolor="#00bdbf" style="font-weight:bold"><%= invoice.info %></td>
+        <td bgcolor="#00bdbf" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00bdbf" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
+        <td bgcolor="#00bdbf" style="font-weight:bold"><%=  invoice.vat %></td>
+        <td bgcolor="#00bdbf" style="font-weight:bold"><%= invoice.total_amount %></td>
+<% elsif invoice.created_at.to_date == Time.now.utc.to_date-6%>
+        <td bgcolor="#00a7a3" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#00a7a3" style="font-weight:bold"><%= invoice.name %></td>
+        <td bgcolor="#00a7a3" style="font-weight:bold"><%= invoice.info %></td>
+        <td bgcolor="#00a7a3" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00a7a3" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
+        <td bgcolor="#00a7a3" style="font-weight:bold"><%=  invoice.vat %></td>
+        <td bgcolor="#00a7a3" style="font-weight:bold"><%= invoice.total_amount %></td>
+<% elsif invoice.created_at.to_date == Time.now.utc.to_date-7%>
+        <td bgcolor="#008d8c" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#008d8c" style="font-weight:bold"><%= invoice.name %></td>
+        <td bgcolor="#008d8c" style="font-weight:bold"><%= invoice.info %></td>
+        <td bgcolor="#008d8c" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#008d8c" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
+        <td bgcolor="#008d8c" style="font-weight:bold"><%=  invoice.vat %></td>
+        <td bgcolor="#008d8c" style="font-weight:bold"><%= invoice.total_amount %></td>
 <% else %>
         <td><%= j+1 %></td>
         <td><%= invoice.name %></td>

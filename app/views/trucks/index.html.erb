@@ -58,9 +58,10 @@ tr:nth-child(even) {
 <table>
   <thead>
     <tr>
-      <th>ID</th>
+      <th></th>
       <th>Nb Plate</th>
       <th>Chassis</th>
+      <th>Active</th>
       <th>Fabrication</th>
       <th>Info</th>
        <th>Photos</th>
@@ -74,6 +75,7 @@ tr:nth-child(even) {
         <td><%= i+1 %></td>
         <td><%= truck.NB_PLATE %></td>
         <td><%= truck.CHASSIS %></td>
+        <td><%= truck.active %></td>
         <td><%= truck.FABDATE %></td>
         <td><%= truck.INFO %></td> 
         <td><%= truck.images.count %></td>

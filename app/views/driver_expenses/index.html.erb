@@ -103,27 +103,72 @@ tr:nth-child(even) {
       <% end%>
          
 
-      <tr>
+<% if driver_expense.created_at.to_date == Time.now.utc.to_date%>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= @drivers.find(driver_expense.DRIVER_id).CNP %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= @drivers.find(driver_expense.DRIVER_id).FIRSTNAME %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= @drivers.find(driver_expense.DRIVER_id).SECONDNAME %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold">
+           <% if (driver_expense.truck_id != nil) %>
+          <%= @trucks.find(driver_expense.truck_id).NB_PLATE %>
+           <% end%>   
+        </td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.DATE %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.AMOUNT %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.INFO %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.DESCRIPTION %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.images.count %></td>
+<% elsif driver_expense.created_at.to_date == Time.now.utc.to_date-1%>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @drivers.find(driver_expense.DRIVER_id).CNP %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @drivers.find(driver_expense.DRIVER_id).FIRSTNAME %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @drivers.find(driver_expense.DRIVER_id).SECONDNAME %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold">
+           <% if (driver_expense.truck_id != nil) %>
+          <%= @trucks.find(driver_expense.truck_id).NB_PLATE %>
+           <% end%>   
+        </td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.DATE %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.AMOUNT %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.INFO %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.DESCRIPTION %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.images.count %></td>  
+<% elsif driver_expense.created_at.to_date == Time.now.utc.to_date-2%>
+        <td bgcolor="#008080" style="font-weight:bold"><%= j+1 %></td>
+        <td bgcolor="#008080" style="font-weight:bold"><%= @drivers.find(driver_expense.DRIVER_id).CNP %></td>
+        <td bgcolor="#008080" style="font-weight:bold"><%= @drivers.find(driver_expense.DRIVER_id).FIRSTNAME %></td>
+        <td bgcolor="#008080" style="font-weight:bold"><%= @drivers.find(driver_expense.DRIVER_id).SECONDNAME %></td>
+        <td bgcolor="#008080" style="font-weight:bold">
+           <% if (driver_expense.truck_id != nil) %>
+          <%= @trucks.find(driver_expense.truck_id).NB_PLATE %>
+           <% end%>   
+        </td>
+        <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.DATE %></td>
+        <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.AMOUNT %></td>
+        <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.INFO %></td>
+        <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.DESCRIPTION %></td>
+        <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.images.count %></td>  
+<% else %>
         <td><%= j+1 %></td>
         <td><%= @drivers.find(driver_expense.DRIVER_id).CNP %></td>
         <td><%= @drivers.find(driver_expense.DRIVER_id).FIRSTNAME %></td>
         <td><%= @drivers.find(driver_expense.DRIVER_id).SECONDNAME %></td>
-
         <td>
            <% if (driver_expense.truck_id != nil) %>
           <%= @trucks.find(driver_expense.truck_id).NB_PLATE %>
-           <% end%>
-            
-          </td>
-        
+           <% end%>   
+        </td>
         <td><%= driver_expense.DATE %></td>
         <td><%= driver_expense.AMOUNT %></td>
         <td><%= driver_expense.INFO %></td>
         <td><%= driver_expense.DESCRIPTION %></td>
-         <td><%= driver_expense.images.count %></td>
+        <td><%= driver_expense.images.count %></td>
+<% end %>
+
         <td><%= link_to 'Show', driver_expense %></td>
         <td><%= link_to 'Edit', edit_driver_expense_path(driver_expense) %></td>
         <td><%= link_to 'Destroy', driver_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
       </tr>
     <% end %>
   </tbody>

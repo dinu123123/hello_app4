@@ -56,9 +56,12 @@ tr:nth-child(even) {
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>Cnp</th>
       <th>First Name</th>
       <th>Second Name</th>
+      <th>Active</th>
+      
       <th>Employment Date</th>
       <th>Termination Date</th>
  <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
@@ -71,11 +74,13 @@ tr:nth-child(even) {
   </thead>
 
   <tbody>
-    <% @drivers.each do |driver| %>
+    <% @drivers.each_with_index do |driver,i| %>
       <tr>
+        <td><%= i+1 %></td>
         <td><%= driver.CNP %></td>
         <td><%= driver.FIRSTNAME %></td>
         <td><%= driver.SECONDNAME %></td>
+        <td><%= driver.active %></td>
         <td><%= driver.StartDate %></td>
         <td><%= driver.EndDate %></td>
          <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 

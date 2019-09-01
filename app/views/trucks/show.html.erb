@@ -10,8 +10,10 @@
   <%= @truck.INFO %>
 </p>
 
-
-<br>
+<p>
+  <strong>Active:</strong>
+  <%= @truck.active %>
+</p>
 
 <table>
   <% @truck.images.each_with_index do |image,index| %>

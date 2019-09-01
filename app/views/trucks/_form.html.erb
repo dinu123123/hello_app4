@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :active, 'Mark if active'  %>
+    <%= form.check_box :active, id: :active%>
+  </div>
+
+  <div class="field">
     <%= form.label :"Number Plate (write without white spaces)" %>
     <%= form.text_field :NB_PLATE, id: :truck_NB_PLATE, cols: "8", rows: "1", :required => 'required' %>
   </div>

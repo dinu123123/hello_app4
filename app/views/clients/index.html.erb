@@ -56,8 +56,10 @@ tr:nth-child(even) {
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>Name</th>
       <th>Address</th>
+      <th>Active</th>
       <th>Bankaccount</th>
       <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
       <th>€/Km</th>
@@ -70,14 +72,13 @@ tr:nth-child(even) {
   </thead>
 
   <tbody>
-    <% @clients.each do |client| %>
+    <% @clients.each_with_index do |client,i| %>
 
-
-<% @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? order by pricings.DATETIME desc", client.id]) %>
-
-      <tr>
+        <td><%= i+1 %></td>
+        <% @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? order by pricings.DATETIME desc", client.id]) %>
         <td><%= client.Name %></td>
         <td><%= client.Address %></td>
+        <td><%= client.active %></td>        
         <td><%= client.BankAccount %></td>
          <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com")
           %> 

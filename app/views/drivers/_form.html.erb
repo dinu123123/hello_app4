@@ -12,6 +12,11 @@
   <% end %>
 
   <div class="field">
+    <%= form.label :active, 'Mark if active'  %>
+    <%= form.check_box :active, id: :active%>
+  </div>
+
+  <div class="field">
     <%= form.label :CNP %>
     <%= form.text_field :CNP, id: :driver_CNP, :required => 'required' %>
   </div>
