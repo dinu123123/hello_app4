@@ -58,7 +58,7 @@ tr:nth-child(even) {
       <div class="row">
       <div class="pull-right range-query">
         <%= form_tag drivers_index_import_path, :method => 'get' do %>
-        <%= collection_select :search1, :active, @search1.arrayC, :id, :name %>
+        <%= collection_select :search1, :active, @search1.arrayD, :id, :name %>
         <%= submit_tag 'Display', class: 'btn search-button' %>  
         <% end %>
       </div>

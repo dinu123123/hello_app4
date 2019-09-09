@@ -9,7 +9,7 @@ end
 
 class PeriodicTransactionSearch 
   attr_reader :date_from, :date_to, :time, :type, :type2, :truck_id, :driver_id, 
-  :truck_events, :running, :running_truck_id, :arrayH, :arrayT, :arrayC, :active
+  :truck_events, :running, :running_truck_id, :arrayH, :arrayT, :arrayC, :arrayD, :active
 
   def initialize(params)
     params ||= {}
@@ -43,11 +43,10 @@ class PeriodicTransactionSearch
     a3 =Element.new("Active",1)
     b3 =Element.new("Inactive",2)    
     c3 =Element.new("All",3)
-    @arrayC = []
-    @arrayC.push(a3)
-    @arrayC.push(b3)
-    @arrayC.push(c3)
-
+    @arrayD = []
+    @arrayD.push(a3)
+    @arrayD.push(b3)
+    @arrayD.push(c3)
 
   end
 
