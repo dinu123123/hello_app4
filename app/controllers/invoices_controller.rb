@@ -75,11 +75,23 @@ attr_accessor :total_price_calculated
     end
   end
 
- def print
+
+def email()
+file = print (true)
+@invoice = Invoice.find(params[:id])
+client = Client.find(@invoice.client_id)
+@invoice.sent = true
+@invoice.save
+
+InvoiceMailer.invoice_email(client.email, file).deliver
+redirect_back fallback_location: root_path and return @invoice
+end
+
+ def print(send_invoice=false)
 
 
 #<InvoicedTrip 
-#id: 1, 
+#id: 1,   
 #date: "2018-09-05", 
 #StartDate: "2018-08-27 07:30:00", 
 #EndDate: "2018-09-04 16:14:00", 
@@ -399,12 +411,21 @@ invoice_inline = InvoicePrinter::Document.new(
   # sum_individual_invoices - the sum of the individual trips amount
 
   if (invoice.total_amount -  @sum_individual_invoices).abs < 3
- 
+   
+    if(!send_invoice)
+      invoice.printed = true
+      invoice.save
       respond_to do |format|
         format.pdf {
         send_data InvoicePrinter.render(document: invoice_inline,  labels: labels, page_size: :a4 ), filename: invoice.info+
           "_"+ client.Name.try(:gsub!,' ', '').to_s+".pdf",  disposition: 'inline' }
       end
+         
+    end
+
+    localObj = Struct.new(:file, :name, :invoiceName, :invoiceTrip)
+    return localObj.new(InvoicePrinter.render(document: invoice_inline,  labels: labels, page_size: :a4), 
+                    "AmeropaLogistics_"+invoice.info+"_"+ client.Name.try(:gsub!,' ', '').to_s+".pdf",invoice.name ,invoice.info )
 
   else
 
@@ -433,7 +454,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invoice_params
-      params.require(:invoice).permit(:name, :info, :date, :client_id, :vat, :total_amount)
+      params.require(:invoice).permit(:name, :info, :date, :client_id, :vat, :total_amount, :sent, :printed)
     end
 
 end

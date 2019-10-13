@@ -51,6 +51,12 @@ tr:nth-child(even) {
   <strong>Paymentdelay:</strong>
   <%= @client.PaymentDelay %>
 </p>
+
+<p>
+  <strong>InvoicingEmail:</strong>
+  <%= @client.email %>
+</p>
+
 <% end %>
 
 <%= link_to 'Edit', edit_client_path(@client) %> |

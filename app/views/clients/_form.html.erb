@@ -44,6 +44,11 @@
     <%= form.number_field :PaymentDelay, id: :client_PaymentDelay %>
   </div>
 
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :client_email %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

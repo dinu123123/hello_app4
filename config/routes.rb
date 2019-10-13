@@ -69,6 +69,9 @@ end
 
   post 'invoiced_trips/print', to: 'invoiced_trips#print' 
   post 'invoices/print', to: 'invoices#print' 
+  post 'invoices/email', to: 'invoices#email' 
+ 
+
 
   get "/events/help", as: "help"
   get "/events/oil", as: "oil"
