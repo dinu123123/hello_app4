@@ -34,7 +34,11 @@
       <th>Client</th>
       <th>VAT(%)</th>
       <th>Amount(€)</th>
-      <th colspan="5"></th>
+      <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %>    
+         <th colspan="5"></th>
+      <% else %>
+         <th colspan="4"></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -118,26 +122,20 @@
         <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
         <td><%= link_to 'Print', invoices_print_path(:id => invoice.id, :format => "pdf"), method: :post %></td>
         <td><%= link_to 'Destroy', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    
+
+  <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %>    
     <% if invoice.sent == true %>
         <td bgcolor=yellow style="font-weight:bold"> <font color=red>Invoice Sent </font></td>
     <% else %>
-           <% if invoice.printed == true %>
-        <td>  <%= link_to 'SendEmail', invoices_email_path(:id => invoice.id,  :format => "pdf") , method: :post, data: { confirm: 'Are you sure?' } %></td>
-      <% else %>
-        <td bgcolor=yellow style="font-weight:bold"> <font color=black>Print Invoice and Reload Page Before Send </font></td>
-    
-      <% end %>
-
-
-
-
+        <% if invoice.printed == true %>
+          <td><%= link_to 'SendEmail', invoices_email_path(:id => invoice.id,  :format => "pdf") , method: :post, data: {confirm: 'Are you sure?'} %></td>
+        <% else %>
+          <td bgcolor=yellow style="font-weight:bold"> <font color=black>Print Invoice and Reload Page Before Send </font></td>
+        <% end %>
     <% end %>
-
-           
-        
-
+  <% end %>
       </tr>
-
     <% end %>
   </tbody>
 </table>
