@@ -118,11 +118,9 @@ invoice = Invoice.find(params[:id])
 invoice_trip_all = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips WHERE invoiced_trips.invoice_id = ? ', invoice.id])
 invoiced_trip = invoice_trip_all[0]
 
-
 ary = Array.new
 
 @total_price_calculated = 0
-
 
 @sum_individual_invoices = 0
 
@@ -136,6 +134,7 @@ truck = Truck.all.find(a.truck_id)
 
 @sum_individual_invoices += a.total_amount
 
+
 @price_distance = 0
 if client.kprice>0 
   @price_distance = a.km*a.price_per_km
@@ -145,6 +144,7 @@ end
 
 
 @info = ""
+
 if a.info != nil and a.info.length >0
   @info = a.info
 else 
