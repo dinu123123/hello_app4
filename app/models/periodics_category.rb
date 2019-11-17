@@ -1,0 +1,2 @@
+class PeriodicsCategory < ApplicationRecord
+end
