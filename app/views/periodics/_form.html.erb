@@ -61,10 +61,12 @@
 <%= form.collection_select :driver_expense_id, DriverExpense.all, :id, :id_with_info, {prompt: "DriverExpense"} %>
 <%= form.collection_select :truck_expense_id, TruckExpense.all, :id, :id_with_info, {prompt: "TruckExpense"} %>
 
+<p></p>
   <div class="form_group">
     <%= form.label :name, 'You can introduce multiple pdf/jpg files at once.' %>
     <%= form.file_field :images, multiple: true %>
   </div>
+<p></p>
 
   <div class="actions">
     <%= form.submit %>
