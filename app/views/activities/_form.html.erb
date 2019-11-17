@@ -23,7 +23,7 @@
 <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client"} %>
 
 <%= form.collection_select :driver_expense_id, DriverExpense.all, :id, :id_with_info, {prompt: "DriverExpense"} %>
-<%= form.collection_select :truck_expense_id, TruckExpense.all, :id, :id_with_info, {prompt: "DriverExpense"} %>
+<%= form.collection_select :truck_expense_id, TruckExpense.all, :id, :id_with_info, {prompt: "TruckExpense"} %>
 
   <div class="field">
     <%= form.label :start_address %>
