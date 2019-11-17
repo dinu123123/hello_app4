@@ -1,0 +1,71 @@
+<%= form_with(model: periodic, local: true) do |form| %>
+  <% if periodic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(periodic.errors.count, "error") %> prohibited this periodic from being saved:</h2>
+
+      <ul>
+      <% periodic.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+<%= form.collection_select :periodics_category_id, PeriodicsCategory.all, :id, :name, {prompt: "Periodics Category"},:required => 'required'%>
+
+
+  <div class="field">
+    <%= form.label :date_start %>
+    <%= form.date_select :date_start %>
+  </div>
+
+
+
+  <div class="field">
+    <%= form.label :date_end %>
+    <%= form.date_select :date_end %>
+  </div>
+
+
+
+
+  <div class="field">
+    <%= form.label :km_start %>
+    <%= form.number_field :km_start %>
+  </div>
+
+
+
+
+  <div class="field">
+    <%= form.label :km_end %>
+    <%= form.number_field :km_end %>
+  </div>
+
+
+<%= form.collection_select :DRIVER_id, Driver.all, :id, :name_with_cnp, {prompt: "Driver Name and CNP"},:required => 'required'%>
+
+<%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
+<%= form.collection_select :trailer_id, Trailer.all, :id, :NB_PLATE, {prompt: "Trailer Nb Plate"} %>
+
+
+
+  <div class="field">
+    <%= form.label :days_valid %>
+    <%= form.number_field :days_valid %>
+  </div>
+
+
+<%= form.collection_select :driver_expense_id, DriverExpense.all, :id, :id_with_info, {prompt: "DriverExpense"} %>
+<%= form.collection_select :truck_expense_id, TruckExpense.all, :id, :id_with_info, {prompt: "DriverExpense"} %>
+
+  <div class="form_group">
+    <%= form.label :name, 'You can introduce multiple pdf/jpg files at once.' %>
+    <%= form.file_field :images, multiple: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
