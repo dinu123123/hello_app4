@@ -1,6 +1,9 @@
   Rails.application.routes.draw do
   
   
+  resources :activities
+  resources :periodics
+  resources :periodics_categories
   resources :pricings
   resources :trailers
   devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => "registrations"}, 
@@ -65,6 +68,7 @@ end
 
   get "/events/weekly", as: "weekly"
   
+
   get "/events/db", as: "db"
 
   post 'invoiced_trips/print', to: 'invoiced_trips#print' 
@@ -139,6 +143,31 @@ get "home/download_pdf"
   resources :invoices do
   collection { post :import}
   end
+
+  resources :periodics  do
+  collection { post :import}
+  end
+
+  resources :periodics  do
+    member do
+      delete :delete_image
+    end
+  end
+
+  resources :activities  do
+  collection { post :import}
+  end
+
+  resources :activities  do
+    member do
+      delete :delete_image
+    end
+  end
+
+  resources :periodics_categories  do
+  collection { post :import}
+  end
+
 
   resources :main_menus
 

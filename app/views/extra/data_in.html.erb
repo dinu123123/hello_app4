@@ -3,6 +3,19 @@
 <% if user_signed_in? %>
 <div class="row">
   <div class="column">
+
+
+<h3>Daily Activities:</h3>
+<table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Activity', new_activity_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Activities', activities_path %> </th>
+  </tr>
+  </table>
+
+    
 <h3>Trucks:</h3>
 <table style="width:100%"  border="1">
   <tr>
@@ -122,19 +135,6 @@
   </tr>
 </table>
 
-<h3>Fuel Expense:</h3>
-  <table style="width:100%"  border="1">
-  <tr>
-    <th> <%= link_to 'New Fuel Expense', new_fuel_expense_path %> </th>
-  </tr>
-  <tr>
-    <th> <%= link_to 'File Import', fuel_expense_file_import_path %> </th>
-  </tr>
-  <tr>
-    <th> <%= link_to 'All Fuel Expenses', fuel_expenses_path %> </th>
-  </tr>
-</table>
-
 <h3>Invoices:</h3>
   <table style="width:100%"  border="1">
   <tr>
@@ -142,6 +142,27 @@
   </tr>
   <tr>
     <th> <%= link_to 'All Invoices', invoices_path %> </th>
+  </tr>
+</table>
+
+
+<h3>All Periodics:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Periodic', new_periodic_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Periodics', periodics_path %> </th>
+  </tr>
+</table>
+
+<h3>Periodic categories:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Periodic Category', new_periodics_category_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Periodic Category', periodics_categories_path %> </th>
   </tr>
 </table>
 
@@ -189,6 +210,19 @@
   </tr>
 
 </table>  
+
+<h3>Fuel Expense:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Fuel Expense', new_fuel_expense_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'File Import', fuel_expense_file_import_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Fuel Expenses', fuel_expenses_path %> </th>
+  </tr>
+</table>
 
 <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
 <h3>Toll Generic:</h3>

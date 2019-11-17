@@ -162,9 +162,13 @@ function pagereload(t) {
 
 <div class="topnav">
   <%= link_to "Input", root_path %>
+  <%= link_to "Daily", activities_url %>
+  <%= link_to "Periodics", periodics_url %>
+
 
 <% if   current_user != nil and current_user.admin == true %> 
   <%= link_to "Weekly", weekly_url %>
+  <%= link_to "Invoices", invoices_url %>
   <%= link_to "Group", mission1_url %>
   <%= link_to "Individual", mission_url %>
   <%= link_to "OilPrice", oil_url, :onclick => "history.go(0)" %> 

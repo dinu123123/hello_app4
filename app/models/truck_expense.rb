@@ -28,4 +28,11 @@ class TruckExpense < ApplicationRecord
           self.create! @my_row.to_hs
 	    end
 	end
+
+
+
+def id_with_info
+    "#{id}"
+end
+
 end
