@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_10_213035) do
+ActiveRecord::Schema.define(version: 2019_11_17_083139) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -31,6 +31,23 @@ ActiveRecord::Schema.define(version: 2019_05_10_213035) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "activities", force: :cascade do |t|
+    t.date "date"
+    t.integer "DRIVER_id"
+    t.integer "truck_id"
+    t.integer "trailer_id"
+    t.integer "client_id"
+    t.integer "driver_expense_id"
+    t.integer "truck_expense_id"
+    t.text "start_address"
+    t.text "dest_addresses"
+    t.integer "volume"
+    t.text "tank"
+    t.text "comments"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "as24_germany_tolls", force: :cascade do |t|
@@ -114,6 +131,8 @@ ActiveRecord::Schema.define(version: 2019_05_10_213035) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "kprice"
+    t.boolean "active"
+    t.string "email"
   end
 
   create_table "de_tolls", force: :cascade do |t|
@@ -161,6 +180,7 @@ ActiveRecord::Schema.define(version: 2019_05_10_213035) do
     t.text "DESCRIPTION"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active"
   end
 
   create_table "events", force: :cascade do |t|
@@ -270,6 +290,30 @@ ActiveRecord::Schema.define(version: 2019_05_10_213035) do
     t.decimal "total_amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "sent", default: false
+    t.boolean "printed", default: false
+  end
+
+  create_table "periodics", force: :cascade do |t|
+    t.integer "periodics_category_id"
+    t.date "date_start"
+    t.date "date_end"
+    t.integer "DRIVER_id"
+    t.integer "truck_id"
+    t.integer "trailer_id"
+    t.integer "days_valid"
+    t.integer "driver_expense_id"
+    t.integer "truck_expense_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "km_start"
+    t.integer "km_end"
+  end
+
+  create_table "periodics_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pricings", force: :cascade do |t|
@@ -291,6 +335,7 @@ ActiveRecord::Schema.define(version: 2019_05_10_213035) do
     t.date "FABDATE"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active"
   end
 
   create_table "truck_expenses", force: :cascade do |t|
@@ -310,6 +355,7 @@ ActiveRecord::Schema.define(version: 2019_05_10_213035) do
     t.date "FABDATE"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active"
   end
 
   create_table "users", force: :cascade do |t|

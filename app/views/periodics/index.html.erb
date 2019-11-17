@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Periodics</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Periodics category</th>
+      <th>Date start</th>
+      <th>Date end</th>
+      <th>Km start</th>
+      <th>Driver ID </th>
+      <th>Driver Name </th>
+      <th>Truck</th>
+      <th>Trailer</th>
+      <th>Days valid</th>
+      <th>Driver expense</th>
+      <th>Truck expense</th>
+      <th>Photos</th> 
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @trucks = Truck.all %>
+    <% @trailers = Trailer.all %>
+    <% @drivers = Driver.all %>
+    <% @periodics1 = PeriodicsCategory.all %>
+    <% @periodics.each do |periodic| %>
+      <tr>
+        <td><%= @periodics1.find(periodic.periodics_category_id).name %></td>
+        <td><%= periodic.date_start %></td>
+        <td><%= periodic.date_end %></td>
+        <td><%= periodic.km_start %></td>
+        <td><%= @drivers.find(periodic.DRIVER_id).CNP  %></td> 
+        <td><%= @drivers.find(periodic.DRIVER_id).FIRSTNAME+ ' ' +
+                @drivers.find(periodic.DRIVER_id).SECONDNAME %></td>
+
+        <td>
+          <% if @trucks and periodic.truck_id %>
+            <%= @trucks.find(periodic.truck_id).NB_PLATE %>
+          <% end %>
+        </td>
+
+        <td>
+          <% if @trailers and periodic.trailer_id %>
+            <%= @trailers.find(periodic.trailer_id).NB_PLATE %>  
+          <% end %>
+        </td>
+
+        <td><%= periodic.days_valid %></td>
+        <td><%= periodic.driver_expense_id %></td>
+        <td><%= periodic.truck_expense_id %></td>
+        <td><%= periodic.images.count %></td>
+        <td><%= link_to 'Show', periodic %></td>
+        <td><%= link_to 'Edit', edit_periodic_path(periodic) %></td>
+        <td><%= link_to 'Destroy', periodic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Periodic', new_periodic_path %>
