@@ -3,4 +3,10 @@ class DriverExpense < ApplicationRecord
   belongs_to :truck, :optional => true
   validates_uniqueness_of :DRIVER_id, scope: %i[DATE AMOUNT DESCRIPTION]
   has_many_attached :images
+
+
+def id_with_info
+    "#{id}"
+end
+
 end
