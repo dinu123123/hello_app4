@@ -10,13 +10,14 @@
       <th>Truck</th>
       <th>Trailer</th>
       <th>Client</th>
-      <th>Driver expense</th>
-      <th>Truck expense</th>
       <th>Start address</th>
       <th>Dest addresses</th>
-      <th>Volume</th>
-      <th>Tank</th>
+      <th>Volume Fuel</th>
+      <th>Country of tanking</th>
       <th>Comments</th>
+      <th>Driver expense</th>
+      <th>Truck expense</th>
+      
       <th>Fotos</th>
       <th colspan="3"></th>
     </tr>
@@ -66,17 +67,25 @@
 
       <tr>
         <td bgcolor= <%=bg_color %> ><%= activity.date %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.DRIVER_id %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.truck_id %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.trailer_id %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.client_id %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.driver_expense_id %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.truck_expense_id %></td>
+          
+        <td bgcolor= <%=bg_color %> ><%= @drivers.find(activity.DRIVER_id).CNP+" "+
+                                         @drivers.find(activity.DRIVER_id).FIRSTNAME+" "+
+                                         @drivers.find(activity.DRIVER_id).SECONDNAME %></td>
+        <td bgcolor= <%=bg_color %> ><%= @trucks.find(activity.truck_id).NB_PLATE %></td>
+        <td bgcolor= <%=bg_color %> ><%= if activity.trailer_id!=nil 
+         @trailers.find(activity.trailer_id).NB_PLATE
+         else
+          " "
+         end %></td>
+        <td bgcolor= <%=bg_color %> ><%= @clients.find(activity.client_id).Name %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.start_address %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.dest_addresses %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.volume %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.tank %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.comments %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.driver_expense_id %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.truck_expense_id %></td>
+      
         <td bgcolor= <%=bg_color %> ><%= activity.images.count %></td>
         <td><%= link_to 'Show', activity %></td>
         <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
