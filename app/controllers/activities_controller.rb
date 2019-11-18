@@ -5,6 +5,11 @@ class ActivitiesController < ApplicationController
   # GET /activities.json
   def index
     @activities = Activity.all
+    
+    @drivers = Driver.all
+    @trucks = Truck.all
+    @trailers = Trailer.all
+    @clients = Client.all
   end
 
   # GET /activities/1
