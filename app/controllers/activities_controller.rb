@@ -4,12 +4,20 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.json
   def index
-    @activities = Activity.all
     
+    @search = TransactionSearch.new(params[:search])
+
+
+    @activities = @search.scope_activities_index
+
+
+
     @drivers = Driver.all
     @trucks = Truck.all
     @trailers = Trailer.all
     @clients = Client.all
+
+
   end
 
   # GET /activities/1

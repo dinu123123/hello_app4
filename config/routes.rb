@@ -1,7 +1,6 @@
   Rails.application.routes.draw do
   
   
-  resources :activities
   resources :periodics
   resources :periodics_categories
   resources :pricings
@@ -55,6 +54,8 @@ end
   get "/events/extract_out", as: "mission"
  
   get "/events/index", as: "mission2"
+
+  get "/activities/index", as: "mission5"
 
   get "/invoiced_trips/index", as: "mission3"
   get "/invoices/index", as: "mission4"
