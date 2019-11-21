@@ -4,6 +4,7 @@ class TransactionSearch
   
 
   def initialize(params, large =false)
+
     params ||= {}
     @date_from = parsed_date(params[:date_from],(DateTime.now - 2.month).strftime('%Y-%m-%dT%H:%M') )
 
@@ -187,6 +188,75 @@ else
 end
 
 return  arrayEvents
+
+end
+
+def scope_activities_index
+  arrayActivities = Array.new
+
+if @client_id > 0 
+
+      if @driver_id > 0 and @truck_id == 0
+                    @activities = Activity.find_by_sql(['SELECT * FROM activities where activities.client_id = ? and activities."DRIVER_id" = ? 
+                      and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', @client_id,
+                      @driver_id, to_datetime(@date_from), to_datetime(@date_to)])
+                    if @activities
+                        arrayActivities.concat(@activities)
+                    end 
+            elsif @truck_id > 0 && @driver_id == 0
+                     @activities = Activity.find_by_sql(['SELECT * FROM activities where activities.client_id = ? and activities.truck_id = ? 
+                          and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', @client_id,
+                          @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                        if @activities
+                          arrayActivities.concat(@activities)
+                        end 
+            elsif @truck_id > 0 && @driver_id > 0
+                      @activities = Activity.find_by_sql(['SELECT * FROM activities where activities.client_id = ? and activities."DRIVER_id" = ? and activities.truck_id = ? 
+                          and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', @client_id,
+                          @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                        if @activities
+                          arrayActivities.concat(@activities)
+                        end 
+            else
+                        @activities = Activity.find_by_sql(['SELECT * FROM activities where activities.client_id = ? and activities."DATE" BETWEEN ? 
+                          AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', @client_id, to_datetime(@date_from), to_datetime(@date_to)])
+                        if @activities
+                        arrayActivities.concat(@activities) 
+                        end  
+            end
+
+else 
+      if @driver_id > 0 and @truck_id == 0
+              @activities = Activity.find_by_sql(['SELECT * FROM activities where activities."DRIVER_id" = ? 
+                and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', 
+                @driver_id, to_datetime(@date_from), to_datetime(@date_to)])
+              if @activities
+                  arrayActivities.concat(@activities)
+              end 
+      elsif @truck_id > 0 && @driver_id == 0
+               @activities = Activity.find_by_sql(['SELECT * FROM activities where activities.truck_id = ? 
+                    and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', 
+                    @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                  if @activities
+                    arrayActivities.concat(@activities)
+                  end 
+      elsif @truck_id > 0 && @driver_id > 0
+                @activities = Activity.find_by_sql(['SELECT * FROM activities where activities."DRIVER_id" = ? and activities.truck_id = ? 
+                    and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', 
+                    @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                  if @activities
+                    arrayActivities.concat(@activities)
+                  end 
+      else
+                  @activities = Activity.find_by_sql(['SELECT * FROM activities where activities."DATE" BETWEEN ? 
+                    AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', to_datetime(@date_from), to_datetime(@date_to)])
+                  if @activities
+                  arrayActivities.concat(@activities) 
+                  end  
+      end
+end
+
+return  arrayActivities
 
 end
 
