@@ -55,6 +55,63 @@
     <%= form.file_field :images, multiple: true %>
   </div>
 
+<p></p>
+
+<table>
+  <% @activity.images.each_with_index do |image,index| %>
+
+  <% if (index+1)%6 == 0 %>
+     <tr>
+  <% end %>
+
+  <td> 
+  <% if false %>
+    <%= image_tag(url_for(image), height: '200', width: '200') %>
+  <% end %>
+        
+        <% if  (image.blob!=nil and image.previewable?) %>
+          <%= image.filename.to_s %>
+          <br>
+          <%= image_tag(url_for(image.preview(resize: "200x200>")), height: '200', width: '200')%>
+         
+        <% if false %>
+        <%= link_to(image_tag(image.preview(resize: "200x200>")),rails_blob_path(image, disposition: "attachment"))%>
+        <% end %>
+
+       <% elsif (image.blob !=nil and image.variable?)  %> 
+         <%= image.filename.to_s %>
+         <br>
+         <%= image_tag(url_for(image.variant(resize: "200x200>")), height: '200', width: '200') %>
+         
+       <% if false %>
+       <%= link_to(image_tag(image.variant(resize: "200x200")),rails_blob_path(image, disposition: "attachment"))%>
+       <% end %>
+
+       <% else  %> 
+        <%= image.filename.to_s %>
+        <br>  
+        <%= image_tag ("/assets/download.jpeg"), class: "img-responsive",  height: '200', width: '200' %>
+      <% end %>
+  <br>
+
+
+  <%if image.blob !=nil  %>     
+   <%= link_to 'Download', image, download: image %>
+   <br>
+   <%= link_to 'Remove', delete_image_activity_path(image.id), method: :delete, data: { confirm: 'Are you sure?' }%>
+ <% end %>
+
+</td>
+
+<% if (index+1)%6 == 0 %>
+     </tr>
+<% end %>
+
+<% end %>
+
+</table>
+
+
   <p></p>
 
   <div class="actions">

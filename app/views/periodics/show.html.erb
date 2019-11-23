@@ -57,9 +57,9 @@
   <%= @periodic.truck_expense_id %>
 </p>
 
-
-
 <br>
+
+<p></p>
 
 <table>
   <% @periodic.images.each_with_index do |image,index| %>
@@ -115,6 +115,8 @@
 <% end %>
 
 </table>
+
+<p></p>
 
 <%= link_to 'Edit', edit_periodic_path(@periodic) %> |
 <%= link_to 'Back', periodics_path %>

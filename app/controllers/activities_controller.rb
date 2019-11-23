@@ -68,6 +68,12 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def delete_image
+    @image = ActiveStorage::Attachment.find(params[:id])
+    @image.purge
+    redirect_back(fallback_location: activities_path)
+  end
+
   # DELETE /activities/1
   # DELETE /activities/1.json
   def destroy
