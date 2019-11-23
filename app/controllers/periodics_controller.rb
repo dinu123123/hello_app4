@@ -55,6 +55,12 @@ class PeriodicsController < ApplicationController
     end
   end
 
+  def delete_image
+    @image = ActiveStorage::Attachment.find(params[:id])
+    @image.purge
+    redirect_back(fallback_location: periodics_path)
+  end
+
   # DELETE /periodics/1
   # DELETE /periodics/1.json
   def destroy
