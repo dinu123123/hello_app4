@@ -95,7 +95,7 @@
                                          @drivers.find(activity.DRIVER_id).FIRSTNAME+" "+
                                          @drivers.find(activity.DRIVER_id).SECONDNAME %></td>
         <td bgcolor= <%=bg_color %> ><%= @trucks.find(activity.truck_id).NB_PLATE %></td>
-        <td bgcolor= <%=bg_color %> ><%= if activity.trailer_id!=nil 
+        <td bgcolor= <%=bg_color %> ><%= if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id)
          @trailers.find(activity.trailer_id).NB_PLATE
          else
           " "
