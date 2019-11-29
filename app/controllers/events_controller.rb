@@ -130,6 +130,12 @@ redirect_to events_url, notice: "DB sucessfully imported  lines!"
     @invoiced_trips = InvoicedTrip.all
     @pricings = Pricing.all
 
+    @activities = Activity.all
+    @periodic_categories = PeriodicsCategory.all
+    @periodics = Periodic.all   
+
+
+
     respond_to do |format|
        format.html
         format.csv { 
@@ -150,7 +156,12 @@ redirect_to events_url, notice: "DB sucessfully imported  lines!"
                     @invoices.size.to_s+"," +
                     @invoiced_trips.size.to_s+","+
                     @trailers.size.to_s+","+
-                    @pricings.size.to_s+"\n"
+                    @pricings.size.to_s+","
+                    @activities.size.to_s+","+
+                    @periodic_categories.size.to_s+","+
+                    @periodics.size.to_s+"\n"
+                     
+
                     
 
           send_data @header + @drivers.to_csv+
@@ -169,7 +180,10 @@ redirect_to events_url, notice: "DB sucessfully imported  lines!"
                     @invoices.to_csv+
                     @invoiced_trips.to_csv+
                     @trailers.to_csv+
-                    @pricings.to_csv,filename: "db#{Date.today.strftime('%Y%m%d')+Time.now.strftime('%H%M%S')}.csv"}
+                    @pricings.to_csv+
+                    @activities.to_csv+
+                    @periodic_categories.to_csv+
+                    @periodics.to_csv,filename: "db#{Date.today.strftime('%Y%m%d')+Time.now.strftime('%H%M%S')}.csv"}
       end
     end
   end

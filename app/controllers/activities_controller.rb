@@ -1,16 +1,52 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
 
+
+  
+ @@recorded_date = Date.today-1
+
   # GET /activities
   # GET /activities.json
   def index
-    
-    @search = TransactionSearch.new(params[:search])
+  
+    if @@recorded_date.to_s !=Date.today.to_s
+      @@recorded_date=Date.today
 
+      Truck.all.each do |truck|
+
+        if truck.active == true
+             Event.order('created_at DESC').all.each do |event|
+               if truck.id == event.truck_id and event.START_END == true
+
+                 @new_Activity = Activity.create(:date => Date.today, 
+                                :DRIVER_id  => event.DRIVER_id,
+                                :truck_id => event.truck_id,
+                                :trailer_id => event.trailer_id,
+                                :client_id => event.client_id
+                                )
+
+                  break
+
+
+               end
+               if truck.id == event.truck_id and event.START_END == false
+                break
+              end
+               
+                 
+
+             end 
+        end       
+      end
+    end
+
+
+
+
+    @search = TransactionSearch.new(params[:search])
+     
 
     @activities = @search.scope_activities_index
-
-
 
     @drivers = Driver.all
     @trucks = Truck.all
@@ -87,6 +123,7 @@ class ActivitiesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_activity
+      @@recorded_date = Date.today-1
       @activity = Activity.find(params[:id])
     end
 
