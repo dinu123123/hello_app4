@@ -8,13 +8,19 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.json
   def index
+
+
+    @drivers = Driver.all
+    @trucks = Truck.all
+    @trailers = Trailer.all
+    @clients = Client.all
   
     if @@recorded_date.to_s !=Date.today.to_s
       @@recorded_date=Date.today
 
       Truck.all.each do |truck|
 
-        if truck.active == true
+        if truck.active == true  and truck.NB_PLATE.start_with?("PH")    
              Event.order('created_at DESC').all.each do |event|
                if truck.id == event.truck_id and event.START_END == true
 
@@ -48,10 +54,6 @@ class ActivitiesController < ApplicationController
 
     @activities = @search.scope_activities_index
 
-    @drivers = Driver.all
-    @trucks = Truck.all
-    @trailers = Trailer.all
-    @clients = Client.all
 
 
   end
