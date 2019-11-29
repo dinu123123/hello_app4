@@ -21,7 +21,7 @@ class ActivitiesController < ApplicationController
       Truck.all.each do |truck|
 
         if truck.active == true  and truck.NB_PLATE.start_with?("PH") == true    
-             Event.order('created_at DESC').all.each do |event|
+             Event.order('DATE DESC').all.each do |event|
                if truck.id == event.truck_id and event.START_END == true
 
                  @new_Activity = Activity.create(:date => Date.today, 
