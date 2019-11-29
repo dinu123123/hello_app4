@@ -1,7 +1,6 @@
 class ActivitiesController < ApplicationController
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
-
-
+  
   
  @@recorded_date = Date.today-1
 
@@ -14,7 +13,7 @@ class ActivitiesController < ApplicationController
     @trucks = Truck.all
     @trailers = Trailer.all
     @clients = Client.all
-  
+
     if @@recorded_date.to_s !=Date.today.to_s
       @@recorded_date=Date.today
 
@@ -32,7 +31,6 @@ class ActivitiesController < ApplicationController
                                 )
 
                   break
-
 
                end
                if truck.id == event.truck_id and event.START_END == false
@@ -122,16 +120,21 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  private 
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_activity
-      @@recorded_date = Date.today-1
+      #@@recorded_date = Date.today-1
       @activity = Activity.find(params[:id])
     end
 
+
+   
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
       params.require(:activity).permit(:date, :DRIVER_id, :truck_id, :trailer_id, :client_id, :driver_expense_id, 
-        :truck_expense_id, :start_address, :dest_addresses, :volume, :tank, :comments, images: [])
+        :truck_expense_id, :start_address, :dest_addresses, :references, :volume, :tank, :comments, images: [])
     end
 end
