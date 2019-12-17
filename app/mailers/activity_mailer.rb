@@ -18,7 +18,7 @@ class ActivityMailer < ApplicationMailer
       if img.blob.filename.to_s.include?("jpeg") or img.blob.filename.to_s.include?("jpg")
         attachments[@references.to_s+"_#{ i }.jpeg"] =  img.blob.download
       elsif img.blob.filename.to_s.include?("pdf") 
-        attachments[@references.to_s+"{_#{ i }.pdf"] =  img.blob.download
+        attachments[@references.to_s+"_#{ i }.pdf"] =  img.blob.download
       elsif img.blob.filename.to_s.include?("doc") 
         attachments[@references.to_s+"_#{ i }.doc"] =  img.blob.download
       end
