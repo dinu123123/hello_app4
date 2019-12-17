@@ -76,6 +76,7 @@ end
   post 'invoices/print', to: 'invoices#print' 
   post 'invoices/email', to: 'invoices#email' 
  
+  post 'activities/email', to: 'activities#email' 
 
 
   get "/events/help", as: "help"
@@ -162,6 +163,12 @@ get "home/download_pdf"
   resources :activities  do
     member do
       delete :delete_image
+    end
+  end
+
+  resources :activities  do
+    member do
+      delete :delete_trip_image
     end
   end
 

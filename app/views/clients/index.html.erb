@@ -61,14 +61,15 @@ tr:nth-child(even) {
       <th>Address</th>
       <th>Active</th>
       <th>Bankaccount</th>
-      <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
+      <% if current_user != nil %> 
       <th>€/Km</th>
       <th>€/Day</th>
       <th>Surcharge</th>
       <th>Paymentdelay</th>
       <th>InvoicingEmail</th>
+      <th>TripsEmail</th>
        <% end %>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -82,7 +83,7 @@ tr:nth-child(even) {
         <td><%= client.active %></td>        
         <td><%= client.BankAccount %></td>
         
-         <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com")
+         <% if current_user != nil 
           %> 
 
        <% if @pricing.size>0 %> 
@@ -97,9 +98,10 @@ tr:nth-child(even) {
          <td> -1 </td>
          <td> -1 </td>
          <td> -1 </td>
+         <td> -1 </td>
       <% end %> 
       <td><%= client.email %></td>
-       
+      <td><%= client.trips_email %></td>
 
 
          <% end %>

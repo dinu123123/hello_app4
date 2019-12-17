@@ -32,7 +32,7 @@
   </div>
 
 
- <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
+ <% if current_user != nil %> 
       <div class="field">
         <%= form.label :kprice, "€/Km", :required => 'required' %>
         <%= form.text_field :kprice, id: :client_kprice, :required => 'required' %>
@@ -47,6 +47,11 @@
   <div class="field">
     <%= form.label :email %>
     <%= form.text_field :email, id: :client_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :trips_email %>
+    <%= form.text_field :trips_email, id: :trips_email %>
   </div>
 
   <div class="actions">

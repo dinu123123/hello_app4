@@ -41,9 +41,12 @@
       <th>Comments</th>
       <th>Driver expense</th>
       <th>Truck expense</th>
-      
       <th>Fotos</th>
-      <th colspan="3"></th>
+      <th>ClientComments</th>
+      <th>ClientAttachements</th>
+      <th>ClientEmailCounter</th>
+ 
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -110,8 +113,20 @@
         <td bgcolor= <%=bg_color %> ><%= activity.comments %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.driver_expense_id %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.truck_expense_id %></td>
-      
         <td bgcolor= <%=bg_color %> ><%= activity.images.count %></td>
+      
+        <td bgcolor= <%=bg_color %> ><%= activity.email_text %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.trip_images.count %></td>
+
+        <% if activity.email_counter.to_i >0  %>
+            <td bgcolor= #f56f42 ><%= activity.email_counter %></td>
+        <% else %>
+            <td bgcolor= <%=bg_color %> ><%= activity.email_counter %></td>
+        <% end %>   
+
+  <td><%= link_to 'SendEmail', activities_email_path(:id => activity.id,  :format => "pdf") , method: :post, data: {confirm: 'Are you sure?'} %></td>    
+
+
         <td><%= link_to 'Show', activity %></td>
         <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
         <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
