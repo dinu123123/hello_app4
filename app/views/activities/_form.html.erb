@@ -1,3 +1,40 @@
+<style>
+.textAreaColumn{
+    width:90%;    
+}
+
+.textAreaColumn div{
+    float:left;
+    width:20%;
+    padding:2px;
+    box-sizing: border-box;
+}
+
+.textAreaColumn div span{
+    display:block;
+    text-align:center;
+}
+
+.textAreaColumn div textarea{
+    box-sizing: border-box;
+    width:100%;
+    border:2px solid blue;
+    max-height:40px;
+}
+
+
+fieldset {
+  background-color: #728085;
+  color: white;
+}
+legend {
+  padding: 2px;
+  border: 1px solid green;
+}
+
+</style>
+
+
 <%= form_with(model: activity, local: true) do |form| %>
   <% if activity.errors.any? %>
     <div id="error_explanation">
@@ -11,10 +48,9 @@
     </div>
   <% end %>
 
+
   <div class="field">
-    <%= form.label :date %>
-    <%= form.date_select :date %>
-  </div>
+  <%= form.date_select :date %>
 
 <%= form.collection_select :DRIVER_id, Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ? 
                     ORDER BY drivers.created_at ASC', true]) , :id, :name_with_cnp, {prompt: "Driver Name and CNP"},:required => 'required'%>
@@ -24,6 +60,14 @@
 
 <%= form.collection_select :driver_expense_id, DriverExpense.all, :id, :id_with_info, {prompt: "DriverExpense"} %>
 <%= form.collection_select :truck_expense_id, TruckExpense.all, :id, :id_with_info, {prompt: "TruckExpense"} %>
+  </div>
+
+<div class="textAreaColumn">
+
+  <div class="field">
+    <%= form.label :references %>
+    <%= form.text_area :references %>
+  </div>
 
   <div class="field">
     <%= form.label :start_address %>
@@ -34,19 +78,23 @@
     <%= form.label :dest_addresses %>
     <%= form.text_area :dest_addresses %>
   </div>
- 
-  <div class="field">
-    <%= form.label :references %>
-    <%= form.text_area :references %>
-  </div>
+
+</div>
+
+<br/>
+<br/>
+
+<br/>
+<br/>
+
+<br>
+
+
+
+<div class="textAreaColumn">
 
   <div class="field">
-    <%= form.label :volume %>
-    <%= form.number_field :volume %>
-  </div>
-
-  <div class="field">
-    <%= form.label :tank %>
+    <%= form.label :tanking_location %>
     <%= form.text_area :tank %>
   </div>
 
@@ -55,11 +103,54 @@
     <%= form.text_area :comments %>
   </div>
 
+
+  <div class="field">
+    <%= form.label :volume %>
+    <%= form.number_field :volume %>
+  </div>
+
+  </div>
+
+
+<br/>
+<br/>
+
+<br/>
+<br/>
+
+<br>
+
   <div class="form_group">
-    <%= form.label :name, 'You can introduce multiple pdf/jpg files at once.' %>
+    <%= form.label :name, 'You can introduce multiple pdf/jpg files at once. (AMENZI,PARCARI, etc)' %>
     <%= form.file_field :images, multiple: true %>
   </div>
 
+
+
+
+<fieldset>
+  <p>Added text and files for the email to be sent to the client:</p>  
+
+   <div class="field" style="text-align: left; font-weight: bold;">
+    <%= form.label :email_text %>
+    <%= form.text_area :email_text %>
+  </div>
+
+  <div class="form_group" style="text-align: left; font-weight: bold;">
+    <%= form.label :name, 'You can introduce multiple TRIP pdf/jpg files at once.' %>
+    <%= form.file_field :trip_images, multiple: true %>
+    
+
+  </div>
+
+
+</fieldset>
+
+
+
+
+
+<p></p>
 <p></p>
 
 <table>
@@ -118,6 +209,69 @@
 
 
   <p></p>
+
+
+
+<p></p>
+
+<table>
+  <% @activity.trip_images.each_with_index do |image,index| %>
+
+  <% if (index+1)%6 == 0 %>
+     <tr>
+  <% end %>
+
+  <td> 
+  <% if false %>
+    <%= image_tag(url_for(image), height: '200', width: '200') %>
+  <% end %>
+        
+        <% if  (image.blob!=nil and image.previewable?) %>
+          <%= image.filename.to_s %>
+          <br>
+          <%= image_tag(url_for(image.preview(resize: "200x200>")), height: '200', width: '200')%>
+         
+        <% if false %>
+        <%= link_to(image_tag(image.preview(resize: "200x200>")),rails_blob_path(image, disposition: "attachment"))%>
+        <% end %>
+
+       <% elsif (image.blob !=nil and image.variable?)  %> 
+         <%= image.filename.to_s %>
+         <br>
+         <%= image_tag(url_for(image.variant(resize: "200x200>")), height: '200', width: '200') %>
+         
+       <% if false %>
+       <%= link_to(image_tag(image.variant(resize: "200x200")),rails_blob_path(image, disposition: "attachment"))%>
+       <% end %>
+
+       <% else  %> 
+        <%= image.filename.to_s %>
+        <br>  
+        <%= image_tag ("/assets/download.jpeg"), class: "img-responsive",  height: '200', width: '200' %>
+      <% end %>
+  <br>
+
+
+  <%if image.blob !=nil  %>     
+   <%= link_to 'Download', image, download: image %>
+   <br>
+   <%= link_to 'Remove', delete_image_activity_path(image.id), method: :delete, data: { confirm: 'Are you sure?' }%>
+ <% end %>
+
+</td>
+
+<% if (index+1)%6 == 0 %>
+     </tr>
+<% end %>
+
+<% end %>
+
+</table>
+
+
+  <p></p>
+
+
 
   <div class="actions">
     <%= form.submit %>

@@ -6,5 +6,6 @@ belongs_to :client, :required => true
 
 #has_one_attached :picture
 has_many_attached :images
+has_many_attached :trip_images
 
 end

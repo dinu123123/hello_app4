@@ -36,25 +36,24 @@ class ActivitiesController < ApplicationController
                if truck.id == event.truck_id and event.START_END == false
                 break
               end
-               
-                 
 
              end 
         end       
       end
     end
 
-
-
-
     @search = TransactionSearch.new(params[:search])
-     
-
     @activities = @search.scope_activities_index
 
-
-
   end
+
+
+def email()
+  @activity = Activity.find(params[:id])
+  client = Client.find(@activity.client_id)
+  ActivityMailer.activity_email(client.trips_email, @activity).deliver
+  redirect_back fallback_location: root_path and return @activity
+end
 
   # GET /activities/1
   # GET /activities/1.json
@@ -68,15 +67,21 @@ class ActivitiesController < ApplicationController
 
   # GET /activities/1/edit
   def edit
+  
   end
 
   # POST /activities
   # POST /activities.json
   def create
-    @activity = Activity.new(activity_params)
 
+    @activity = Activity.new(activity_params)
     if @activity.images.count>0
      @activity.images.attach(params[:activity][:images])
+    end
+
+
+    if @activity.trip_images.count>0
+     file = @activity.trip_images.attach(params[:activity][:trip_images])
     end
 
     respond_to do |format|
@@ -93,8 +98,20 @@ class ActivitiesController < ApplicationController
   # PATCH/PUT /activities/1
   # PATCH/PUT /activities/1.json
   def update
+
+    #@filename = ''
+    #if params[:activity][:cmr] == 1.to_s
+    #  @filename = 'cmr'
+    #elsif params[:activity][:trips] == 1.to_s
+    #  @filename = 'ẗrip'
+    #elsif params[:activity][:pallet] == 1.to_s
+    #  @filename = 'pallet'
+    #end  
+
     respond_to do |format|
+        
       if @activity.update(activity_params)
+
         format.html { redirect_to @activity, notice: 'Activity was successfully updated.' }
         format.json { render :show, status: :ok, location: @activity }
       else
@@ -105,6 +122,13 @@ class ActivitiesController < ApplicationController
   end
 
   def delete_image
+    @image = ActiveStorage::Attachment.find(params[:id])
+    @image.purge
+    redirect_back(fallback_location: activities_path)
+  end
+
+
+  def delete_trip_image
     @image = ActiveStorage::Attachment.find(params[:id])
     @image.purge
     redirect_back(fallback_location: activities_path)
@@ -135,6 +159,6 @@ class ActivitiesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
       params.require(:activity).permit(:date, :DRIVER_id, :truck_id, :trailer_id, :client_id, :driver_expense_id, 
-        :truck_expense_id, :start_address, :dest_addresses, :references, :volume, :tank, :comments, images: [])
+        :truck_expense_id, :start_address, :dest_addresses, :references, :volume, :tank, :comments, :email_text, :email_counter, images: [],  trip_images: [])
     end
 end
