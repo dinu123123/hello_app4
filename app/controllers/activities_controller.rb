@@ -159,6 +159,6 @@ end
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
       params.require(:activity).permit(:date, :DRIVER_id, :truck_id, :trailer_id, :client_id, :driver_expense_id, 
-        :truck_expense_id, :start_address, :dest_addresses, :references, :volume, :tank, :comments, :email_text, :email_counter, images: [],  trip_images: [])
+        :truck_expense_id, :start_address, :dest_addresses, :references, :volume, :tank, :comments, :email_text, :pallet, :email_counter, images: [],  trip_images: [])
     end
 end
