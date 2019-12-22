@@ -43,6 +43,7 @@
       <th>Truck expense</th>
       <th>Fotos</th>
       <th>ClientComments</th>
+      <th>NbPallets</th>
       <th>ClientAttachements</th>
       <th>ClientEmailCounter</th>
  
@@ -114,8 +115,11 @@
         <td bgcolor= <%=bg_color %> ><%= activity.driver_expense_id %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.truck_expense_id %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.images.count %></td>
-      
+
         <td bgcolor= <%=bg_color %> ><%= activity.email_text %></td>
+      
+              <td bgcolor= <%=bg_color %> ><%= activity.pallet.to_i %></td>
+
         <td bgcolor= <%=bg_color %> ><%= activity.trip_images.count %></td>
 
         <% if activity.email_counter.to_i >0  %>
