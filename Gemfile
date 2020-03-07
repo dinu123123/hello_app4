@@ -19,7 +19,7 @@ gem 'devise'
 gem 'figaro'
 
 
-gem 'mini_magick', '4.8'
+gem 'mini_magick', '4.9.4'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
