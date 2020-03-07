@@ -6,15 +6,8 @@ attr_accessor :total_price_calculated
   # GET /invoices
   # GET /invoices.json
   def index
-
-
-
     @search = TransactionSearch.new(params[:search])
-    
     @invoices = @search.scope_invoices_index
-
-
-    
     #@invoices = Invoice.all
     #@invoices = Invoice.find_by_sql(['SELECT * FROM invoices ORDER BY  invoices.date DESC, invoices.client_id ASC, invoices.info DESC '])
     @clients = Client.all
@@ -77,14 +70,14 @@ attr_accessor :total_price_calculated
 
 
 def email()
-file = print (true)
-@invoice = Invoice.find(params[:id])
-client = Client.find(@invoice.client_id)
-@invoice.sent = true
-@invoice.save
+  file = print (true)
+  @invoice = Invoice.find(params[:id])
+  client = Client.find(@invoice.client_id)
+  @invoice.sent = true
+  @invoice.save
 
-InvoiceMailer.invoice_email(client.email, file).deliver
-redirect_back fallback_location: root_path and return @invoice
+  InvoiceMailer.invoice_email(client.email, file).deliver
+  redirect_back fallback_location: root_path and return @invoice
 end
 
  def print(send_invoice=false)

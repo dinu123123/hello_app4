@@ -165,7 +165,9 @@ function pagereload(t) {
 <% if   current_user != nil %> 
   <%= link_to "Input", root_path %>
   <%= link_to "Daily", activities_url %>
-  <%= link_to "Periodics", periodics_url %>
+  <%= link_to "PeriodicMaintenance", periodics_url %>
+  <%= link_to "Repairs", repairs_url %>
+
 <% end %>
 
 <% if   current_user != nil and current_user.admin == true %> 

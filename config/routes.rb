@@ -1,7 +1,6 @@
   Rails.application.routes.draw do
   
   
-  resources :periodics
   resources :periodics_categories
   resources :pricings
   resources :trailers
@@ -56,6 +55,9 @@ end
   get "/events/index", as: "mission2"
 
   get "/activities/index", as: "mission5"
+  get "/periodics/index", as: "mission6" 
+  get "/repairs/index", as: "mission7" 
+
 
   get "/invoiced_trips/index", as: "mission3"
   get "/invoices/index", as: "mission4"
@@ -151,6 +153,16 @@ get "home/download_pdf"
   end
 
   resources :periodics  do
+    member do
+      delete :delete_image
+    end
+  end
+
+  resources :repairs  do
+  collection { post :import}
+  end
+
+  resources :repairs  do
     member do
       delete :delete_image
     end

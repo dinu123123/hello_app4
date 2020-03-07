@@ -1,6 +1,26 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Periodics</h1>
+
+
+<fieldset>
+  <p>Introduce the Start/End date interval and truck:</p>  
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission6_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
+  </br>
+</fieldset>
+ <p> </p> 
+<p> </p> 
+
+
 <table>
   <thead>
     <tr>

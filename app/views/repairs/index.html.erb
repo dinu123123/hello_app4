@@ -1,0 +1,81 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Repairs</h1>
+
+
+<fieldset>
+  <p>Introduce the Start/End date interval and truck:</p>  
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission7_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
+  </br>
+</fieldset>
+ <p> </p> 
+<p> </p> 
+
+
+<%= link_to 'New Repair', new_repair_path %>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Date repair</th>
+      <th>Km</th>
+      <th>Driver CNP</th>
+      <th>Driver</th>
+      <th>Truck</th>
+      <th>Trailer</th>
+      <th>Description</th>
+      <th>Mechanic name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+ <% @trucks = Truck.all %>
+    <% @trailers = Trailer.all %>
+    <% @drivers = Driver.all %>
+
+    <% @repairs.each do |repair| %>
+      <tr>
+        <td><%= repair.date_repair %></td>
+        <td><%= repair.km %></td>
+        
+
+         <td><%= @drivers.find(repair.DRIVER_id).CNP  %></td> 
+        <td><%= @drivers.find(repair.DRIVER_id).FIRSTNAME+ ' ' +
+                @drivers.find(repair.DRIVER_id).SECONDNAME %></td>
+
+        <td>
+          <% if @trucks and repair.truck_id %>
+            <%= @trucks.find(repair.truck_id).NB_PLATE %>
+          <% end %>
+        </td>
+
+        <td>
+          <% if @trailers and repair.trailer_id %>
+            <%= @trailers.find(repair.trailer_id).NB_PLATE %>  
+          <% end %>
+        </td>
+
+
+
+        <td><%= repair.description %></td>
+        <td><%= repair.mechanic_name %></td>
+        <td><%= link_to 'Show', repair %></td>
+        <td><%= link_to 'Edit', edit_repair_path(repair) %></td>
+        <td><%= link_to 'Destroy', repair, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

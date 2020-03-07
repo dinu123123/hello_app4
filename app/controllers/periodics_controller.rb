@@ -4,7 +4,9 @@ class PeriodicsController < ApplicationController
   # GET /periodics
   # GET /periodics.json
   def index
-    @periodics = Periodic.all
+    @trucks = Truck.all
+    @search = TransactionSearch.new(params[:search])
+    @periodics = @search.scope_periodics_index
   end
 
   # GET /periodics/1

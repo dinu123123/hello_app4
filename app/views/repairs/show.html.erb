@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date repair:</strong>
+  <%= @repair.date_repair %>
+</p>
+
+<p>
+  <strong>Km:</strong>
+  <%= @repair.km %>
+</p>
+
+<p>
+  <strong>Driver:</strong>
+  <%= @repair.DRIVER_id %>
+</p>
+
+<p>
+  <strong>Truck:</strong>
+  <%= @repair.truck_id %>
+</p>
+
+<p>
+  <strong>Trailer:</strong>
+  <%= @repair.trailer_id %>
+</p>
+
+<p>
+  <strong>Driver expense:</strong>
+  <%= @repair.driver_expense_id %>
+</p>
+
+<p>
+  <strong>Truck expense:</strong>
+  <%= @repair.truck_expense_id %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @repair.description %>
+</p>
+
+<p>
+  <strong>Mechanic name:</strong>
+  <%= @repair.mechanic_name %>
+</p>
+
+<%= link_to 'Edit', edit_repair_path(@repair) %> |
+<%= link_to 'Back', repairs_path %>
