@@ -260,6 +260,55 @@ return  arrayActivities
 
 end
 
+
+def scope_periodics_index
+  arrayPeriodics = Array.new
+
+if @truck_id > 0 
+                @periodics = Periodic.find_by_sql(['SELECT * FROM periodics where periodics.truck_id = ? 
+                    and periodics."date_start" BETWEEN ? AND ? ORDER BY periodics."date_start" DESC', 
+                    @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                  if @periodics
+                    arrayPeriodics.concat(@periodics)
+                  end 
+else
+                  @periodics = Periodic.find_by_sql(['SELECT * FROM periodics where periodics."date_start" BETWEEN ? 
+                    AND ? ORDER BY periodics."date_start" DESC', to_datetime(@date_from), to_datetime(@date_to)])
+                  if @periodics
+                  arrayPeriodics.concat(@periodics) 
+                  end  
+end
+
+return  arrayPeriodics
+
+end
+
+
+
+def scope_repairs_index
+  arrayRepairs = Array.new
+
+if @truck_id > 0 
+                @repairs = Repair.find_by_sql(['SELECT * FROM periodics where repairs.truck_id = ? 
+                    and repairs."date_repair" BETWEEN ? AND ? ORDER BY repairs."date_repair" DESC', 
+                    @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                  if @repairs
+                    arrayRepairs.concat(@repairs)
+                  end 
+else
+                  @repairs = Repair.find_by_sql(['SELECT * FROM repairs where repairs."date_repair" BETWEEN ? 
+                    AND ? ORDER BY repairs."date_repair" DESC', to_datetime(@date_from), to_datetime(@date_to)])
+                  if @repairs
+                  arrayRepairs.concat(@repairs) 
+                  end
+
+
+end
+
+return  arrayRepairs
+
+end
+
 def scope   
 # return  Event.where('date BETWEEN ? AND ?', @date_from, @date_to),
 #           TruckExpense.where('date BETWEEN ? AND ?', @date_from, @date_to), 

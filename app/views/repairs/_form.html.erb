@@ -1,0 +1,53 @@
+<%= form_with(model: repair, local: true) do |form| %>
+  <% if repair.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(repair.errors.count, "error") %> prohibited this repair from being saved:</h2>
+
+      <ul>
+      <% repair.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :date_repair %>
+    <%= form.date_select :date_repair %>
+  </div>
+
+  <div class="field">
+    <%= form.label :km %>
+    <%= form.number_field :km %>
+  </div>
+
+<%= form.collection_select :DRIVER_id, Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ? 
+                     ORDER BY drivers.created_at ASC', true]), :id, :name_with_cnp, {prompt: "Driver Name and CNP"},:required => 'required'%>
+
+<%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
+<%= form.collection_select :trailer_id, Trailer.all, :id, :NB_PLATE, {prompt: "Trailer Nb Plate"} %>
+
+  <div class="field">
+    <%= form.label :driver_expense_id %>
+    <%= form.number_field :driver_expense_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :truck_expense_id %>
+    <%= form.number_field :truck_expense_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mechanic_name %>
+    <%= form.text_field :mechanic_name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
