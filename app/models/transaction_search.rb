@@ -1,5 +1,5 @@
 class TransactionSearch 
-  attr_reader :date_from, :date_to, :truck_id, :driver_id, :client_id, :truck_events
+  attr_reader :date_from, :date_to, :truck_id, :driver_id, :client_id, :truck_events, :periodic_category_id
 
   
 
@@ -12,6 +12,9 @@ class TransactionSearch
     @driver_id = parsed_driver_id(params[:driver_id], 1)
     @truck_id = parsed_truck_id(params[:truck_id], 1)
     @client_id = parsed_client_id(params[:client_id], 1)
+
+    @periodic_category_id = parsed_periodic_category_id(params[:periodic_category_id], 1)
+
 
   end
 
@@ -265,9 +268,16 @@ def scope_periodics_index
   arrayPeriodics = Array.new
 
 if @truck_id > 0 
-                @periodics = Periodic.find_by_sql(['SELECT * FROM periodics where periodics.truck_id = ? 
+                @periodics = Periodic.find_by_sql(['SELECT * FROM periodics where periodics.truck_id = ? and  periodics."periodics_category_id" = ?
                     and periodics."date_start" BETWEEN ? AND ? ORDER BY periodics."date_start" DESC', 
-                    @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                    @truck_id, @periodic_category_id, to_datetime(@date_from), to_datetime(@date_to)])
+                  if @periodics
+                    arrayPeriodics.concat(@periodics)
+                  end 
+elsif @periodic_category_id > 0 
+                @periodics = Periodic.find_by_sql(['SELECT * FROM periodics where periodics."periodics_category_id" = ?
+                    and periodics."date_start" BETWEEN ? AND ? ORDER BY periodics."date_start" DESC', 
+                    @periodic_category_id, to_datetime(@date_from), to_datetime(@date_to)])
                   if @periodics
                     arrayPeriodics.concat(@periodics)
                   end 
@@ -848,6 +858,15 @@ return     arrayEvents,
            @total_toll_invoiced
 
 end 
+
+
+
+  def parsed_periodic_category_id (n1, default)
+    n1.to_i
+    rescue ArgumentError, TypeError
+    default.to_i
+  end
+
 
   def parsed_driver_id (n1, default)
     n1.to_i
