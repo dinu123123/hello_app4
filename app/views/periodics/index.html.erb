@@ -11,6 +11,8 @@
         <%= datetime_field_tag 'search[date_from]', @search.date_from %>
         <%= datetime_field_tag 'search[date_to]', @search.date_to %>
         <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
+        <%= collection_select :search, :periodic_category_id, PeriodicsCategory.all, :id, :name, {:include_blank => 'All Periodics'} %>
+
         <%= submit_tag 'Display', class: 'btn search-button' %>  
         <% end %>
       </div>

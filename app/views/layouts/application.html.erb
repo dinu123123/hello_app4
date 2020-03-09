@@ -165,7 +165,7 @@ function pagereload(t) {
 <% if   current_user != nil %> 
   <%= link_to "Input", root_path %>
   <%= link_to "Daily", activities_url %>
-  <%= link_to "PeriodicMaintenance", periodics_url %>
+  <%= link_to "Maintenance", periodics_url %>
   <%= link_to "Repairs", repairs_url %>
 
 <% end %>
@@ -175,7 +175,9 @@ function pagereload(t) {
   <%= link_to "Invoices", invoices_url %>
   <%= link_to "Group", mission1_url %>
   <%= link_to "Individual", mission_url %>
-  <%= link_to "OilPrice", oil_url, :onclick => "history.go(0)" %> 
+<% if false %> 
+  <%= link_to "OilPrice", oil_url, :onclick => "history.go(0)" %>
+<% end %> 
   <%= link_to "File", db_url %>
 <% end %>
 
