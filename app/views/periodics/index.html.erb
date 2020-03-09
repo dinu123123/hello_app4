@@ -26,6 +26,7 @@
 <table>
   <thead>
     <tr>
+      <th></th>
       <th>Periodics category</th>
       <th>Date start</th>
       <th>Date end</th>
@@ -47,8 +48,9 @@
     <% @trailers = Trailer.all %>
     <% @drivers = Driver.all %>
     <% @periodics1 = PeriodicsCategory.all %>
-    <% @periodics.each do |periodic| %>
+    <% @periodics.each_with_index do |periodic,i| %>
       <tr>
+        <td><%= i+1 %></td>
         <td><%= @periodics1.find(periodic.periodics_category_id).name %></td>
         <td><%= periodic.date_start %></td>
         <td><%= periodic.date_end %></td>
