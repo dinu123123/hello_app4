@@ -80,7 +80,7 @@ def email()
   redirect_back fallback_location: root_path and return @invoice
 end
 
- def print(send_invoice=false)
+def print(send_invoice=false)
 
 
 #<InvoicedTrip 
@@ -154,12 +154,13 @@ if @service_name.length>0
  @service_name = " - " + @service_name
 end
 
+
 item = InvoicePrinter::Document::Item.new(
   name: @info+"  "+truck.NB_PLATE+" / "+ driver.FIRSTNAME+" "+driver.SECONDNAME, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
   unit: a.price_per_km,
   quantity: "km".to_s,
   price: a.km,
-  tax: '0',
+  tax: (invoice.vat/100*@price_distance.round(2)).round(2).to_s,
   amount: @price_distance.round(2) # client_id.price_per_km,
 )
 
@@ -361,7 +362,7 @@ labels = {
   quantity: 'U.O.M.',
   price_per_item: 'Quantity',
   amount: 'Value (€)',
-  tax: 'VAT (0%)',
+  tax: 'VAT (' + invoice.vat.to_s + '%)',
   total: 'TURJAN MIHAIL AS872851                                      Total'
 }
 
@@ -389,8 +390,8 @@ invoice_inline = InvoicePrinter::Document.new(
   issue_date: invoice.date.to_s,
   due_date: (invoice.date+client.PaymentDelay).to_s,
   subtotal: '€ '+invoice.total_amount.round(2).to_s,
-  tax: '€ 0.00',
-  total: '€ '+invoice.total_amount.round(2).to_s,
+  tax: '€ '+ (invoice.vat/100*invoice.total_amount).round(2).to_s,
+  total: '€ '+(invoice.total_amount*((100+invoice.vat)/100)).round(2).to_s,
 
   bank_account_number: 'RO53 RZBR 0000 0600 1753 0734',
   items: ary,
