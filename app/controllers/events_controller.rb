@@ -419,8 +419,7 @@ def weekly
       end
 
       @arrayWeeklyTruckExpense = nil
-      @pInvoices = nil
-
+      
       if @search1.type == 1 or @search1.type == 3 
 
 
@@ -609,11 +608,11 @@ else
                        @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
                           invoices.date >= ? AND invoices.date <= ?', client.id, 
                           @date_from1-client.PaymentDelay, @date_to1-client.PaymentDelay])
-                   else 
+                   elsif @search1.type == 3 
                        @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
                           invoices.date >= ? AND invoices.date <= ?', client.id, 
                           @date_from1, @date_to1])
-                    end
+                   end
 
 
                      if  @invoices != nil
