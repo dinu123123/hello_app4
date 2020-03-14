@@ -606,9 +606,8 @@ else
       
                      @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
                           invoices.date >= ? AND invoices.date <= ?', client.id, 
-                          @date_from1-client.PaymentDelay, @date_to1-client.PaymentDelay])
+                          @date_from1, @date_to1])
       
-     
 
                      if  @invoices != nil
                          1.upto( @invoices.count) do |k|
