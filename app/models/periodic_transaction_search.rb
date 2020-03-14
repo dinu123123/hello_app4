@@ -34,11 +34,13 @@ class PeriodicTransactionSearch
     @arrayT.push(a1)
     @arrayT.push(b1)
 
-    a2 =Element.new("Invoices",1)
+    a2 =Element.new("InvoicesPaid",1)
     b2 =Element.new("Salaries",2)    
+    a3 =Element.new("InvoicesIssued",3)
     @arrayC = []
     @arrayC.push(a2)
     @arrayC.push(b2)
+    @arrayC.push(a3)
 
     a3 =Element.new("Active",1)
     b3 =Element.new("Inactive",2)    
