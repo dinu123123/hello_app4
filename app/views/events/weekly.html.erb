@@ -169,7 +169,7 @@
                                       <% @pInvoices[i][j].each_with_index do |inv, k| %>
                                          <% if inv != 0 %>
                                          <small>
-                                              <%= inv.name.to_s +  '|'.to_s + inv.date.to_s + '|'.to_s+   (Date.today-inv.date).to_i>to_s+ '|'.to_s+ inv.total_amount.to_s  %>
+                                              <%= inv.name.to_s +  '|'.to_s + inv.date.to_s + '|'.to_s+   (Date.today-inv.date).to_i.to_s> + '|'.to_s+ inv.total_amount.to_s  %>
                                               <% @sizeN = inv.name.length + inv.date.to_s.length-3  %>
                                           </small>
                                               
