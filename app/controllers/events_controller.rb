@@ -539,9 +539,9 @@ def weekly
               
                 end      
 
-                @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.transpose()
-                @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.reject { |row| !(row.first.is_a? String)  and  row.first.to_i == 0 }
-                @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
+             #   @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.transpose()
+             #   @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.reject { |row| !(row.first.is_a? String)  and  row.first.to_i == 0 }
+             #   @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
 
 else 
 #################################
