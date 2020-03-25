@@ -294,7 +294,14 @@ for week in @period_start..@period_end do
 
   if @search1.type ==1 
   
+
+
           Truck.all.each_with_index do |truck,j|
+
+
+  
+
+
                 @search1.setDriver(0)
                 @search1.setTruck(truck.id)
                 @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
@@ -446,7 +453,12 @@ def weekly
 
           @arrayWeeklyTruckExpense[0][0]= "".to_s
           Driver.all.each_with_index do |driver,j|
-              @arrayWeeklyTruckExpense[0][j+1]=driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
+            if driver.active 
+              @arrayWeeklyTruckExpense[0][j+1]=1.to_s+driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
+            else
+              @arrayWeeklyTruckExpense[0][j+1]=0.to_s+driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
+            end
+              
           end  
           
           @arrayWeeklyTruckExpense[0][0] = "Week".to_s
@@ -467,15 +479,10 @@ def weekly
 ##################################
 ##################################                  
 
-
-
                 @arrayDriverPaymentDates = Array.new(Driver.all.size){Array.new(53)}
-                 
 
                 Driver.all.each_with_index do |driver,j|
                  
-
-
                  @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
                             and events."DATE" <= ? ORDER BY events."DATE" DESC LIMIT 1', driver.id, Date.today])
 
@@ -536,13 +543,30 @@ def weekly
               
                 end      
 
-             #   @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.transpose()
-             #   @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.reject { |row| !(row.first.is_a? String)  and  row.first.to_i == 0 }
-             #   @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
 
+ @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.transpose()
+
+#asdasd
+
+
+#@arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense[1..@arrayWeeklyTruckExpense.size-1]
+
+ @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.reject { |row| row[0][0].to_s != "W" and row[0][0].to_s !=  'M' and row[0][0].to_s !=  'T' and row[0].to_i ==0 }
+@arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.each { |row| 
+  if(row[0][0].to_s == '1') 
+    row[0][0]="" end 
+  }
+
+
+ @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
+
+               
 else 
 #################################
 #################################
+
+
+
 
   @totalAll = 0
   for week in @period_start..@period_end do
