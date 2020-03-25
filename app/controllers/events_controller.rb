@@ -294,14 +294,7 @@ for week in @period_start..@period_end do
 
   if @search1.type ==1 
   
-
-
           Truck.all.each_with_index do |truck,j|
-
-
-  
-
-
                 @search1.setDriver(0)
                 @search1.setTruck(truck.id)
                 @events,@truck_expenses, @total_truck_expenses,@germany_tolls,@total_germany_tolls,
@@ -453,7 +446,9 @@ def weekly
 
           @arrayWeeklyTruckExpense[0][0]= "".to_s
           Driver.all.each_with_index do |driver,j|
-            @arrayWeeklyTruckExpense[0][j+1]=driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
+            if driver.active
+              @arrayWeeklyTruckExpense[0][j+1]=driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
+            end
           end  
           
           @arrayWeeklyTruckExpense[0][0] = "Week".to_s
@@ -472,11 +467,18 @@ def weekly
          elsif @search1.type ==2 and @search1.time == 1
  
 ##################################
-##################################                          
+##################################                  
+
+@Driver1 = Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ?', true])
+
+
                 @arrayDriverPaymentDates = Array.new(Driver.all.size){Array.new(53)}
                  
-                Driver.all.each_with_index do |driver,j|
+
+                @Driver1.each_with_index do |driver,j|
                  
+
+
                  @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
                             and events."DATE" <= ? ORDER BY events."DATE" DESC LIMIT 1', driver.id, Date.today])
 
@@ -537,14 +539,13 @@ def weekly
               
                 end      
 
+                @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.transpose()
+                @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.reject { |row| !(row.first.is_a? String)  and  row.first.to_i == 0 }
+                @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
 
-               
 else 
 #################################
 #################################
-
-
-
 
   @totalAll = 0
   for week in @period_start..@period_end do
@@ -635,10 +636,22 @@ else
 
           @arrayWeeklyTruckExpense[@period_end-@period_start+2][Client.all.size+1] = @totalAll
 
-   end           
+
+
+
+   end
+
 end
+
+ #@arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.reject { |row| row[Client.all.size+1] == 0 }
+ @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.transpose()
+ @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.reject { |row| !(row.last.is_a? String)  and    row.last.to_i == 0 }
+ @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
+
     end
 
+
+   
           @drivers = Driver.all
           @trucks = Truck.all
           @clients = Client.all
