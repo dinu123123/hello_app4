@@ -446,9 +446,7 @@ def weekly
 
           @arrayWeeklyTruckExpense[0][0]= "".to_s
           Driver.all.each_with_index do |driver,j|
-            if driver.active
               @arrayWeeklyTruckExpense[0][j+1]=driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
-            end
           end  
           
           @arrayWeeklyTruckExpense[0][0] = "Week".to_s
@@ -469,13 +467,12 @@ def weekly
 ##################################
 ##################################                  
 
-@Driver1 = Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ?', true])
 
 
                 @arrayDriverPaymentDates = Array.new(Driver.all.size){Array.new(53)}
                  
 
-                @Driver1.each_with_index do |driver,j|
+                Driver.all.each_with_index do |driver,j|
                  
 
 
