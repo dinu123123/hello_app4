@@ -664,15 +664,20 @@ else
 
 end
 
- #@arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.reject { |row| row[Client.all.size+1] == 0 }
 
- if @search1.type == 2 
- @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.transpose()
- @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.reject { |row| !(row.last.is_a? String)  and    row.last.to_i == 0 }
- @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
-end
-
+  @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose() 
+  @pInvoices = @pInvoices.transpose()
+  
+  @arrayWeeklyTruckExpense.each_with_index {|column, i|   
+    if (column.first.to_s[0] != "W" and    column.last.to_i == 0)
+       @pInvoices.delete_at(i)     
+       @arrayWeeklyTruckExpense.delete column
     end
+  }
+
+   @pInvoices =  @pInvoices.transpose()
+   @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
+  end
 
 
    

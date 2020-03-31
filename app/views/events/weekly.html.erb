@@ -54,7 +54,7 @@
 <% if @arrayWeeklyTruckExpense %>
   <legend> 
 
-<% if (@search1.type ==1)  %>
+<% if (@search1.type ==1 )  %>
     Invoiced (avg. <td><%= (@arrayWeeklyTruckExpense[@arrayWeeklyTruckExpense.size-1][@arrayWeeklyTruckExpense[0].size-1].to_i)/(@arrayWeeklyTruckExpense.size-2) %></td>) 
 <% end %>
 
@@ -153,7 +153,7 @@
 
                                          <% if value != nil and value.to_i>0  %>
                                          <small> 
-                                            <%=  ("total=".to_s)+value.to_s %>
+                                            <%=  value.to_s %>
                                           </small>
                                          <% end %>
 
@@ -179,7 +179,7 @@
 
                                          <% if value != nil and value.to_i>0 %>
                                          <small> 
-                                            <%=  ("total=".to_s)+value.to_s %>
+                                            <%=  value.to_s %>
                                          </small> 
                                          <% end %>
 
@@ -202,7 +202,7 @@
 
                                          <% if value != nil and value.to_i>0 %> 
                                          <small>
-                                            <%=  ("total=".to_s)+value.to_s %>
+                                            <%=  value.to_s %>
                                          </small>
                                          <% end %>
 
@@ -225,7 +225,7 @@
                                            <% if i != 0 and j !=0  %>
                                             <% if value.to_i >0  %>
                                               <small> 
-                                                 <%=  ("total=".to_s)+value.to_s %>
+                                                 <%=  value.to_s %>
                                               </small>
                                             <% end %>
                                             
