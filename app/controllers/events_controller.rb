@@ -666,16 +666,23 @@ end
 
 
   @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose() 
-  @pInvoices = @pInvoices.transpose()
   
+  if @pInvoices != nil
+    @pInvoices = @pInvoices.transpose()
+  end
+
   @arrayWeeklyTruckExpense.each_with_index {|column, i|   
     if (column.first.to_s[0] != "W" and    column.last.to_i == 0)
-       @pInvoices.delete_at(i)     
+       if @pInvoices != nil
+         @pInvoices.delete_at(i)
+       end
        @arrayWeeklyTruckExpense.delete column
     end
   }
 
-   @pInvoices =  @pInvoices.transpose()
+   if @pInvoices != nil
+     @pInvoices =  @pInvoices.transpose()
+   end 
    @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
   end
 
