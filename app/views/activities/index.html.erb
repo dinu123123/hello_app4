@@ -113,8 +113,20 @@
 
  <% if  activity.references  %>
  <%  activity.references.each_line do |line|  %>
-    <% if  line.include? "p" or line.include? "P"  %>
+    <% if  line.include? "paid"%>
+
+    <% line.slice! "paid"%>
     <p style="background-color:yellow;font-size:100%;"><%= line %></p>
+  <%elsif  line.include? "Paid"%>
+
+    <% line.slice! "Paid"%>
+    <p style="background-color:yellow;font-size:100%;"><%= line %></p>
+ <%elsif  line.include? "PAID"%>
+
+    <% line.slice! "PAID"%>
+    <p style="background-color:yellow;font-size:100%;"><%= line %></p>
+        
+
     <% else %>
       <p style="background-color:tomato;font-size:100%;"><%= line %></p>
     <% end %>
