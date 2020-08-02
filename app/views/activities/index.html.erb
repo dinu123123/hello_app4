@@ -108,7 +108,22 @@
         <td bgcolor= <%=bg_color %> ><%= @clients.find(activity.client_id).Name %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.start_address %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.dest_addresses %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.references %></td>
+<td>
+        
+
+ <% if  activity.references  %>
+ <%  activity.references.each_line do |line|  %>
+    <% if  line.include? "p" or line.include? "P"  %>
+    <p style="background-color:yellow;font-size:100%;"><%= line %></p>
+    <% else %>
+      <p style="background-color:tomato;font-size:100%;"><%= line %></p>
+    <% end %>
+ <% end %>
+ <% end %>
+ </td>
+
+        
+
         <td bgcolor= <%=bg_color %> ><%= activity.volume %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.tank %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.comments %></td>
