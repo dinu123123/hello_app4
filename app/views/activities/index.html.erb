@@ -112,6 +112,30 @@
         <td bgcolor= <%=bg_color %> ><%= activity.start_address %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.dest_addresses %></td>
 
+
+
+
+<td>
+
+    <p style="background-color:yellow;font-size:100%;"><%= activity.start_address.to_s[0..11] %></p>
+  
+    <% if activity.dest1_address !=nil  %>
+    <p style="background-color:yellow;font-size:100%;"><%= activity.dest1_address.to_s[0..11] %></p>
+  
+    <%end%>
+
+    <% if activity.dest1_address !=nil  %>
+    <p style="background-color:yellow;font-size:100%;"><%= activity.dest2_address.to_s[0..11] %></p>
+  
+    <%end%>
+    
+    <p style="background-color:yellow;font-size:100%;"><%= activity.dest_addresses.to_s[0..11] %></p>
+  
+
+
+</td>
+
+
 <td>
  <% if  activity.references  %>
  <%  activity.references.each_line do |line|  %>
@@ -136,27 +160,6 @@
  <% end %>
 </td>
 
-
-
-<td>
-
-    <p style="background-color:yellow;font-size:100%;"><%= activity.start_address.to_s[0..11] %></p>
-  
-    <% if activity.dest1_address !=nil  %>
-    <p style="background-color:yellow;font-size:100%;"><%= activity.dest1_address.to_s[0..11] %></p>
-  
-    <%end%>
-
-    <% if activity.dest1_address !=nil  %>
-    <p style="background-color:yellow;font-size:100%;"><%= activity.dest2_address.to_s[0..11] %></p>
-  
-    <%end%>
-    
-    <p style="background-color:yellow;font-size:100%;"><%= activity.dest_addresses.to_s[0..11] %></p>
-  
-
-
-</td>
 
 
 
