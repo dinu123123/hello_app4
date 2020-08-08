@@ -23,6 +23,18 @@
 }
 
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 fieldset {
   background-color: #728085;
   color: white;
@@ -31,7 +43,6 @@ legend {
   padding: 2px;
   border: 1px solid green;
 }
-
 
 .fieldspec {
   width: 15px;
@@ -71,11 +82,7 @@ legend {
 
 <div class="textAreaColumn">
 
-  <div class="field">
-    <%= form.label :references %>
-    <%= form.text_area :references %>
-  </div>
-
+  
   <div class="field">
     <%= form.label :start_address %>
     <%= form.text_area :start_address %>
@@ -86,7 +93,27 @@ legend {
     <%= form.text_area :dest_addresses %>
   </div>
 
+<div class="field">
+    <%= form.label :references %>
+    <%= form.text_area :references %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :pallets_paid_out, "Pallet inv paid (reference|price|invoice Nb)" %>
+    <%= form.text_area :pallets_paid_out %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pallets_paid_in, "Pallet inv collected (reference|price|invoice Nb)" %>
+    <%= form.text_area :pallets_paid_in %>
+  </div>
+
+
 </div>
+
+
+
 
 <br/>
 <br/>
@@ -95,6 +122,8 @@ legend {
 <br/>
 
 <br>
+
+
 
 
 
@@ -129,6 +158,9 @@ legend {
 
 <br/>
 <br/>
+
+
+
 
 <br>
 
@@ -283,8 +315,264 @@ legend {
 
   <p></p>
 
+<br>
 
 
+
+<TABLE BORDER="1">
+  <TR>
+  <TD>START of the day</TD>
+
+<TD>
+</TD>
+
+
+<TD>
+</TD>
+
+
+<TD>
+</TD>
+
+
+<TD>
+</TD>
+
+
+
+<TD>
+</TD>
+
+
+<TD>
+</TD>
+
+
+<TD>
+</TD>
+
+
+ 
+  <TD>
+   <div class="field">
+    <%= form.label :start_ep , "EPs" %>
+    <%= form.number_field :start_ep,:size=>"2" %>
+   </div>
+    </TD>
+ 
+
+
+  <TD>
+  <div class="field">
+    <%= form.label :start_dp, "DPs" %>
+    <%= form.number_field :start_dp,:size=>"2" %>
+  </div>
+    </TD>
+
+ <TD>
+<div class="field">
+    <%= form.label :start_op, "OPs" %>
+    <%= form.number_field :start_op,:size=>"2" %>
+  </div>
+</TD>
+
+  </TR>
+
+
+
+
+
+
+  <TR>
+
+
+   <TD>
+    <div class="field">
+     <%= form.label :dest1_address , "Int Address 1" %>
+     <%= form.text_area :dest1_address%>
+     </div>
+    </TD>
+  
+  <TD>
+   <div class="field">
+    <%= form.label :dest1_comments , "Comments" %>
+    <%= form.text_area :dest1_comments %>
+   </div>
+  </TD>
+
+
+ 
+  <TD>
+   <div class="field">
+    <%= form.label :dest1_unloaded_ep , "UnLD EPs" %>
+    <%= form.number_field :dest1_unloaded_ep,:size=>"2" %>
+   </div>
+    </TD>
+
+
+  <TD>
+   <div class="field">
+    <%= form.label :dest1_loaded_ep , "LD EPs" %>
+    <%= form.number_field :dest1_loaded_ep,:size=>"2" %>
+   </div>
+    </TD>
+
+
+  <TD>
+   <div class="field">
+    <%= form.label :dest1_unloaded_dp , "UnLD DPs" %>
+    <%= form.number_field :dest1_unloaded_dp,:size=>"2" %>
+   </div>
+    </TD>
+  
+
+  <TD>
+   <div class="field">
+    <%= form.label :dest1_loaded_dp , "LD DPs" %>
+    <%= form.number_field :dest1_loaded_dp,:size=>"2" %>
+   </div>
+    </TD>
+
+
+
+  <TD>
+   <div class="field">
+    <%= form.label :dest1_unloaded_op , "UnLD OPs" %>
+    <%= form.number_field :dest1_unloaded_op,:size=>"2" %>
+   </div>
+    </TD>
+
+
+  <TD>
+   <div class="field">
+    <%= form.label :dest1_loaded_op , "LD OPs" %>
+    <%= form.number_field :dest1_loaded_op,:size=>"2" %>
+   </div>
+    </TD>
+
+
+
+  <TD>
+    </TD>
+ 
+
+
+  <TD>
+    </TD>
+
+ <TD>
+</TD>
+
+
+
+
+  </TR>
+
+
+
+
+
+  <TR>
+
+
+   <TD>
+    <div class="field">
+     <%= form.label :dest2_address , "Int Address 2" %>
+     <%= form.text_area :dest2_address%>
+     </div>
+    </TD>
+  
+  <TD>
+   <div class="field">
+    <%= form.label :dest2_comments , "Comments" %>
+    <%= form.text_area :dest2_comments %>
+   </div>
+  </TD>
+
+
+ 
+  <TD>
+   <div class="field">
+    <%= form.label :dest2_unloaded_ep , "UnLD EPs" %>
+    <%= form.number_field :dest2_unloaded_ep,:size=>"2" %>
+   </div>
+    </TD>
+
+
+
+  <TD>
+   <div class="field">
+    <%= form.label :dest2_loaded_ep , "LD EPs" %>
+    <%= form.number_field :dest2_loaded_ep,:size=>"2" %>
+   </div>
+    </TD>
+
+
+  <TD>
+   <div class="field">
+    <%= form.label :dest2_unloaded_dp , "UnLD DPs" %>
+    <%= form.number_field :dest2_unloaded_dp,:size=>"2" %>
+   </div>
+    </TD>
+  
+
+
+  <TD>
+   <div class="field">
+    <%= form.label :dest2_loaded_dp , "LD DPs" %>
+    <%= form.number_field :dest2_loaded_dp,:size=>"2" %>
+   </div>
+    </TD>
+
+  <TD>
+   <div class="field">
+    <%= form.label :dest2_unloaded_op , "UnLD OPs" %>
+    <%= form.number_field :dest2_unloaded_op,:size=>"2" %>
+   </div>
+    </TD>
+
+
+
+
+
+  <TD>
+   <div class="field">
+    <%= form.label :dest2_loaded_op , "LD OPs" %>
+    <%= form.number_field :dest2_loaded_op,:size=>"2" %>
+   </div>
+    </TD>
+
+
+
+  <TD>
+    </TD>
+ 
+
+
+  <TD>
+    </TD>
+
+ <TD>
+</TD>
+
+
+
+
+
+
+
+
+
+
+</TABLE>
+
+
+
+
+<br/>
+
+
+ <p></p>
   <div class="actions">
     <%= form.submit %>
   </div>
