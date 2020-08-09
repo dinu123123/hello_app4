@@ -6,7 +6,7 @@ class TransactionSearch
   def initialize(params, large =false)
 
     params ||= {}
-    @date_from = parsed_date(params[:date_from],(DateTime.now - 10.days).strftime('%Y-%m-%dT%H:%M') )
+    @date_from = parsed_date(params[:date_from],(DateTime.now - 5.days).strftime('%Y-%m-%dT%H:%M') )
 
     @date_to = parsed_date(params[:date_to],  (DateTime.now+1.day).strftime('%Y-%m-%dT%H:%M') )
     @driver_id = parsed_driver_id(params[:driver_id], 1)
@@ -194,34 +194,51 @@ return  arrayEvents
 
 end
 
-def scope_activities_index
+def scope_combinex_pallets_index
+
+
+    params ||= {}
+    @date_from = parsed_date(params[:date_from],(DateTime.now - 300.days).strftime('%Y-%m-%dT%H:%M') )
+
+    @date_to = parsed_date(params[:date_to],  (DateTime.now+1.day).strftime('%Y-%m-%dT%H:%M') )
+    @driver_id = parsed_driver_id(params[:driver_id], 1)
+    @truck_id = parsed_truck_id(params[:truck_id], 1)
+    @client_id = parsed_client_id(params[:client_id], 1)
+
+    @periodic_category_id = parsed_periodic_category_id(params[:periodic_category_id], 1)
+
+
+
   arrayActivities = Array.new
+
 
 if @client_id > 0 
 
       if @driver_id > 0 and @truck_id == 0
-                    @activities = Activity.find_by_sql(['SELECT * FROM activities where activities.client_id = ? and activities."DRIVER_id" = ? 
+                    @activities = Activity.find_by_sql(['SELECT * FROM activities where (activities.pallets_paid_out or  activities.pallets_paid_in)  and   activities.client_id = ? and activities."DRIVER_id" = ? 
                       and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', @client_id,
                       @driver_id, to_datetime(@date_from), to_datetime(@date_to)])
                     if @activities
                         arrayActivities.concat(@activities)
                     end 
             elsif @truck_id > 0 && @driver_id == 0
-                     @activities = Activity.find_by_sql(['SELECT * FROM activities where activities.client_id = ? and activities.truck_id = ? 
+                     @activities = Activity.find_by_sql(['SELECT * FROM activities where (activities.pallets_paid_out or  activities.pallets_paid_in)  and activities.client_id = ? and activities.truck_id = ? 
                           and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', @client_id,
                           @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
                         if @activities
                           arrayActivities.concat(@activities)
                         end 
             elsif @truck_id > 0 && @driver_id > 0
-                      @activities = Activity.find_by_sql(['SELECT * FROM activities where activities.client_id = ? and activities."DRIVER_id" = ? and activities.truck_id = ? 
+
+
+                      @activities = Activity.find_by_sql(['SELECT * FROM activities where (activities.pallets_paid_out or  activities.pallets_paid_in)  and activities.client_id = ? and activities."DRIVER_id" = ? and activities.truck_id = ? 
                           and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', @client_id,
                           @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
                         if @activities
                           arrayActivities.concat(@activities)
                         end 
             else
-                        @activities = Activity.find_by_sql(['SELECT * FROM activities where activities.client_id = ? and activities."DATE" BETWEEN ? 
+                        @activities = Activity.find_by_sql(['SELECT * FROM activities where (activities.pallets_paid_out or  activities.pallets_paid_in)  and activities.client_id = ? and activities."DATE" BETWEEN ? 
                           AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', @client_id, to_datetime(@date_from), to_datetime(@date_to)])
                         if @activities
                         arrayActivities.concat(@activities) 
@@ -230,28 +247,30 @@ if @client_id > 0
 
 else 
       if @driver_id > 0 and @truck_id == 0
-              @activities = Activity.find_by_sql(['SELECT * FROM activities where activities."DRIVER_id" = ? 
+              @activities = Activity.find_by_sql(['SELECT * FROM activities where (activities.pallets_paid_out or  activities.pallets_paid_in)  and  activities."DRIVER_id" = ? 
                 and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', 
                 @driver_id, to_datetime(@date_from), to_datetime(@date_to)])
               if @activities
                   arrayActivities.concat(@activities)
               end 
       elsif @truck_id > 0 && @driver_id == 0
-               @activities = Activity.find_by_sql(['SELECT * FROM activities where activities.truck_id = ? 
+               @activities = Activity.find_by_sql(['SELECT * FROM activities where (activities.pallets_paid_out or  activities.pallets_paid_in)  and activities.truck_id = ? 
                     and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', 
                     @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
                   if @activities
                     arrayActivities.concat(@activities)
                   end 
       elsif @truck_id > 0 && @driver_id > 0
-                @activities = Activity.find_by_sql(['SELECT * FROM activities where activities."DRIVER_id" = ? and activities.truck_id = ? 
+                @activities = Activity.find_by_sql(['SELECT * FROM activities where (activities.pallets_paid_out or  activities.pallets_paid_in)  and  activities."DRIVER_id" = ? and activities.truck_id = ? 
                     and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', 
                     @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
                   if @activities
                     arrayActivities.concat(@activities)
                   end 
       else
-                  @activities = Activity.find_by_sql(['SELECT * FROM activities where activities."DATE" BETWEEN ? 
+
+
+                  @activities = Activity.find_by_sql(['SELECT * FROM activities where (activities.pallets_paid_out or  activities.pallets_paid_in)  and  activities."DATE" BETWEEN ? 
                     AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', to_datetime(@date_from), to_datetime(@date_to)])
                   if @activities
                   arrayActivities.concat(@activities) 

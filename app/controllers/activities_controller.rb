@@ -73,6 +73,27 @@ class ActivitiesController < ApplicationController
   end
 
 
+
+ def CombinexPallets
+
+
+
+    @drivers = Driver.all
+    @trucks = Truck.all
+    @trailers = Trailer.all
+    @clients = Client.all
+
+   
+
+                
+
+
+    @search = TransactionSearch.new(params[:search])
+    @activities = @search.scope_combinex_pallets_index
+
+  end
+
+
 def email()
   @activity = Activity.find(params[:id])
   client = Client.find(@activity.client_id)
