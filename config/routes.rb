@@ -55,6 +55,8 @@ end
   get "/events/index", as: "mission2"
 
   get "/activities/index", as: "mission5"
+  get "/activities/CombinexPallets", as: "mission51"
+
   get "/periodics/index", as: "mission6" 
   get "/repairs/index", as: "mission7" 
 
