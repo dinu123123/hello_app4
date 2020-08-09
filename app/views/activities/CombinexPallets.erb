@@ -1,0 +1,285 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Activities</h1>
+
+
+
+
+
+<fieldset>
+  <p>Introduce the Start/End date interval, driver and truck:</p>  
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission51_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :driver_id, Driver.all.order('"FIRSTNAME" ASC'), :id, :name_with_cnp, {:include_blank => 'All Drivers'} %>
+        <%= collection_select :search, :truck_id, Truck.all, :id, :NB_PLATE, {:include_blank => 'All Trucks'} %>
+        <%= collection_select :search, :client_id, Client.all, :id, :Name, {:include_blank => 'All Clients'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
+  </br>
+</fieldset>
+ <p> </p> 
+<p> </p> 
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Driver</th>
+      <th>Truck</th>
+      <th>Trailer</th>
+      <th>Client</th>
+      <th>Start addr</th>
+      <th>End addr</th>
+      <th>Intermediary addr</th>
+      <th>References</th>
+      <th>UnresolvedPINvoices</th>
+      <th>EU|DU|OT|Total</th> 
+      <th>Volume Fuel</th>
+      <th>Country of tanking</th>
+      <th>Comments</th>
+      <th>Driver expense</th>
+      <th>Truck expense</th>
+      <th>Fotos</th>
+      <th>ClientComments</th>
+      <th>NbPallets</th>
+      <th>ClientAttachements</th>
+      <th>ClientEmailCounter</th>
+ 
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @activities.each do |activity| %>
+    <% bg_color = "white" %>
+
+    <% if activity.date == Time.now.utc.to_date%>
+      <% bg_color = "#66ff66" %>
+    
+    <% elsif activity.date == Time.now.utc.to_date-1%>
+      <% bg_color = "#00e500" %>
+     
+    <% elsif activity.date == Time.now.utc.to_date-2%>
+      <% bg_color = "#00cc00" %>
+
+    <% elsif activity.date == Time.now.utc.to_date-3%>
+     <% bg_color = "#00b200" %>
+     
+    <% elsif activity.date == Time.now.utc.to_date-4%>
+     <% bg_color = "#009900" %>
+     
+    <% elsif activity.date == Time.now.utc.to_date-5%>
+     <% bg_color = "#007f00" %>
+     
+    <% elsif activity.date == Time.now.utc.to_date-6%>
+     <% bg_color = "#6666ff" %>
+     
+    <% elsif activity.date == Time.now.utc.to_date-7%>
+     <% bg_color = "#4c4cff" %>
+     
+    <% elsif activity.date == Time.now.utc.to_date-8%>
+     <% bg_color = "#3232ff" %>
+     
+    <% elsif activity.date == Time.now.utc.to_date-9%>
+     <% bg_color = "#1919ff" %>
+     
+    <% elsif activity.date == Time.now.utc.to_date-10%>
+     <% bg_color = "#0000ff" %>
+     
+    <% else %>
+     <% bg_color = "white" %>
+    <% end %>   
+
+
+      <tr>
+        <td bgcolor= <%=bg_color %> ><%= activity.date %></td>
+          
+        <td bgcolor= <%=bg_color %> ><%= @drivers.find(activity.DRIVER_id).CNP+" "+
+                                         @drivers.find(activity.DRIVER_id).FIRSTNAME+" "+
+                                         @drivers.find(activity.DRIVER_id).SECONDNAME %></td>
+        <td bgcolor= <%=bg_color %> ><%= @trucks.find(activity.truck_id).NB_PLATE %></td>
+        <td bgcolor= <%=bg_color %> ><%= if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id)
+         @trailers.find(activity.trailer_id).NB_PLATE
+         else
+          " "
+         end %></td>
+        <td bgcolor= <%=bg_color %> ><%= @clients.find(activity.client_id).Name %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.start_address %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.dest_addresses %></td>
+
+
+
+
+<td>
+
+    <p style="background-color:yellow;font-size:100%;"><%= activity.start_address.to_s[0..11] %></p>
+  
+    <% if activity.dest1_address !=nil  %>
+    <p style="background-color:yellow;font-size:100%;"><%= activity.dest1_address.to_s[0..11] %></p>
+  
+    <%end%>
+
+    <% if activity.dest1_address !=nil  %>
+    <p style="background-color:yellow;font-size:100%;"><%= activity.dest2_address.to_s[0..11] %></p>
+  
+    <%end%>
+    
+    <p style="background-color:yellow;font-size:100%;"><%= activity.dest_addresses.to_s[0..11] %></p>
+  
+
+
+</td>
+
+
+<td>
+ <% if  activity.references  %>
+ <%  activity.references.each_line do |line|  %>
+    <% if  line.include? "paid"%>
+
+    <% line.slice! "paid"%>
+    <p style="background-color:yellow;font-size:100%;"><%= line %></p>
+  <%elsif  line.include? "Paid"%>
+
+    <% line.slice! "Paid"%>
+    <p style="background-color:yellow;font-size:100%;"><%= line %></p>
+ <%elsif  line.include? "PAID"%>
+
+    <% line.slice! "PAID"%>
+    <p style="background-color:yellow;font-size:100%;"><%= line %></p>
+        
+
+    <% else %>
+      <p style="background-color:tomato;font-size:100%;"><%= line %></p>
+    <% end %>
+ <% end %>
+ <% end %>
+</td>
+
+
+
+
+<td>
+ <% if  activity.pallets_paid_in  %>
+ <%  activity.pallets_paid_out.each_line do |line_out|  %>
+ <% @match = false %>
+     <%  activity.pallets_paid_in.each_line do |line_in|  %>
+ 
+
+        <% if line_out.partition('|').first ==  line_in.partition('|').first and  line_out[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i == line_in[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i  %>
+             <p style="background-color:green;font-size:100%;"><%= line_out %></p>
+            <% @match = true %>
+        <% end %>
+
+
+        <% if line_out.partition('|').first ==  line_in.partition('|').first and  line_out[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i != line_in[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i  %>
+
+           <p style="background-color:tomato;font-size:100%;"><%= line_out.partition('|').first.to_s + "|".to_s +
+           + (line_out[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i - line_in[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i).to_s   %></p>
+         <% @match = true %>
+        <% end %>    
+  
+
+
+
+     <% end %>    
+
+        <% if @match == false %>
+           <p style="background-color:tomato;font-size:100%;"><%= line_out %></p>
+        <% end %>      
+
+ <% end %>
+
+
+ <% end %>
+</td>
+
+
+
+
+
+<td>
+
+   <p style="background-color:yellow;font-size:100%;"><%= activity.start_ep.to_s.rjust(2, "0")+"|".to_s+activity.start_dp.to_s.rjust(2, "0")+"|".to_s+ 
+   activity.start_op.to_s.rjust(2, "0")+ "|".to_s+ (activity.start_ep.to_s.to_i+activity.start_dp.to_s.to_i+activity.start_op.to_s.to_i).to_s.rjust(2, "0") %></p>
+ 
+
+<% if  activity.dest1_address.to_s.size>0  %>
+   <p style="background-color:yellow;font-size:100%;">
+    <%= (activity.start_ep.to_s.to_i-activity.dest1_unloaded_ep.to_s.to_i+activity.dest1_loaded_ep.to_s.to_i).to_s.to_s.rjust(2, "0")+"|".to_s+
+     (activity.start_dp.to_s.to_i-activity.dest1_unloaded_dp.to_s.to_i+activity.dest1_loaded_dp.to_s.to_i).to_i.to_s.rjust(2, "0")+"|".to_s+ 
+     (activity.start_op.to_s.to_i-activity.dest1_unloaded_op.to_s.to_i+activity.dest1_loaded_op.to_s.to_i).to_i.to_s.rjust(2, "0")+"|".to_s+
+      (activity.start_ep.to_s.to_i-activity.dest1_unloaded_ep.to_s.to_i+activity.dest1_loaded_ep.to_s.to_i+activity.start_dp.to_s.to_i-activity.dest1_unloaded_dp.to_s.to_i+activity.dest1_loaded_dp.to_s.to_i+ activity.start_op.to_s.to_i-activity.dest1_unloaded_op.to_s.to_i+activity.dest1_loaded_op.to_s.to_i).to_i.to_s.rjust(2, "0")  %></p>
+<% end %>
+
+<% if  activity.dest2_address.to_s.size>0  %>
+   <p style="background-color:yellow;font-size:100%;">
+    <%= (activity.start_ep.to_s.to_i-activity.dest1_unloaded_ep.to_s.to_i+activity.dest1_loaded_ep.to_s.to_i -
+         activity.dest2_unloaded_ep.to_s.to_i+activity.dest2_loaded_ep.to_s.to_i).to_s.to_s.rjust(2, "0")+"|".to_s+
+
+     (activity.start_dp.to_s.to_i-activity.dest1_unloaded_dp.to_s.to_i+activity.dest1_loaded_dp.to_s.to_i-
+      activity.dest2_unloaded_dp.to_s.to_i+activity.dest2_loaded_dp.to_s.to_i).to_i.to_s.rjust(2, "0")+"|".to_s+ 
+    
+     (activity.start_op.to_s.to_i-activity.dest1_unloaded_op.to_s.to_i+activity.dest1_loaded_op.to_s.to_i-
+      activity.dest2_unloaded_op.to_s.to_i+activity.dest2_loaded_op.to_s.to_i).to_i.to_s.rjust(2, "0")+"|".to_s+
+    
+
+
+
+      (activity.start_ep.to_s.to_i-activity.dest1_unloaded_ep.to_s.to_i+activity.dest1_loaded_ep.to_s.to_i-activity.dest2_unloaded_ep.to_s.to_i+activity.dest2_loaded_ep.to_s.to_i+activity.start_dp.to_s.to_i-activity.dest1_unloaded_dp.to_s.to_i+activity.dest1_loaded_dp.to_s.to_i-activity.dest2_unloaded_dp.to_s.to_i+activity.dest2_loaded_dp.to_s.to_i+ activity.start_op.to_s.to_i-activity.dest1_unloaded_op.to_s.to_i+activity.dest1_loaded_op.to_s.to_i-activity.dest1_unloaded_op.to_s.to_i+activity.dest1_loaded_op.to_s.to_i).to_i.to_s.rjust(2, "0")  %></p>
+
+<% end %>
+
+
+
+
+
+
+</td>
+
+
+        <td bgcolor= <%=bg_color %> ><%= activity.volume %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.tank %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.comments %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.driver_expense_id %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.truck_expense_id %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.images.count %></td>
+
+        <td bgcolor= <%=bg_color %> ><%= activity.email_text %></td>
+      
+              <td bgcolor= <%=bg_color %> ><%= activity.pallet.to_i %></td>
+
+        <td bgcolor= <%=bg_color %> ><%= activity.trip_images.count %></td>
+
+        <% if activity.email_counter.to_i >0  %>
+            <td bgcolor= #f56f42 ><%= activity.email_counter %></td>
+        <% else %>
+            <td bgcolor= <%=bg_color %> ><%= activity.email_counter %></td>
+        <% end %>   
+
+
+
+    
+
+
+
+
+
+  <td><%= link_to 'SendEmail', activities_email_path(:id => activity.id,  :format => "pdf") , method: :post, data: {confirm: 'Are you sure?'} %></td>    
+
+
+        <td><%= link_to 'Show', activity %></td>
+        <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
+        <td><%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Activity', new_activity_path %>
