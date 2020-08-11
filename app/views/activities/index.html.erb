@@ -39,8 +39,8 @@
       <th>References</th>
       <th>UnresolvedPINvoices</th>
       <th>EU|DU|OT|Total</th> 
-      <th>Volume Fuel</th>
-      <th>Country of tanking</th>
+      <th>Vol tanking</th>
+      <th>Country tanking</th>
       <th>Comments</th>
       <th>Driver expense</th>
       <th>Truck expense</th>
@@ -209,7 +209,24 @@
  
 
 <% if  activity.dest1_address.to_s.size>0  %>
-   <p style="background-color:yellow;font-size:100%;">
+
+
+<% if  activity.dest1_unloaded_ep.to_s.to_i or activity.dest1_loaded_ep.to_s.to_i or
+  activity.dest1_unloaded_dp.to_s.to_i or activity.dest1_loaded_dp.to_s.to_i or
+  activity.dest1_unloaded_op.to_s.to_i or activity.dest1_loaded_op.to_s.to_i %>
+
+
+
+   <p style="background-color:#9F00C5; font-size:100%;">
+<% else %>
+
+     <p style="background-color:yellow; font-size:100%;">
+
+<% end %>
+
+
+
+
     <%= (activity.start_ep.to_s.to_i-activity.dest1_unloaded_ep.to_s.to_i+activity.dest1_loaded_ep.to_s.to_i).to_s.to_s.rjust(2, "0")+"|".to_s+
      (activity.start_dp.to_s.to_i-activity.dest1_unloaded_dp.to_s.to_i+activity.dest1_loaded_dp.to_s.to_i).to_i.to_s.rjust(2, "0")+"|".to_s+ 
      (activity.start_op.to_s.to_i-activity.dest1_unloaded_op.to_s.to_i+activity.dest1_loaded_op.to_s.to_i).to_i.to_s.rjust(2, "0")+"|".to_s+
@@ -217,8 +234,26 @@
 <% end %>
 
 <% if  activity.dest2_address.to_s.size>0  %>
-   <p style="background-color:yellow;font-size:100%;">
-    <%= (activity.start_ep.to_s.to_i-activity.dest1_unloaded_ep.to_s.to_i+activity.dest1_loaded_ep.to_s.to_i -
+
+
+
+
+<% if  activity.dest2_unloaded_ep.to_s.to_i or activity.dest2_loaded_ep.to_s.to_i or
+  activity.dest2_unloaded_dp.to_s.to_i or activity.dest2_loaded_dp.to_s.to_i or
+  activity.dest2_unloaded_op.to_s.to_i or activity.dest2_loaded_op.to_s.to_i %>
+
+
+
+   <p style="background-color:#9F00C5; font-size:100%;">
+<% else %>
+
+     <p style="background-color:yellow; font-size:100%;">
+
+<% end %>
+
+
+
+<%= (activity.start_ep.to_s.to_i-activity.dest1_unloaded_ep.to_s.to_i+activity.dest1_loaded_ep.to_s.to_i -
          activity.dest2_unloaded_ep.to_s.to_i+activity.dest2_loaded_ep.to_s.to_i).to_s.to_s.rjust(2, "0")+"|".to_s+
 
      (activity.start_dp.to_s.to_i-activity.dest1_unloaded_dp.to_s.to_i+activity.dest1_loaded_dp.to_s.to_i-
