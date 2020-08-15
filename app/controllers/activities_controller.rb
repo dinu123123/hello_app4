@@ -227,7 +227,7 @@ end
              :dest1_unloaded_ep, :dest1_unloaded_dp, :dest1_unloaded_op, :dest1_loaded_ep, :dest1_loaded_dp,
     :dest1_loaded_op, :dest2_address, :dest2_comments, :dest2_unloaded_ep, :dest2_unloaded_dp,
     :dest2_unloaded_op, :dest2_loaded_ep, :dest2_loaded_dp, :dest2_loaded_op, :end_ep, :end_dp, 
-    :end_op , :pallets_paid_in, :pallets_paid_out, images: [], trip_images: [])
+    :end_op , :pallets_paid_in, :pallets_paid_out, :name_advisor, images: [], trip_images: [])
     end
 
 end

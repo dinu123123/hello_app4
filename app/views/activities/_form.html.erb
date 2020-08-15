@@ -5,7 +5,7 @@
 
 .textAreaColumn div{
     float:left;
-    width:20%;
+    width:19%;
     padding:2px;
     box-sizing: border-box;
 }
@@ -19,8 +19,17 @@
     box-sizing: border-box;
     width:100%;
     border:2px solid blue;
-    max-height:40px;
+    max-height:100px;
 }
+
+.textAreaColumn1 textarea{
+    box-sizing: border-box;
+    width:10%;
+    border:3px solid green;
+    max-height:100px;
+}
+
+
 
 
 /* Chrome, Safari, Edge, Opera */
@@ -83,8 +92,19 @@ legend {
 <%= form.collection_select :truck_expense_id, TruckExpense.all, :id, :id_with_info, {prompt: "TruckExpense"} %>
   </div>
 
-<div class="textAreaColumn">
 
+  
+
+<div class="textAreaColumn1">
+  
+  <div class="field">
+    <%= form.label :name_advisor, "Dispatcher Name(s)" %>
+    <%= form.text_area :name_advisor %>
+  </div>
+</div>
+
+
+<div class="textAreaColumn">
   
   <div class="field">
     <%= form.label :start_address %>
@@ -96,10 +116,25 @@ legend {
     <%= form.text_area :dest_addresses %>
   </div>
 
-<div class="field">
+  <div class="field">
     <%= form.label :references %>
     <%= form.text_area :references %>
   </div>
+
+  </div>
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<div class="textAreaColumn">
 
 
   <div class="field">
@@ -112,23 +147,14 @@ legend {
     <%= form.text_area :pallets_paid_in %>
   </div>
 
-
 </div>
 
 
-
-
-<br/>
-<br/>
-
-<br/>
-<br/>
-
 <br>
-
-
-
-
+<br>
+<br>
+<br>
+<br>
 
 <div class="textAreaColumn">
 
@@ -144,14 +170,10 @@ legend {
 
 
   <div class="field">
-    <%= form.label :volume %>
+    <%= form.label :volume, "Volume diesel" %>
     <%= form.number_field :volume %>
   </div>
 
-  <div class="field">
-    <%= form.label :pallets %>
-    <%= form.number_field :pallet %>
-  </div>
 
   </div>
 
