@@ -39,6 +39,7 @@
       <th>References</th>
       <th>UnresolvedPINvoices</th>
       <th>EU|DU|OT|Total</th> 
+      <th>Dispatcher(s)</th> 
       <th>Vol tanking</th>
       <th>Country tanking</th>
       <th>Comments</th>
@@ -97,11 +98,11 @@
 
 
       <tr>
-        <td bgcolor= <%=bg_color %> ><%= activity.date %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.date.strftime("%m/%d") %></td>
           
-        <td bgcolor= <%=bg_color %> ><%= @drivers.find(activity.DRIVER_id).CNP+" "+
-                                         @drivers.find(activity.DRIVER_id).FIRSTNAME+" "+
-                                         @drivers.find(activity.DRIVER_id).SECONDNAME %></td>
+        <td bgcolor= <%=bg_color %> ><%= @drivers.find(activity.DRIVER_id).CNP.split(//).last(0).join+" "+
+                                         @drivers.find(activity.DRIVER_id).FIRSTNAME.split.first+" "+
+                                         @drivers.find(activity.DRIVER_id).SECONDNAME.split.first %></td>
         <td bgcolor= <%=bg_color %> ><%= @trucks.find(activity.truck_id).NB_PLATE %></td>
         <td bgcolor= <%=bg_color %> ><%= if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id)
          @trailers.find(activity.trailer_id).NB_PLATE
@@ -217,7 +218,7 @@
 
 
 
-   <p style="background-color:#9F00C5; font-size:100%;">
+   <p style="background-color:#9F00C5; ; color:white; font-size:100%;">
 <% else %>
 
      <p style="background-color:yellow; font-size:100%;">
@@ -244,7 +245,7 @@
 
 
 
-   <p style="background-color:#9F00C5; font-size:100%;">
+   <p style="background-color:#9F00C5; color:white; font-size:100%;">
 <% else %>
 
      <p style="background-color:yellow; font-size:100%;">
@@ -276,7 +277,7 @@
 
 </td>
 
-
+        <td bgcolor= <%=bg_color %>   >  <p style="font-weight: bold"> <%= activity.name_advisor %> <p>  </td>
         <td bgcolor= <%=bg_color %> ><%= activity.volume %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.tank %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.comments %></td>
