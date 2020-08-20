@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="activities">
+    <Table>
+      <Row>
+      <Cell><Data ss:Type="String">Vehicle</Data></Cell>
+      <Cell><Data ss:Type="String">Trailer</Data></Cell>
+            </Row>
+    <% @activities1.each do |activity| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= @trucks.find(activity.truck_id).NB_PLATE %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id)
+         @trailers.find(activity.trailer_id).NB_PLATE
+         else
+          " "
+         end %></Data></Cell>
+
+
+
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
