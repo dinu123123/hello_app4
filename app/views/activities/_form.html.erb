@@ -101,6 +101,46 @@ legend {
     <%= form.label :name_advisor, "Dispatcher Name(s)" %>
     <%= form.text_area :name_advisor %>
   </div>
+
+  <div class="field">
+    <%= form.label :km_destination, "Km destination" %>
+    <%= form.number_field :km_destination %>
+  </div>
+
+
+<div class="field">
+    <%= form.label :starting_time %>
+    <%= form.time_select :starting_time, id: :starting_time, :required => 'required' %>
+</div>
+
+
+
+<div class="field">
+    <%= form.label :driving_time_left %>
+    <%= form.time_select :driving_time_left, id: :driving_time_left, :required => 'required' %>
+</div>
+
+<div class="field">
+    <%= form.label :end_time %>
+    <%= form.time_select :end_time, id: :end_time, :required => 'required' %>
+</div>
+
+
+
+
+  <div class="field">
+    <%= form.label :night_break, "Night break" %>
+    <%= form.number_field :night_break %>
+  </div>
+
+  <div class="field">
+    <%= form.label :weekend_break, "Weekend break" %>
+    <%= form.number_field :weekend_break %>
+  </div>
+
+
+
+
 </div>
 
 
@@ -116,10 +156,34 @@ legend {
     <%= form.text_area :dest_addresses %>
   </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
   <div class="field">
     <%= form.label :references %>
     <%= form.text_area :references %>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
   </div>
 

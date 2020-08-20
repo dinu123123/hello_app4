@@ -71,7 +71,8 @@ class ActivitiesController < ApplicationController
     @activities = @search.scope_activities_index
 
 
-    @activities1 = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.client_id = ? order by activities.date asc ", Date.today, 0.to_i ]) 
+    @activities1 = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.client_id = ? order by activities.date asc ", Date.today, 6.to_i ]) 
+
 
      respond_to do |format|
         format.html
@@ -236,7 +237,13 @@ end
              :dest1_unloaded_ep, :dest1_unloaded_dp, :dest1_unloaded_op, :dest1_loaded_ep, :dest1_loaded_dp,
     :dest1_loaded_op, :dest2_address, :dest2_comments, :dest2_unloaded_ep, :dest2_unloaded_dp,
     :dest2_unloaded_op, :dest2_loaded_ep, :dest2_loaded_dp, :dest2_loaded_op, :end_ep, :end_dp, 
-    :end_op , :pallets_paid_in, :pallets_paid_out, :name_advisor, images: [], trip_images: [])
+    :end_op , :pallets_paid_in, :pallets_paid_out, :name_advisor, 
+ :km_destination,
+ :starting_time,
+ :driving_time_left,
+ :end_time,
+ :night_break,
+ :weekend_break, images: [], trip_images: [])
     end
 
 end

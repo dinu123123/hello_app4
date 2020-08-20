@@ -7,7 +7,7 @@
  
   <li>
   <p>
-  <h4> Download Activties as Excel file:
+  <h4> Download Combinex start of the day as Excel file:
   <%= link_to "Excel", activities_path(format: "xls") %> 
   </h4> 
   </p>
@@ -45,6 +45,13 @@
       <th>Truck</th>
       <th>Trailer</th>
       <th>Client</th>
+      <th>Km Dest</th>
+      <th>Starting Time</th>
+      <th>Driving Time Left</th>
+      <th>End Driving Time</th>
+      <th>Night Break</th>
+      <th>Weekend Break</th>
+
       <th>Start addr</th>
       <th>End addr</th>
       <th>Intermediary addr</th>
@@ -124,6 +131,15 @@
         <td bgcolor= <%=bg_color %> ><%= @clients.find(activity.client_id).Name %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.start_address %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.dest_addresses %></td>
+
+
+        <td bgcolor= <%=bg_color %> ><%= activity.km_destination %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.starting_time.try(:strftime,"%H:%M") %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.driving_time_left.try(:strftime,"%H:%M") %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.end_time.try(:strftime,"%H:%M") %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.night_break.try(:strftime,"%H:%M") %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.weekend_break %></td>
+
 
 
 
