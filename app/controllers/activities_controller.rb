@@ -70,6 +70,15 @@ class ActivitiesController < ApplicationController
     @search = TransactionSearch.new(params[:search])
     @activities = @search.scope_activities_index
 
+
+    @activities1 = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.client_id = ? order by activities.date asc ", Date.today, 0.to_i ]) 
+
+     respond_to do |format|
+        format.html
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      end
+  
+
   end
 
 
