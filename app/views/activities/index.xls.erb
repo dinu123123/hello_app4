@@ -8,7 +8,34 @@
     <Table>
       <Row>
       <Cell><Data ss:Type="String">Vehicle</Data></Cell>
-      <Cell><Data ss:Type="String">Trailer</Data></Cell>
+      <Cell><Data ss:Type="String">Trailer</Data></Cell>  
+
+<Cell><Data ss:Type="String">Km till destination</Data></Cell>
+  
+
+<Cell><Data ss:Type="String">Started to work</Data></Cell>
+  
+
+<Cell><Data ss:Type="String">Driving H left</Data></Cell>
+  
+
+<Cell><Data ss:Type="String">Working time ends</Data></Cell>
+  
+
+<Cell><Data ss:Type="String">Night break following night</Data></Cell>
+  
+
+<Cell><Data ss:Type="String">Weekend break</Data></Cell>
+  
+
+<Cell><Data ss:Type="String">How much Euro pallets has now?</Data></Cell>
+  
+
+<Cell><Data ss:Type="String">Notes</Data></Cell>
+  
+
+
+
             </Row>
     <% @activities1.each do |activity| %>
       <Row>
@@ -19,6 +46,15 @@
           " "
          end %></Data></Cell>
 
+       
+         <Cell><Data ss:Type="String"><%= activity.km_destination %></Data></Cell>
+         <Cell><Data ss:Type="String"><%= activity.starting_time.try(:strftime,"%H:%M") %></Data></Cell>
+         <Cell><Data ss:Type="String"><%= activity.driving_time_left.try(:strftime,"%H:%M") %></Data></Cell>
+         <Cell><Data ss:Type="String"><%= activity.end_time.try(:strftime,"%H:%M") %></Data></Cell>
+         <Cell><Data ss:Type="String"><%= activity.night_break.try(:strftime,"%H:%M") %></Data></Cell>
+         <Cell><Data ss:Type="String"><%= activity.weekend_break %></Data></Cell>
+         <Cell><Data ss:Type="String"><%= activity.start_ep.to_s %></Data></Cell>
+
 
 
       </Row>
@@ -26,3 +62,10 @@
     </Table>
   </Worksheet>
 </Workbook>
+
+
+
+
+
+
+
