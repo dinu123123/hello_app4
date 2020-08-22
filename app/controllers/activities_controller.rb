@@ -14,7 +14,7 @@ class ActivitiesController < ApplicationController
     @trailers = Trailer.all
     @clients = Client.all
 
-    if @@recorded_date.to_s !=Date.today.to_s
+    if  @@recorded_date.to_s != Date.today.to_s
       @@recorded_date=Date.today
 
       Truck.all.each do |truck|
@@ -23,11 +23,36 @@ class ActivitiesController < ApplicationController
              Event.order('DATE DESC').all.each do |event|
                if truck.id == event.truck_id and event.START_END == true
 
+                @prev_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", Date.today-1, event.truck_id ]) 
+
+                
+                @end_ep = 0
+                @end_dp = 0
+                @end_op = 0
+
+
+
+                if @prev_activity[0] != nil
+
+                   @end_ep = @prev_activity[0].end_ep
+
+                   @end_dp = @prev_activity[0].end_dp
+                   
+                   @end_op = @prev_activity[0].end_op
+
+                end
+
                  @new_Activity = Activity.create(:date => Date.today, 
                                 :DRIVER_id  => event.DRIVER_id,
                                 :truck_id => event.truck_id,
                                 :trailer_id => event.trailer_id,
-                                :client_id => event.client_id
+                                :client_id => event.client_id,
+                                :start_ep => @end_ep,
+                                :start_dp => @end_dp,
+                                :start_op => @end_op,
+                                :end_ep => @end_ep,
+                                :end_dp => @end_dp,
+                                :end_op => @end_op
                                 )
 
                   break
@@ -108,6 +133,23 @@ end
     #  @filename = 'pallet'
     #end  
 
+    @activity.end_ep =  params[:activity][:start_ep].to_s.to_i-params[:activity][:dest1_unloaded_ep].to_s.to_i+params[:activity][:dest1_loaded_ep].to_s.to_i-
+                        params[:activity][:dest2_unloaded_ep].to_s.to_i+params[:activity][:dest2_loaded_ep].to_s.to_i
+
+
+
+    @activity.end_dp =  params[:activity][:start_dp].to_s.to_i-params[:activity][:dest1_unloaded_dp].to_s.to_i+params[:activity][:dest1_loaded_dp].to_s.to_i-
+                        params[:activity][:dest2_unloaded_dp].to_s.to_i+params[:activity][:dest2_loaded_dp].to_s.to_i
+
+    @activity.end_op =  params[:activity][:start_op].to_s.to_i-params[:activity][:dest1_unloaded_op].to_s.to_i+params[:activity][:dest1_loaded_op].to_s.to_i-
+                        params[:activity][:dest2_unloaded_op].to_s.to_i+params[:activity][:dest2_loaded_op].to_s.to_i
+
+    
+
+
+
+
+
     respond_to do |format|
         
       if @activity.update(activity_params)
@@ -159,6 +201,12 @@ end
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
       params.require(:activity).permit(:date, :DRIVER_id, :truck_id, :trailer_id, :client_id, :driver_expense_id, 
-        :truck_expense_id, :start_address, :dest_addresses, :references, :volume, :tank, :comments, :email_text, :pallet, :email_counter, images: [],  trip_images: [])
+        :truck_expense_id, :start_address, :dest_addresses, :references, :volume, :tank, :comments, :email_text, :pallet,
+         :email_counter,:start_ep, :start_dp , :start_op, :dest1_address, :dest1_comments, 
+             :dest1_unloaded_ep, :dest1_unloaded_dp, :dest1_unloaded_op, :dest1_loaded_ep, :dest1_loaded_dp,
+    :dest1_loaded_op, :dest2_address, :dest2_comments, :dest2_unloaded_ep, :dest2_unloaded_dp,
+    :dest2_unloaded_op, :dest2_loaded_ep, :dest2_loaded_dp, :dest2_loaded_op, :end_ep, :end_dp, 
+    :end_op , :pallets_paid_in, :pallets_paid_out, images: [], trip_images: [])
     end
+
 end

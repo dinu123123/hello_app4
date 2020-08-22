@@ -35,7 +35,10 @@
       <th>Client</th>
       <th>Start address</th>
       <th>Dest addresses</th>
+      <th>IntAddresses</th>
       <th>References</th>
+      <th>UnresolvedPINvoices</th>
+      <th>EU|DU|OT|Total</th> 
       <th>Volume Fuel</th>
       <th>Country of tanking</th>
       <th>Comments</th>
@@ -108,9 +111,8 @@
         <td bgcolor= <%=bg_color %> ><%= @clients.find(activity.client_id).Name %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.start_address %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.dest_addresses %></td>
-<td>
-        
 
+<td>
  <% if  activity.references  %>
  <%  activity.references.each_line do |line|  %>
     <% if  line.include? "paid"%>
@@ -132,9 +134,110 @@
     <% end %>
  <% end %>
  <% end %>
- </td>
+</td>
 
-        
+
+
+<td>
+
+    <p style="background-color:yellow;font-size:100%;"><%= activity.start_address.to_s[0..11] %></p>
+  
+    <% if activity.dest1_address !=nil  %>
+    <p style="background-color:yellow;font-size:100%;"><%= activity.dest1_address.to_s[0..11] %></p>
+  
+    <%end%>
+
+    <% if activity.dest1_address !=nil  %>
+    <p style="background-color:yellow;font-size:100%;"><%= activity.dest2_address.to_s[0..11] %></p>
+  
+    <%end%>
+    
+    <p style="background-color:yellow;font-size:100%;"><%= activity.dest_addresses.to_s[0..11] %></p>
+  
+
+
+</td>
+
+
+
+<td>
+ <% if  activity.pallets_paid_in  %>
+ <%  activity.pallets_paid_out.each_line do |line_out|  %>
+ <% @match = false %>
+     <%  activity.pallets_paid_in.each_line do |line_in|  %>
+ 
+
+        <% if line_out.partition('|').first ==  line_in.partition('|').first and  line_out[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i == line_in[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i  %>
+             <p style="background-color:green;font-size:100%;"><%= line_out %></p>
+            <% @match = true %>
+        <% end %>
+
+
+        <% if line_out.partition('|').first ==  line_in.partition('|').first and  line_out[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i != line_in[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i  %>
+
+           <p style="background-color:tomato;font-size:100%;"><%= line_out.partition('|').first.to_s + "|".to_s +
+           + (line_out[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i - line_in[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i).to_s   %></p>
+         <% @match = true %>
+        <% end %>    
+  
+
+
+
+     <% end %>    
+
+        <% if @match == false %>
+           <p style="background-color:tomato;font-size:100%;"><%= line_out %></p>
+        <% end %>      
+
+ <% end %>
+
+
+ <% end %>
+</td>
+
+
+
+
+
+<td>
+
+   <p style="background-color:yellow;font-size:100%;"><%= activity.start_ep.to_s.rjust(2, "0")+"|".to_s+activity.start_dp.to_s.rjust(2, "0")+"|".to_s+ 
+   activity.start_op.to_s.rjust(2, "0")+ "|".to_s+ (activity.start_ep.to_s.to_i+activity.start_dp.to_s.to_i+activity.start_op.to_s.to_i).to_s.rjust(2, "0") %></p>
+ 
+
+<% if  activity.dest1_address.to_s.size>0  %>
+   <p style="background-color:yellow;font-size:100%;">
+    <%= (activity.start_ep.to_s.to_i-activity.dest1_unloaded_ep.to_s.to_i+activity.dest1_loaded_ep.to_s.to_i).to_s.to_s.rjust(2, "0")+"|".to_s+
+     (activity.start_dp.to_s.to_i-activity.dest1_unloaded_dp.to_s.to_i+activity.dest1_loaded_dp.to_s.to_i).to_i.to_s.rjust(2, "0")+"|".to_s+ 
+     (activity.start_op.to_s.to_i-activity.dest1_unloaded_op.to_s.to_i+activity.dest1_loaded_op.to_s.to_i).to_i.to_s.rjust(2, "0")+"|".to_s+
+      (activity.start_ep.to_s.to_i-activity.dest1_unloaded_ep.to_s.to_i+activity.dest1_loaded_ep.to_s.to_i+activity.start_dp.to_s.to_i-activity.dest1_unloaded_dp.to_s.to_i+activity.dest1_loaded_dp.to_s.to_i+ activity.start_op.to_s.to_i-activity.dest1_unloaded_op.to_s.to_i+activity.dest1_loaded_op.to_s.to_i).to_i.to_s.rjust(2, "0")  %></p>
+<% end %>
+
+<% if  activity.dest2_address.to_s.size>0  %>
+   <p style="background-color:yellow;font-size:100%;">
+    <%= (activity.start_ep.to_s.to_i-activity.dest1_unloaded_ep.to_s.to_i+activity.dest1_loaded_ep.to_s.to_i -
+         activity.dest2_unloaded_ep.to_s.to_i+activity.dest2_loaded_ep.to_s.to_i).to_s.to_s.rjust(2, "0")+"|".to_s+
+
+     (activity.start_dp.to_s.to_i-activity.dest1_unloaded_dp.to_s.to_i+activity.dest1_loaded_dp.to_s.to_i-
+      activity.dest2_unloaded_dp.to_s.to_i+activity.dest2_loaded_dp.to_s.to_i).to_i.to_s.rjust(2, "0")+"|".to_s+ 
+    
+     (activity.start_op.to_s.to_i-activity.dest1_unloaded_op.to_s.to_i+activity.dest1_loaded_op.to_s.to_i-
+      activity.dest2_unloaded_op.to_s.to_i+activity.dest2_loaded_op.to_s.to_i).to_i.to_s.rjust(2, "0")+"|".to_s+
+    
+
+
+
+      (activity.start_ep.to_s.to_i-activity.dest1_unloaded_ep.to_s.to_i+activity.dest1_loaded_ep.to_s.to_i-activity.dest2_unloaded_ep.to_s.to_i+activity.dest2_loaded_ep.to_s.to_i+activity.start_dp.to_s.to_i-activity.dest1_unloaded_dp.to_s.to_i+activity.dest1_loaded_dp.to_s.to_i-activity.dest2_unloaded_dp.to_s.to_i+activity.dest2_loaded_dp.to_s.to_i+ activity.start_op.to_s.to_i-activity.dest1_unloaded_op.to_s.to_i+activity.dest1_loaded_op.to_s.to_i-activity.dest1_unloaded_op.to_s.to_i+activity.dest1_loaded_op.to_s.to_i).to_i.to_s.rjust(2, "0")  %></p>
+
+<% end %>
+
+
+
+
+
+
+</td>
+
 
         <td bgcolor= <%=bg_color %> ><%= activity.volume %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.tank %></td>
@@ -154,6 +257,14 @@
         <% else %>
             <td bgcolor= <%=bg_color %> ><%= activity.email_counter %></td>
         <% end %>   
+
+
+
+    
+
+
+
+
 
   <td><%= link_to 'SendEmail', activities_email_path(:id => activity.id,  :format => "pdf") , method: :post, data: {confirm: 'Are you sure?'} %></td>    
 
