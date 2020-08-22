@@ -45,6 +45,10 @@
       <th>Truck</th>
       <th>Trailer</th>
       <th>Client</th>
+      <th>Start addr</th>
+      <th>End addr</th>
+      <th>Intermediary addr</th>
+       
       <th>Km Dest</th>
       <th>Starting Time</th>
       <th>Driving Time Left</th>
@@ -52,9 +56,8 @@
       <th>Night Break</th>
       <th>Weekend Break</th>
 
-      <th>Start addr</th>
-      <th>End addr</th>
-      <th>Intermediary addr</th>
+      
+     
       <th>References</th>
       <th>UnresolvedPINvoices</th>
       <th>EU|DU|OT|Total</th> 
@@ -133,13 +136,6 @@
         <td bgcolor= <%=bg_color %> ><%= activity.dest_addresses %></td>
 
 
-        <td bgcolor= <%=bg_color %> ><%= activity.km_destination %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.starting_time.try(:strftime,"%H:%M") %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.driving_time_left.try(:strftime,"%H:%M") %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.end_time.try(:strftime,"%H:%M") %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.night_break.try(:strftime,"%H:%M") %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.weekend_break %></td>
-
 
 
 
@@ -163,6 +159,15 @@
 
 
 </td>
+
+
+        <td bgcolor= <%=bg_color %> ><%= activity.km_destination %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.starting_time.try(:strftime,"%H:%M") %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.driving_time_left.try(:strftime,"%H:%M") %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.end_time.try(:strftime,"%H:%M") %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.night_break.try(:strftime,"%H:%M") %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.weekend_break %></td>
+
 
 
 <td>
