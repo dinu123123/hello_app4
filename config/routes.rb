@@ -72,7 +72,8 @@ end
   get "/events/extract_explicit", as: "mission1"
 
   get "/events/weekly", as: "weekly"
-  
+  get "/events/weekly", as: "schedule"
+
 
   get "/events/db", as: "db"
 

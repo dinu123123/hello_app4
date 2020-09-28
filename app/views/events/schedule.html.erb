@@ -19,13 +19,8 @@
             <%= select_tag 'search1[type]', options_for_select([["Invoice Credits",1],["Salary Debits",2]]) %>
 <% end %>
 
-            
-
-<% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %>    
             <%= collection_select :search1, :time, @search1.arrayT, :id, :name %>
             <%= collection_select :search1, :type, @search1.arrayC, :id, :name %>
-<% end %>
-
             <%= collection_select :search1, :client_id, Client.all, :id, :Name, {:include_blank => 'Clients'} %>
 
 
@@ -67,7 +62,7 @@
   <table>
 
 
-<% if (@search1.type == 4 or @search1.type == 0 )  %>
+<% if (@search1.type ==4 )  %>
 
 
    <tbody>
