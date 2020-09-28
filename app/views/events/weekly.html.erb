@@ -71,9 +71,10 @@
 
 
    <tbody>
-    <% @start = true %>
         <% @arrayWeeklyTruckExpense.each_with_index do |row, i| %>
           <tr>
+    <% @start = false %>
+
             <% row.each_with_index do |value, j| %>
                    <% if @arrayWeeklyTruckExpense[0][0].to_s.starts_with?('Week') and @arrayWeeklyTruckExpense[0][j] == Date.today.cweek.to_i %>
 
