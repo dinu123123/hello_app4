@@ -35,6 +35,7 @@ tr:nth-child(even) {
     <th>Volume</th>
     <th>Km</th>
     <th>Start/End</th>
+    <th>Expected</th>
   </tr>
   <tr>
     <td><%= @event.DATE.strftime("%d %B %Y %H:%M")%></td>
@@ -57,7 +58,8 @@ tr:nth-child(even) {
       <td><%= 'Start' %></td>
       <% else %>
       <td><%= 'End' %></td>
-      <% end %>
+    <% end %>
+    <td><%=  @event.expected_date %></td>
   </tr> 
 </table>
 

@@ -9,7 +9,7 @@ end
 
 class PeriodicTransactionSearch 
   attr_reader :date_from, :date_to, :time, :type, :type2, :truck_id, :driver_id, 
-  :truck_events, :running, :running_truck_id, :arrayH, :arrayT, :arrayC, :arrayD, :active
+  :truck_events, :running, :running_truck_id, :arrayH, :arrayT, :arrayC, :arrayD, :active, :client_id
 
   def initialize(params)
     params ||= {}
@@ -20,6 +20,9 @@ class PeriodicTransactionSearch
     @time = parsed_period(params[:time], 1)
     @type = parsed_trucks_drivers(params[:type], 1)
     
+    @client_id = parsed_clients(params[:client_id], 1)
+
+
     @active = parsed_active(params[:active], 1)
 
     a =Element.new("Drivers",2)
@@ -37,10 +40,15 @@ class PeriodicTransactionSearch
     a2 =Element.new("InvoicesPaid",1)
     b2 =Element.new("Salaries",2)    
     a3 =Element.new("InvoicesIssued",3)
+    
+    a4 =Element.new("DriversSchedule",4)
+    
+
     @arrayC = []
     @arrayC.push(a2)
     @arrayC.push(b2)
     @arrayC.push(a3)
+    @arrayC.push(a4)
 
     a3 =Element.new("Active",1)
     b3 =Element.new("Inactive",2)    
@@ -70,6 +78,9 @@ def setTruck(a)
 end
 
 def scope1(date_from1, date_to1)
+
+
+  
 # return  Event.where('date BETWEEN ? AND ?', date_from1, date_to1),
 #           TruckExpense.where('date BETWEEN ? AND ?', date_from1, date_to1), 
 #         DriverExpense.where('date BETWEEN ? AND ?', date_from1, date_to1)
@@ -245,16 +256,6 @@ else
 
 
 
-#if @driver_id == 6
-
-#asdasd1
-
-# end
-
-
- 
-
-
 
                       else
                          @localEvent = nil
@@ -324,12 +325,6 @@ else
                         arrayDriverExpenses.concat(@driverExpenses)
                     end
 
-
-
-if @driver_id == 23
-        # asdasda
-end
-        
 
               end
 
@@ -510,6 +505,13 @@ end
   end
 
   def parsed_trucks_drivers (n1, default)
+    n1.to_i
+    rescue ArgumentError, TypeError
+    default
+
+  end
+
+   def parsed_clients (n1, default)
     n1.to_i
     rescue ArgumentError, TypeError
     default

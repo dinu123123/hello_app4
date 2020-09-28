@@ -381,11 +381,10 @@ end
 
 #############################################################
 def weekly
-   if !(current_user.email.eql?  "ameropa.logistics@gmail.com")
-    redirect_to root_path
+   if false #!(current_user.email.eql?  "ameropa.logistics@gmail.com")
+    # redirect_to root_path
   else
       @search1 = PeriodicTransactionSearch.new(params[:search1])
-
 
 
 
@@ -419,6 +418,10 @@ def weekly
       end
 
       @arrayWeeklyTruckExpense = nil
+
+
+      
+
       
       if @search1.type == 1 or @search1.type == 3 
 
@@ -448,11 +451,13 @@ def weekly
             @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
       else
       
-          @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Driver.all.size+2,0)}
+@Drv = Driver.find_by_sql(['SELECT * FROM drivers where drivers."active" = ? ', true])
+
+          @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(@Drv.size+2,0)}
           
 
           @arrayWeeklyTruckExpense[0][0]= "".to_s
-          Driver.all.each_with_index do |driver,j|
+          @Drv.each_with_index do |driver,j|
             if driver.active 
               @arrayWeeklyTruckExpense[0][j+1]=1.to_s+driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
             else
@@ -463,7 +468,7 @@ def weekly
           
           @arrayWeeklyTruckExpense[0][0] = "Week".to_s
 
-          @arrayWeeklyTruckExpense[0][Driver.all.size+1] = "Total".to_s
+          @arrayWeeklyTruckExpense[0][@Drv.size+1] = "Total".to_s
           @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
       end
 
@@ -474,14 +479,181 @@ def weekly
 
          if @search1.type ==2 and @search1.time == 2
            #for the time being not worth implemented
-         elsif @search1.type ==2 and @search1.time == 1
+         
+
+         elsif (@search1.type == 4  or @search1.type == 0 )  
+                
+
+
+
+                @Drv.each_with_index do |driver,j|
+
+                 
+                 @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? and  events."client_id" = ?
+                            and events."DATE" >= ? and events."DATE" <= ? ORDER BY events."DATE" ASC', driver.id, @search1.client_id, Date.today-Date.today.yday()+1, Date.today])
+
+
+                   if @localEvent.size>0 
+                   #it means the driver is in service
+                   #fill in an array with payment dates
+                    
+                        
+                           @localEvent.each_with_index do |event,i|
+
+                               @tmpEvent = Struct.new(:date, :type)
+                               @tmp = @tmpEvent.new(event.DATE, event.START_END)
+                              
+
+                               @arrayWeeklyTruckExpense[event.DATE.strftime("%U").to_i+1][j+1] = @tmp 
+
+
+                               if i == @localEvent.size-1 and event.expected_date
+                                 @tmpEvent = Struct.new(:date, :type)
+                                 @tmp = @tmpEvent.new(event.expected_date, not(event.START_END)) 
+                                 @arrayWeeklyTruckExpense[event.expected_date.strftime("%U").to_i+1][j+1] = @tmp 
+                                
+                               end 
+
+                           end
+
+
+
+
+
+
+
+
+
+                  end
+                   end
+
+ 
+
+  @arrayWeeklyTruckExpense.transpose.each_with_index { |row,i| 
+
+@start = false
+
+
+
+if  i == 0 
+
+next
+end 
+
+@htotal = 0
+
+row.each_with_index { |column,j| 
+ 
+
+
+if   j ==0  
+
+next
+
+end 
+
+
+  if column.is_a?(Struct) and column.type == true
+      @start = true
+       next
+  end
+   
+  if  column.is_a?(Struct) and column.type == false
+     @start = false
+      next  
+  end 
+
+
+
+  if @start == true   
+      @arrayWeeklyTruckExpense[j][i] = 1
+      @htotal =  @htotal + 1
+  else
+      @arrayWeeklyTruckExpense[j][i] = 0
+  end
+
+
+if j == row.size-1 
+  
+      @arrayWeeklyTruckExpense[j][i] = @htotal
+
+
+end
+
+  }
+
+
+
+}
+
+
+  @arrayWeeklyTruckExpense.each_with_index { |row,i| 
+
+start = false
+
+
+
+
+if  i == 0 
+
+next
+end 
+
+@htotal = 0
+
+row.each_with_index { |column,j| 
+ 
+
+
+if   j ==0  
+
+next
+
+end 
+
+
+
+ if column.is_a?(Struct) 
+
+      @htotal =  @htotal + 1
+    else
+    @htotal =  @htotal + column
+   end   
+  
+
+if j == row.size-1 
+  
+      @arrayWeeklyTruckExpense[i][j] = @htotal
+
+
+end
+
+  }
+
+
+}
+
+ @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.transpose.reject { |column|   column[column.size-1] == 0 }
+@arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.transpose
+
+
+
+
+
+
+         elsif @search1.type ==2  and @search1.time == 1
  
 ##################################
 ##################################                  
 
-                @arrayDriverPaymentDates = Array.new(Driver.all.size){Array.new(53)}
 
-                Driver.all.each_with_index do |driver,j|
+                @Drv = Driver.find_by_sql(['SELECT * FROM drivers where drivers."active" = ? ', true])
+
+                @arrayDriverPaymentDates = Array.new(@Drv.size){Array.new(53)}
+
+
+
+                @Drv.each_with_index do |driver,j|
                  
                  @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
                             and events."DATE" <= ? ORDER BY events."DATE" DESC LIMIT 1', driver.id, Date.today])
@@ -544,6 +716,9 @@ def weekly
                 end      
 
 
+
+
+
  @arrayWeeklyTruckExpense =   @arrayWeeklyTruckExpense.transpose()
 
 #asdasd
@@ -559,6 +734,7 @@ def weekly
 
 
  @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
+
 
                
 else 
@@ -671,6 +847,7 @@ end
     @pInvoices = @pInvoices.transpose()
   end
 
+
   @arrayWeeklyTruckExpense.each_with_index {|column, i|   
     if (column.first.to_s[0] != "W" and    column.last.to_i == 0)
        if @pInvoices != nil
@@ -692,6 +869,7 @@ end
           @trucks = Truck.all
           @clients = Client.all
 end
+
 
   end
 
@@ -813,7 +991,7 @@ end
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
       #params.require(:event).permit(:DATE, :DRIVER_id, :truck_id, :client_id, :START_END, :picture)
-            params.require(:event).permit(:DATE, :DRIVER_id, :truck_id, :trailer_id, :client_id, :START_END, :volume, :km , images: [] )
+      params.require(:event).permit(:DATE, :DRIVER_id, :truck_id, :trailer_id, :client_id, :START_END, :volume, :km, :expected_date, images: [] )
     end
 
 

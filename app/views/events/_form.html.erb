@@ -16,6 +16,13 @@
     <%= form.datetime_select :DATE, id: :event_DATE, :required => 'required' %>
   </div>
 
+
+<div class="field">
+    <%= form.label :expected_date %>
+    <%= form.datetime_select :expected_date, id: :expected_date, :required => 'required' %>
+  </div>
+
+
 <%= form.collection_select :DRIVER_id, Driver.all, :id, :name_with_cnp, {prompt: "Driver Name and CNP"},:required => 'required'%>
 
 <% if false %>

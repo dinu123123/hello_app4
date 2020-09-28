@@ -79,6 +79,8 @@
         <th>Km</th> 
         <th>Photos</th>
         <th>Start/End</th>
+        <th>Expected date of change</th>
+          
       
         <th colspan="3"></th>
         </tr>
@@ -120,6 +122,8 @@
       <% else %>
       <td><%= 'End' %></td>
       <% end %>
+
+      <td><%= 'Expected' %></td>
 
       <td><%= link_to 'Show', event %></td>
       <td><%= link_to 'Edit', edit_event_path(event) %></td>
