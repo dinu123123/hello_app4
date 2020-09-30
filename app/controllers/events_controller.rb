@@ -453,7 +453,7 @@ def weekly
       
 @Drv = Driver.find_by_sql(['SELECT * FROM drivers where drivers."active" = ? ', true])
 
-          @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(@Drv.size+2,0)}
+          @arrayWeeklyTruckExpense = Array.new(53){Array.new(@Drv.size+2,0)}
           
 
           @arrayWeeklyTruckExpense[0][0]= "".to_s
