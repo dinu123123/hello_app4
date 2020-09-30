@@ -499,7 +499,7 @@ def weekly
                     
                         
                            @localEvent.each_with_index do |event,i|
-
+                             if(event.expected_date.strftime("%U").to_i >= period_start and vent.expected_date.strftime("%U").to_i <= period_end )
                                @tmpEvent = Struct.new(:date, :type)
                                @tmp = @tmpEvent.new(event.DATE, event.START_END)
                               
