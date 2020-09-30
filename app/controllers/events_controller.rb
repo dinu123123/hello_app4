@@ -453,7 +453,7 @@ def weekly
       
 @Drv = Driver.find_by_sql(['SELECT * FROM drivers where drivers."active" = ? ', true])
 
-          @arrayWeeklyTruckExpense = Array.new(53){Array.new(@Drv.size+2,0)}
+          @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(@Drv.size+2,0)}
           
 
           @arrayWeeklyTruckExpense[0][0]= "".to_s
@@ -507,7 +507,7 @@ def weekly
                                @arrayWeeklyTruckExpense[event.DATE.strftime("%U").to_i+1][j+1] = @tmp 
 
 
-                               if i == @localEvent.size-1 and event.expected_date
+                               if i == @localEvent.size-1 and event.expected_date and (@arrayWeeklyTruckExpense.length > (1+event.expected_date.strftime("%U").to_i+1))
                                  @tmpEvent = Struct.new(:date, :type)
                                  @tmp = @tmpEvent.new(event.expected_date, not(event.START_END)) 
                                  @arrayWeeklyTruckExpense[event.expected_date.strftime("%U").to_i+1][j+1] = @tmp 
