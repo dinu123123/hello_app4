@@ -513,6 +513,7 @@ def weekly
                                  @arrayWeeklyTruckExpense[event.expected_date.strftime("%U").to_i+1][j+1] = @tmp 
                                 
                                end 
+                             end
 
                            end
 
