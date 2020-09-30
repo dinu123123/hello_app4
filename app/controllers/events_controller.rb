@@ -499,8 +499,7 @@ def weekly
                     
                         
                            @localEvent.each_with_index do |event,i|
-                             if(event.expected_date and event.expected_date.strftime("%U").to_i >= @period_start and event.expected_date.strftime("%U").to_i <= @period_end and 
-                              @arrayWeeklyTruckExpense.length > (1+event.expected_date.strftime("%U").to_i+1))
+                             
                                @tmpEvent = Struct.new(:date, :type)
                                @tmp = @tmpEvent.new(event.DATE, event.START_END)
                               
@@ -514,7 +513,6 @@ def weekly
                                  @arrayWeeklyTruckExpense[event.expected_date.strftime("%U").to_i+1][j+1] = @tmp 
                                 
                                end 
-                             end
 
                            end
 
