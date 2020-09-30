@@ -123,7 +123,7 @@
       <td><%= 'End' %></td>
       <% end %>
 
-      <td><%= 'Expected' %></td>
+      <td><%= event.expected_date.DATE.strftime("%d %B %Y")   %></td>
 
       <td><%= link_to 'Show', event %></td>
       <td><%= link_to 'Edit', edit_event_path(event) %></td>
