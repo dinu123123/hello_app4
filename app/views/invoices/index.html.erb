@@ -20,7 +20,8 @@
 <p> </p> 
 
 <fieldset>
-<p>Selected list of trips:</p>  
+
+<p>Total amount: <%= @total_price %>  </p>  
 
 
 
@@ -34,17 +35,22 @@
       <th>Client</th>
       <th>VAT(%)</th>
       <th>Amount(€)</th>
+      <th>Paid</th>
       <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %>    
-         <th colspan="5"></th>
+         <th colspan="6"></th>
       <% else %>
-         <th colspan="4"></th>
+         <th colspan="5"></th>
       <% end %>
     </tr>
   </thead>
 
   <tbody>
+
     <% @invoices.each_with_index do |invoice,j| %>
+   
       <tr>
+   
+
 <% if invoice.created_at.to_date == Time.now.utc.to_date%>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= j+1 %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.name %></td>
@@ -118,6 +124,16 @@
         <td><%=  invoice.vat %></td>
         <td><%= invoice.total_amount %></td>
 <% end %>
+
+<% if invoice.paid == true %>
+        <td bgcolor="#b6f746" style="font-weight:bold"><%= "PAID" %></td>
+<% else%>
+        <td bgcolor="red" style="font-weight:bold"><%= "NOT" %></td>          
+<% end %>
+
+
+
+
         <td><%= link_to 'Show', invoice %></td>
         <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
         <td><%= link_to 'Print', invoices_print_path(:id => invoice.id, :format => "pdf"), method: :post %></td>
