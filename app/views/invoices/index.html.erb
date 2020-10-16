@@ -36,11 +36,16 @@
       <th>VAT(%)</th>
       <th>Amount(€)</th>
       <th>Paid</th>
-      <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %>    
-         <th colspan="6"></th>
-      <% else %>
-         <th colspan="5"></th>
+
+      <% if false %>    
+         <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %>    
+            <th colspan="6"></th>
+         <% else %>
+            <th colspan="5"></th>
+         <% end %>
       <% end %>
+
+      <th colspan="6"></th>
     </tr>
   </thead>
 
