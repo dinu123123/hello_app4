@@ -78,7 +78,7 @@ if @client_id > 0
             elsif @truck_id > 0 && @driver_id == 0
                 @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.client_id = ? and invoiced_trips.truck_id = ? 
                           and invoiced_trips."StartDate" >= ? and invoiced_trips."StartDate" <= ? and ORDER BY 
-                           invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id', @client_id,
+                           invoiced_trips."StartDate" DESC, invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC', @client_id,
                           @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
                      
             elsif @truck_id > 0 && @driver_id > 0

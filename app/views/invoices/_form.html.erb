@@ -13,6 +13,14 @@
 
   <p><h2> Facturile GLS, JCL sHeerenberg si LTC se trec cu  data = data_factura_precedenta + 7zile !!!
   </h2> </p>
+
+
+
+
+  <div class="field">
+    <%= form.label :paid, 'Mark if PAID'  %>
+    <%= form.check_box :paid, id: :paid%>
+  </div>
   
   <div class="field">
     <%= form.label :"Invoice ID" %>

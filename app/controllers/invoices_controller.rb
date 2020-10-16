@@ -6,8 +6,10 @@ attr_accessor :total_price_calculated
   # GET /invoices
   # GET /invoices.json
   def index
+    @total_price = 0
     @search = TransactionSearch.new(params[:search])
     @invoices = @search.scope_invoices_index
+    @total_price = @invoices.sum(&:total_amount)
     #@invoices = Invoice.all
     #@invoices = Invoice.find_by_sql(['SELECT * FROM invoices ORDER BY  invoices.date DESC, invoices.client_id ASC, invoices.info DESC '])
     @clients = Client.all
@@ -448,7 +450,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invoice_params
-      params.require(:invoice).permit(:name, :info, :date, :client_id, :vat, :total_amount, :sent, :printed)
+      params.require(:invoice).permit(:name, :info, :date, :client_id, :vat, :total_amount, :sent, :printed, :paid)
     end
 
 end
