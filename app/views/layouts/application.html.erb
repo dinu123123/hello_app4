@@ -92,6 +92,13 @@ input[type=text] {
     overflow: hidden;
 }
 
+.topnav1 {
+    border: 1px solid gray;
+    background-color: #5c5f62 ;
+    overflow: hidden;
+}
+
+
 /* Style the links inside the navigation bar */
 .topnav a {
     float: left;
@@ -145,7 +152,7 @@ function pagereload(t) {
  <body>
 <div class="header">
   <h2>FinAdmin</h2>
-  <p>Provides detailed overview over the company finance</p>
+  <p>Provides detailed overview over the company activities</p>
 
 <div class='block2'>
 <% if user_signed_in? %>
@@ -163,8 +170,11 @@ function pagereload(t) {
 <div class="topnav">
  
 <% if   current_user != nil %> 
-  <%= link_to "Input", root_path %>
-  <%= link_to "Daily", activities_url %>
+  <%= link_to "All", root_path %>
+
+  <%= link_to "Daily->", activities_url, class: "topnav1" %>
+  <%= link_to "Trips->", invoiced_trips_url, class: "topnav1" %>
+  <%= link_to "Invoices", invoices_url, class: "topnav1" %>
   <%= link_to "Pallets", mission51_url %>
   <% if  current_user.admin != true and ! current_user.email.eql?  "ameropa.logistics@gmail.com" %> 
   <%= link_to "ScheduleDrivers", schedule_url %>
@@ -177,7 +187,7 @@ function pagereload(t) {
 
 <% if   current_user != nil and current_user.admin == true %> 
   <%= link_to "Weekly", weekly_url %>
-  <%= link_to "Invoices", invoices_url %>
+ 
   <%= link_to "Group", mission1_url %>
   <%= link_to "Individual", mission_url %>
 <% if false %> 
