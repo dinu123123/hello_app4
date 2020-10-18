@@ -82,6 +82,8 @@ legend {
   <div class="field">
   <%= form.date_select :date %>
 
+<%= form.collection_select :invoiced_trip_id, InvoicedTrip.all, :id, :info, {prompt: "Trip"} %>
+
 <%= form.collection_select :DRIVER_id, Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ? 
                     ORDER BY drivers.created_at ASC', true]) , :id, :name_with_cnp, {prompt: "Driver Name and CNP"},:required => 'required'%>
 <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>

@@ -66,14 +66,19 @@ tr:nth-child(even) {
         <%= submit_tag 'Display', class: 'btn search-button' %>  
         <% end %>
       </div>
-    </div>
+    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
   </br>
 </fieldset>
  <p> </p> 
 <p> </p> 
 
 <fieldset>
-<p>Selected list of trips:</p>  
+  
+  <% if @total_loss >= 0 %>
+     <p style="font-size:18px;color:green"><b><mark> Total GAIN: <%= @total_loss %> km (<%= @total_loss_percentage.round(1) %> %)</mark> </b></p>  
+  <% else %>
+     <p style="font-size:18px;color:red">  <b><mark> Total LOSS: <%= @total_loss %> km (<%= @total_loss_percentage.round(1) %> %)</mark></b> </p>  
+  <% end %>
 
 <table>
   <thead>
@@ -108,6 +113,7 @@ tr:nth-child(even) {
       <th>Trailer Rent</th>
       <th>Km</th>
       <th>Km EvoGPS</th>
+      <th>Km Loss</th>
       <th>Km Driver's Route Note</th>
       <th>Trip Start DateTime</th>
       <th>Trip End DateTime</th>
@@ -174,6 +180,15 @@ tr:nth-child(even) {
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.trailer_cost %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km_evogps %></td>
+
+        <% if invoiced_trip.km >= invoiced_trip.km_evogps %>
+            <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+        <% else %>
+            <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+        <% end %>
+
+
+
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km_driver_route_note %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.EndDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
@@ -254,6 +269,13 @@ tr:nth-child(even) {
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.trailer_cost %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km_evogps %></td>
+
+         <% if invoiced_trip.km >= invoiced_trip.km_evogps %>
+            <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+        <% else %>
+            <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+        <% end %>
+
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km_driver_route_note %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.EndDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
@@ -314,6 +336,13 @@ tr:nth-child(even) {
         <td><%= invoiced_trip.trailer_cost %></td>
         <td><%= invoiced_trip.km %></td>
         <td><%= invoiced_trip.km_evogps %></td>
+
+        <% if invoiced_trip.km >= invoiced_trip.km_evogps %>
+            <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+        <% else %>
+            <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+        <% end %> 
+
         <td><%= invoiced_trip.km_driver_route_note %></td>
         <td><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>
         <td><%= invoiced_trip.EndDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>

@@ -13,6 +13,7 @@ class ActivitiesController < ApplicationController
     @trucks = Truck.all
     @trailers = Trailer.all
     @clients = Client.all
+    @invoiced_trips = InvoicedTrip.all
 
     if  @@recorded_date.to_s != Date.today.to_s
       @@recorded_date=Date.today
@@ -85,19 +86,10 @@ class ActivitiesController < ApplicationController
 
 
  def CombinexPallets
-
-
-
     @drivers = Driver.all
     @trucks = Truck.all
     @trailers = Trailer.all
     @clients = Client.all
-
-   
-
-                
-
-
     @search = TransactionSearch.new(params[:search])
     @activities = @search.scope_combinex_pallets_index
 
@@ -168,17 +160,11 @@ end
                         params[:activity][:dest2_unloaded_ep].to_s.to_i+params[:activity][:dest2_loaded_ep].to_s.to_i
 
 
-
     @activity.end_dp =  params[:activity][:start_dp].to_s.to_i-params[:activity][:dest1_unloaded_dp].to_s.to_i+params[:activity][:dest1_loaded_dp].to_s.to_i-
                         params[:activity][:dest2_unloaded_dp].to_s.to_i+params[:activity][:dest2_loaded_dp].to_s.to_i
 
     @activity.end_op =  params[:activity][:start_op].to_s.to_i-params[:activity][:dest1_unloaded_op].to_s.to_i+params[:activity][:dest1_loaded_op].to_s.to_i-
                         params[:activity][:dest2_unloaded_op].to_s.to_i+params[:activity][:dest2_loaded_op].to_s.to_i
-
-    
-
-
-
 
 
     respond_to do |format|
@@ -233,17 +219,12 @@ end
     def activity_params
       params.require(:activity).permit(:date, :DRIVER_id, :truck_id, :trailer_id, :client_id, :driver_expense_id, 
         :truck_expense_id, :start_address, :dest_addresses, :references, :volume, :tank, :comments, :email_text, :pallet,
-         :email_counter,:start_ep, :start_dp , :start_op, :dest1_address, :dest1_comments, 
-             :dest1_unloaded_ep, :dest1_unloaded_dp, :dest1_unloaded_op, :dest1_loaded_ep, :dest1_loaded_dp,
-    :dest1_loaded_op, :dest2_address, :dest2_comments, :dest2_unloaded_ep, :dest2_unloaded_dp,
-    :dest2_unloaded_op, :dest2_loaded_ep, :dest2_loaded_dp, :dest2_loaded_op, :end_ep, :end_dp, 
-    :end_op , :pallets_paid_in, :pallets_paid_out, :name_advisor, 
- :km_destination,
- :starting_time,
- :driving_time_left,
- :end_time,
- :night_break,
- :weekend_break, images: [], trip_images: [])
+        :email_counter,:start_ep, :start_dp , :start_op, :dest1_address, :dest1_comments, 
+        :dest1_unloaded_ep, :dest1_unloaded_dp, :dest1_unloaded_op, :dest1_loaded_ep, :dest1_loaded_dp,
+        :dest1_loaded_op, :dest2_address, :dest2_comments, :dest2_unloaded_ep, :dest2_unloaded_dp,
+        :dest2_unloaded_op, :dest2_loaded_ep, :dest2_loaded_dp, :dest2_loaded_op, :end_ep, :end_dp, 
+        :end_op , :pallets_paid_in, :pallets_paid_out, :name_advisor, :km_destination, :starting_time, :driving_time_left,
+        :end_time, :night_break, :weekend_break, :invoiced_trip_id, images: [], trip_images: [])
     end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_17_083139) do
+ActiveRecord::Schema.define(version: 2020_10_16_225332) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -48,6 +48,42 @@ ActiveRecord::Schema.define(version: 2019_11_17_083139) do
     t.text "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "references"
+    t.text "email_text"
+    t.integer "email_counter"
+    t.integer "pallet"
+    t.integer "start_ep"
+    t.integer "start_dp"
+    t.integer "start_op"
+    t.text "dest1_address"
+    t.text "dest1_comments"
+    t.integer "dest1_unloaded_ep"
+    t.integer "dest1_unloaded_dp"
+    t.integer "dest1_unloaded_op"
+    t.integer "dest1_loaded_ep"
+    t.integer "dest1_loaded_dp"
+    t.integer "dest1_loaded_op"
+    t.text "dest2_address"
+    t.text "dest2_comments"
+    t.integer "dest2_unloaded_ep"
+    t.integer "dest2_unloaded_dp"
+    t.integer "dest2_unloaded_op"
+    t.integer "dest2_loaded_ep"
+    t.integer "dest2_loaded_dp"
+    t.integer "dest2_loaded_op"
+    t.integer "end_ep"
+    t.integer "end_dp"
+    t.integer "end_op"
+    t.text "pallets_paid_in"
+    t.text "pallets_paid_out"
+    t.string "name_advisor"
+    t.integer "km_destination"
+    t.time "starting_time"
+    t.time "driving_time_left"
+    t.time "end_time"
+    t.time "night_break"
+    t.integer "weekend_break"
+    t.integer "invoiced_trip_id"
   end
 
   create_table "as24_germany_tolls", force: :cascade do |t|
@@ -133,6 +169,7 @@ ActiveRecord::Schema.define(version: 2019_11_17_083139) do
     t.decimal "kprice"
     t.boolean "active"
     t.string "email"
+    t.string "trips_email"
   end
 
   create_table "de_tolls", force: :cascade do |t|
@@ -194,6 +231,7 @@ ActiveRecord::Schema.define(version: 2019_11_17_083139) do
     t.integer "trailer_id"
     t.decimal "volume"
     t.decimal "km"
+    t.date "expected_date"
   end
 
   create_table "fuel_expenses", force: :cascade do |t|
@@ -292,6 +330,7 @@ ActiveRecord::Schema.define(version: 2019_11_17_083139) do
     t.datetime "updated_at", null: false
     t.boolean "sent", default: false
     t.boolean "printed", default: false
+    t.boolean "paid"
   end
 
   create_table "periodics", force: :cascade do |t|
@@ -326,6 +365,20 @@ ActiveRecord::Schema.define(version: 2019_11_17_083139) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "PaymentDelay"
+  end
+
+  create_table "repairs", force: :cascade do |t|
+    t.date "date_repair"
+    t.integer "km"
+    t.integer "DRIVER_id"
+    t.integer "truck_id"
+    t.integer "trailer_id"
+    t.integer "driver_expense_id"
+    t.integer "truck_expense_id"
+    t.text "description"
+    t.string "mechanic_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "trailers", force: :cascade do |t|
