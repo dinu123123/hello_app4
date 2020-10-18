@@ -75,11 +75,15 @@ def email()
   file = print (true)
   @invoice = Invoice.find(params[:id])
   client = Client.find(@invoice.client_id)
-  @invoice.sent = true
-  @invoice.save
 
-  InvoiceMailer.invoice_email(client.email, file).deliver
-  redirect_back fallback_location: root_path and return @invoice
+#  @invoice.sent = true
+#  @invoice.save
+
+  if !InvoiceMailer.invoice_email(client.email, file, @invoice).deliver
+      redirect_to @invoice
+  else 
+    redirect_back fallback_location: root_path and return @invoice
+  end
 end
 
 def print(send_invoice=false)

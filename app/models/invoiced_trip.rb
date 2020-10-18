@@ -9,4 +9,5 @@ validates_uniqueness_of :client_id, scope: %i[StartDate EndDate truck_id]
 
 has_many_attached :images
 
+has_many :activities
 end

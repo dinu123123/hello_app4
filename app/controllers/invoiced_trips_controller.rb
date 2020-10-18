@@ -20,6 +20,12 @@ class InvoicedTripsController < ApplicationController
     @search = TransactionSearch.new(params[:search])
     @invoiced_trips = @search.scope_invoiced_trips_index
 
+    @total_loss = @invoiced_trips.sum(&:km) -  @invoiced_trips.sum(&:km_evogps) 
+
+    @total_loss_percentage = 0
+    if @invoiced_trips.sum(&:km_evogps) >0
+    @total_loss_percentage =  (@total_loss*100)/@invoiced_trips.sum(&:km_evogps)
+    end
 
 @invoiced_trips.each_with_index do |invoiced_trip, j|
 
@@ -29,9 +35,14 @@ class InvoicedTripsController < ApplicationController
 #invoiced_trip.price_per_km = @pricing[0].price_per_km 
 #invoiced_trip.surcharge = @pricing[0].surcharge
 
+if @pricing[0] != nil and @pricing[0].price_per_km != nil
+  invoiced_trip.update_attribute(:price_per_km, @pricing[0].price_per_km)
+end
 
-invoiced_trip.update_attribute(:price_per_km, @pricing[0].price_per_km)
-invoiced_trip.update_attribute(:surcharge, @pricing[0].surcharge)
+if  @pricing[0] != nil and @pricing[0].surcharge != nil
+   invoiced_trip.update_attribute(:surcharge, @pricing[0].surcharge)
+end
+
 end
 
 

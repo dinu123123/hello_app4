@@ -45,6 +45,8 @@
       <th>Truck</th>
       <th>Trailer</th>
       <th>Client</th>
+      <th>TripInfo</th>
+      
       <th>Start addr</th>
       <th>End addr</th>
       <th>Intermediary addr</th>
@@ -131,7 +133,22 @@
          else
           " "
          end %></td>
+
         <td bgcolor= <%=bg_color %> ><%= @clients.find(activity.client_id).Name %></td>
+        
+<td bgcolor= <%=bg_color %> > 
+<% if activity.invoiced_trip_id != nil%>   
+
+        <%= @invoiced_trips.find(activity.invoiced_trip_id).info %>
+
+    <% else %>
+
+<% end %>
+
+
+
+
+</td>
         <td bgcolor= <%=bg_color %> ><%= activity.start_address %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.dest_addresses %></td>
 
