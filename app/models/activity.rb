@@ -3,7 +3,7 @@ belongs_to :driver, :optional => true
 belongs_to :truck, :optional => true
 belongs_to :trailer, :optional => true
 belongs_to :client, :required => true
-belongs_to :invoiced_trip
+belongs_to :invoiced_trip, :optional => true
 
 
 
