@@ -24,9 +24,9 @@ class ActivitiesController < ApplicationController
              Event.order('DATE DESC').all.each do |event|
                @curr_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", Date.today, event.truck_id ]) 
             
-               if @curr_activity != nil and truck.id == event.truck_id and event.START_END == true
+               if @curr_activity.size == 0 and truck.id == event.truck_id and event.START_END == true
 
-                @prev_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", Date.today-1, event.truck_id ]) 
+                @prev_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", Date.today-2, event.truck_id ]) 
 
                 
                 @end_ep = 0
