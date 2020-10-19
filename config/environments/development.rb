@@ -61,14 +61,15 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for gmail
+  #:user_name            => "invoice.ameropa@gmail.com",
+  #:password             => "71491977Rr",
+   
   config.action_mailer.smtp_settings = {
    :address              => "smtp.gmail.com",
    :port                 => 587,
    :domain               => "gmail.com",
-   #:user_name            => "ameropa.logistics@gmail.com",
-   #:password             => "Mihail1980!",
-   :user_name            => "invoice.ameropa@gmail.com",
-   :password             => "71491977Rr",
+   :user_name            => "ameropa.logistics@gmail.com",
+   :password             => "Mihail1980!",
    :authentication       => "plain",
    :openssl_verify_mode  => 'none',
   :enable_starttls_auto => true
