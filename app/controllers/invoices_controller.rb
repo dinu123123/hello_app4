@@ -76,8 +76,8 @@ def email()
   @invoice = Invoice.find(params[:id])
   client = Client.find(@invoice.client_id)
 
-#  @invoice.sent = true
-#  @invoice.save
+  @invoice.sent = true
+  @invoice.save
 
   if !InvoiceMailer.invoice_email(client.email, file, @invoice).deliver
       redirect_to @invoice
