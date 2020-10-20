@@ -22,7 +22,9 @@ class ActivitiesController < ApplicationController
 
         if truck.active == true  and truck.NB_PLATE.start_with?("PH") == true    
              Event.order('DATE DESC').all.each do |event|
-               if truck.id == event.truck_id and event.START_END == true
+               @curr_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", Date.today, event.truck_id ]) 
+            
+               if @curr_activity != nil and truck.id == event.truck_id and event.START_END == true
 
                 @prev_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", Date.today-1, event.truck_id ]) 
 
