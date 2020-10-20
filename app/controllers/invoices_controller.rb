@@ -79,10 +79,10 @@ def email()
  
 
   if !InvoiceMailer.invoice_email(client.email, file, @invoice).deliver
-      @invoice.sent = true
-      @invoice.save
       redirect_to @invoice
   else 
+    @invoice.sent = true
+    @invoice.save
     redirect_back fallback_location: root_path and return @invoice
   end
 end
