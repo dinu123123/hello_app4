@@ -58,10 +58,10 @@ end
 def scope_invoices_index
   if @client_id > 0
       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? and invoices.date >= ? and invoices.date <= ? 
-                  ORDER BY  invoices.date DESC, invoices.client_id ASC, invoices.info DESC ', @client_id ,to_datetime(@date_from), to_datetime(@date_to)]) 
+                  ORDER BY  invoices.date DESC, invoices.name DESC, invoices.client_id ASC ', @client_id ,to_datetime(@date_from), to_datetime(@date_to)]) 
   else
       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.date >= ? and invoices.date <= ? 
-                  ORDER BY  invoices.date DESC, invoices.client_id ASC, invoices.info DESC ', to_datetime(@date_from), to_datetime(@date_to) ])
+                  ORDER BY  invoices.date DESC, invoices.name DESC, invoices.client_id ASC ', to_datetime(@date_from), to_datetime(@date_to) ])
   end  
 end
 
