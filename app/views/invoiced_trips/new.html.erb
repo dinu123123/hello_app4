@@ -1,4 +1,16 @@
 
+
+
+
 <%= render 'form', invoiced_trip: @invoiced_trip %>
 
+
+
+<% if @invoiced_trip.typeT == 0 %>
+
 <%= link_to 'Back', invoiced_trips_path %>
+
+<% else %>
+<%= link_to 'Back', index_special_path %>
+
+<% %>

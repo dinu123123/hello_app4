@@ -3,4 +3,14 @@
 <%= render 'form', invoiced_trip: @invoiced_trip %>
 
 <%= link_to 'Show', @invoiced_trip %> |
-<%= link_to 'Back', invoiced_trips_path %>
+
+<% if   @invoiced_trip.typeT == 1 %>
+
+    <%= link_to 'Back', index_special_path %>
+
+
+<% else %>
+
+	<%= link_to 'Back', invoiced_trips_path %>
+
+<% end %>

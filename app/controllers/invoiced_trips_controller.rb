@@ -18,7 +18,67 @@ class InvoicedTripsController < ApplicationController
   #  if(current_user.email.eql?  "ameropa.logistics@gmail.com")
   #  @invoiced_trips = InvoicedTrip.all
     @search = TransactionSearch.new(params[:search])
-    @invoiced_trips = @search.scope_invoiced_trips_index
+
+
+
+    @invoiced_trips = @search.scope_invoiced_trips_index(true)
+
+    @total_loss = @invoiced_trips.sum(&:km) -  @invoiced_trips.sum(&:km_evogps) 
+
+    @total_loss_percentage = 0
+    if @invoiced_trips.sum(&:km_evogps) >0
+    @total_loss_percentage =  (@total_loss*100)/@invoiced_trips.sum(&:km_evogps)
+    end
+
+@invoiced_trips.each_with_index do |invoiced_trip, j|
+
+ @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
+  and pricings.DATETIME <= ? order by pricings.DATETIME desc", invoiced_trip.client_id, invoiced_trip.StartDate ]) 
+
+#invoiced_trip.price_per_km = @pricing[0].price_per_km 
+#invoiced_trip.surcharge = @pricing[0].surcharge
+
+if @pricing[0] != nil and @pricing[0].price_per_km != nil
+  invoiced_trip.update_attribute(:price_per_km, @pricing[0].price_per_km)
+end
+
+if  @pricing[0] != nil and @pricing[0].surcharge != nil
+   invoiced_trip.update_attribute(:surcharge, @pricing[0].surcharge)
+end
+
+end
+
+
+
+    #@invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips ORDER BY invoiced_trips.date DESC'])
+   
+
+    @invoices = Invoice.all
+    @trucks = Truck.all
+    @clients = Client.all
+    @drivers = Driver.all
+    respond_to do |format|
+        format.html
+        format.csv { send_data @invoiced_trips.to_csv, filename: "invoiced_trips-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      end
+   # else
+   #   redirect_to root_path
+   # end
+  end
+
+
+ def index_special
+  #  if(current_user.email.eql?  "ameropa.logistics@gmail.com")
+  #  @invoiced_trips = InvoicedTrip.all
+    @search = TransactionSearch.new(params[:search])
+
+
+
+    
+    @invoiced_trips = @search.scope_invoiced_trips_index(true)
+
+
 
     @total_loss = @invoiced_trips.sum(&:km) -  @invoiced_trips.sum(&:km_evogps) 
 
@@ -67,6 +127,7 @@ end
   # GET /invoiced_trips/1
   # GET /invoiced_trips/1.json
   def show
+    @invoices = Invoice.all
   end
 
 
@@ -192,25 +253,59 @@ respond_to do |format|
   # GET /invoiced_trips/new
   def new
     @invoiced_trip = InvoicedTrip.new
+    @invoiced_trip.typeT = 0
+
+  end
+
+   # GET /invoiced_trips/new
+  def new_special
+    @invoiced_trip = InvoicedTrip.new
+    @invoiced_trip.typeT = 1
   end
 
   # GET /invoiced_trips/1/edit
   def edit
   end
 
+
   # POST /invoiced_trips
   # POST /invoiced_trips.json
   def create
+
+    
     @invoiced_trip = InvoicedTrip.new(invoiced_trip_params)
+if invoiced_trip_params.fetch(:brand).to_s.size
+  
+
+  @invoiced_trip.StartDate = Invoice.find_by(id: @invoiced_trip.invoice_id).date
+  @invoiced_trip.typeT = true
+  @invoiced_trip.save
+end
+
+
 
   @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
   and pricings.DATETIME <= ? order by pricings.DATETIME desc", @invoiced_trip.client_id, @invoiced_trip.StartDate ])
-  @invoiced_trip.surcharge = @pricing[0].surcharge
-  @invoiced_trip.price_per_km = @pricing[0].price_per_km
+  
+  if @invoiced_trip.typeT == 0
+    @invoiced_trip.surcharge = @pricing[0].surcharge
+    @invoiced_trip.price_per_km = @pricing[0].price_per_km
+  else
+    @invoiced_trip.surcharge = 0
+    @invoiced_trip.price_per_km = 0
+  end
 
 
      if @invoiced_trip.images.count>0
      @invoiced_trip.images.attach(params[:event][:images])
+    end
+
+      if @invoiced_trip.bill_of_lading.count>0
+     @invoiced_trip.bill_of_lading.attach(params[:event][:images])
+    end
+
+      if @invoiced_trip.export_document.count>0
+     @invoiced_trip.export_document.attach(params[:event][:images])
     end
     
     respond_to do |format|
@@ -218,9 +313,11 @@ respond_to do |format|
         format.html { redirect_to @invoiced_trip, notice: 'Invoiced trip was successfully created.' }
         format.json { render :show, status: :created, location: @invoiced_trip }
       else
+        format.html { render :new }
         format.json { render json: @invoiced_trip.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   def delete_image
@@ -255,9 +352,17 @@ respond_to do |format|
     # Use callbacks to share common setup or constraints between actions.
     def set_invoiced_trip
       @invoiced_trip = InvoicedTrip.find(params[:id])
-      @truck  = Truck.find(@invoiced_trip.truck_id)
-      @driver = Driver.find(@invoiced_trip.DRIVER_id)
-      @client = Client.find(@invoiced_trip.client_id)
+
+      if @invoiced_trip.typeT == 0
+        @truck  = Truck.find(@invoiced_trip.truck_id)
+        @driver = Driver.find(@invoiced_trip.DRIVER_id)
+        @client = Client.find(@invoiced_trip.client_id)
+      else
+        @truck  = @invoiced_trip.brand + " ".to_s + @invoiced_trip.model + " ".to_s + @invoiced_trip.vin
+        @driver = "".to_s
+        @client = Client.find(@invoiced_trip.client_id)
+       end      
+
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -265,6 +370,7 @@ respond_to do |format|
       params.require(:invoiced_trip).permit(:invoice_id, :date, :StartDate, :EndDate, :client_id, 
         :DRIVER_id, :truck_id, :info, :germany_toll, :belgium_toll, :swiss_toll, :france_toll, 
         :italy_toll, :uk_toll, :netherlands_toll, :bridge, :parking, :tunnel, :trailer_cost, :km, 
-        :km_evogps, :km_driver_route_note, :surcharge, :price_per_km, :total_amount, images: [])
+        :km_evogps, :km_driver_route_note, :surcharge, :price_per_km, :total_amount, :typeT,
+        :brand, :model, :vin, :production_year, :km_usage, :shipper, images: [] , bill_of_lading: [], export_document: [])
     end
 end
