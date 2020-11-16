@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td, th {
+    border: 1px solid #aaaaaa;
+    text-align: left;
+    padding: 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<p id="notice"><%= notice %></p>
+<h1>Sold Vehicles</h1>
+ 
+<h4> Create <%= link_to 'New Sold Vehicle ',new_special_path %> </h4> 
+
+<fieldset>
+  <p>Introduce the start/end date interval and client:</p>  
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag index_special_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :client_id, Client.all, :id, :Name, {:include_blank => 'All Clients'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+  </br>
+</fieldset>
+ <p> </p> 
+<p> </p> 
+
+<fieldset>
+  
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="1"></th>
+      <th>Foto</th>
+      <th>InvoiceID</th>
+      <th>Vehicle</th>
+      <th>VIN</th>
+      <th>Client Name</th>
+      <th>Invoice Date</th>
+      <th>Total amount</th>
+      <th>Shipping</th>
+      <th>Bill of Lading (BOL)</th>
+      <th>Export Docs (MRN)</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invoiced_trips.each_with_index do |invoiced_trip, j| %>
+      <tr>
+
+
+
+
+
+
+ <td bgcolor="#b6f666" style="font-weight:bold"><%= (j+"1".to_i).to_s %></td>
+ 
+ <td><div class="product-image"><%= link_to image_tag(url_for(invoiced_trip.images[0]), height: '40', width: '40'), invoiced_trip %></div></td>
+   
+
+  <% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
+    <td bgcolor="#b6f666" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).name %></td>
+  <% else %>
+    <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.invoice_id %></td>
+  <% end %>
+
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.brand.to_s + " ".to_s + invoiced_trip.model.to_s %></td> 
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.vin.to_s %></td> 
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= @clients.find(invoiced_trip.client_id).Name %></td>
+
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y") %></td>
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).total_amount + @invoices.find(invoiced_trip.invoice_id).total_amount*@invoices.find(invoiced_trip.invoice_id).vat/100  %></td>
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.shipper %></td>
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.bill_of_lading.count %></td>
+
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.export_document.count %></td>
+
+
+
+
+
+
+        <td><%= link_to 'Show', invoiced_trip %></td>
+        <td><%= link_to 'Edit', edit_invoiced_trip_path(invoiced_trip) %></td>
+
+         <% if false %>
+        <td><%= link_to 'Print', invoiced_trips_print_path(:id => invoiced_trip.id, :format => "pdf"), method: :post %></td>
+         <% end %>
+
+        <td><%= link_to 'Destroy', invoiced_trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</fieldset>
+
+<br>

@@ -62,6 +62,11 @@ end
 
 
   get "/invoiced_trips/index", as: "mission3"
+  get "/invoiced_trips/index_special", as: "index_special"
+  get "/invoiced_trips/new_special", as: "new_special"
+
+
+
   get "/invoices/index", as: "mission4"
 
   get "/driver_expenses/index", as: "dv"

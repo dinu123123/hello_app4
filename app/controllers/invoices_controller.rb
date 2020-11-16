@@ -116,7 +116,13 @@ def print(send_invoice=false)
 
 invoice = Invoice.find(params[:id])
 invoice_trip_all = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips WHERE invoiced_trips.invoice_id = ? ', invoice.id])
+
+
+
 invoiced_trip = invoice_trip_all[0]
+
+
+
 
 ary = Array.new
 
@@ -129,14 +135,27 @@ invoice_trip_all.each {
 
 
 client = Client.find(a.client_id)
-driver = Driver.find(a.DRIVER_id)
-truck = Truck.all.find(a.truck_id)
 
-@sum_individual_invoices += a.total_amount
+if invoiced_trip.typeT == 1
+ driver = Driver.find_by_SECONDNAME("Turjan")
+else
+ driver = Driver.find(a.DRIVER_id)
+end
+
+if invoiced_trip.typeT == 1
+ truck = Truck.all.find_by_NB_PLATE("Office")
+else
+ truck = Truck.all.find(a.truck_id)
+end
+
+
+
+
+@sum_individual_invoices += a.total_amount.to_s.to_c
 
 
 @price_distance = 0
-if client.kprice>0 
+if client.kprice>0 and invoiced_trip.typeT == 0
   @price_distance = a.km*a.price_per_km
 else
   @price_distance = a.total_amount
@@ -162,8 +181,22 @@ if @service_name.length>0
 end
 
 
+
+if invoiced_trip.typeT == 1
+
 item = InvoicePrinter::Document::Item.new(
-  name: @info+"  "+truck.NB_PLATE+" / "+ driver.FIRSTNAME+" "+driver.SECONDNAME, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+  name: "VIN " + invoiced_trip.vin,
+  tax: (invoice.vat/100*invoice.total_amount).round(2).to_s,
+  amount: invoice.total_amount.to_s
+)
+@total_price_calculated += 100
+
+ary << item
+
+else
+
+item = InvoicePrinter::Document::Item.new(
+  name: @info+"  "+truck.NB_PLATE+" / "+ driver.FIRSTNAME.to_s+" "+driver.SECONDNAME.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
   unit: a.price_per_km,
   quantity: "km".to_s,
   price: a.km,
@@ -335,14 +368,14 @@ if (a.trailer_cost != nil and a.trailer_cost > 0)
     ary << item
     @total_price_calculated -=a.trailer_cost
 end
-
+end
 
 
 }
 
 client = Client.find(invoice.client_id)
 
-item1 = InvoicePrinter::Document::Item.new(
+item = InvoicePrinter::Document::Item.new(
   name: 'Transport '.to_s + @info, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
   unit: "1".to_s,
   quantity: "piece".to_s,
@@ -351,6 +384,7 @@ item1 = InvoicePrinter::Document::Item.new(
   tax: '0'  
 )
 
+if invoiced_trip.typeT == 0
 
 labels = {
   name: 'Invoice',
@@ -372,6 +406,31 @@ labels = {
   tax: 'VAT (' + invoice.vat.to_s + '%)',
   total: 'TURJAN MIHAIL AS872851                                      Total'
 }
+
+else
+
+labels = {
+  name: 'Invoice',
+  provider: 'Supplier:',
+  purchaser: 'Purchaser:',
+  tax_id: 'VAT',
+  tax_id2: 'EUID',
+  payment: 'Forma uhrady',
+  payment_by_transfer: 'Payment by bank transfer on the account bellow:',
+  account_number: 'IBAN:',
+  bank_account_number: '',
+  issue_date: 'Issue Date:',
+  due_date: 'Due Date:',
+  item: invoiced_trip.brand + " ".to_s  + invoiced_trip.model,
+  unit: 'Unit price',
+  quantity: 'U.O.M.',
+  price_per_item: 'VIN',
+  amount: 'Value (€)',
+  tax: 'VAT (' + invoice.vat.to_s + '%)',
+  total: 'TURJAN MIHAIL AS872851                                      Total'
+}
+
+end
 
 
 invoice_inline = InvoicePrinter::Document.new(
@@ -411,8 +470,9 @@ invoice_inline = InvoicePrinter::Document.new(
   # invoice.total_amount - the total invoice amount
   # sum_individual_invoices - the sum of the individual trips amount
 
-  if (invoice.total_amount -  @sum_individual_invoices).abs < 3
+  if (invoice.total_amount -  @sum_individual_invoices).abs < 3 or invoiced_trip.typeT == 1
    
+
     if(!send_invoice)
       invoice.printed = true
       invoice.save
@@ -430,6 +490,7 @@ invoice_inline = InvoicePrinter::Document.new(
 
   else
 
+if invoiced_trip.typeT == 0
     if @total_price_calculated > 0
         render html: "<script>alert('The invoiced amount different than the sum of the component trips!')</script>".to_s.html_safe +
         "<b>".to_s.html_safe + invoice.total_amount.to_s + " €</b>".to_s.html_safe + " - the total amout invoiced (suma totala facturata): ".to_s + "<p>".to_s.html_safe + 
@@ -441,7 +502,7 @@ invoice_inline = InvoicePrinter::Document.new(
         "<b>".to_s.html_safe + invoice.total_amount.to_s + " €</b>".to_s.html_safe + " - the sum of the individal trips (suma tripurilor individuale) ".to_s + 
         "</p>".to_s.html_safe +  "<p>".to_s.html_safe + "<b>".to_s.html_safe +  @sum_individual_invoices.to_s.html_safe + " €</b>".to_s.html_safe + " - the sum of the individual trips CALCULATED using price/km (Suma tripurilor individuale CALCULATE ca folosind pret/km) ".to_s + "</p>".to_s.html_safe
     end
-   
+end   
   end
 
 end

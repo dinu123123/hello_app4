@@ -11,9 +11,11 @@
   <%= @client.Name %>
 </p>
 
+ <% if @invoiced_trip.typeT == 0 %>
+
 <p>
   <strong>Driver:</strong>
-  <%= @driver.FIRSTNAME+" "+@driver.SECONDNAME %>
+  <%= @driver.FIRSTNAME.to+" "+@driver.SECONDNAME %>
 </p>
 
 <p>
@@ -111,21 +113,32 @@
   <%= @invoiced_trip.EndDate %>
 </p>
 
-<p>
-  <strong>Invoice Date:</strong>
-  <%= @invoiced_trip.date %>
-</p>
 
 <p>
   <strong>Diesel Surcharge:</strong>
   <%= @invoiced_trip.surcharge %>
 </p>
 
+<% else %>
+
 <p>
-  <strong>Total amount:</strong>
-  <%= @invoiced_trip.total_amount %>
+  <strong>Invoice Date:</strong>
+  <%= @invoices.find(@invoiced_trip.invoice_id).date %>
 </p>
 
+<p>
+  <strong>Total amount:</strong>
+  <%= @invoices.find(@invoiced_trip.invoice_id).total_amount %>
+</p>
+
+<p>
+  <strong>Shipping:</strong>
+  <%= @invoiced_trip.shipper %>
+</p>
+
+<p>
+  <strong>Vehicle FOTOs</strong>
+</p>
 <table>
   <% @invoiced_trip.images.each_with_index do |image,index| %>
 
@@ -178,6 +191,141 @@
     <% end %>
 
 </table>
+
+
+
+<p>
+  <strong>Bill of Lading</strong>
+</p>
+
+<table>
+  <% @invoiced_trip.bill_of_lading.each_with_index do |image,index| %>
+
+    <% if (index)%6 == 0 %>
+       <tr>
+        </tr>
+    <% end %>
+
+    <td>
+
+    <% if false %>
+     <%= image_tag(url_for(image), height: '200', width: '200') %>
+    <% end %>
+
+      <% if  (image.blob!=nil and image.previewable?) %>
+        
+
+        <%= image_tag(url_for(image.preview(resize: "200x200>")), height: '200', width: '200') %>
+        
+        <% if false %>
+        <%= link_to(image_tag(image.preview(resize: "200x200>")),rails_blob_path(image, disposition: "attachment"))%>
+        <% end %>
+
+      <% elsif (image.blob !=nil and image.variable?)  %>
+        
+        <%= image_tag(url_for(image.variant(resize: "200x200>")), height: '200', width: '200') %>
+         
+        <% if false %>
+        <%= link_to(image_tag(image.variant(resize: "200x200")),rails_blob_path(image, disposition: "attachment"))%>
+        <% end %>
+
+      <% else  %> 
+        <%= image_tag ("/assets/download.jpeg"), class: "img-responsive",  height: '200', width: '200' %>
+      
+      <% end %>
+
+      <br>
+
+       <%if image.blob !=nil  %>
+      
+     <%= link_to 'Download', image, download: image %>
+     <br>
+     <%= link_to 'Remove', delete_image_invoiced_trip_path(image.id), method: :delete, data: { confirm: 'Are you sure?' }%>
+    <% end %>
+        
+
+    </td>
+
+     
+    <% end %>
+
+</table>
+
+
+
+<p>
+  <strong>Export Documents</strong>
+</p>
+
+<table>
+  <% @invoiced_trip.export_document.each_with_index do |image,index| %>
+
+    <% if (index)%6 == 0 %>
+       <tr>
+        </tr>
+    <% end %>
+
+    <td>
+
+    <% if false %>
+     <%= image_tag(url_for(image), height: '200', width: '200') %>
+    <% end %>
+
+      <% if  (image.blob!=nil and image.previewable?) %>
+        
+
+        <%= image_tag(url_for(image.preview(resize: "200x200>")), height: '200', width: '200') %>
+        
+        <% if false %>
+        <%= link_to(image_tag(image.preview(resize: "200x200>")),rails_blob_path(image, disposition: "attachment"))%>
+        <% end %>
+
+      <% elsif (image.blob !=nil and image.variable?)  %>
+        
+        <%= image_tag(url_for(image.variant(resize: "200x200>")), height: '200', width: '200') %>
+         
+        <% if false %>
+        <%= link_to(image_tag(image.variant(resize: "200x200")),rails_blob_path(image, disposition: "attachment"))%>
+        <% end %>
+
+      <% else  %> 
+        <%= image_tag ("/assets/download.jpeg"), class: "img-responsive",  height: '200', width: '200' %>
+      
+      <% end %>
+
+      <br>
+
+       <%if image.blob !=nil  %>
+      
+     <%= link_to 'Download', image, download: image %>
+     <br>
+     <%= link_to 'Remove', delete_image_invoiced_trip_path(image.id), method: :delete, data: { confirm: 'Are you sure?' }%>
+    <% end %>
+        
+
+    </td>
+
+     
+    <% end %>
+
+</table>
+
+
 <br>
+
+
+<% end %>
+
+
+<% if   @invoiced_trip.typeT == 1 %>
+
+<%= link_to 'Edit', edit_invoiced_trip_path(@invoiced_trip) %> |
+<%= link_to 'Back', index_special_path %>
+
+
+<% else %>
+
 <%= link_to 'Edit', edit_invoiced_trip_path(@invoiced_trip) %> |
 <%= link_to 'Back', invoiced_trips_path %>
+
+<% end %>

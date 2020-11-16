@@ -1,5 +1,12 @@
 <%= form_with(model: invoiced_trip, local: true) do |form| %>
-<h2>New Invoiced Trip</h2>
+
+
+<% if @invoiced_trip.typeT == 0 %>
+  <h2>New Invoiced Trip</h2>
+<% else %>
+  <h2>New Sold Vehicle</h2>
+<% end %>
+
   <% if invoiced_trip.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(invoiced_trip.errors.count, "error") %> prohibited this invoiced_trip from being saved:</h2>
@@ -11,6 +18,9 @@
       </ul>
     </div>
   <% end %>
+
+
+<% if @invoiced_trip.typeT == 0 %>
 
 <% if false %>
  <div class="field">
@@ -130,14 +140,78 @@
     <%= form.text_field :total_amount, id: :invoiced_trip_total_amount, :required => 'required' %>
   </div>
 
-  <div class="form_group">
+  <p>
 
-    <%= form.label :name, 'You can introduce multiple pdf/jpg files at once.' %>
+    <div class="form_group">
+
+    <%= form.label :name, 'You can introduce multiple trip pdf/jpg files at once.' %>
     <%= form.file_field :images, multiple: true %>
   </div>
-  <br></br>
+ 
 
-  <div class="actions">
+
+<% else %>
+ <%= form.collection_select :invoice_id, Invoice.all, :id, :name, {prompt: "Invoice"}, :required => 'required' %>
+
+ <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
+
+
+
+
+<div class="field">
+    <%= form.label :brand %>
+    <%= form.text_field :brand, id: :brand %>
+  </div>
+
+
+<div class="field">
+    <%= form.label :model %>
+    <%= form.text_field :model, id: :model %>
+  </div>
+
+
+<div class="field">
+    <%= form.label :vin %>
+    <%= form.text_field :vin, id: :vin %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :km_usage %>
+    <%= form.text_field :km_usage, id: :invoiced_trip_km_usage %>
+  </div>
+
+  <div class="field">
+    <%= form.label :shipper %>
+    <%= form.text_field :shipper, id: :shipper %>
+  </div>
+
+ <p>
+  
+  <div class="form_group">
+    <%= form.label :name, 'Introduce bill of lading.' %>
+    <%= form.file_field :bill_of_lading, multiple: true %>
+  </div>
+
+  <p>
+  <div class="form_group">
+    <%= form.label :name, 'Introduce export document.' %>
+    <%= form.file_field :export_document, multiple: true %>
+  </div>
+ <p>
+  <div class="form_group">
+    <%= form.label :name, 'Introduce vehicle photos' %>
+    <%= form.file_field :images, multiple: true %>
+  </div>
+ 
+<% end %>
+ 
+<p>
+ 
+<div class="actions">
     <%= form.submit %>
   </div>
+
+
+
 <% end %>
