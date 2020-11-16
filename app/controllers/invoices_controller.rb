@@ -136,13 +136,16 @@ invoice_trip_all.each {
 
 client = Client.find(a.client_id)
 
-if invoiced_trip.typeT == 1
- driver = Driver.find_by_SECONDNAME("Turjan")
+
+if invoiced_trip.typeT == 1 or a.DRIVER_id == nil
+ driver = Driver.all.find_by_SECONDNAME("Turjan")
 else
- driver = Driver.find(a.DRIVER_id)
+ driver = Driver.all.find(a.DRIVER_id)
 end
 
-if invoiced_trip.typeT == 1
+
+
+if invoiced_trip.typeT == 1 or a.truck_id == nil
  truck = Truck.all.find_by_NB_PLATE("Office")
 else
  truck = Truck.all.find(a.truck_id)
@@ -384,7 +387,7 @@ item = InvoicePrinter::Document::Item.new(
   tax: '0'  
 )
 
-if invoiced_trip.typeT == 0
+if invoiced_trip.typeT == 0 or invoiced_trip.typeT == nil
 
 labels = {
   name: 'Invoice',
