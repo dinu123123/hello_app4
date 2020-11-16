@@ -271,18 +271,14 @@ respond_to do |format|
   # POST /invoiced_trips
   # POST /invoiced_trips.json
   def create
-
-    
-    @invoiced_trip = InvoicedTrip.new(invoiced_trip_params)
-if invoiced_trip_params.fetch(:brand).to_s.size
   
-
-  @invoiced_trip.StartDate = Invoice.find_by(id: @invoiced_trip.invoice_id).date
-  @invoiced_trip.typeT = true
-  @invoiced_trip.save
-end
-
-
+  @invoiced_trip = InvoicedTrip.new(invoiced_trip_params)
+  
+  if invoiced_trip_params.fetch(:brand).to_s.size
+    @invoiced_trip.StartDate = Invoice.find_by(id: @invoiced_trip.invoice_id).date
+    @invoiced_trip.typeT = true
+    @invoiced_trip.save
+  end
 
   @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
   and pricings.DATETIME <= ? order by pricings.DATETIME desc", @invoiced_trip.client_id, @invoiced_trip.StartDate ])
@@ -296,16 +292,16 @@ end
   end
 
 
-     if @invoiced_trip.images.count>0
-     @invoiced_trip.images.attach(params[:event][:images])
+    if @invoiced_trip.images.count>0
+     @invoiced_trip.images.attach(params[:invoiced_trip][:images])
     end
 
-      if @invoiced_trip.bill_of_lading.count>0
-     @invoiced_trip.bill_of_lading.attach(params[:event][:images])
+    if @invoiced_trip.bill_of_lading.count>0
+     @invoiced_trip.bill_of_lading.attach(params[:invoiced_trip][:images])
     end
 
-      if @invoiced_trip.export_document.count>0
-     @invoiced_trip.export_document.attach(params[:event][:images])
+    if @invoiced_trip.export_document.count>0
+     @invoiced_trip.export_document.attach(params[:invoiced_trip][:images])
     end
     
     respond_to do |format|
