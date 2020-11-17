@@ -158,7 +158,7 @@ end
 
 
 @price_distance = 0
-if client.kprice>0 and invoiced_trip.typeT == 0
+if client.kprice>0 and (invoiced_trip.typeT == 0 or ivoiced_trip.typeT == nil)
   @price_distance = a.km*a.price_per_km
 else
   @price_distance = a.total_amount
@@ -493,7 +493,7 @@ invoice_inline = InvoicePrinter::Document.new(
 
   else
 
-if invoiced_trip.typeT == 0
+if invoiced_trip.typeT == 0 or ivoiced_trip.typeT == nil
     if @total_price_calculated > 0
         render html: "<script>alert('The invoiced amount different than the sum of the component trips!')</script>".to_s.html_safe +
         "<b>".to_s.html_safe + invoice.total_amount.to_s + " €</b>".to_s.html_safe + " - the total amout invoiced (suma totala facturata): ".to_s + "<p>".to_s.html_safe + 
