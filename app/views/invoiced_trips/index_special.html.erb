@@ -89,7 +89,13 @@ tr:nth-child(even) {
   <td bgcolor="#b6f666" style="font-weight:bold"><%= @clients.find(invoiced_trip.client_id).Name %></td>
 
   <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y") %></td>
+  
+ <% if false %>
+
   <td bgcolor="#b6f666" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).total_amount + @invoices.find(invoiced_trip.invoice_id).total_amount*@invoices.find(invoiced_trip.invoice_id).vat/100  %></td>
+  
+<% end %>
+
   <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.shipper %></td>
   <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.bill_of_lading.count %></td>
 
