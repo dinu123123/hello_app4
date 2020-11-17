@@ -134,7 +134,7 @@ else
                   invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC', special ? 1:0, to_datetime(@date_from), to_datetime(@date_to)])
 end  
 
-
+end
 
     if @invoiced_trips
           arrayInvoicedTrips.concat(@invoiced_trips) 
