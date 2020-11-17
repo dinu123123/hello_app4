@@ -80,12 +80,6 @@ end
 
 
 
-    @total_loss = @invoiced_trips.sum(&:km) -  @invoiced_trips.sum(&:km_evogps) 
-
-    @total_loss_percentage = 0
-    if @invoiced_trips.sum(&:km_evogps) >0
-    @total_loss_percentage =  (@total_loss*100)/@invoiced_trips.sum(&:km_evogps)
-    end
 
 @invoiced_trips.each_with_index do |invoiced_trip, j|
 
