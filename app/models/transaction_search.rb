@@ -6,7 +6,9 @@ class TransactionSearch
   def initialize(params, large =false)
 
     params ||= {}
+
     @date_from = parsed_date(params[:date_from],(DateTime.now - 10.days).strftime('%Y-%m-%dT%H:%M') )
+
 
     @date_to = parsed_date(params[:date_to],  (DateTime.now+1.day).strftime('%Y-%m-%dT%H:%M') )
     @driver_id = parsed_driver_id(params[:driver_id], 1)
@@ -125,6 +127,9 @@ else
 end
 
 else
+
+    @date_from = parsed_date(params[:date_from],(DateTime.now - 150.days).strftime('%Y-%m-%dT%H:%M') )
+
 
   if @client_id > 0 
                 @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where brand IS NOT NULL and DRIVER_id IS NULL and 
