@@ -188,7 +188,7 @@ end
 if invoiced_trip.typeT == 1
 
 item = InvoicePrinter::Document::Item.new(
-  name: "VIN " + invoiced_trip.vin,
+  name: "VIN " + invoiced_trip.vin.to_s,
   tax: (invoice.vat/100*invoice.total_amount).round(2).to_s,
   amount: invoice.total_amount.to_s
 )
@@ -424,7 +424,7 @@ labels = {
   bank_account_number: '',
   issue_date: 'Issue Date:',
   due_date: 'Due Date:',
-  item: invoiced_trip.brand + " ".to_s  + invoiced_trip.model,
+  item: invoiced_trip.brand.to_s + " ".to_s  + invoiced_trip.model.to_s,
   unit: 'Unit price',
   quantity: 'U.O.M.',
   price_per_item: 'VIN',

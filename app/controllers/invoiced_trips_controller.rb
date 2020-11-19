@@ -268,7 +268,7 @@ respond_to do |format|
   
   @invoiced_trip = InvoicedTrip.new(invoiced_trip_params)
   
-  if invoiced_trip_params.fetch(:brand).to_s.size
+  if  @invoiced_trip.brand != nil #_params.fetch(:brand).to_s.size
     @invoiced_trip.StartDate = Invoice.find_by(id: @invoiced_trip.invoice_id).date
     @invoiced_trip.typeT = true
     @invoiced_trip.save
@@ -348,7 +348,7 @@ respond_to do |format|
         @driver = Driver.find(@invoiced_trip.DRIVER_id)
         @client = Client.find(@invoiced_trip.client_id)
       else
-        @truck  = @invoiced_trip.brand + " ".to_s + @invoiced_trip.model + " ".to_s + @invoiced_trip.vin
+	@truck  = @invoiced_trip.brand.to_s + " ".to_s + @invoiced_trip.model.to_s + " ".to_s + @invoiced_trip.vin.to_s
         @driver = "".to_s
         @client = Client.find(@invoiced_trip.client_id)
        end      
