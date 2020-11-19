@@ -31,7 +31,7 @@
   </div>
 <% end %>
 
- <%= form.collection_select :invoice_id, Invoice.all, :id, :name, {prompt: "Invoice"}, :required => 'required' %>
+ <%= form.collection_select :invoice_id, Invoice.all.order('"id" DESC'), :id, :name, {prompt: "Invoice"}, :required => 'required' %>
 
  <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
  <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
