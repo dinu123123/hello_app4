@@ -20,7 +20,9 @@
   <% end %>
 
 
-<% if @invoiced_trip.typeT == 0 %>
+
+
+<% if @invoiced_trip.typeT == nil or @invoiced_trip.typeT == 0 %>
 
 <% if false %>
  <div class="field">
