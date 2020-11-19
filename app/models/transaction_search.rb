@@ -7,8 +7,11 @@ class TransactionSearch
 
     params ||= {}
 
-    @date_from = parsed_date(params[:date_from],(DateTime.now - 10.days).strftime('%Y-%m-%dT%H:%M') )
+    @date_from = parsed_date(params[:date_from], (DateTime.now - 10.days).strftime('%Y-%m-%dT%H:%M'))
 
+    if large == true
+          @date_from = parsed_date(params[:date_from], (DateTime.now.beginning_of_year).strftime('%Y-%m-%dT%H:%M'))
+    end
 
     @date_to = parsed_date(params[:date_to],  (DateTime.now+1.day).strftime('%Y-%m-%dT%H:%M') )
     @driver_id = parsed_driver_id(params[:driver_id], 1)
@@ -228,17 +231,8 @@ end
 
 
 def scope_combinex_pallets_index
-
-
-    params ||= {}
-    @date_from = parsed_date(params[:date_from],(DateTime.now - 300.days).strftime('%Y-%m-%dT%H:%M') )
-
-   
-
-
-
-  arrayActivities = Array.new
-
+params ||= {}
+arrayActivities = Array.new
 
 if @client_id > 0 
 
