@@ -131,9 +131,6 @@ end
 
 else
 
-    @date_from = parsed_date(params[:date_from],(DateTime.now - 150.days).strftime('%Y-%m-%dT%H:%M') )
-
-
   if @client_id > 0 
                 @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where brand IS NOT NULL and DRIVER_id IS NULL and 
                   invoiced_trips."StartDate" >= ? and invoiced_trips."StartDate" <= ? and invoiced_trips.client_id = ? ORDER BY invoiced_trips."StartDate" DESC, 
