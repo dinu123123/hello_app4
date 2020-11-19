@@ -73,7 +73,7 @@ end
  def index_special
   #  if(current_user.email.eql?  "ameropa.logistics@gmail.com")
   #  @invoiced_trips = InvoicedTrip.all
-    @search = TransactionSearch.new(params[:search])
+    @search = TransactionSearch.new(params[:search], true)
 
 
 
