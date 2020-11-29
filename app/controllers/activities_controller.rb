@@ -12,8 +12,6 @@ def edit_individual
     @invoiced_trips = InvoicedTrip.all
 
     @activities = Activity.find(params[:activity_ids])
-
-
 end
 
 def update_individual
