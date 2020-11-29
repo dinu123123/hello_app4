@@ -53,8 +53,13 @@ function checkAll(check_all){
  
  <br> 
   <h3> Download Combinex list of activities as:
-  <%= link_to 'PDF',   mission52_path(format: "pdf", client_id: "6") %> or
+  <%= link_to 'PDF',   mission52_path(format: "pdf", client_id: "6") %> 
+
+<% if false %> 
+  or
   <%= link_to "Excel", activities_path(format: "xls") %> file.
+<% end %> 
+
 <br>
   Create <%= link_to 'new activity', new_activity_path %>.
 
