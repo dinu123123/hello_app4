@@ -51,19 +51,18 @@ function checkAll(check_all){
 
 <ul>
  
-  <li>
-  <p>
-  <h4> Download Combinex start of the day as Excel file:
-  <%= link_to "Excel", activities_path(format: "xls") %> 
-  <%= link_to 'PDF',   activities_path(format: "pdf") %>
+ <br> 
+  <h3> Download Combinex list of activities as:
+  <%= link_to 'PDF',   activities_path(format: "pdf") %> or
+  <%= link_to "Excel", activities_path(format: "xls") %> file.
+<br>
+  Create <%= link_to 'new activity', new_activity_path %>.
 
-  </h4> 
-  </p>
-  </li>
+  </h3> 
+  
 
 
-  <%= link_to 'New Activity', new_activity_path %>
-
+  
 
   <p>
     <%= submit_tag "Edit Checked" %>

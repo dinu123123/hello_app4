@@ -13,7 +13,7 @@ class TransactionSearch
           @date_from = parsed_date(params[:date_from], (DateTime.now.beginning_of_year).strftime('%Y-%m-%dT%H:%M'))
     end
 
-    @date_to = parsed_date(params[:date_to],  (DateTime.now+1.day).strftime('%Y-%m-%dT%H:%M') )
+    @date_to = parsed_date(params[:date_to],  DateTime.now.strftime('%Y-%m-%dT%H:%M') )
     @driver_id = parsed_driver_id(params[:driver_id], 1)
     @truck_id = parsed_truck_id(params[:truck_id], 1)
     @client_id = parsed_client_id(params[:client_id], 1)
