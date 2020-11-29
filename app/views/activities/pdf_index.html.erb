@@ -75,7 +75,7 @@ table, th, td {
       
 
 <% if activity.dispatcher_id != nil %>
-        <td bgcolor= <%=bg_color %> ><%= @dispatchers.find(activity.dispatcher_id).FIRSTNAME + @dispatchers.find(activity.dispatcher_id).SECONDNAME[0] %></td>    
+        <td bgcolor= <%=bg_color %> ><%= @dispatchers.find(activity.dispatcher_id).FIRSTNAME%></td>    
 <% else %>
         <td bgcolor= "FFAC00"> NO </td>    
 <% end %>
