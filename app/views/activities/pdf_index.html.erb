@@ -103,12 +103,6 @@ table, th, td {
           <% end %> 
 
 
-        <%= if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id)
-         @trailers.find(activity.trailer_id).NB_PLATE
-         else
-          " "
-         end %></td>
-
         
 <td bgcolor= <%=bg_color %> > 
 <% if activity.invoiced_trip_id != nil%>   
