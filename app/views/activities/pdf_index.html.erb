@@ -97,7 +97,7 @@ table, th, td {
 <% if activity.DRIVER_id!=nil  and @drivers.exists?(activity.DRIVER_id) %>
 
    
-    <%= @drivers.find(activity.DRIVER_id).FIRSTNAME.split.first + " "+ @drivers.find(activity.DRIVER_id).SECONDNAME.split.first  %>
+    <%= @drivers.find(activity.DRIVER_id).FIRSTNAME.split.first[0] + "."+ @drivers.find(activity.DRIVER_id).SECONDNAME.split.first  %>
  <% else %>
             -     
           <% end %> 
