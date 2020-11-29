@@ -117,7 +117,7 @@ table, th, td {
         <td bgcolor= <%=bg_color %> ><%= activity.starting_time.try(:strftime,"%H:%M") %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.driving_time_left.try(:strftime,"%H:%M") %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.end_time.try(:strftime,"%H:%M") %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.night_break %></td>
+        <td bgcolor= <%=bg_color %> ><%= activity.night_break.try(:strftime,"%H") %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.weekend_break %></td>
 
 
