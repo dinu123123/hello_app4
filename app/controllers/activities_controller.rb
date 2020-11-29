@@ -12,6 +12,8 @@ def edit_individual
     @invoiced_trips = InvoicedTrip.all
 
     @activities = Activity.find(params[:activity_ids])
+
+
 end
 
 def update_individual
@@ -115,8 +117,24 @@ end
      respond_to do |format|
         format.html
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+        format.pdf do
+              render pdf: "s",
+              page_size: 'A4',
+              template: "activities/pdf_index.html.erb",
+              layout: "pdf.html",
+              orientation: "Portrait",
+              lowquality: true,
+              zoom: 1,
+              dpi: 75
+        end
+
+
       end
   
+
+
+
+
 
   end
 
@@ -255,7 +273,7 @@ end
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
       params.require(:activity).permit(:date, :DRIVER_id, :truck_id, :trailer_id, :client_id, :driver_expense_id, 
-        :truck_expense_id, :start_address, :dest_addresses, :references, :volume, :tank, :comments, :email_text, :pallet,
+        :truck_expense_id, :start_address, :dest_addresses, :references, :volume, :tank, :comments, :client_comment, :email_text, :pallet,
         :email_counter,:start_ep, :start_dp , :start_op, :dest1_address, :dest1_comments, 
         :dest1_unloaded_ep, :dest1_unloaded_dp, :dest1_unloaded_op, :dest1_loaded_ep, :dest1_loaded_dp,
         :dest1_loaded_op, :dest2_address, :dest2_comments, :dest2_unloaded_ep, :dest2_unloaded_dp,

@@ -1,7 +1,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.5.1' 
+ruby '2.4.4' 
 
 
 gem 'rails',        '5.2.1'
@@ -45,3 +45,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :development do
     gem 'rails_db',        '1.4.0'
 end
+
+
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'

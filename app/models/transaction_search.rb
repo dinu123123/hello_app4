@@ -7,7 +7,7 @@ class TransactionSearch
 
     params ||= {}
 
-    @date_from = parsed_date(params[:date_from], (DateTime.now - 10.days).strftime('%Y-%m-%dT%H:%M'))
+    @date_from = parsed_date(params[:date_from], (DateTime.now).strftime('%Y-%m-%dT%H:%M'))
 
     if large == true
           @date_from = parsed_date(params[:date_from], (DateTime.now.beginning_of_year).strftime('%Y-%m-%dT%H:%M'))
