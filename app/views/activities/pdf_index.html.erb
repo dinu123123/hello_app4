@@ -110,7 +110,7 @@ table, th, td {
         <%= @invoiced_trips.find(activity.invoiced_trip_id).info %>
 
     <% else %>
-
+  <%= activity.references %>
 <% end %>
 
 
