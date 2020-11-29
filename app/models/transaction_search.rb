@@ -13,10 +13,14 @@ class TransactionSearch
           @date_from = parsed_date(params[:date_from], (DateTime.now.beginning_of_year).strftime('%Y-%m-%dT%H:%M'))
     end
 
+
     @date_to = parsed_date(params[:date_to],  DateTime.now.strftime('%Y-%m-%dT%H:%M') )
     @driver_id = parsed_driver_id(params[:driver_id], 1)
     @truck_id = parsed_truck_id(params[:truck_id], 1)
     @client_id = parsed_client_id(params[:client_id], 1)
+
+
+
 
     @dispatcher_id = parsed_dispatcher_id(params[:dispatcher_id], 1)
 
@@ -163,6 +167,7 @@ end
 
 def scope_events_index
   arrayEvents = Array.new
+
 
 if @client_id > 0 
 
@@ -312,6 +317,9 @@ def scope_activities_index
 
 #   and events."DATE" IN (SELECT max("DATE") FROM events) 
            
+
+
+
 
 if @dispatcher_id > 0
 

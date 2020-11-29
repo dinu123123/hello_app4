@@ -57,12 +57,13 @@ end
 
   get "/activities/index", as: "mission5"
   get "/activities/CombinexPallets", as: "mission51"
+  get "/activities/pdf_index", as: "mission52"
 
   get "/periodics/index", as: "mission6" 
   get "/repairs/index", as: "mission7" 
 
 
-  get "/invoiced_trips/index", as: "mission3"
+  get "/invoiced_trips/pdf_index", as: "mission3"
   get "/invoiced_trips/index_special", as: "index_special"
   get "/invoiced_trips/new_special", as: "new_special"
 

@@ -108,7 +108,11 @@ end
     end
 
     @search = TransactionSearch.new(params[:search])
+
+
     @activities = @search.scope_activities_index
+
+
 
 
 
@@ -116,7 +120,52 @@ end
         format.html
         format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
         format.pdf do
-              render pdf: "s",
+              render pdf: "activities",
+              page_size: 'A4',
+              template: "activities/pdf_index.html.erb",
+              layout: "pdf.html",
+              orientation: "Portrait",
+              lowquality: true,
+              zoom: 1,
+              dpi: 75
+        end
+
+
+      end
+  
+
+
+
+
+
+  end
+
+
+ def pdf_index
+
+
+    @drivers = Driver.all
+    @trucks = Truck.all
+    @trailers = Trailer.all
+    @clients = Client.all
+    @dispatchers = Dispatcher.all
+    @invoiced_trips = InvoicedTrip.all
+
+   
+
+    @search = TransactionSearch.new(params)
+
+  
+    @activities = @search.scope_activities_index
+
+
+
+
+     respond_to do |format|
+        format.html
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+        format.pdf do
+              render pdf: "activities",
               page_size: 'A4',
               template: "activities/pdf_index.html.erb",
               layout: "pdf.html",

@@ -11,23 +11,23 @@ table, th, td {
 </style>
 
     <tr>
+      <th></th>
       <th>Date</th>
-      <th>Dispatcher</th>
-      <th>Truck</th>
-      <th>Trailer</th>
-       <th>TripInfo</th>
+      <th>Dispatch</th>
+      <th>T/T/D</th>
+      <th>Trip</th>
       
-      <th>Starting Time</th>
-      <th>Driving Time Left</th>
-      <th>End Driving Time</th>
-      <th>Night Break</th>
-      <th>Weekend Break</th>
+      <th>TStart</th>
+      <th>TLeft</th>
+      <th>TEnd</th>
+      <th>NightBr</th>
+      <th>WkBr</th>
       <th>Comments</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @activities.each do |activity| %>
+    <% @activities.each_with_index do |activity,i| %>
     <% bg_color = "white" %>
 
     <% if activity.date == Time.now.utc.to_date%>
@@ -69,7 +69,7 @@ table, th, td {
 
 
       <tr>
-
+<td bgcolor= <%=bg_color %> ><%= i+1 %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.date.strftime("%d/%m") %></td>
           
       
@@ -81,8 +81,29 @@ table, th, td {
 <% end %>
 
 
-        <td bgcolor= <%=bg_color %> ><%= @trucks.find(activity.truck_id).NB_PLATE %></td>
-        <td bgcolor= <%=bg_color %> ><%= if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id)
+        <td bgcolor= <%=bg_color %> >
+
+
+  <% if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id) %>
+    <%=             @trailers.find(activity.trailer_id).NB_PLATE    %>   
+          <% else %>
+            -
+          <% end %> 
+
+
+          <%= "/" + @trucks.find(activity.truck_id).NB_PLATE + "/" %>
+
+
+<% if activity.DRIVER_id!=nil  and @drivers.exists?(activity.DRIVER_id) %>
+
+   
+    <%= @drivers.find(activity.DRIVER_id).FIRSTNAME.split.first + " "+ @drivers.find(activity.DRIVER_id).SECONDNAME.split.first  %>
+ <% else %>
+            -     
+          <% end %> 
+
+
+        <%= if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id)
          @trailers.find(activity.trailer_id).NB_PLATE
          else
           " "
