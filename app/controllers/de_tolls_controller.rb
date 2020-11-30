@@ -17,7 +17,7 @@ class DeTollsController < ApplicationController
   # GET /de_tolls.json
   def index
 
-    @search = TransactionSearch.new(params[:search], true)
+    @search = TransactionSearch.new(params[:search], 3)
 
     #@de_tolls = DeToll.all.order("platenr ASC, date ASC, time ASC ")
 

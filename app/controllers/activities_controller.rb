@@ -107,7 +107,7 @@ end
       end
     end
 
-    @search = TransactionSearch.new(params[:search])
+    @search = TransactionSearch.new(params[:search],1)
 
 
     @activities = @search.scope_activities_index
@@ -153,7 +153,7 @@ end
 
    
 
-    @search = TransactionSearch.new(params)
+    @search = TransactionSearch.new(params,1)
 
   
     @activities = @search.scope_activities_index

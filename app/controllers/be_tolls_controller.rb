@@ -4,7 +4,7 @@ class BeTollsController < ApplicationController
   # GET /be_tolls
   # GET /be_tolls.json
   def index
-   @search = TransactionSearch.new(params[:search], true)
+   @search = TransactionSearch.new(params[:search], 3)
 
    if @search.truck_id == 0
       @be_tolls = BeToll.find_by_sql(["SELECT * FROM be_tolls where  
