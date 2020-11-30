@@ -182,7 +182,7 @@ function checkAll(check_all){
 
         <td bgcolor= <%=bg_color %> >
           <% if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id) %>
-             @trailers.find(activity.trailer_id).NB_PLATE      
+             <%=  @trailers.find(activity.trailer_id).NB_PLATE  %>   
           <% else %>
             -     
           <% end %>
