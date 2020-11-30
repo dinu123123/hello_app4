@@ -14,11 +14,28 @@
        <%= +" /".to_s + @trailers.find(activity.trailer_id).NB_PLATE %>
      <% end %>
        
+
+      <% if activity.night_break == nil or activity.night_break == 0 %>
+          <div class="field">
+            <%= f.label :night_break, "Night break" %>
+            <%= f.time_select :night_break %>
+          </div>
+      <% end %>
+
+      <% if activity.weekend_break == nil or activity.weekend_break == 0 %>
+        <div class="field">
+          <%= f.label :weekend_break, "Weekend break" %>
+          <%= f.number_field :weekend_break %>
+        </div>
+      <% end %>
+
       <div class="field">
         <%= f.label :comments %>
         <%= f.text_area :comments , size: "100x11" %>
       </div>
-      
+
+     
+
     <% end %>
   <% end %>
   <div class="actions">
