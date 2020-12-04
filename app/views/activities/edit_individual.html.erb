@@ -11,7 +11,7 @@
 
      <%= @trucks.find(activity.truck_id).NB_PLATE %>
       <% if @trailers != nil and activity.trailer_id != nil and @trailers.find(activity.trailer_id) != nil %>
-       <%= +" /".s + @trailers.find(activity.trailer_id).NB_PLATE %>
+       <%= +" /".to_s + @trailers.find(activity.trailer_id).NB_PLATE %>
      <% end %>
        
       <div class="field">
