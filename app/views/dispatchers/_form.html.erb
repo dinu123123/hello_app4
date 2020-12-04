@@ -1,0 +1,52 @@
+<%= form_with(model: dispatcher, local: true) do |form| %>
+  <% if dispatcher.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(dispatcher.errors.count, "error") %> prohibited this dispatcher from being saved:</h2>
+
+      <ul>
+      <% dispatcher.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :cnp %>
+    <%= form.text_area :cnp %>
+  </div>
+
+  <div class="field">
+    <%= form.label :FIRSTNAME %>
+    <%= form.text_area :FIRSTNAME %>
+  </div>
+
+  <div class="field">
+    <%= form.label :SECONDNAME %>
+    <%= form.text_area :SECONDNAME %>
+  </div>
+
+  <div class="field">
+    <%= form.label :INFO %>
+    <%= form.text_area :INFO %>
+  </div>
+
+  <div class="field">
+    <%= form.label :DESCRIPTION %>
+    <%= form.text_area :DESCRIPTION %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_date %>
+    <%= form.date_select :start_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end_date %>
+    <%= form.date_select :end_date %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

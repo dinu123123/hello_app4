@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Cnp:</strong>
+  <%= @dispatcher.cnp %>
+</p>
+
+<p>
+  <strong>Firstname:</strong>
+  <%= @dispatcher.FIRSTNAME %>
+</p>
+
+<p>
+  <strong>Secondname:</strong>
+  <%= @dispatcher.SECONDNAME %>
+</p>
+
+<p>
+  <strong>Info:</strong>
+  <%= @dispatcher.INFO %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @dispatcher.DESCRIPTION %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @dispatcher.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @dispatcher.end_date %>
+</p>
+
+<%= link_to 'Edit', edit_dispatcher_path(@dispatcher) %> |
+<%= link_to 'Back', dispatchers_path %>
