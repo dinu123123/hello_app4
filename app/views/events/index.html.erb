@@ -72,7 +72,8 @@
         <th>Driver CNP</th>
         <th>First Name</th>
         <th>Second Name</th>
-        <th>Client Name</th>
+        <th>Client</th>
+        <th>Dispatcher</th>
         <th>Truck</th>
         <th>Trailer</th>
         <th>Fuel</th>
@@ -104,6 +105,7 @@
 <% end %>
 
       <td><%= @clients.find(event.client_id).Name %></td>
+      <td><%= @dispatchers.find(event.dispatcher_id).FIRSTNAME+" ".to_s + @dispatchers.find(event.dispatcher_id).SECONDNAME %></td>
 
       <td><%= @trucks.find(event.truck_id).NB_PLATE %></td>
 

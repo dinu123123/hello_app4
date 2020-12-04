@@ -1,0 +1,27 @@
+<%= form_tag  update_individual_activities_path, method: :put do %>
+  <% @activities.each do |activity| %>
+    <%= fields_for "activities[]", activity do |f| %>
+
+
+     <%= @drivers.find(activity.DRIVER_id).CNP.split(//).last(0).join+" "+
+                                         @drivers.find(activity.DRIVER_id).FIRSTNAME.split.first+" "+
+                                         @drivers.find(activity.DRIVER_id).SECONDNAME.split.first + " /"%> 
+
+    
+
+     <%= @trucks.find(activity.truck_id).NB_PLATE %>
+      <% if @trailers != nil and activity.trailer_id != nil and @trailers.find(activity.trailer_id) != nil %>
+       <%= +" /".s + @trailers.find(activity.trailer_id).NB_PLATE %>
+     <% end %>
+       
+      <div class="field">
+        <%= f.label :comments %>
+        <%= f.text_area :comments , size: "100x11" %>
+      </div>
+      
+    <% end %>
+  <% end %>
+  <div class="actions">
+    <%= submit_tag "Update" %>
+  </div>
+<% end %>

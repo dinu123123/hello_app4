@@ -1,5 +1,5 @@
 class TransactionSearch 
-  attr_reader :date_from, :date_to, :truck_id, :driver_id, :client_id, :truck_events, :periodic_category_id
+  attr_reader :date_from, :date_to, :truck_id, :driver_id, :client_id, :truck_events, :periodic_category_id, :dispatcher_id
 
   
 
@@ -17,6 +17,10 @@ class TransactionSearch
     @driver_id = parsed_driver_id(params[:driver_id], 1)
     @truck_id = parsed_truck_id(params[:truck_id], 1)
     @client_id = parsed_client_id(params[:client_id], 1)
+
+    @dispatcher_id = parsed_dispatcher_id(params[:dispatcher_id], 1)
+
+
 
     @periodic_category_id = parsed_periodic_category_id(params[:periodic_category_id], 1)
 
@@ -306,7 +310,34 @@ end
 def scope_activities_index
   arrayActivities = Array.new
 
-if @client_id > 0 
+#   and events."DATE" IN (SELECT max("DATE") FROM events) 
+           
+
+if @dispatcher_id > 0
+
+#     if Event.all.size > 0
+#        Truck.all.each do |truck|
+#              @localEvent = Event.find_by_sql(['SELECT truck_id, "START_END", MAX ("DATE") FROM events where events.dispatcher_id = ? and events.truck_id = ?    ', 
+#              @dispatcher_id,  truck.id ])
+
+
+#              @localEvent.each { |item|
+#                if (item.START_END == true)
+#                  arrayActivities.concat( Activity.find_by_sql(['SELECT * FROM activities where activities."DATE" = ? and activities.truck_id = ?', Date.today, item.truck_id]))
+#                end
+#              }
+
+#           end
+           
+#     end
+
+
+    arrayActivities.concat( Activity.find_by_sql(['SELECT * FROM activities where activities."DATE" = ? and activities.dispatcher_id = ?', Date.today, @dispatcher_id]))
+
+
+
+else
+  if @client_id > 0
 
       if @driver_id > 0 and @truck_id == 0
                     @activities = Activity.find_by_sql(['SELECT * FROM activities where activities.client_id = ? and activities."DRIVER_id" = ? 
@@ -337,7 +368,7 @@ if @client_id > 0
                         end  
             end
 
-else 
+  else 
       if @driver_id > 0 and @truck_id == 0
               @activities = Activity.find_by_sql(['SELECT * FROM activities where activities."DRIVER_id" = ? 
                 and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', 
@@ -366,6 +397,9 @@ else
                   arrayActivities.concat(@activities) 
                   end  
       end
+ end
+
+
 end
 
 return  arrayActivities
@@ -990,6 +1024,12 @@ end
   end
 
 def parsed_client_id (n1, default)
+    n1.to_i
+    rescue ArgumentError, TypeError
+    default.to_i
+  end
+
+def parsed_dispatcher_id (n1, default)
     n1.to_i
     rescue ArgumentError, TypeError
     default.to_i

@@ -66,16 +66,21 @@
 
   <div class="column">  
 
-<h3>Drivers:</h3>
+<h3>Company Employees:</h3>
 <table style="width:100%"  border="1">
   <tr>
-    <th> <%= link_to 'New Driver', new_driver_path %> </th>
+    <th> <%= link_to 'All Dispatchers', dispatchers_path %> </th>
+  </tr>
+   <tr>
+    <th> <%= link_to 'New Dispatcher', new_dispatcher_path %> </th>
   </tr>
   <tr>
     <th> <%= link_to 'All Drivers', drivers_path %> </th>
   </tr>
-  </table>
-
+  <tr>
+    <th> <%= link_to 'New Driver', new_driver_path %> </th>
+  </tr>
+</table>
 
 <h3>Driver Expenses:</h3>
   <table style="width:100%"  border="1">

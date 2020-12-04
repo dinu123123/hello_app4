@@ -93,6 +93,7 @@ redirect_to events_url, notice: "DB sucessfully imported  lines!"
     @trucks = Truck.all
     @trailers = Trailer.all
     @clients = Client.all
+    @dispatchers = Dispatcher.all
     respond_to do |format|
         format.html
         format.csv { send_data Event.all.to_csv_special, filename: "events-#{Time.now.strftime('s%S/m%M/h%H/')+Date.today.strftime('d%d/m%m/y%Y')}.csv" }   
@@ -991,7 +992,7 @@ end
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
       #params.require(:event).permit(:DATE, :DRIVER_id, :truck_id, :client_id, :START_END, :picture)
-      params.require(:event).permit(:DATE, :DRIVER_id, :truck_id, :trailer_id, :client_id, :START_END, :volume, :km, :expected_date, images: [] )
+      params.require(:event).permit(:DATE, :DRIVER_id, :truck_id, :trailer_id, :client_id, :dispatcher_id, :START_END, :volume, :km, :expected_date, images: [] )
     end
 
 

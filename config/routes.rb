@@ -1,6 +1,7 @@
   Rails.application.routes.draw do
   
   
+  resources :dispatchers
   resources :periodics_categories
   resources :pricings
   resources :trailers
@@ -177,7 +178,11 @@ get "home/download_pdf"
   end
 
   resources :activities  do
-  collection { post :import}
+    collection do
+      post :import 
+      post :edit_individual 
+      put :update_individual 
+    end
   end
 
   resources :activities  do

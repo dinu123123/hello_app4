@@ -33,6 +33,7 @@
 <% end %>
 
 <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
+<%= form.collection_select :dispatcher_id, Dispatcher.all, :id, :FIRSTNAME, {prompt: "Dispatcher Name"}, :required => 'required' %>
 <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
 <%= form.collection_select :trailer_id, Trailer.all, :id, :NB_PLATE, {prompt: "Trailer Nb Plate"} %>
 

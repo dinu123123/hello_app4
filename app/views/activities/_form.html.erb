@@ -29,8 +29,22 @@
     max-height:100px;
 }
 
-
-
+.container {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+.navi,
+.infoi {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.infoi {
+  z-index: 10;
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -92,6 +106,9 @@ legend {
 
 <%= form.collection_select :driver_expense_id, DriverExpense.all, :id, :id_with_info, {prompt: "DriverExpense"} %>
 <%= form.collection_select :truck_expense_id, TruckExpense.all, :id, :id_with_info, {prompt: "TruckExpense"} %>
+ 
+<%= form.collection_select :dispatcher_id, Dispatcher.all, :id, :FIRSTNAME, {:include_blank => 'All Dispatchers'} %>
+
   </div>
 
 
@@ -99,10 +116,6 @@ legend {
 
 <div class="textAreaColumn1">
   
-  <div class="field">
-    <%= form.label :name_advisor, "Dispatcher Name(s)" %>
-    <%= form.text_area :name_advisor %>
-  </div>
 
   <div class="field">
     <%= form.label :km_destination, "Km destination" %>
@@ -204,13 +217,19 @@ legend {
 
 
   <div class="field">
-    <%= form.label :pallets_paid_out, "Pallet inv paid (reference|price|invoice Nb)" %>
+    <%= form.label :pallets_paid_out, "Pallet inv paid      (reference|price|invoice Nb)" %>
     <%= form.text_area :pallets_paid_out %>
   </div>
 
   <div class="field">
-    <%= form.label :pallets_paid_in, "Pallet inv collected (reference|price|invoice Nb)" %>
+    <%= form.label :pallets_paid_in,  "Pallet inv collected (reference|price|invoice Nb)" %>
     <%= form.text_area :pallets_paid_in %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :tanking_location, "Location where truck has tanked diesel/adblue" %>
+    <%= form.text_area :tank %>
   </div>
 
 </div>
@@ -222,17 +241,10 @@ legend {
 <br>
 <br>
 
-<div class="textAreaColumn">
 
-  <div class="field">
-    <%= form.label :tanking_location %>
-    <%= form.text_area :tank %>
-  </div>
+<div id="container">
 
-  <div class="field">
-    <%= form.label :comments %>
-    <%= form.text_area :comments %>
-  </div>
+
 
 
   <div class="field">
@@ -241,27 +253,17 @@ legend {
   </div>
 
 
+  <div class="field">
+    <%= form.label :comments, "Dispatcher comments regarding hourly activities!" %>
+    <%= form.text_area :comments , size: "100x14" %>
   </div>
 
-
-<br/>
-<br/>
-
-<br/>
-<br/>
-
-
-
-
-<br>
+  </div>
 
   <div class="form_group">
     <%= form.label :name, 'You can introduce multiple pdf/jpg files at once. (AMENZI,PARCARI, etc)' %>
     <%= form.file_field :images, multiple: true %>
   </div>
-
-
-
 
 <fieldset>
   <p>Added text and files for the email to be sent to the client:</p>  
@@ -274,8 +276,6 @@ legend {
   <div class="form_group" style="text-align: left; font-weight: bold;">
     <%= form.label :name, 'You can introduce multiple TRIP pdf/jpg files at once.' %>
     <%= form.file_field :trip_images, multiple: true %>
-    
-
   </div>
 
 

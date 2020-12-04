@@ -5,7 +5,7 @@
   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:html="http://www.w3.org/TR/REC-html40">
   <Worksheet ss:Name="activities">
-    <Table>
+  <Table>
       <Row>
       <Cell><Data ss:Type="String">Vehicle</Data></Cell>
       <Cell><Data ss:Type="String">Trailer</Data></Cell>  
@@ -37,7 +37,7 @@
 
 
             </Row>
-    <% @activities1.each do |activity| %>
+    <% @activities.each do |activity| %>
       <Row>
         <Cell><Data ss:Type="String"><%= @trucks.find(activity.truck_id).NB_PLATE %></Data></Cell>
         <Cell><Data ss:Type="String"><%= if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id)
@@ -54,7 +54,7 @@
          <Cell><Data ss:Type="String"><%= activity.night_break.try(:strftime,"%H:%M") %></Data></Cell>
          <Cell><Data ss:Type="String"><%= activity.weekend_break %></Data></Cell>
          <Cell><Data ss:Type="String"><%= activity.start_ep.to_s %></Data></Cell>
-         <Cell><Data ss:Type="String"><%= activity.comments.to_s %></Data></Cell>
+         <Cell><Data ss:Type="Text"><%= activity.comments%></Data></Cell>
 
 
 
