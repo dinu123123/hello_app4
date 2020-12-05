@@ -12,9 +12,7 @@ table, th, td {
 
     <tr>
       <th></th>
-      <th>Date</th>
-      <th>Disp</th>
-      <th>T/T/D</th>
+      <th>Disp/T/T/D</th>
       <th>Trip</th>
       
       <th>TStart</th>
@@ -70,28 +68,29 @@ table, th, td {
 
       <tr>
 <td bgcolor= <%=bg_color %> ><%= i+1 %></td>
-        <td bgcolor= <%=bg_color %> ><%= activity.date.strftime("%d/%m") %></td>
           
       
 
-<% if activity.dispatcher_id != nil %>
-        <td bgcolor= <%=bg_color %> ><%= @dispatchers.find(activity.dispatcher_id).FIRSTNAME%></td>    
-<% else %>
-        <td bgcolor= "FFAC00"> NO </td>    
-<% end %>
 
 
         <td bgcolor= <%=bg_color %> >
+
+        <% if activity.dispatcher_id != nil %>
+            <%= @dispatchers.find(activity.dispatcher_id).FIRSTNAME + "/"%>    
+        <% else %>
+            <%= "-".to_s + "/" %>
+        <% end %>
+
 
 
   <% if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id) %>
     <%=             @trailers.find(activity.trailer_id).NB_PLATE    %>   
           <% else %>
-            -
+             <%="-".to_s %>
           <% end %> 
 
 
-          <%= "/" + @trucks.find(activity.truck_id).NB_PLATE + "/" %>
+          <%="/" + @trucks.find(activity.truck_id).NB_PLATE + "/" %>
 
 
 <% if activity.DRIVER_id!=nil  and @drivers.exists?(activity.DRIVER_id) %>
