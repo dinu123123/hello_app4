@@ -29,6 +29,13 @@
         </div>
       <% end %>
 
+      <% if activity.invoiced_trip_id == nil or activity.invoiced_trip_id == 0 %>
+        <div class="field">
+          <%= f.label :invoiced_trip_id, "Invoice Trip Info" %>
+         <%= f.collection_select :invoiced_trip_id, InvoicedTrip.all, :id, :info, {prompt: "Trip"} %>
+        </div>
+      <% end %>
+
       <div class="field">
         <%= f.label :comments %>
         <%= f.text_area :comments , size: "100x11" %>
