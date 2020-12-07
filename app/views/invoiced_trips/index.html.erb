@@ -99,7 +99,6 @@ tr:nth-child(even) {
       <% if false %>
        <th>Truck ID</th>
       <% end %>
-      <th>Info</th>
       <th>DE toll</th>
       <th>BE toll</th>
       <th>CH toll</th>
@@ -166,7 +165,6 @@ tr:nth-child(even) {
 <% if false %>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.truck_id %></td>
 <% end %>
-        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.info %></td> 
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.germany_toll %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.belgium_toll %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.swiss_toll %></td>
@@ -255,7 +253,6 @@ tr:nth-child(even) {
 <% if false %>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.truck_id %></td>
 <% end %>
-        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.info %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.germany_toll %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.belgium_toll %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.swiss_toll %></td>
@@ -307,7 +304,6 @@ tr:nth-child(even) {
                   
         <% else %>
           <td><%= invoiced_trip.invoice_id %></td>
-          <td><%= invoiced_trip.info %></td>
         <% end %>
         <td><%= @clients.find(invoiced_trip.client_id).Name %></td>
         <% if false %>
@@ -322,7 +318,6 @@ tr:nth-child(even) {
         <% if false %>
         <td><%= invoiced_trip.truck_id %></td>
         <% end %>
-        <td><%= invoiced_trip.info %></td>
         <td><%= invoiced_trip.germany_toll %></td>
         <td><%= invoiced_trip.belgium_toll %></td>
         <td><%= invoiced_trip.swiss_toll %></td>
