@@ -83,7 +83,7 @@ function checkAll(check_all){
       <th>Trailer</th>
       <th>Client</th>
       <th>TripInfo</th>
-      
+      <th>Km EVOGPS</th>
       <th>Start addr</th>
       <th>End addr</th>
       <th>Intermediary addr</th>
@@ -201,9 +201,7 @@ function checkAll(check_all){
 <% end %>
 
 
-
-
-
+        <td bgcolor= <%=bg_color %> ><%= activity.km_evogps %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.start_address %></td>
         <td bgcolor= <%=bg_color %> ><%= activity.dest_addresses %></td>
 

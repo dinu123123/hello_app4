@@ -85,6 +85,7 @@ tr:nth-child(even) {
     <tr>
       <th colspan="1"></th>
       <th>InvoiceID</th>
+      <th>TripInfo</th>
       <th>InvoiceInfo</th>
       <th>Client Name</th>
       <% if false %>
@@ -110,7 +111,7 @@ tr:nth-child(even) {
       <th>Parking</th>
       <th>Tunnel</th>
       <th>Trailer Rent</th>
-      <th>Km</th>
+      <th>Km Paid</th>
       <th>Km EvoGPS</th>
       <th>Km Loss</th>
       <th>Km Driver's Route Note</th>
@@ -147,6 +148,8 @@ tr:nth-child(even) {
 <td bgcolor="#b6f666" style="font-weight:bold"><%= (j+"1".to_i).to_s %></td>
 <% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
   <td bgcolor="#b6f666" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).name %></td>
+  <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.info %></td>
+
   <td bgcolor="#b6f666" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).info %></td>
 <% else %>
   <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.invoice_id %></td>
@@ -177,12 +180,29 @@ tr:nth-child(even) {
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.tunnel %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.trailer_cost %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km %></td>
-        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km_evogps %></td>
 
-        <% if invoiced_trip.km >= invoiced_trip.km_evogps %>
-            <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
-        <% else %>
-            <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold">
+          <% if invoiced_trip.km_evogps != nil and invoiced_trip.km_evogps > 0 %>
+                  <%= invoiced_trip.km_evogps %>
+          `<% else %> 
+                  <%=  @sum_km_activities = @activities.find_by_sql(['SELECT * FROM activities where invoiced_trip_id = ?', invoiced_trip.id]).to_a.map(&:km_evogps).inject(:+) %>
+          <% end %>
+        </td>
+
+        <% if invoiced_trip.km_evogps != nil and invoiced_trip.km_evogps > 0 %>
+              <% if invoiced_trip.km >= invoiced_trip.km_evogps %>
+                  <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+              <% else %>
+                  <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+              <% end %> 
+        <% elsif @sum_km_activities != nil and @sum_km_activities > 0 %>
+              <% if invoiced_trip.km >= @sum_km_activities %>
+                  <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km - @sum_km_activities %></td>
+              <% else %>
+                  <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - @sum_km_activities %></td>
+              <% end %> 
+       `<% else %>
+              <td bgcolor="#b6f666" style="font-weight:bold">NO INFO1</td>
         <% end %>
 
 
@@ -230,6 +250,7 @@ tr:nth-child(even) {
 
 <% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
   <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).name %></td>
+  <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.info %></td>
   <td bgcolor="#8bf0f8" style="font-weight:bold"><%= @invoices.find(invoiced_trip.invoice_id).info %></td>
 <% else %>
   <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.invoice_id %></td>
@@ -265,12 +286,29 @@ tr:nth-child(even) {
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.tunnel %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.trailer_cost %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km %></td>
-        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km_evogps %></td>
+        
+        <td bgcolor="#8bf0f8" style="font-weight:bold">
+        <% if invoiced_trip.km_evogps != nil and invoiced_trip.km_evogps > 0 %>
+                <%= invoiced_trip.km_evogps %>
+        <% else %> 
+                <%=  @sum_km_activities1 = @activities.find_by_sql(['SELECT * FROM activities where invoiced_trip_id = ?', invoiced_trip.id]).to_a.map(&:km_evogps).inject(:+) %>
+        <% end %>
+        </td>
 
-         <% if invoiced_trip.km >= invoiced_trip.km_evogps %>
-            <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
-        <% else %>
-            <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+        <% if invoiced_trip.km_evogps != nil and invoiced_trip.km_evogps > 0 %>
+              <% if invoiced_trip.km >= invoiced_trip.km_evogps %>
+                  <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+              <% else %>
+                  <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+              <% end %> 
+        <% elsif @sum_km_activities1 != nil and @sum_km_activities1 > 0 %>
+              <% if invoiced_trip.km >= @sum_km_activities1 %>
+                  <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km - @sum_km_activities1 %></td>
+              <% else %>
+                  <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - @sum_km_activities1 %></td>
+              <% end %> 
+       `<% else %>
+              <td bgcolor="#8bf0f8" style="font-weight:bold">NO INFO</td>
         <% end %>
 
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= invoiced_trip.km_driver_route_note %></td>
@@ -300,6 +338,7 @@ tr:nth-child(even) {
         <% if @invoices.find_by_id(invoiced_trip.invoice_id) != nil %>
 
           <td><%= @invoices.find(invoiced_trip.invoice_id).name %></td>
+          <td><%= invoiced_trip.info %></td>
           <td><%= @invoices.find(invoiced_trip.invoice_id).info %></td>
                   
         <% else %>
@@ -330,13 +369,31 @@ tr:nth-child(even) {
         <td><%= invoiced_trip.tunnel %></td>
         <td><%= invoiced_trip.trailer_cost %></td>
         <td><%= invoiced_trip.km %></td>
-        <td><%= invoiced_trip.km_evogps %></td>
 
-        <% if invoiced_trip.km >= invoiced_trip.km_evogps %>
-            <td bgcolor="#b6f666" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
-        <% else %>
-            <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
-        <% end %> 
+        <td>
+        <% if invoiced_trip.km_evogps != nil and invoiced_trip.km_evogps > 0 %>
+                <%= invoiced_trip.km_evogps %></td>
+        `<% else %> 
+                <%=  @sum_km_activities2 = @activities.find_by_sql(['SELECT * FROM activities where invoiced_trip_id = ?', invoiced_trip.id]).to_a.map(&:km_evogps).inject(:+) %>
+        <% end %>
+        </td>
+
+        <% if invoiced_trip.km_evogps != nil and invoiced_trip.km_evogps > 0 %>
+              <% if invoiced_trip.km >= invoiced_trip.km_evogps %>
+                  <td><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+              <% else %>
+                  <td><%= invoiced_trip.km - invoiced_trip.km_evogps %></td>
+              <% end %> 
+        <% elsif @sum_km_activities2 != nil and @sum_km_activities2 > 0 %>
+              <% if invoiced_trip.km >= @sum_km_activities2 %>
+                  <td><%= invoiced_trip.km - @sum_km_activities2 %></td>
+              <% else %>
+                  <td><%= invoiced_trip.km - @sum_km_activities2 %></td>
+              <% end %> 
+       `<% else %>
+              <td>NO INFO</td>
+        <% end %>
+ 
 
         <td><%= invoiced_trip.km_driver_route_note %></td>
         <td><%= invoiced_trip.StartDate.to_datetime.strftime("%d %B %Y %H:%M") %></td>

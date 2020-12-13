@@ -12,6 +12,7 @@ def edit_individual
     @invoiced_trips = InvoicedTrip.all
 
     @activities = Activity.find(params[:activity_ids])
+    
 end
 
 def update_individual
@@ -23,6 +24,13 @@ def update_individual
     @dispatchers = Dispatcher.all
     @invoiced_trips = InvoicedTrip.all
 
+    @activities = Activity.find(params[:activities].keys)
+    @activities.each do |activity|
+      if params[:invoiced_trip_id][:id].size >0  
+          activity.update_attribute(:invoiced_trip_id, params[:invoiced_trip_id][:id])
+      end
+    end
+
     @activities = Activity.update(params[:activities].keys, params[:activities].values).reject { |p| p.errors.empty? }
 
     if @activities.empty?
@@ -31,6 +39,7 @@ def update_individual
     else
       render :action => "edit_individual"
     end
+
 end
 
   # GET /activities
@@ -326,7 +335,7 @@ end
         :dest1_loaded_op, :dest2_address, :dest2_comments, :dest2_unloaded_ep, :dest2_unloaded_dp,
         :dest2_unloaded_op, :dest2_loaded_ep, :dest2_loaded_dp, :dest2_loaded_op, :end_ep, :end_dp, 
         :end_op , :pallets_paid_in, :pallets_paid_out, :name_advisor, :km_destination, :starting_time, :driving_time_left,
-        :end_time, :night_break, :weekend_break, :invoiced_trip_id, :dispatcher_id, images: [], trip_images: [])
+        :end_time, :night_break, :weekend_break, :invoiced_trip_id, :dispatcher_id, :km_evogps, images: [], trip_images: [])
     end
 
 end

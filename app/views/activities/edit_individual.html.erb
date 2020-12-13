@@ -1,4 +1,9 @@
 <%= form_tag  update_individual_activities_path, method: :put do %>
+
+ <div class="field">
+     <%= collection_select :invoiced_trip_id,  :id, InvoicedTrip.all, :id, :info, {prompt: "Trip"} %>
+ </div>
+
   <% @activities.each do |activity| %>
     <%= fields_for "activities[]", activity do |f| %>
 
@@ -7,15 +12,12 @@
                                          @drivers.find(activity.DRIVER_id).FIRSTNAME.split.first+" "+
                                          @drivers.find(activity.DRIVER_id).SECONDNAME.split.first + " /"%> 
 
-    
-
      <%= @trucks.find(activity.truck_id).NB_PLATE %>
       <% if @trailers != nil and activity.trailer_id != nil and @trailers.find(activity.trailer_id) != nil %>
        <%= +" /".to_s + @trailers.find(activity.trailer_id).NB_PLATE %>
      <% end %>
        
-
-      <% if activity.night_break == nil or activity.night_break == 0 %>
+     <% if activity.night_break == nil or activity.night_break == 0 %>
           <div class="field">
             <%= f.label :night_break, "Night break" %>
             <%= f.time_select :night_break %>
@@ -29,19 +31,10 @@
         </div>
       <% end %>
 
-      <% if activity.invoiced_trip_id == nil or activity.invoiced_trip_id == 0 %>
-        <div class="field">
-          <%= f.label :invoiced_trip_id, "Invoice Trip Info" %>
-         <%= f.collection_select :invoiced_trip_id, InvoicedTrip.all, :id, :info, {prompt: "Trip"} %>
-        </div>
-      <% end %>
-
       <div class="field">
         <%= f.label :comments %>
         <%= f.text_area :comments , size: "100x11" %>
       </div>
-
-     
 
     <% end %>
   <% end %>

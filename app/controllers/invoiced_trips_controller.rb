@@ -19,7 +19,7 @@ class InvoicedTripsController < ApplicationController
   #  @invoiced_trips = InvoicedTrip.all
     @search = TransactionSearch.new(params[:search])
 
-
+    @activities = Activity.all
 
     @invoiced_trips = @search.scope_invoiced_trips_index(false)
 

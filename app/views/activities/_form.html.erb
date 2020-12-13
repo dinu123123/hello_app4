@@ -98,6 +98,7 @@ legend {
 
 <%= form.collection_select :invoiced_trip_id, InvoicedTrip.all, :id, :info, {prompt: "Trip"} %>
 
+
 <%= form.collection_select :DRIVER_id, Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ? 
                     ORDER BY drivers.created_at ASC', true]) , :id, :name_with_cnp, {prompt: "Driver Name and CNP"},:required => 'required'%>
 <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
@@ -116,6 +117,12 @@ legend {
 
 <div class="textAreaColumn1">
   
+
+  <div class="field">
+    <%= form.label :km_evogps, "Km EVOGPS" %>
+    <%= form.number_field :km_evogps %>
+  </div>
+
 
   <div class="field">
     <%= form.label :km_destination, "Km destination" %>
