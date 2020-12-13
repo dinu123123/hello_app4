@@ -6,7 +6,7 @@ belongs_to :invoice, :required => true
 
 validates_uniqueness_of :client_id, scope: %i[invoice_id StartDate EndDate DRIVER_id]	, if: -> { typeT == nil or typeT == 0 } 
 
-validates_uniqueness_of :invoice_id ,scope: %i[invoice_id vin], if: -> { name.present? } , if: -> { not( typeT == nil or typeT == 0) } 
+#validates_uniqueness_of :invoice_id ,scope: %i[invoice_id vin], if: -> { name.present? } , if: -> { not( typeT == nil or typeT == 0) } 
 
 
 
