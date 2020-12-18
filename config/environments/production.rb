@@ -83,7 +83,7 @@ config.action_mailer.smtp_settings = {
  :address              => "smtp.gmail.com",
  :port                 => 587,
  :user_name            => "ameropa.logistics@gmail.com",
- :password             => "Mihail1980!",
+ :password             => "2021Amp!",
  :authentication       => "plain",
 :enable_starttls_auto => true
 }
