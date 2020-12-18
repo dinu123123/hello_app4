@@ -450,7 +450,7 @@ invoice_inline = InvoicePrinter::Document.new(
   purchaser_name: client.Name,
   purchaser_tax_id: '',
   purchaser_tax_id2: '',
-  purchaser_street: client.Address,
+  purchaser_street: "\n".to_s + client.Address,
   purchaser_street_number: '',
   purchaser_postcode: '',
   purchaser_city: '',
