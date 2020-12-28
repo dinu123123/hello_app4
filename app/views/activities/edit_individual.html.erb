@@ -1,7 +1,7 @@
 <%= form_tag  update_individual_activities_path, method: :put do %>
 
  <div class="field">
-     <%= collection_select :invoiced_trip_id,  :id, InvoicedTrip.all, :id, :info, {prompt: "Trip"} %>
+     <%= collection_select :invoiced_trip_id,  :id, InvoicedTrip.order(date: :desc), :id, :info, {prompt: "Trip"} %>
  </div>
 
   <% @activities.each do |activity| %>

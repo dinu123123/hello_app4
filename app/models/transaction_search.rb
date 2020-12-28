@@ -317,11 +317,6 @@ end
 def scope_activities_index
   arrayActivities = Array.new
 
-#   and events."DATE" IN (SELECT max("DATE") FROM events) 
-           
-
-
-
 
 if @dispatcher_id > 0
 

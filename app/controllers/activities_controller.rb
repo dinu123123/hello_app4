@@ -57,16 +57,30 @@ end
     if  @@recorded_date.to_s != Date.today.to_s
       @@recorded_date=Date.today
 
-      Truck.all.each do |truck|
 
-        if truck.active == true  and truck.NB_PLATE.start_with?("PH") == true    
+      reg_trucks = Array.new
+
+
+ #     Truck.all.each do |truck|
+
+
+  #      if truck.active == true  and truck.NB_PLATE.start_with?("PH") == true    
              Event.order('DATE DESC').all.each do |event|
+            
+               if event.START_END == true and !(reg_trucks.include? event.truck_id)
+                
+               reg_trucks.push(event.truck_id)
+          
                @curr_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", 
                 Date.today, event.truck_id ]) 
             
-                     if @curr_activity.size == 0 and truck.id == event.truck_id and event.START_END == true
 
-                                      @prev_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", 
+
+
+                     if @curr_activity.size == 0 and event.START_END == true
+
+                                      @prev_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and 
+                                        activities.truck_id = ? order by activities.date asc ", 
                                         Date.today-1, event.truck_id ]) 
 
                                       
@@ -103,17 +117,15 @@ end
                                                         :comments => "[08:00]\n[09:00]\n[10:00]\n[11:00]\n[12:00]\n[13:00]\n[14:00]\n[15:00]\n[16:00]\n[17:00]".to_s
                                                         )
 
-                      break
-
+      
                  end
           
-               if truck.id == event.truck_id and event.START_END == false
-                  break
-               end
 
              end 
+
         end       
-      end
+#      end
+
     end
 
     @search = TransactionSearch.new(params[:search],1)
