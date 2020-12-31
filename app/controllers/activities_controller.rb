@@ -44,122 +44,92 @@ end
 
   # GET /activities
   # GET /activities.json
-  def index
+def index
 
+ @drivers = Driver.all
+ @trucks = Truck.all
+ @trailers = Trailer.all
+ @clients = Client.all
+ @dispatchers = Dispatcher.all
+ @invoiced_trips = InvoicedTrip.all
 
-    @drivers = Driver.all
-    @trucks = Truck.all
-    @trailers = Trailer.all
-    @clients = Client.all
-    @dispatchers = Dispatcher.all
-    @invoiced_trips = InvoicedTrip.all
-
-    if  @@recorded_date.to_s != Date.today.to_s
+ if  @@recorded_date.to_s != Date.today.to_s
       @@recorded_date=Date.today
 
 
-      reg_trucks = Array.new
+    reg_trucks = Array.new
+      
+    Event.order('DATE DESC').all.each do |event|
 
+      if @trucks.find(event.truck_id).NB_PLATE.start_with?("PH") == true and !(reg_trucks.include? event.truck_id)
+  
+        if event.START_END == false 
+                reg_trucks.push(event.truck_id)
 
- #     Truck.all.each do |truck|
-
-
-  #      if truck.active == true  and truck.NB_PLATE.start_with?("PH") == true    
-             Event.order('DATE DESC').all.each do |event|
-            
-               if event.START_END == true and !(reg_trucks.include? event.truck_id)
+        elsif event.START_END == true 
                 
                reg_trucks.push(event.truck_id)
           
                @curr_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", 
                 Date.today, event.truck_id ]) 
             
-
-
-
                      if @curr_activity.size == 0 and event.START_END == true
 
                                       @prev_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and 
                                         activities.truck_id = ? order by activities.date asc ", 
                                         Date.today-1, event.truck_id ]) 
-
-                                      
+                          
                                       @end_ep = 0
                                       @end_dp = 0
                                       @end_op = 0
 
-
-
                                       if @prev_activity[0] != nil
-
                                          @end_ep = @prev_activity[0].end_ep
-
                                          @end_dp = @prev_activity[0].end_dp
-                                         
                                          @end_op = @prev_activity[0].end_op
-
                                       end
 
-
-               
-                                         @new_Activity = Activity.create(:date => Date.today, 
-                                                        :DRIVER_id  => event.DRIVER_id,
-                                                        :truck_id => event.truck_id,
-                                                        :trailer_id => event.trailer_id,
-                                                        :client_id => event.client_id,
-                                                        :dispatcher_id => event.dispatcher_id,
-                                                        :start_ep => @end_ep,
-                                                        :start_dp => @end_dp,
-                                                        :start_op => @end_op,
-                                                        :end_ep => @end_ep,
-                                                        :end_dp => @end_dp,
-                                                        :end_op => @end_op,
-                                                        :comments => "[08:00]\n[09:00]\n[10:00]\n[11:00]\n[12:00]\n[13:00]\n[14:00]\n[15:00]\n[16:00]\n[17:00]".to_s
-                                                        )
-
+                                     @new_Activity = Activity.create(:date => Date.today, 
+                                                    :DRIVER_id  => event.DRIVER_id,
+                                                    :truck_id => event.truck_id,
+                                                    :trailer_id => event.trailer_id,
+                                                    :client_id => event.client_id,
+                                                    :dispatcher_id => event.dispatcher_id,
+                                                    :start_ep => @end_ep,
+                                                    :start_dp => @end_dp,
+                                                    :start_op => @end_op,
+                                                    :end_ep => @end_ep,
+                                                    :end_dp => @end_dp,
+                                                    :end_op => @end_op,
+                                                    :comments => "[08:00]\n[09:00]\n[10:00]\n[11:00]\n[12:00]\n[13:00]\n[14:00]\n[15:00]\n[16:00]\n[17:00]".to_s
+                                                    )
       
-                 end
-          
+                     end
+          end 
+       end
+     end       
+   end
 
-             end 
+   @search = TransactionSearch.new(params[:search],1)
 
-        end       
-#      end
-
-    end
-
-    @search = TransactionSearch.new(params[:search],1)
-
-
-    @activities = @search.scope_activities_index
-
-
-
-
-
-     respond_to do |format|
-        format.html
-        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
-        format.pdf do
-              render pdf: "activities",
-              page_size: 'A4',
-              template: "activities/pdf_index.html.erb",
-              layout: "pdf.html",
-              orientation: "Portrait",
-              lowquality: true,
-              zoom: 1,
-              dpi: 75
-        end
-
-
+   @activities = @search.scope_activities_index
+   
+   respond_to do |format|
+      format.html
+      format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+      format.pdf do
+            render pdf: "activities",
+            page_size: 'A4',
+            template: "activities/pdf_index.html.erb",
+            layout: "pdf.html",
+            orientation: "Portrait",
+            lowquality: true,
+            zoom: 1,
+            dpi: 75
       end
+    end
   
-
-
-
-
-
-  end
+end
 
 
  def pdf_index
