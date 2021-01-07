@@ -772,7 +772,7 @@ else
 
 ##Last repair
 
-        @date_start =  Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.cweek, 1) 
+        @date_start =  Date.commercial(@search1.date_from.to_date.year, (@search1.date_from.to_date.strftime("%Y").to_i, 1) 
 
         @date_from1 =  @date_start+(week-1)*7
         @date_to1 =  @date_from1+6
