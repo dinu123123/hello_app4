@@ -475,7 +475,7 @@ def weekly
 
       for week in @period_start..@period_end do
           @arrayWeeklyTruckExpense[week-@period_start+1][0] = 
-           (Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.cweek, 1) +(week-1)*7).cweek
+           (Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1) +(week-1)*7).cweek
       end
 
          if @search1.type ==2 and @search1.time == 2
