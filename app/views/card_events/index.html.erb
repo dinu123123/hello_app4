@@ -21,11 +21,7 @@
         <td><%= @cards.find(card_event.card_id).card_id   %></td>
         <td><%= link_to 'Show', card_event %></td>
         <td><%= link_to 'Edit', edit_card_event_path(card_event) %></td>
-
-        <% if current_user != nil and !(current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
-           <td><%= link_to 'Destroy', card_event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-
+        <td><%= link_to 'Destroy', card_event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
