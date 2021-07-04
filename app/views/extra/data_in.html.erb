@@ -212,6 +212,27 @@
   </tr>
 <%end%>  
 
+<h3>Cards:</h3>
+  <table style="width:100%"  border="1">
+  <tr>
+    <th> <%= link_to 'New Card', new_card_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Cards', cards_path %> </th>
+  </tr>
+<tr>
+    <th> <%= link_to 'New Card Event', new_card_event_path %> </th>
+  </tr>
+  <tr>
+    <th> <%= link_to 'All Card Events', card_events_path %> </th>
+  </tr>
+
+
+
+
+
+</table>
+
 <h3>Toll Germany:</h3>
   <table style="width:100%"  border="1">
   <tr>
@@ -223,8 +244,7 @@
   <tr>
     <th> <%= link_to 'All Germany Toll', de_tolls_path %> </th>
   </tr>
-
-</table>
+  </table>
 
 
 <h3>Toll Belgium:</h3>
@@ -265,6 +285,9 @@
   </tr>
 </table>
 <% end %>   
+
+
+
 
   </div>
 

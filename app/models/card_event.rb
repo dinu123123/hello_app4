@@ -1,0 +1,2 @@
+class CardEvent < ApplicationRecord
+end

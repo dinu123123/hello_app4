@@ -1,0 +1,18 @@
+
+<%= simple_form_for(@card_event) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<p>
+ <%= f.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
+<p>
+  <%= f.collection_select :card_id, Card.all, :id, :card_id, {prompt: "Card ID"}, :required => 'required' %>
+
+  <div class="form-inputs">
+    <%= f.input :date %>
+  </div>
+<p>
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

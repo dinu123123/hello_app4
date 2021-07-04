@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Card Events</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Truck</th>
+      <th>Card</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @card_events.each do |card_event| %>
+      <tr>
+        <td><%= card_event.date %></td>
+        <td><%= @trucks.find(card_event.truck_id).NB_PLATE %></td>
+
+        <td><%= @cards.find(card_event.card_id).card_id   %></td>
+        <td><%= link_to 'Show', card_event %></td>
+        <td><%= link_to 'Edit', edit_card_event_path(card_event) %></td>
+        <td><%= link_to 'Destroy', card_event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Card Event', new_card_event_path %>

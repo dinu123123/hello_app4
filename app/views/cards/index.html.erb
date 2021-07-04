@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Cards</h1>
+
+<%= link_to 'New Card', new_card_path %>
+<p>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Provider</th>
+      <th>Card ID</th>
+      <th>Card Name/Type</th>
+      <th>Pin</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cards.each_with_index do |card,i| %>
+      <tr>
+        <td><%= i %></td>
+        <td><%= card.provider %></td>
+        <td><%= card.card_id %></td>
+        <td><%= card.name %></td>
+        <td><%= card.pin %></td>
+        <td><%= card.start_date %></td>
+        <td><%= card.end_date %></td>
+        <td><%= link_to 'Show', card %></td>
+        <td><%= link_to 'Edit', edit_card_path(card) %></td>
+        <td><%= link_to 'Destroy', card, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

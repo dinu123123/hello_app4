@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @card_event.date %>
+</p>
+
+<p>
+  <strong>Truck:</strong>
+  <%= @card_event.truck_id %>
+</p>
+
+<p>
+  <strong>Card:</strong>
+  <%= @card_event.card_id %>
+</p>
+
+<%= link_to 'Edit', edit_card_event_path(@card_event) %> |
+<%= link_to 'Back', card_events_path %>
