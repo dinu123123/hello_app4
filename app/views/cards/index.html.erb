@@ -32,7 +32,7 @@
         <td><%= link_to 'Show', card %></td>
         <td><%= link_to 'Edit', edit_card_path(card) %></td>
 
-        <% if current_user != nil and !(current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %>         
+        <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %>         
           <td><%= link_to 'Destroy', card, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
 
