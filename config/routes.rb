@@ -1,6 +1,8 @@
   Rails.application.routes.draw do
   
   
+  resources :card_events
+  resources :cards
   resources :dispatchers
   resources :periodics_categories
   resources :pricings
@@ -66,6 +68,9 @@ end
   get "/invoiced_trips/index", as: "mission3"
   get "/invoiced_trips/index_special", as: "index_special"
   get "/invoiced_trips/new_special", as: "new_special"
+
+
+
 
 
 
@@ -183,6 +188,8 @@ get "home/download_pdf"
       post :import 
       post :edit_individual 
       put :update_individual 
+      put :update_multiple   
+
     end
   end
 
