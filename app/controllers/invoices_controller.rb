@@ -435,6 +435,12 @@ labels = {
 
 end
 
+if(Invoice.find_by(id: invoiced_trip.invoice_id).ddate != nil && Invoice.find_by(id: invoiced_trip.invoice_id).ddate != 0) 
+  @due_date = Invoice.find_by(id: invoiced_trip.invoice_id).ddate
+else
+  @due_date = (invoiced_trip.date+client.PaymentDelay) 
+end
+
 
 invoice_inline = InvoicePrinter::Document.new(
   number: invoice.name,
@@ -519,7 +525,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invoice_params
-      params.require(:invoice).permit(:name, :info, :date, :client_id, :vat, :total_amount, :sent, :printed, :paid)
+      params.require(:invoice).permit(:name, :info, :date, :ddate, :client_id, :vat, :total_amount, :sent, :printed, :paid)
     end
 
 end

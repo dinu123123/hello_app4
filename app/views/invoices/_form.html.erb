@@ -59,6 +59,11 @@
     <%= form.text_field :total_amount, id: :total_amount, :required => 'required' %>
   </div>
 
+   <div class="field">
+    <%= form.label :"Due Date" %>
+    <%= form.date_select :ddate, id: :invoice_ddate %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

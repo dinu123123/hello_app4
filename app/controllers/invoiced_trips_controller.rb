@@ -191,28 +191,34 @@ labels = {
 }
 
 
+if(Invoice.find_by(id: @invoiced_trip.invoice_id).ddate != nil && Invoice.find_by(id: @invoiced_trip.invoice_id).ddate != 0) 
+  @due_date = Invoice.find_by(id: @invoiced_trip.invoice_id).ddate
+else
+  @due_date = (invoiced_trip.date+client.PaymentDelay) 
+end
+
 invoice = InvoicePrinter::Document.new(
   number: invoiced_trip.invoice_id,
   provider_name: 'Ameropa Logistics SRL',
   provider_tax_id:'  RO 32274128',
   provider_tax_id2:'ROONRC.J29/1508/2013 ',
   provider_street: 'sat Cioranii de Jos, Nr. 806, Cod 107160, Comuna Ciorani, Judet Prahova, Romania ',
-  provider_street_number: '',
-  provider_postcode: '',
-  provider_city: '',
-  provider_city_part: '',
-  provider_extra_address_line: '',
+  provider_street_number: ' ',
+  provider_postcode: ' ',
+  provider_city: ' ',
+  provider_city_part: ' ',
+  provider_extra_address_line: ' ',
   purchaser_name: client.Name,
-  purchaser_tax_id: '',
-  purchaser_tax_id2: '',
+  purchaser_tax_id: ' ',
+  purchaser_tax_id2: ' ',
   purchaser_street: client.Address,
-  purchaser_street_number: '',
-  purchaser_postcode: '',
-  purchaser_city: '',
-  purchaser_city_part: '',
-  purchaser_extra_address_line: '',
+  purchaser_street_number: ' ',
+  purchaser_postcode: ' ',
+  purchaser_city: ' ',
+  purchaser_city_part: ' ',
+  purchaser_extra_address_line: ' ',
   issue_date: invoiced_trip.date.to_s,
-  due_date: (invoiced_trip.date+client.PaymentDelay).to_s,
+  due_date: @due_date.to_s,
   subtotal: 'Eur '+invoiced_trip.total_amount.to_s,
   tax: 'Eur 0.00',
   total: 'Eur '+invoiced_trip.total_amount.to_s,

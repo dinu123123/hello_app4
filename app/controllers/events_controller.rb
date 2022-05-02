@@ -203,7 +203,7 @@ end
  #redirect_to :back
 #end
 
-def extract_explicit
+def extract_explicit  
  if !(current_user.email.eql?  "ameropa.logistics@gmail.com")
     redirect_to root_path
   else
@@ -804,10 +804,17 @@ else
                    #  end  
 
 
-                   if @search1.type == 1        
+                   if @search1.type == 1   
+                     if client.PaymentDelay > 0 
                        @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
                           invoices.date >= ? AND invoices.date <= ?', client.id, 
                           @date_from1-client.PaymentDelay, @date_to1-client.PaymentDelay])
+                      else
+                       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
+                          invoices.ddate >= ? AND invoices.ddate <= ?', client.id, 
+                          @date_from1, @date_to1])
+                      end
+
                    elsif @search1.type == 3 
                        @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
                           invoices.date >= ? AND invoices.date <= ?', client.id, 
