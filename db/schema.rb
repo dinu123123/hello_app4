@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_16_215422) do
+ActiveRecord::Schema.define(version: 2022_04_27_132214) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -84,6 +84,9 @@ ActiveRecord::Schema.define(version: 2020_11_16_215422) do
     t.time "night_break"
     t.integer "weekend_break"
     t.integer "invoiced_trip_id"
+    t.integer "dispatcher_id"
+    t.text "client_comment"
+    t.integer "km_evogps", default: 0
   end
 
   create_table "as24_germany_tolls", force: :cascade do |t|
@@ -157,6 +160,25 @@ ActiveRecord::Schema.define(version: 2020_11_16_215422) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "card_events", force: :cascade do |t|
+    t.date "date"
+    t.integer "truck_id"
+    t.integer "card_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.string "provider"
+    t.string "name"
+    t.string "card_id"
+    t.string "pin"
+    t.date "start_date"
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "clients", force: :cascade do |t|
     t.string "Name"
     t.string "Address"
@@ -196,6 +218,18 @@ ActiveRecord::Schema.define(version: 2020_11_16_215422) do
     t.datetime "datetime"
   end
 
+  create_table "dispatchers", force: :cascade do |t|
+    t.text "cnp"
+    t.text "FIRSTNAME"
+    t.text "SECONDNAME"
+    t.text "INFO"
+    t.text "DESCRIPTION"
+    t.date "start_date"
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "driver_expenses", force: :cascade do |t|
     t.integer "DRIVER_id"
     t.integer "truck_id"
@@ -232,6 +266,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_215422) do
     t.decimal "volume"
     t.decimal "km"
     t.date "expected_date"
+    t.integer "dispatcher_id"
   end
 
   create_table "fuel_expenses", force: :cascade do |t|
@@ -339,6 +374,7 @@ ActiveRecord::Schema.define(version: 2020_11_16_215422) do
     t.boolean "sent", default: false
     t.boolean "printed", default: false
     t.boolean "paid"
+    t.date "ddate"
   end
 
   create_table "periodics", force: :cascade do |t|
