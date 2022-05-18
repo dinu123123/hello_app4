@@ -805,15 +805,30 @@ else
 
 
                    if @search1.type == 1   
-                     if client.PaymentDelay > 0 
-                       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
-                          invoices.date >= ? AND invoices.date <= ?', client.id, 
-                          @date_from1-client.PaymentDelay, @date_to1-client.PaymentDelay])
-                      else
-                       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
-                          invoices.ddate >= ? AND invoices.ddate <= ?', client.id, 
+
+#                     if client.PaymentDelay != nil 
+#                       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where ddate = ? AND invoices.client_id = ? AND
+#                          invoices.date >= ? AND invoices.date <= ?','2000-01-01', client.id, 
+#                          @date_from1-client.PaymentDelay, @date_to1-client.PaymentDelay])
+#                      else
+#                       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
+#                          invoices.ddate >= ? AND invoices.ddate <= ?', client.id, 
+#                          @date_from1, @date_to1])
+#                      end
+
+                        if client.PaymentDelay != nil 
+
+                        @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where ddate = ? AND invoices.client_id = ? AND
+                          invoices.date >= ? AND invoices.date <= ?','2000-01-01', client.id,
+                          @date_from1-client.PaymentDelay, @date_to1-client.PaymentDelay]) + 
+                        Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
+                          invoices.ddate >= ? AND invoices.ddate <= ?', client.id,
                           @date_from1, @date_to1])
-                      end
+                        else
+                          @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
+                          invoices.ddate >= ? AND invoices.ddate <= ?', client.id,
+                          @date_from1, @date_to1])
+                       end
 
                    elsif @search1.type == 3 
                        @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND

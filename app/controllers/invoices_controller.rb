@@ -435,10 +435,10 @@ labels = {
 
 end
 
-if(Invoice.find_by(id: invoiced_trip.invoice_id).ddate != nil && Invoice.find_by(id: invoiced_trip.invoice_id).ddate != 0) 
+if(Invoice.find_by(id: invoiced_trip.invoice_id).ddate != nil && Invoice.find_by(id: invoiced_trip.invoice_id).ddate != Date.new(2000,1,1)) 
   @due_date = Invoice.find_by(id: invoiced_trip.invoice_id).ddate
 else
-  @due_date = (invoiced_trip.date+client.PaymentDelay) 
+  @due_date = (invoiced_trip.date+client.PaymentDelay)  
 end
 
 
@@ -463,7 +463,7 @@ invoice_inline = InvoicePrinter::Document.new(
   purchaser_city_part: '',
   purchaser_extra_address_line: '',
   issue_date: invoice.date.to_s,
-  due_date: (invoice.date+client.PaymentDelay).to_s,
+  due_date: @due_date.to_s,
   subtotal: '€ '+invoice.total_amount.round(2).to_s,
   tax: '€ '+ (invoice.vat/100*invoice.total_amount).round(2).to_s,
   total: '€ '+(invoice.total_amount*((100+invoice.vat)/100)).round(2).to_s,
@@ -525,7 +525,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def invoice_params
-      params.require(:invoice).permit(:name, :info, :date, :ddate, :client_id, :vat, :total_amount, :sent, :printed, :paid)
+      params.require(:invoice).permit(:name, :info, :date, :client_id, :vat, :total_amount, :sent, :printed, :paid, :ddate)
     end
 
 end

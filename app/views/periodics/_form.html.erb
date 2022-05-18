@@ -47,7 +47,7 @@
 <%= form.collection_select :DRIVER_id, Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ? 
                     ORDER BY drivers.created_at ASC', true]), :id, :name_with_cnp, {prompt: "Driver Name and CNP"},:required => 'required'%>
 
-<%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
+<%= form.collection_select :truck_id, Truck.all.where(:active => true), :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
 <%= form.collection_select :trailer_id, Trailer.all, :id, :NB_PLATE, {prompt: "Trailer Nb Plate"} %>
 
 

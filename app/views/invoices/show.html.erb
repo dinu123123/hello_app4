@@ -30,10 +30,16 @@
   <%= @invoice.total_amount %>
 </p>
 
+ <% if @invoice.ddate != nil %>
+
+
 <p>
   <strong>Due Date:</strong>
   <%= @invoice.ddate %>
 </p>
+
+<% end if  %>
+
 
 <%= link_to 'Edit', edit_invoice_path(@invoice) %> |
 <%= link_to 'Back', invoices_path %>

@@ -32,11 +32,9 @@
 <% end %>
 
  <%= form.collection_select :invoice_id, Invoice.all.order('"id" DESC'), :id, :name, {prompt: "Invoice"}, :required => 'required' %>
-
- <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
- <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
-
- <%= form.collection_select :DRIVER_id, Driver.all, :id, :name_with_cnp, {prompt: "Driver Name and CNP"}, :required => 'required'%>
+ <%= form.collection_select :client_id, Client.all.where(:active => true), :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
+ <%= form.collection_select :truck_id, Truck.all.where(:active => true), :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
+ <%= form.collection_select :DRIVER_id, Driver.all.where(:active => true), :id, :name_with_cnp, {prompt: "Driver Name and CNP"}, :required => 'required'%>
 
  <div class="field">
     <%= form.label :info %>

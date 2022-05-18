@@ -46,7 +46,7 @@
 <% end %>
 
  <div class="field">
-<%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
+<%= form.collection_select :client_id, Client.all.where(:active => true), :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
 </div>
 
   <div class="field">
@@ -61,7 +61,7 @@
 
    <div class="field">
     <%= form.label :"Due Date" %>
-    <%= form.date_select :ddate, id: :invoice_ddate %>
+    <%= form.date_select :ddate, id: :invoice_ddate,start_year: Time.now.year+1, end_year: Time.now.year-50 %>
   </div>
 
   <div class="actions">
