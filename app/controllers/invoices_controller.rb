@@ -438,7 +438,7 @@ end
 if(Invoice.find_by(id: invoiced_trip.invoice_id).ddate != nil && Invoice.find_by(id: invoiced_trip.invoice_id).ddate != Date.new(2000,1,1)) 
   @due_date = Invoice.find_by(id: invoiced_trip.invoice_id).ddate
 else
-  @due_date = (invoiced_trip.date+client.PaymentDelay)  
+  @due_date = (invoice.date+client.PaymentDelay)  
 end
 
 
