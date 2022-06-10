@@ -33,84 +33,120 @@
 
  <%= form.collection_select :invoice_id, Invoice.all.order('"id" DESC'), :id, :name, {prompt: "Invoice"}, :required => 'required' %>
  <%= form.collection_select :client_id, Client.all.where(:active => true), :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
- <%= form.collection_select :truck_id, Truck.all.where(:active => true), :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
- <%= form.collection_select :DRIVER_id, Driver.all.where(:active => true), :id, :name_with_cnp, {prompt: "Driver Name and CNP"}, :required => 'required'%>
+ <%= form.collection_select :DRIVER_id, Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ? 
+                    ORDER BY drivers.SECONDNAME ASC', true]) , :id, :name_with_cnp, {prompt: "Driver Name and CNP"},:required => 'required'%>
+ <%= form.collection_select :truck_id, Truck.all.where(:active => true).order(:NB_PLATE), :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
 
- <div class="field">
+ <div class="field",  border-color: coral>
     <%= form.label :info %>
     <%= form.text_field :info, id: :invoiced_trip_info %>
   </div>
 
-  <div class="field">
+
+<div class="row">
+  
+  <div class="block">
     <%= form.label :germany_toll %>
     <%= form.text_field :germany_toll, id: :invoiced_trip_germany_toll, :required => 'required' %>
   </div>
-
-  <div class="field">
+  <div class="block">
     <%= form.label :belgium_toll %>
     <%= form.text_field :belgium_toll, id: :invoiced_trip_belgium_toll, :required => 'required' %>
   </div>
-
-  <div class="field">
+  <div class="block">
     <%= form.label :swiss_toll %>
     <%= form.text_field :swiss_toll, id: :invoiced_trip_swiss_toll, :required => 'required' %>
   </div>
 
-  <div class="field">
+  </div>
+
+<div class="row">
+
+
+  <div class="block">
     <%= form.label :france_toll %>
     <%= form.text_field :france_toll, id: :invoiced_trip_france_toll, :required => 'required' %>
   </div>
 
-  <div class="field">
+  <div class="block">
     <%= form.label :italy_toll %>
     <%= form.text_field :italy_toll, id: :invoiced_trip_italy_toll, :required => 'required' %>
   </div>
 
-  <div class="field">
+  <div class="block">
     <%= form.label :uk_toll %>
     <%= form.text_field :uk_toll, id: :invoiced_trip_uk_toll, :required => 'required' %>
   </div>
 
-  <div class="field">
+  </div>
+
+
+<div class="row">
+
+
+  <div class="block">
     <%= form.label :netherlands_toll %>
     <%= form.text_field :netherlands_toll, id: :invoiced_trip_netherlands_toll, :required => 'required' %>
   </div>
 
-  <div class="field">
+  <div class="block">
     <%= form.label :trailer_cost %>
     <%= form.text_field :trailer_cost, id: :invoiced_trip_trailer_cost, :required => 'required' %>
   </div>
 
-  <div class="field">
+  <div class="block">
     <%= form.label :bridge %>
     <%= form.text_field :bridge, id: :invoiced_trip_bridge, :required => 'required' %>
   </div>
 
-  <div class="field">
+  </div>
+
+
+
+
+<div class="row">
+
+
+ <div class="block">
+    <%= form.label :bridge %>
+    <%= form.text_field :bridge, id: :invoiced_trip_bridge, :required => 'required' %>
+  </div>
+
+
+  <div class="block">
     <%= form.label :parking %>
     <%= form.text_field :parking, id: :invoiced_trip_parking, :required => 'required' %>
   </div>
 
-  <div class="field">
+  <div class="block">
     <%= form.label :tunnel %>
     <%= form.text_field :tunnel, id: :invoiced_trip_tunnel, :required => 'required' %>
   </div>
 
-  <div class="field">
+  </div>
+
+
+
+<div class="row">
+
+
+ <div class="block">
     <%= form.label :km %>
     <%= form.text_field :km, id: :invoiced_trip_km, :required => 'required' %>
   </div>
 
 
-  <div class="field">
+  <div class="block">
     <%= form.label :km_evogps %>
     <%= form.text_field :km_evogps, id: :invoiced_trip_km_evogps, :required => 'required' %>
   </div>
 
-  <div class="field">
-    <%= form.label :km_driver_route_note %>
+  <div class="block">
+    <%= form.label :km_driver_route %>
     <%= form.text_field :km_driver_route_note, id: :invoiced_trip_km_driver_route_note, :required => 'required' %>
   </div>
+  </div>
+
 
 
   <div class="field">
