@@ -53,8 +53,12 @@ tr:nth-child(even) {
 
 </ul>
 
+
+<% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
+
 <fieldset>
   <p>Introduce the start/end date interval, driver and truck:</p>  
+ 
     <div class="row">
       <div class="pull-right range-query">
         <%= form_tag mission3_path, :method => 'get' do %>
@@ -66,9 +70,58 @@ tr:nth-child(even) {
         <%= submit_tag 'Display', class: 'btn search-button' %>  
         <% end %>
       </div>
-    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-  </br>
+    </div>                                                                                                                                                      
+ </fieldset>       
+
+<fieldset>
+  <p>Introduce the start/end date interval, driver and truck:</p>  
+
+   <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission3_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :driver_id, Driver.all.order('"FIRSTNAME" ASC'), :id, :name_with_cnp, {:include_blank => 'Active Drivers'} %>
+        <%= collection_select :search, :truck_id, Truck.find_by_sql(['SELECT * FROM trucks where trucks.active = ? 
+                    ORDER BY trucks.NB_PLATE ASC', true]), :id, :NB_PLATE, {:include_blank => 'Active Trucks'} %>
+        <%= collection_select :search, :client_id, Client.find_by_sql(['SELECT * FROM clients where clients.active = ? 
+                    ORDER BY clients.Name ASC', true]), :id, :Name, {:include_blank => 'Active Clients'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>                                                                                                                                                      
+
 </fieldset>
+
+<% end %>
+
+
+<% if (current_user != nil and current_user.email.eql? "ameropa.logistics@yahoo.com") %> 
+<fieldset>
+  <p>Introduce the start/end date interval, driver and truck:</p>  
+
+   <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission3_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :driver_id, Driver.all.order('"FIRSTNAME" ASC'), :id, :name_with_cnp, {:include_blank => 'Active Drivers'} %>
+        <%= collection_select :search, :truck_id, Truck.find_by_sql(['SELECT * FROM trucks where trucks.active = ? 
+                    ORDER BY trucks.NB_PLATE ASC', true]), :id, :NB_PLATE, {:include_blank => 'Active Trucks'} %>
+        <%= collection_select :search, :client_id, Client.find_by_sql(['SELECT * FROM clients where clients.active = ? 
+                    ORDER BY clients.Name ASC', true]), :id, :Name, {:include_blank => 'Active Clients'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>                                                                                                                                                      
+
+</fieldset>
+
+<% end %>
+
+
+
+
  <p> </p> 
 <p> </p> 
 

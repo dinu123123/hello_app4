@@ -1,9 +1,7 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Invoices</h1>
-
+<% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
 <fieldset>
-  <p>Introduce the start/end date interval and client:</p>  
     <div class="row">
       <div class="pull-right range-query">
         <%= form_tag mission4_path, :method => 'get' do %>
@@ -14,8 +12,52 @@
         <% end %>
       </div>
     </div>
+</fieldset>
+<fieldset>
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission4_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :client_id, Client.find_by_sql(['SELECT * FROM clients where clients.active = ? 
+                    ORDER BY clients.Name ASC', true]), :id, :Name, {:include_blank => 'Active Clients'} %>
+
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
+</fieldset>
+
+<% end %> 
+
+
+<% if (current_user != nil and current_user.email.eql? "ameropa.logistics@yahoo.com") %> 
+<h1>Invoices</h1>
+
+<fieldset>
+  <p>Introduce the start/end date interval and client:</p>  
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission4_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :client_id, Client.find_by_sql(['SELECT * FROM clients where clients.active = ? 
+                    ORDER BY clients.Name ASC', true]), :id, :Name, {:include_blank => 'Active Clients'} %>
+
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
   </br>
 </fieldset>
+
+<% end %> 
+
+
+
+
+
+
  <p> </p> 
 <p> </p> 
 

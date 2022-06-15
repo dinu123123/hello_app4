@@ -24,11 +24,9 @@ function checkAll(check_all){
 
 <h1>Activities</h1>
 
-
-
+<% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
 
 <fieldset>
-  <p>Introduce the Start/End date interval, driver and truck:</p>  
     <div class="row">
       <div class="pull-right range-query">
         <%= form_tag mission5_path, :method => 'get' do %>
@@ -42,10 +40,57 @@ function checkAll(check_all){
         <% end %>
       </div>
     </div>
+</fieldset>
+<fieldset>
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission5_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :driver_id, Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ? 
+                    ORDER BY drivers.SECONDNAME ASC', true]) , :id, :name_with_cnp, {:include_blank => 'Active Drivers'}  %>
+        <%= collection_select :search, :truck_id, Truck.find_by_sql(['SELECT * FROM trucks where trucks.active = ? 
+                    ORDER BY trucks.NB_PLATE ASC', true]), :id, :NB_PLATE, {:include_blank => 'Active Trucks'} %>
+        <%= collection_select :search, :client_id, Client.find_by_sql(['SELECT * FROM clients where clients.active = ? 
+                    ORDER BY clients.Name ASC', true]), :id, :Name, {:include_blank => 'Active Clients'} %>
+        <%= collection_select :search, :dispatcher_id, Dispatcher.all, :id, :FIRSTNAME, {:include_blank => 'All Dispatchers'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
+</fieldset>
+ <p> </p> 
+<p> </p> 
+
+<% end %>
+
+<% if (current_user != nil and current_user.email.eql? "ameropa.logistics@yahoo.com") %> 
+<fieldset>
+  <p>Introduce the Start/End date interval, driver and truck:</p>  
+    <div class="row">
+      <div class="pull-right range-query">
+        <%= form_tag mission5_path, :method => 'get' do %>
+        <%= datetime_field_tag 'search[date_from]', @search.date_from %>
+        <%= datetime_field_tag 'search[date_to]', @search.date_to %>
+        <%= collection_select :search, :driver_id, Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ? 
+                    ORDER BY drivers.SECONDNAME ASC', true]) , :id, :name_with_cnp, {:include_blank => 'Active Drivers'}  %>
+        <%= collection_select :search, :truck_id, Truck.find_by_sql(['SELECT * FROM trucks where trucks.active = ? 
+                    ORDER BY trucks.NB_PLATE ASC', true]), :id, :NB_PLATE, {:include_blank => 'Active Trucks'} %>
+        <%= collection_select :search, :client_id, Client.find_by_sql(['SELECT * FROM clients where clients.active = ? 
+                    ORDER BY clients.Name ASC', true]), :id, :Name, {:include_blank => 'Active Clients'} %>
+        <%= collection_select :search, :dispatcher_id, Dispatcher.all, :id, :FIRSTNAME, {:include_blank => 'All Dispatchers'} %>
+        <%= submit_tag 'Display', class: 'btn search-button' %>  
+        <% end %>
+      </div>
+    </div>
   </br>
 </fieldset>
  <p> </p> 
 <p> </p> 
+
+<% end %>
+
+
 
 <%= form_tag edit_individual_activities_path, :method => 'post' do %>
 
