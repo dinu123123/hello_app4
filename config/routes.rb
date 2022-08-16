@@ -64,6 +64,8 @@ end
   get "/periodics/index", as: "mission6" 
   get "/repairs/index", as: "mission7" 
 
+  get "/extra/dkv", as: "dkv_import_url"
+
 
   get "/invoiced_trips/index", as: "mission3"
   get "/invoiced_trips/index_special", as: "index_special"
@@ -118,6 +120,7 @@ get "home/download_pdf"
   resources :fuel_expenses do
   collection { post :import}
   collection { post :import_as24}
+  collection { post :import_dkv}
   end
 
   resources :de_tolls do

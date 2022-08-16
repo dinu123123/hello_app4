@@ -114,7 +114,7 @@
     </thead>
 <tbody>    
     <tr>  
-      <td bgcolor="#E8F993"><%= ((@total_germany_tolls+@total_be_tolls)/@total_km_invoiced).round(4) %></td>
+      <td bgcolor="#E8F993"><%= ((@total_germany_tolls+@total_be_tolls)/(@total_km_invoiced+1)).round(4) %></td>
     </tr>
      </tbody>
 </table>
@@ -136,6 +136,7 @@
     <% @events.each do |event| %>
     <tr>
       <td><%= event.DATE.strftime("%d %B %Y %H:%M") %></td>
+      
       <td><%= @drivers.find(event.DRIVER_id).CNP %></td>
       <td><%= @drivers.find(event.DRIVER_id).FIRSTNAME %></td>
       <td><%= @drivers.find(event.DRIVER_id).SECONDNAME %></td>
@@ -191,8 +192,15 @@
       <tr>
         <td><%= @clients.find(invoiced_trip.client_id).Name %></td>
         <td><%= invoiced_trip.client_id %></td>
+
+
+<% if @drivers.find(invoiced_trip.DRIVER_id) != nil %>
+
         <td><%= @drivers.find(invoiced_trip.DRIVER_id).FIRSTNAME+" "+ @drivers.find(invoiced_trip.DRIVER_id).SECONDNAME %></td>
         <td><%= @drivers.find(invoiced_trip.DRIVER_id).CNP %></td>
+
+<% end %>
+
         <td><%= invoiced_trip.DRIVER_id %></td>
         <td><%= @trucks.find(invoiced_trip.truck_id).NB_PLATE %></td>
         <td><%= invoiced_trip.truck_id %></td>
@@ -266,14 +274,16 @@
 <tbody>
     <% @truck_expenses.each do |truck_expense| %>
     <tr>
-      <td><%= @trucks.find(truck_expense.truck_id).NB_PLATE %></td>
-      <td><%= truck_expense.DATE %></td>
-      <td><%= truck_expense.AMOUNT %></td>
-      <td><%= truck_expense.INFO %></td>
-      <td><%= truck_expense.DESCRIPTION %></td>
-      <td><%= link_to 'Show', truck_expense %></td>
-      <td><%= link_to 'Edit', edit_truck_expense_path(truck_expense) %></td>
-      <td><%= link_to 'Destroy', truck_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% if @trucks.where(:id => truck_expense.truck_id).size > 0 %>
+        <td><%= @trucks.find(truck_expense.truck_id).NB_PLATE %></td>
+        <td><%= truck_expense.DATE %></td>
+        <td><%= truck_expense.AMOUNT %></td>
+        <td><%= truck_expense.INFO %></td>
+        <td><%= truck_expense.DESCRIPTION %></td>
+        <td><%= link_to 'Show', truck_expense %></td>
+        <td><%= link_to 'Edit', edit_truck_expense_path(truck_expense) %></td>
+        <td><%= link_to 'Destroy', truck_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
     </tr>
     <% end %>
   
@@ -328,6 +338,7 @@
   <tbody>
     <% @generic_tolls.each do |generic_toll| %>
       <tr>
+      <% if @trucks.where(:id => generic_toll.truck_id).size > 0 %>
         <td><%= @trucks.find(generic_toll.truck_id).NB_PLATE %></td>
         <td><%= generic_toll.StartDate %></td>
         <td><%= generic_toll.EndDate %></td>
@@ -337,6 +348,7 @@
         <td><%= link_to 'Show', generic_toll %></td>
         <td><%= link_to 'Edit', edit_generic_toll_path(generic_toll) %></td>
         <td><%= link_to 'Destroy', generic_toll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>          
       </tr>
     <% end %>
   </tbody>

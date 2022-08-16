@@ -1,8 +1,9 @@
 class DeToll < ApplicationRecord
 require 'csv'
  belongs_to :truck, :optional => true
- validates :bookingid, uniqueness: true
- 
+ #validates :bookingid, uniqueness: true
+validates_uniqueness_of :date, scope: %i[time truck_id eur]
+
 #CSV.read(file.path, :quote_char => "\´")
 def self.import(file)
 row_to_skip = 0

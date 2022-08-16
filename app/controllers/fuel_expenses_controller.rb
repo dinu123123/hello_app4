@@ -70,11 +70,269 @@ end
     redirect_to fuel_expenses_url, notice: "Activity Data Imported!"
   end 
 
-
   def import_as24
     FuelExpense.import_as24(params[:file])
     redirect_to fuel_expenses_url, notice: "Activity Data Imported!"
   end 
+
+  def import_dkv
+    import_dkv_file(params[:file])
+    #redirect_to fuel_expenses_url, notice: "Activity Data Imported!"
+  end 
+
+
+
+
+def import_dkv_file(file)
+   
+row_to_skip = 0
+        # a block that runs through a loop in our CSV data
+         CSV.foreach(file.path,  headers: [
+'Vehicle registration number',
+'Number of card or box',
+'Billing date',
+'Date',
+'Customer number',
+'Sales',
+'Unit',
+'Value of purchases net',
+'Value of purchases gross',
+'Product code',
+'Product',
+'Product group',
+'Cost centre',
+'Card -additional information',
+'Service country',
+'Price per unit',
+'VAT',
+'Discount net',
+'Discount gross',
+'Service fee net',
+'Service fee gross',
+'Postcode',
+'Town',
+'Service station',
+'Brand',
+'AB',
+'AH',
+'Mileage in km',
+'Customized data 1',
+'OBU ID'],
+     encoding: "ISO-8859-1",  
+                               :col_sep => ";", 
+                               :quote_char => "\"", 
+                               :header_converters => lambda { |h| h.try(:gsub,' ', ' ').try(:gsub,'ï»¿', '') }
+                    ) do |row| 
+
+    if row_to_skip ==0
+        row_to_skip = 1
+    else  
+      @my_date = row["Date"]
+
+    @my_product = row["Product"].to_s.try(:gsub,' ', ' ')
+    @my_volume = row["Sales"].to_s.to_d
+    @my_country = row["Service country"].to_s.try(:gsub,' ', '')
+
+    if row["Mileage in km"] != nil
+      @my_kminsertion = row["Mileage in km"].to_d
+    else
+      @my_kminsertion = 0.to_d
+    end
+
+    @my_truck = row["Vehicle registration number"].to_s.try(:gsub,' ', '').try(:gsub,'-', '') 
+    @my_cardnr = row["Number of card or box"].to_s.try(:gsub,' ', '')
+    @my_stationid = row["Site_nbr"].to_s.try(:gsub,' ', '')
+    @my_stationname = row["Town"].to_s.try(:gsub,' ', '')
+    @my_eurgrossunitprice = 0.to_d
+
+    if row["Value of purchases gross"] != nil
+      @my_eurgrossamount = row["Value of purchases gross"].to_d
+    else
+      @my_eurgrossamount = 0.to_d
+    end
+
+   if @my_truck == " "
+      @my_truck_id =  23
+      @my_platenr = "Office".to_s
+   else
+      @my_truck_id_ROW = Truck.find_by NB_PLATE:@my_truck.try(:gsub,' ', '')
+      if @my_truck_id_ROW == nil
+        @my_truck_id =  23
+        @my_platenr = "Office".to_s
+      else
+        @my_truck_id = @my_truck_id_ROW.id
+      end
+   end
+
+
+if @my_product == "Toll D - DKV BOX EUROPE"
+
+   @my_row = Hash.new
+   @my_trstime = DateTime.strptime( @my_date, '%d.%m.%Y %H:%M')
+
+   @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
+   @my_trsdate = @my_trsdatetime.to_time
+
+   @my_platenr = row["Vehicle registration number"].to_s.try(:gsub,' ', '')
+
+   @my_date = @my_trsdatetime.to_date
+   @my_time = "12:00".to_time
+   @my_datetime = @my_date.to_s+ "T" + @my_time.to_s
+   @my_row = @my_row.to_a<<(["datetime",@my_datetime]) 
+
+   @my_bookingid = "0".to_s 
+   @my_art = "0".to_s
+   @my_road = "".to_s
+   @my_via = "".to_s
+   @my_departure = "".to_s
+   @my_costcentre = "0".to_i
+      
+   @my_tariffmodel = "0".to_i
+   @my_axelclass = "0".to_i
+   @my_weightclass = "0".to_i
+   @my_emissioncat = "0".to_i
+   @my_roadoperators = "0".to_i
+
+   @my_ver = "-".to_s
+   @my_km = "0".to_d
+   #@my_eur = @my_eurgrossamount
+   @my_eur = row["Value of purchases net"].to_s.to_d - row["Discount net"].to_s.to_d + row["Service fee net"].to_s.to_d
+
+   @my_row = @my_row.to_a<<(["platenr",@my_platenr])<<(["date",@my_date])<<(["time",@my_time])
+   @my_row = @my_row.to_a<<(["bookingid",@my_bookingid])<<(["art",@my_art])<<(["road",@my_road])
+
+   @my_row = @my_row.to_a<<(["via",@my_via])<<(["art",@art])<<(["road",@my_road]) 
+   @my_row = @my_row.to_a<<(["eur",@my_eur])<<(["truck_id",@my_truck_id])
+
+   DeToll.find_or_create_by @my_row.to_h
+
+elsif @my_product.start_with?('Toll') or @my_product.include?('DKV BOX EUROPE')
+
+   @my_row = Hash.new
+   @my_trstime = DateTime.strptime( @my_date, '%d.%m.%Y %H:%M')
+
+   @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
+   @my_trsdate = @my_trsdatetime.to_time
+
+   @my_date = @my_trsdatetime.to_date
+   @my_time = "12:00".to_time
+
+   @my_datetime = @my_date.to_s+ "T" + @my_trsdatetime.to_time.to_s
+   @my_row = @my_row.to_a<<(["StartDate",@my_datetime]) 
+   @my_row = @my_row.to_a<<(["EndDate",@my_datetime]) 
+
+   @my_km = row["Mileage in km"].to_s.to_i
+   @my_row = @my_row.to_a<<(["Km",@my_km]) 
+   @my_net_costs = row["Value of purchases net"].to_s.to_d - row["Discount net"].to_s.to_d + row["Service fee net"].to_s.to_d
+   @my_row = @my_row.to_a<<(["EUR",@my_net_costs]) 
+
+   @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
+   @my_row = @my_row.to_a<<(["country",@my_country]) 
+
+   GenericToll.find_or_create_by @my_row.to_h
+
+elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?('ADBLUE')  or @my_product.include?('adblue') or @my_product.include?("AD BLUE")  or @my_product.include?("ad blue") 
+
+      @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%d/%m/%Y %H:%M')  
+      #DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%m/%d/%Y %H:%M %p')
+
+      if @my_trstime.year < 50
+         year4 = "20" + @my_trstime.year.to_s
+      elsif @my_trstime.year >= 50 and @my_trstime.year < 100
+         year4 = "19" + @my_trstime.year.to_s
+      else
+         year4 = @my_trstime.year.to_s
+      end
+
+      # @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, row["Time"][0,2].to_i , row["Time"][2,2].to_i, 0.to_i, DateTime.now.zone)
+      @my_trsdatetime = DateTime.new(year4.to_i, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
+      @my_trsdate = @my_trsdatetime.to_time
+   
+      @my_row = Hash.new
+      @my_row = @my_row.to_a<<(["trstime",@my_trsdatetime.to_time])
+      @my_row = @my_row.to_a<<(["trsdate",@my_trsdatetime.to_date])
+      @my_row = @my_row.to_a<<(["product",@my_product])
+      @my_row = @my_row.to_a<<(["volume",@my_volume])
+      @my_row = @my_row.to_a<<(["kminsertion",@my_kminsertion])
+      @my_row = @my_row.to_a<<(["platenr",@my_truck])
+      @my_row = @my_row.to_a<<(["cardnr",@my_cardnr])
+      @my_row = @my_row.to_a<<(["stationid",@my_stationid])
+      @my_row = @my_row.to_a<<(["stationname",@my_stationname])
+      @my_row = @my_row.to_a<<(["eurgrossunitprice",@my_eurgrossunitprice])
+      @my_row = @my_row.to_a<<(["eurgrossamount",@my_eurgrossamount])
+      @my_row = @my_row.to_a<<(["country",@my_country])
+      @my_row = @my_row.to_a<<(["truck_id",@my_truck_id])
+
+      #default
+      @my_eurnetamount = row["Value of purchases net"]
+      @my_EuroNetAmountInclVATFreeCharges = row["Value of purchases net"].to_s.to_d - row["Discount net"].to_s.to_d + row["Service fee net"].to_s.to_d
+
+      @my_row = @my_row.to_a<<(["eurnetamount",@my_eurnetamount.to_d.round(2)])
+      @my_row = @my_row.to_a<<(["EuroNetAmountInclVATFreeCharges",@my_EuroNetAmountInclVATFreeCharges.round(2)])
+      
+      @my_row_datetime =@my_trsdate.to_s + "T" + @my_trstime.to_s
+
+            if @my_truck != nil 
+
+              if  @my_eurgrossamount > 0.to_d
+                 #do not register transactions with zero value 
+                 @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
+                 @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
+                 FuelExpense.find_or_create_by @my_row.to_h
+
+               end
+            else
+              #hope one day we will have 1001 trucks
+              #but then that wont be a problem 
+              @my_row = @my_row.to_a<<(["truck_id",23.to_i]) 
+              #@my_row_datetime = row.to_a[1][1].try(:gsub!,'/', '-')+ "T" + row.to_a[0][1]
+              @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
+              FuelExpense.find_or_create_by @my_row.to_h
+            end 
+       
+    
+else 
+  # anything else is recored as truck expense
+  # t.integer :truck_id
+  # t.date :DATE
+  # t.decimal :AMOUNT
+  # t.text :INFO
+  # t.text :DESCRIPTION
+
+   @my_row = Hash.new
+   @my_trstime = DateTime.strptime( @my_date, '%d.%m.%Y %H:%M')
+
+   @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
+   @my_trsdate = @my_trsdatetime.to_time
+   @my_platenr = row["Vehicle registration number"].to_s.try(:gsub,' ', '')
+   @my_date = @my_trsdatetime
+   
+   @my_row = @my_row.to_a<<(["DATE",@my_date]) 
+   @my_net_costs = (row["Value of purchases net"].to_s.to_d - row["Discount net"].to_s.to_d + row["Service fee net"].to_s.to_d).to_s.to_i
+   @my_row = @my_row.to_a<<(["AMOUNT",@my_net_costs]) 
+
+   @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
+   @my_row = @my_row.to_a<<(["DESCRIPTION", (row["Product"].to_s.try(:gsub,' ', ' ')+ row["Product group"].to_s.try(:gsub,' ', ' ')+ @my_country) ])
+
+   TruckExpense.find_or_create_by @my_row.to_h
+
+  end
+
+end
+
+end
+
+
+
+
+
+
+
+
+
+end
+
+
 
   # GET /fuel_expenses/1
   # GET /fuel_expenses/1.json
@@ -145,4 +403,7 @@ end
                                             :eurgrossunitprice, :eurgrossamount, :country, :truck_id)
     
     end
-end
+
+  end
+
+

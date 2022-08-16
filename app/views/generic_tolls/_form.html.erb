@@ -43,9 +43,8 @@
 
   <div class="field">
     <%= form.label :country %>
-    <%= form.select :country, options_for_select(['Swiss', 'Italy', 'Austria','France','Hungary','Romania','Czech']), { prompt: "Country Select"}, :required => 'required' %>
+    <%= form.select :country, options_for_select(['CH', 'IT', 'AT','FR','HU','RO','CZ','SK','BE','DK','ES','PT','SE']), { prompt: "Country Select"}, :required => 'required' %>
   </div>
-
 
 <%if false%>
 <%= form.select(:country, [['Type A', 'Type A'],

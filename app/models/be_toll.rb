@@ -2,7 +2,10 @@ class BeToll < ApplicationRecord
 require 'csv'
  belongs_to :truck, :optional => true
 # validates :bookingid, uniqueness: true
- 
+validates_uniqueness_of :date, scope: %i[time truck_id eur]
+
+
+
 def time_convert()
  entry_time.to_time.strftime("%H %M")
 end
