@@ -80,9 +80,6 @@ end
     #redirect_to fuel_expenses_url, notice: "Activity Data Imported!"
   end 
 
-
-
-
 def import_dkv_file(file)
    
 row_to_skip = 0
@@ -164,14 +161,21 @@ row_to_skip = 0
       end
    end
 
+   @my_row = Hash.new
+   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%m/%d/%Y %H:%M')
+
+   if @my_trstime.year < 50
+      year4 = "20" + @my_trstime.year.to_s
+   elsif @my_trstime.year >= 50 and @my_trstime.year < 100
+      year4 = "19" + @my_trstime.year.to_s
+   else
+      year4 = @my_trstime.year.to_s
+   end
+
+   @my_trsdatetime = DateTime.new(year4.to_i, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
+   @my_trsdate = @my_trsdatetime.to_time
 
 if @my_product == "Toll D - DKV BOX EUROPE"
-
-   @my_row = Hash.new
-   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%d/%m/%Y %H:%M')
-
-   @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
-   @my_trsdate = @my_trsdatetime.to_time
 
    @my_platenr = row["Vehicle registration number"].to_s.try(:gsub,' ', '')
 
@@ -208,12 +212,7 @@ if @my_product == "Toll D - DKV BOX EUROPE"
 
 elsif @my_product.start_with?('Toll') or @my_product.include?('DKV BOX EUROPE')
 
-   @my_row = Hash.new
-   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%d/%m/%Y %H:%M')  
-
-   @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
-   @my_trsdate = @my_trsdatetime.to_time
-
+  
    @my_date = @my_trsdatetime.to_date
    @my_time = "12:00".to_time
 
@@ -233,21 +232,6 @@ elsif @my_product.start_with?('Toll') or @my_product.include?('DKV BOX EUROPE')
 
 elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?('ADBLUE')  or @my_product.include?('adblue') or @my_product.include?("AD BLUE")  or @my_product.include?("ad blue") 
 
-      @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%d/%m/%Y %H:%M')  
-      #DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%m/%d/%Y %H:%M %p')
-
-      if @my_trstime.year < 50
-         year4 = "20" + @my_trstime.year.to_s
-      elsif @my_trstime.year >= 50 and @my_trstime.year < 100
-         year4 = "19" + @my_trstime.year.to_s
-      else
-         year4 = @my_trstime.year.to_s
-      end
-
-      # @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, row["Time"][0,2].to_i , row["Time"][2,2].to_i, 0.to_i, DateTime.now.zone)
-      @my_trsdatetime = DateTime.new(year4.to_i, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
-      @my_trsdate = @my_trsdatetime.to_time
-   
       @my_row = Hash.new
       @my_row = @my_row.to_a<<(["trstime",@my_trsdatetime.to_time])
       @my_row = @my_row.to_a<<(["trsdate",@my_trsdatetime.to_date])
@@ -292,18 +276,7 @@ elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?
        
     
 else 
-  # anything else is recored as truck expense
-  # t.integer :truck_id
-  # t.date :DATE
-  # t.decimal :AMOUNT
-  # t.text :INFO
-  # t.text :DESCRIPTION
-
-   @my_row = Hash.new
-   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%d/%m/%Y %H:%M')  
-
-   @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
-   @my_trsdate = @my_trsdatetime.to_time
+  
    @my_platenr = row["Vehicle registration number"].to_s.try(:gsub,' ', '')
    @my_date = @my_trsdatetime
    
