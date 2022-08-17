@@ -175,6 +175,12 @@ row_to_skip = 0
    @my_trsdatetime = DateTime.new(year4.to_i, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
    @my_trsdate = @my_trsdatetime.to_time
 
+   @my_eur = row["Value of purchases net"].try(:gsub,',', '').to_s.to_d - 
+             row["Discount net"].try(:gsub,',', '').to_s.to_d + 
+             row["Service fee net"].try(:gsub,',', '').to_s.to_d
+
+
+
 if @my_product == "Toll D - DKV BOX EUROPE"
 
    @my_platenr = row["Vehicle registration number"].to_s.try(:gsub,' ', '')
@@ -200,7 +206,6 @@ if @my_product == "Toll D - DKV BOX EUROPE"
    @my_ver = "-".to_s
    @my_km = "0".to_d
    #@my_eur = @my_eurgrossamount
-   @my_eur = row["Value of purchases net"].to_s.to_d - row["Discount net"].to_s.to_d + row["Service fee net"].to_s.to_d
 
    @my_row = @my_row.to_a<<(["platenr",@my_platenr])<<(["date",@my_date])<<(["time",@my_time])
    @my_row = @my_row.to_a<<(["bookingid",@my_bookingid])<<(["art",@my_art])<<(["road",@my_road])
@@ -249,8 +254,7 @@ elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?
 
       #default
       @my_eurnetamount = row["Value of purchases net"]
-      @my_EuroNetAmountInclVATFreeCharges = row["Value of purchases net"].to_s.to_d - row["Discount net"].to_s.to_d + row["Service fee net"].to_s.to_d
-
+      @my_EuroNetAmountInclVATFreeCharges = @my_eur
       @my_row = @my_row.to_a<<(["eurnetamount",@my_eurnetamount.to_d.round(2)])
       @my_row = @my_row.to_a<<(["EuroNetAmountInclVATFreeCharges",@my_EuroNetAmountInclVATFreeCharges.round(2)])
       
@@ -279,11 +283,8 @@ else
   
    @my_platenr = row["Vehicle registration number"].to_s.try(:gsub,' ', '')
    @my_date = @my_trsdatetime
-   
    @my_row = @my_row.to_a<<(["DATE",@my_date]) 
-   @my_net_costs = (row["Value of purchases net"].to_s.to_d - row["Discount net"].to_s.to_d + row["Service fee net"].to_s.to_d).to_s.to_i
-   @my_row = @my_row.to_a<<(["AMOUNT",@my_net_costs]) 
-
+   @my_row = @my_row.to_a<<(["AMOUNT",@my_eur]) 
    @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
    @my_row = @my_row.to_a<<(["DESCRIPTION", (row["Product"].to_s.try(:gsub,' ', ' ')+ row["Product group"].to_s.try(:gsub,' ', ' ')+ @my_country) ])
 
