@@ -168,7 +168,7 @@ row_to_skip = 0
 if @my_product == "Toll D - DKV BOX EUROPE"
 
    @my_row = Hash.new
-   @my_trstime = DateTime.strptime( @my_date, '%d.%m.%Y %H:%M')
+   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%d/%m/%Y %H:%M')
 
    @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
    @my_trsdate = @my_trsdatetime.to_time
@@ -209,7 +209,7 @@ if @my_product == "Toll D - DKV BOX EUROPE"
 elsif @my_product.start_with?('Toll') or @my_product.include?('DKV BOX EUROPE')
 
    @my_row = Hash.new
-   @my_trstime = DateTime.strptime( @my_date, '%d.%m.%Y %H:%M')
+   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%d/%m/%Y %H:%M')  
 
    @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
    @my_trsdate = @my_trsdatetime.to_time
@@ -300,7 +300,7 @@ else
   # t.text :DESCRIPTION
 
    @my_row = Hash.new
-   @my_trstime = DateTime.strptime( @my_date, '%d.%m.%Y %H:%M')
+   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%d/%m/%Y %H:%M')  
 
    @my_trsdatetime = DateTime.new(@my_trstime.year, @my_trstime.month, @my_trstime.day, @my_trstime.hour , @my_trstime.minute, 0.to_i, DateTime.now.zone)
    @my_trsdate = @my_trsdatetime.to_time
