@@ -256,7 +256,7 @@ elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?
       @my_row = @my_row.to_a<<(["truck_id",@my_truck_id])
 
       #default
-      @my_eurnetamount = row["Value of purchases net"]
+      @my_eurnetamount = @my_eur
       @my_EuroNetAmountInclVATFreeCharges = @my_eur
       @my_row = @my_row.to_a<<(["eurnetamount",@my_eurnetamount.to_d.round(2)])
       @my_row = @my_row.to_a<<(["EuroNetAmountInclVATFreeCharges",@my_EuroNetAmountInclVATFreeCharges.round(2)])
