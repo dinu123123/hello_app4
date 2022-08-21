@@ -82,6 +82,8 @@ end
 
 def import_dkv_file(file)
    
+# TruckExpense.delete_all; FuelExpense.delete_all; DeToll.delete_all; GenericToll.delete_all; DriverExpense.delete_all
+
 row_to_skip = 0
         # a block that runs through a loop in our CSV data
          CSV.foreach(file.path,  headers: [
@@ -163,7 +165,7 @@ row_to_skip = 0
 
    @my_row = Hash.new
    logger.debug @my_date
-   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%m/%d/%Y %H:%M')
+   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%d/%m/%Y %H:%M')
 
    if @my_trstime.year < 50
       year4 = "20" + @my_trstime.year.to_s
@@ -184,7 +186,7 @@ row_to_skip = 0
 
 if @my_product == "Toll D - DKV BOX EUROPE"
 
-   @my_platenr = row["Vehicle registration number"].to_s.try(:gsub,' ', '')
+   @my_platenr = row["Vehicle registration number"].to_s.try(:gsub,' ', '').try(:gsub,'-', '')
 
    @my_date = @my_trsdatetime.to_date
    @my_time = "12:00".to_time
@@ -282,7 +284,7 @@ elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?
     
 else 
   
-   @my_platenr = row["Vehicle registration number"].to_s.try(:gsub,' ', '')
+   @my_platenr = row["Vehicle registration number"].to_s.try(:gsub,' ', '').try(:gsub,'-', '')
    @my_date = @my_trsdatetime
    @my_row = @my_row.to_a<<(["DATE",@my_date]) 
    @my_row = @my_row.to_a<<(["AMOUNT",@my_eur]) 
