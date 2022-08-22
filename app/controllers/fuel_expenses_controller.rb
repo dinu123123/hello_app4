@@ -230,7 +230,7 @@ elsif @my_product.start_with?('Toll') or @my_product.include?('DKV BOX EUROPE')
 
    @my_km = row["Mileage in km"].to_s.to_i
    @my_row = @my_row.to_a<<(["Km",@my_km]) 
-   @my_net_costs = row["Value of purchases net"].to_s.to_d - row["Discount net"].to_s.to_d + row["Service fee net"].to_s.to_d
+   @my_net_costs = @my_eur 
    @my_row = @my_row.to_a<<(["EUR",@my_net_costs]) 
 
    @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
