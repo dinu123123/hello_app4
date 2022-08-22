@@ -34,6 +34,14 @@ attr_accessor :total_price_calculated
   def create
     @invoice = Invoice.new(invoice_params)
 
+
+   @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
+   and pricings.DATETIME <= ? order by pricings.DATETIME desc", @invoice.client_id,  @invoice.date ]) 
+
+   if @pricing[0].PaymentDelay != nil
+     @invoice.write_attribute(:ddate, @invoice.date+@pricing[0].PaymentDelay)
+   end 
+
     respond_to do |format|
       if @invoice.save
         format.html { redirect_to action: "index" }
