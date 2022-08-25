@@ -9,10 +9,17 @@ attr_accessor :total_price_calculated
     @total_price = 0
     @search = TransactionSearch.new(params[:search])
     @invoices = @search.scope_invoices_index
-    @total_price = @invoices.sum(&:total_amount)
+
+    if @invoices != nil
+      @total_price = @invoices.sum(&:total_amount)
+    else
+      @total_price = 0
+    end 
+     
     #@invoices = Invoice.all
     #@invoices = Invoice.find_by_sql(['SELECT * FROM invoices ORDER BY  invoices.date DESC, invoices.client_id ASC, invoices.info DESC '])
     @clients = Client.all
+
   end
 
   # GET /invoices/1
@@ -32,6 +39,7 @@ attr_accessor :total_price_calculated
   # POST /invoices
   # POST /invoices.json
   def create
+
     @invoice = Invoice.new(invoice_params)
 
 

@@ -8,6 +8,7 @@
         <%= datetime_field_tag 'search[date_from]', @search.date_from %>
         <%= datetime_field_tag 'search[date_to]', @search.date_to %>
         <%= collection_select :search, :client_id, Client.all, :id, :Name, {:include_blank => 'All Clients'} %>
+        <%= collection_select :search, :status, @search.arrayE, :id, :name %>
         <%= submit_tag 'Display', class: 'btn search-button' %>  
         <% end %>
       </div>
@@ -22,6 +23,7 @@
         <%= collection_select :search, :client_id, Client.find_by_sql(['SELECT * FROM clients where clients.active = ? 
                     ORDER BY clients.Name ASC', true]), :id, :Name, {:include_blank => 'Active Clients'} %>
 
+        <%= collection_select :search, :status, @search.arrayE, :id, :name %>
         <%= submit_tag 'Display', class: 'btn search-button' %>  
         <% end %>
       </div>
@@ -92,12 +94,9 @@
   </thead>
 
   <tbody>
-
+<% if @invoices != nil  %>    
     <% @invoices.each_with_index do |invoice,j| %>
-   
       <tr>
-   
-
 <% if invoice.created_at.to_date == Time.now.utc.to_date%>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= j+1 %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.name %></td>
@@ -171,6 +170,9 @@
         <td><%=  invoice.vat %></td>
         <td><%= invoice.total_amount %></td>
 <% end %>
+  
+
+
 
 <% if invoice.paid == true %>
         <td bgcolor="#b6f746" style="font-weight:bold"><%= "PAID" %></td>
@@ -202,6 +204,8 @@
   <% end %>
       </tr>
     <% end %>
+
+    <% end %>  
   </tbody>
 </table>
 

@@ -1,7 +1,21 @@
-class TransactionSearch 
-  attr_reader :date_from, :date_to, :truck_id, :driver_id, :client_id, :truck_events, :periodic_category_id, :dispatcher_id
+class Element
+   attr_reader :name, :id
 
-  
+   def initialize (a,b)
+    @name = a
+    @id = b
+  end
+end
+
+class TransactionSearch 
+  attr_reader :date_from, :date_to, :truck_id, :driver_id, :client_id, 
+  :truck_events, :periodic_category_id, :dispatcher_id, :arrayE, :status
+
+  def parsed_status (n1, default)
+    n1.to_i
+    rescue ArgumentError, TypeError
+    default
+  end
 
   def initialize(params, large = 2)
 
@@ -20,7 +34,17 @@ class TransactionSearch
     @truck_id = parsed_truck_id(params[:truck_id], 1)
     @client_id = parsed_client_id(params[:client_id], 1)
 
+   @status = parsed_status(params[:status], 1)
 
+    a4 =Element.new("All",4)
+    b4 =Element.new("Overdue",3) 
+    c4 =Element.new("NOT Paid",2) 
+    d4 =Element.new("Paid",1)
+    @arrayE = []
+    @arrayE.push(a4)
+    @arrayE.push(b4)
+    @arrayE.push(c4)
+    @arrayE.push(d4)
 
 
     @dispatcher_id = parsed_dispatcher_id(params[:dispatcher_id], 1)
@@ -70,6 +94,13 @@ end
  end
 
 def scope_invoices_index
+
+#a4 =Element.new("All",4)
+#b4 =Element.new("Overdue",3) 
+#c4 =Element.new("Issued and NOT Paid",2) 
+#d4 =Element.new("Issued and Paid",1)
+
+if @status == 4
   if @client_id > 0
       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? and invoices.date >= ? and invoices.date <= ? 
                   ORDER BY  invoices.date DESC, invoices.name DESC, invoices.client_id ASC ', @client_id ,to_datetime(@date_from), to_datetime(@date_to)]) 
@@ -77,6 +108,38 @@ def scope_invoices_index
       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.date >= ? and invoices.date <= ? 
                   ORDER BY  invoices.date DESC, invoices.name DESC, invoices.client_id ASC ', to_datetime(@date_from), to_datetime(@date_to) ])
   end  
+elsif @status == 3
+    if @client_id > 0
+      @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? and 
+                  invoices.ddate <= ? and invoices.paid = ? ORDER BY  invoices.date DESC, invoices.name DESC, 
+                  invoices.client_id ASC ', @client_id , Date.today , false]) 
+  else
+      @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where 
+                  invoices.ddate <= ? and invoices.paid = ? ORDER BY invoices.date DESC, invoices.name DESC, 
+                  invoices.client_id ASC ', Date.today , false])   
+  end  
+
+elsif @status == 2
+    if @client_id > 0
+      @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? and invoices.date >= ? and 
+                  invoices.date <= ? and invoices.paid = ?
+                  ORDER BY  invoices.date DESC, invoices.name DESC, invoices.client_id ASC ', @client_id ,to_datetime(@date_from), to_datetime(@date_to), false]) 
+    else
+      @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.date >= ? and invoices.date <= ? and invoices.paid = ?
+                  ORDER BY  invoices.date DESC, invoices.name DESC, invoices.client_id ASC ', to_datetime(@date_from), to_datetime(@date_to), false ])
+    end  
+
+elsif @status == 1
+    if @client_id > 0
+      @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? and invoices.date >= ? and 
+                  invoices.date <= ? and invoices.paid = ?
+                  ORDER BY  invoices.date DESC, invoices.name DESC, invoices.client_id ASC ', @client_id ,to_datetime(@date_from), to_datetime(@date_to), true]) 
+    else
+      @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.date >= ? and invoices.date <= ? and invoices.paid = ?
+                  ORDER BY  invoices.date DESC, invoices.name DESC, invoices.client_id ASC ', to_datetime(@date_from), to_datetime(@date_to), true])
+    end  
+ end
+
 end
 
 ##changed
@@ -468,9 +531,7 @@ return  arrayRepairs
 end
 
 def scope   
-# return  Event.where('date BETWEEN ? AND ?', @date_from, @date_to),
-#           TruckExpense.where('date BETWEEN ? AND ?', @date_from, @date_to), 
-#         DriverExpense.where('date BETWEEN ? AND ?', @date_from, @date_to)
+#Individual Calculation Interval
 
 arrayTruckExpense = Array.new
 arrayGermanyToll = Array.new
@@ -480,11 +541,6 @@ arrayDriverExpenses = Array.new
 arrayFuelExpenses = Array.new
 arrayInvoicedTrips = Array.new
 arrayEvents = Array.new
-
-
-
-
-
 
 if @driver_id > 0
 
