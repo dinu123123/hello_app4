@@ -24,7 +24,7 @@ class TransactionSearch
     if large == 1
       @date_from = parsed_date(params[:date_from], (DateTime.now - 1.days).strftime('%Y-%m-%dT%H:%M'))
     elsif large == 2
-      @date_from = parsed_date(params[:date_from], (DateTime.now - 7.days).strftime('%Y-%m-%dT%H:%M'))
+      @date_from = parsed_date(params[:date_from], (DateTime.now - 60.days).strftime('%Y-%m-%dT%H:%M'))
     else
       @date_from = parsed_date(params[:date_from], (DateTime.now.beginning_of_year).strftime('%Y-%m-%dT%H:%M'))
     end
@@ -34,7 +34,7 @@ class TransactionSearch
     @truck_id = parsed_truck_id(params[:truck_id], 1)
     @client_id = parsed_client_id(params[:client_id], 1)
 
-   @status = parsed_status(params[:status], 1)
+    @status = parsed_status(params[:status], 1)
 
     a4 =Element.new("All",4)
     b4 =Element.new("Overdue",3) 
@@ -48,11 +48,7 @@ class TransactionSearch
 
 
     @dispatcher_id = parsed_dispatcher_id(params[:dispatcher_id], 1)
-
-
-
     @periodic_category_id = parsed_periodic_category_id(params[:periodic_category_id], 1)
-
 
   end
 
@@ -138,8 +134,20 @@ elsif @status == 1
       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.date >= ? and invoices.date <= ? and invoices.paid = ?
                   ORDER BY  invoices.date DESC, invoices.name DESC, invoices.client_id ASC ', to_datetime(@date_from), to_datetime(@date_to), true])
     end  
- end
+else
+  if @client_id > 0
+      @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? and invoices.date >= ? and invoices.date <= ? 
+                  ORDER BY  invoices.date DESC, invoices.name DESC, invoices.client_id ASC ', @client_id ,to_datetime(@date_from), to_datetime(@date_to)]) 
+  else
+      @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.date >= ? and invoices.date <= ? 
+                  ORDER BY  invoices.date DESC, invoices.name DESC, invoices.client_id ASC ', to_datetime(@date_from), to_datetime(@date_to) ])
+  end  
+end
 
+
+
+
+ 
 end
 
 ##changed

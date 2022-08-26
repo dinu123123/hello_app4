@@ -61,7 +61,10 @@ def index
       
     Event.order('DATE DESC').all.each do |event|
 
-      if @trucks.find(event.truck_id).NB_PLATE.start_with?("PH") == true and !(reg_trucks.include? event.truck_id)
+      if (@trucks.find(event.truck_id).NB_PLATE.start_with?("PH") == true or 
+          @trucks.find(event.truck_id).NB_PLATE.start_with?("B") == true or
+          @trucks.find(event.truck_id).NB_PLATE.start_with?("CT") == true
+          ) and !(reg_trucks.include? event.truck_id)
   
         if event.START_END == false 
                 reg_trucks.push(event.truck_id)
@@ -185,7 +188,6 @@ end
     @clients = Client.all
     @search = TransactionSearch.new(params[:search])
     @activities = @search.scope_combinex_pallets_index
-
   end
 
 
