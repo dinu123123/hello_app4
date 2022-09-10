@@ -165,7 +165,7 @@ row_to_skip = 0
 
    @my_row = Hash.new
    logger.debug @my_date
-   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%d/%m/%Y %H:%M')
+   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%m/%d/%Y %H:%M')
 
    if @my_trstime.year < 50
       year4 = "20" + @my_trstime.year.to_s
