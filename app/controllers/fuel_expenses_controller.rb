@@ -271,7 +271,6 @@ elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?
                  #do not register transactions with zero value 
                  @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
                  @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
-                 @my_row = @my_row.to_a<<(["manual",false]) 
                  FuelExpense.find_or_create_by @my_row.to_h
 
                end
@@ -281,7 +280,6 @@ elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?
               @my_row = @my_row.to_a<<(["truck_id",23.to_i]) 
               #@my_row_datetime = row.to_a[1][1].try(:gsub!,'/', '-')+ "T" + row.to_a[0][1]
               @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
-              @my_row = @my_row.to_a<<(["manual",false]) 
               FuelExpense.find_or_create_by @my_row.to_h
             end 
        
