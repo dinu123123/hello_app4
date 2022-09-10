@@ -87,6 +87,7 @@ tr:nth-child(even) {
       <th>Amount</th>
       <th>Info</th>
       <th>Description</th>
+      <th>Manual</th>
       <th>Photos</th>
       <th colspan="3"></th>
     </tr>
@@ -117,6 +118,7 @@ tr:nth-child(even) {
         <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.AMOUNT %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.INFO %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.DESCRIPTION %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.manual %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.images.count %></td>
 <% elsif driver_expense.created_at.to_date == Time.now.utc.to_date-1%>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= j+1 %></td>
@@ -132,6 +134,8 @@ tr:nth-child(even) {
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.AMOUNT %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.INFO %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.DESCRIPTION %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.manual%></td>
+        
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.images.count %></td>  
 <% elsif driver_expense.created_at.to_date == Time.now.utc.to_date-2%>
         <td bgcolor="#008080" style="font-weight:bold"><%= j+1 %></td>
@@ -147,6 +151,8 @@ tr:nth-child(even) {
         <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.AMOUNT %></td>
         <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.INFO %></td>
         <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.DESCRIPTION %></td>
+        
+        <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.manual%></td>
         <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.images.count %></td>  
 <% else %>
         <td><%= j+1 %></td>
@@ -162,6 +168,7 @@ tr:nth-child(even) {
         <td><%= driver_expense.AMOUNT %></td>
         <td><%= driver_expense.INFO %></td>
         <td><%= driver_expense.DESCRIPTION %></td>
+        <td><%= driver_expense.manual %></td>
         <td><%= driver_expense.images.count %></td>
 <% end %>
 

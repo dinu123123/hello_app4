@@ -117,6 +117,6 @@ else
     def de_toll_params
       params.require(:de_toll).permit(:platenr, :date, :time, :bookingID, :art, :road, 
         :via, :departure, :costcentre, :tariffmodel, :axelclass, :weightclass, :emissioncat, 
-        :roadoperators, :ver, :km, :eur, :truck_id)
+        :roadoperators, :ver, :km, :eur, :truck_id, :manual)
     end
 end

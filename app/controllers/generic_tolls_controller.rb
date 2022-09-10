@@ -81,6 +81,6 @@ def import
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def generic_toll_params
-      params.require(:generic_toll).permit(:StartDate, :EndDate, :Km, :EUR, :truck_id, :country)
+      params.require(:generic_toll).permit(:StartDate, :EndDate, :Km, :EUR, :truck_id, :country, :manual)
     end
 end

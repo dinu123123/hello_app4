@@ -387,8 +387,6 @@ def weekly
   else
       @search1 = PeriodicTransactionSearch.new(params[:search1])
 
-
-
       @nb_weeks = num_weeks
 
 
@@ -434,6 +432,7 @@ def weekly
             @pInvoices = Array.new(@period_end- @period_start+3){Array.new(Client.all.size+2,0) {Array.new(30,0)}}
                         
             @arrayWeeklyTruckExpense[0][0]= "".to_s
+
 
             Client.all.each_with_index do |client,j|
               @arrayWeeklyTruckExpense[0][j+1]=client.Name
@@ -789,6 +788,7 @@ else
         
 
         if @search1.type != 2 
+
 
               Client.all.each_with_index do |client,j|
                      @totalInvoicedTrips = 0

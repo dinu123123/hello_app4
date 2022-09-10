@@ -127,6 +127,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def driver_expense_params
-      params.require(:driver_expense).permit(:truck_id, :DRIVER_id, :DATE, :AMOUNT, :INFO, :DESCRIPTION, images: [])
+      params.require(:driver_expense).permit(:truck_id, :DRIVER_id, :DATE, :AMOUNT, :INFO, :DESCRIPTION, :manual, images: [])
     end
 end

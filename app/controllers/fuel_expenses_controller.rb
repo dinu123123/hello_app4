@@ -215,6 +215,7 @@ if @my_product == "Toll D - DKV BOX EUROPE"
 
    @my_row = @my_row.to_a<<(["via",@my_via])<<(["art",@art])<<(["road",@my_road]) 
    @my_row = @my_row.to_a<<(["eur",@my_eur])<<(["truck_id",@my_truck_id])
+   @my_row = @my_row.to_a<<(["manual",false]) 
 
    DeToll.find_or_create_by @my_row.to_h
 
@@ -235,6 +236,7 @@ elsif @my_product.start_with?('Toll') or @my_product.include?('DKV BOX EUROPE')
 
    @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
    @my_row = @my_row.to_a<<(["country",@my_country]) 
+   @my_row = @my_row.to_a<<(["manual",false]) 
 
    GenericToll.find_or_create_by @my_row.to_h
 
@@ -269,6 +271,7 @@ elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?
                  #do not register transactions with zero value 
                  @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
                  @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
+                 @my_row = @my_row.to_a<<(["manual",false]) 
                  FuelExpense.find_or_create_by @my_row.to_h
 
                end
@@ -278,6 +281,7 @@ elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?
               @my_row = @my_row.to_a<<(["truck_id",23.to_i]) 
               #@my_row_datetime = row.to_a[1][1].try(:gsub!,'/', '-')+ "T" + row.to_a[0][1]
               @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
+              @my_row = @my_row.to_a<<(["manual",false]) 
               FuelExpense.find_or_create_by @my_row.to_h
             end 
        
@@ -290,6 +294,7 @@ else
    @my_row = @my_row.to_a<<(["AMOUNT",@my_eur]) 
    @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
    @my_row = @my_row.to_a<<(["DESCRIPTION", (row["Product"].to_s.try(:gsub,' ', ' ')+ row["Product group"].to_s.try(:gsub,' ', ' ')+ @my_country) ])
+   @my_row = @my_row.to_a<<(["manual",false]) 
 
    TruckExpense.find_or_create_by @my_row.to_h
 

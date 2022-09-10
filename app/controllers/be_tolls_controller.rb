@@ -106,6 +106,6 @@ class BeTollsController < ApplicationController
         :payment_method, :date_of_processing, 
         :date_of_usage, :toll_charger, :road_type, :route, 
         :entry_time, :charged_distance, :distance_unit, 
-        :charged_amount_excluding_vat, :currency, :vat_indicator)
+        :charged_amount_excluding_vat, :currency, :vat_indicator, :manual)
     end
 end
