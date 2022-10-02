@@ -55,20 +55,11 @@
 
 <% end %> 
 
-
-
-
-
-
  <p> </p> 
 <p> </p> 
-
 <fieldset>
-
+<p><%= link_to 'New Invoice', new_invoice_path %></p>
 <p>Total amount: <%= @total_price %>  </p>  
-
-
-
 <table>
   <thead>
     <tr>
@@ -208,7 +199,4 @@
     <% end %>  
   </tbody>
 </table>
-
 <br>
-
-<%= link_to 'New Invoice', new_invoice_path %>

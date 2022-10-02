@@ -46,9 +46,9 @@ attr_accessor :total_price_calculated
    @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
    and pricings.DATETIME <= ? order by pricings.DATETIME desc", @invoice.client_id,  @invoice.date ]) 
 
-   if @pricing[0].PaymentDelay != nil
+   if @pricing[0].PaymentDelay != nil  ## and invoice_params["ddate(1i)"] == Date.new(2000,1,1).year and invoice_params["ddate(2i)"] == Date.new(2000,1,1).month and invoice_params["ddate(3i)"] == Date.new(2000,1,1).day
      @invoice.write_attribute(:ddate, @invoice.date+@pricing[0].PaymentDelay)
-   end 
+   end
 
     respond_to do |format|
       if @invoice.save
