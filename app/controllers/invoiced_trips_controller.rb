@@ -24,6 +24,8 @@ class InvoicedTripsController < ApplicationController
     @invoiced_trips = @search.scope_invoiced_trips_index(false)
 
     @total_loss = @invoiced_trips.sum(&:km) -  @invoiced_trips.sum(&:km_evogps) 
+    @total_km_invoiced = @invoiced_trips.sum(&:km)  
+
 
     @total_loss_percentage = 0
     if @invoiced_trips.sum(&:km_evogps) >0

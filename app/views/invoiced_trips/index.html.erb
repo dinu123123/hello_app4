@@ -126,12 +126,15 @@ tr:nth-child(even) {
 <p> </p> 
 
 <fieldset>
-  
+    <p style="font-size:18px;color:green"><b><mark> KM Invoiced: <%=  @total_km_invoiced %> km 
+    </mark> </b></p>  
   <% if @total_loss >= 0 %>
-     <p style="font-size:18px;color:green"><b><mark> Total GAIN: <%= @total_loss %> km (<%= @total_loss_percentage.round(1) %> %)</mark> </b></p>  
+     <p style="font-size:18px;color:green"><b><mark> Km Gained: <%= @total_loss %> km (<%= @total_loss_percentage.round(1) %> %)</mark> </b></p>  
   <% else %>
-     <p style="font-size:18px;color:red">  <b><mark> Total LOSS: <%= @total_loss %> km (<%= @total_loss_percentage.round(1) %> %)</mark></b> </p>  
+     <p style="font-size:18px;color:red">  <b><mark> Km Lost: <%= @total_loss %> km (<%= @total_loss_percentage.round(1) %> %)</mark></b> </p>  
   <% end %>
+
+ 
 
 <table>
   <thead>
