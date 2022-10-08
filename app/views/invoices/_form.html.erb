@@ -60,8 +60,8 @@
   </div>
 
    <div class="field">
-    <%= form.label :"Due Date" %>
-    <%= form.date_select :ddate, id: :invoice_ddate,start_year: Time.now.year+1, end_year: Time.now.year-50 %>
+    <%= form.label :"Due Date" %> 
+    <%= form.date_select :ddate, id: :invoice_ddate, selected: Date.new(2000,1,1), start_year: Time.now.year+1, end_year: Time.now.year-50 %>
   </div>
 
   <div class="actions">
