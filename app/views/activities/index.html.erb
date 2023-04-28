@@ -163,7 +163,7 @@ function checkAll(check_all){
 
 
   <tbody>
-    <% @activities.each do |activity| %>
+    <% @activities.each_with_index do |activity, index| %>
     <% bg_color = "white" %>
 
     <% if activity.date == Time.now.utc.to_date%>
@@ -210,7 +210,7 @@ function checkAll(check_all){
 
         <td bgcolor= <%=bg_color %> ><%= activity.date.strftime("%m/%d") %></td>
           
-        <td bgcolor= <%=bg_color %> ><%= @drivers.find(activity.DRIVER_id).CNP.split(//).last(0).join+" "+
+        <td bgcolor= <%=bg_color %> style="font-weight:bold" > <%= (@activities.size-index).to_s+".".to_s + @drivers.find(activity.DRIVER_id).CNP.split(//).last(0).join+" "+
                                          @drivers.find(activity.DRIVER_id).FIRSTNAME.split.first+" "+
                                          @drivers.find(activity.DRIVER_id).SECONDNAME.split.first %></td>
 
