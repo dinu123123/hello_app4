@@ -743,20 +743,25 @@ if @pInvoices != nil
   @pInvoices = @pInvoices.transpose()
 end
 
-@arrayWeeklyTruckExpense.delete_if.with_index {|column,i|   
-  if (column.first.to_s != "Week" and column.first.to_s != "Total" and    column.last.to_i == 0)
+
+@arrayWeeklyTruckExpense.each_with_index {|column, i|   
+  if (column.first.to_s[0] != "W" and    column.last.to_i == 0)
    if @pInvoices != nil
      @pInvoices.delete_at(i)
    end
-   @arrayWeeklyTruckExpense.delete column
  end
 }
+
+@arrayWeeklyTruckExpense.delete_if.with_index {|column,i| 
+  column.first.to_s != "Week" and column.first.to_s != "Total" and    column.last.to_i == 0}
 
 if @pInvoices != nil
  @pInvoices =  @pInvoices.transpose()
 end 
 @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
 end
+
+
 
 @drivers = Driver.all
 @trucks = Truck.all
