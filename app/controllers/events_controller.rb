@@ -729,13 +729,9 @@ end
 
 @arrayWeeklyTruckExpense[@period_end-@period_start+2][Client.all.size+1] = @totalAll
 
-
-
-
 end
 
 end
-
 
 @arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose() 
 
@@ -743,17 +739,20 @@ if @pInvoices != nil
   @pInvoices = @pInvoices.transpose()
 end
 
+@count_delete = 0
 
-@arrayWeeklyTruckExpense.each_with_index {|column, i|   
-  if (column.first.to_s[0] != "W" and    column.last.to_i == 0)
+@arrayWeeklyTruckExpense.each_with_index {|column, i|
+  if (column.first.to_s != "Week" and column.first.to_s != "Total" and column.last.to_i == 0)
    if @pInvoices != nil
-     @pInvoices.delete_at(i)
+     @pInvoices.delete_at(i-@count_delete)
+     @count_delete = @count_delete + 1
    end
  end
 }
 
-@arrayWeeklyTruckExpense.delete_if.with_index {|column,i| 
-  column.first.to_s != "Week" and column.first.to_s != "Total" and    column.last.to_i == 0}
+@arrayWeeklyTruckExpense.delete_if.with_index {|column,i|
+   column.first.to_s != "Week" and column.first.to_s != "Total" and column.last.to_i == 0
+}
 
 if @pInvoices != nil
  @pInvoices =  @pInvoices.transpose()
