@@ -3,7 +3,7 @@ class ExtraController < ApplicationController
   # GET /truck_expenses
   # GET /truck_expenses.json
   def index
-   end
+  end
 
   def data_in
   end
@@ -38,5 +38,4 @@ class ExtraController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
- 
 end

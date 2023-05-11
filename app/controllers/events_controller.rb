@@ -32,7 +32,7 @@
       head = CSV.readlines(@file_name.path)
 
 
-      individual_import_db(head, 0, Driver)
+    individual_import_db(head, 0, Driver)
     #flash[:notice] = "Drivers tbl sucessfully imported #Driver.all.size lines!"
 
     individual_import_db(head, 1, Truck)

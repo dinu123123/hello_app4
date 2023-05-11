@@ -5,6 +5,8 @@ class FuelExpensesController < ApplicationController
   # GET /fuel_expenses.json
   def index
 
+
+
 FuelExpense.all.each_with_index do |fuelexpense,i|
  
 if false
@@ -75,18 +77,25 @@ end
     redirect_to fuel_expenses_url, notice: "Activity Data Imported!"
   end 
 
+  def parsed_active (n1, default)
+    if n1 == nil
+      return 0
+    else
+      return 1  
+    end
+  end
+
   def import_dkv
-    import_dkv_file(params[:file])
+    import_dkv_file(params[:file], parsed_active(params[:date_format_month_day_year], 1))
     #redirect_to fuel_expenses_url, notice: "Activity Data Imported!"
   end 
 
-def import_dkv_file(file)
+def import_dkv_file(file, date_format_month_day_year)
    
 # TruckExpense.delete_all; FuelExpense.delete_all; DeToll.delete_all; GenericToll.delete_all; DriverExpense.delete_all
 
-row_to_skip = 0
-        # a block that runs through a loop in our CSV data
-         CSV.foreach(file.path,  headers: [
+## this is used to count the line numbers within the file
+lines_end_to_skip = CSV.read(file.path,  headers: [
 'Vehicle registration number',
 'Number of card or box',
 'Billing date',
@@ -121,11 +130,52 @@ row_to_skip = 0
                                :col_sep => ";", 
                                :quote_char => "\"", 
                                :header_converters => lambda { |h| h.try(:gsub,' ', ' ').try(:gsub,'ï»¿', '') }
-                    ) do |row| 
+                    ).count-3
 
-    if row_to_skip ==0
-        row_to_skip = 1
-    else  
+row_to_skip = 0
+
+CSV.foreach(file.path,  headers: [
+'Vehicle registration number',
+'Number of card or box',
+'Billing date',
+'Date',
+'Customer number',
+'Sales',
+'Unit',
+'Value of purchases net',
+'Value of purchases gross',
+'Product code',
+'Product',
+'Product group',
+'Cost centre',
+'Card -additional information',
+'Service country',
+'Price per unit',
+'VAT',
+'Discount net',
+'Discount gross',
+'Service fee net',
+'Service fee gross',
+'Postcode',
+'Town',
+'Service station',
+'Brand',
+'AB',
+'AH',
+'Mileage in km',
+'Customized data 1',
+'OBU ID'],
+     encoding: "ISO-8859-1",  
+                               :col_sep => ";", 
+                               :quote_char => "\"", 
+                               :header_converters => lambda { |h| h.try(:gsub,' ', ' ').try(:gsub,'ï»¿', '') }
+                    ).with_index do |row, index| 
+
+    next if index < 13 or index >= lines_end_to_skip
+
+##    if row_to_skip ==0
+##        row_to_skip = 1
+##    else  
       @my_date = row["Date"]
 
     @my_product = row["Product"].to_s.try(:gsub,' ', ' ')
@@ -165,7 +215,12 @@ row_to_skip = 0
 
    @my_row = Hash.new
    logger.debug @my_date
-   @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%m/%d/%Y %H:%M')
+
+   if date_format_month_day_year == 1
+      @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%m/%d/%Y %H:%M')
+   else
+      @my_trstime = DateTime.strptime( @my_date.try(:gsub,'.', '/'), '%d/%m/%Y %H:%M')
+   end
 
    if @my_trstime.year < 50
       year4 = "20" + @my_trstime.year.to_s
@@ -300,7 +355,7 @@ else
 
 end
 
-end
+##end
 
 
 
