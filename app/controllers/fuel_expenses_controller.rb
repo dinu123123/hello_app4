@@ -170,8 +170,8 @@ CSV.foreach(file.path,  headers: [
                                :quote_char => "\"", 
                                :header_converters => lambda { |h| h.try(:gsub,' ', ' ').try(:gsub,'ï»¿', '') }
                     ).with_index do |row, index| 
+   next if index < 12 or index >= lines_end_to_skip
 
-    next if index < 13 or index >= lines_end_to_skip
 
 ##    if row_to_skip ==0
 ##        row_to_skip = 1
@@ -238,7 +238,6 @@ CSV.foreach(file.path,  headers: [
              row["Service fee net"].try(:gsub,',', '').to_s.to_d
 
 
-
 if @my_product == "Toll D - DKV BOX EUROPE"
 
    @my_platenr = row["Vehicle registration number"].to_s.try(:gsub,' ', '').try(:gsub,'-', '')
@@ -292,7 +291,6 @@ elsif @my_product.start_with?('Toll') or @my_product.include?('DKV BOX EUROPE')
    @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
    @my_row = @my_row.to_a<<(["country",@my_country]) 
    @my_row = @my_row.to_a<<(["manual",false]) 
-
    GenericToll.find_or_create_by @my_row.to_h
 
 elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?('ADBLUE')  or @my_product.include?('adblue') or @my_product.include?("AD BLUE")  or @my_product.include?("ad blue") 
