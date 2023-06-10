@@ -20,6 +20,15 @@
        end
      end
 
+
+def to_datetime (date)
+  if date.to_s.include? "T" and ! (date.to_s.include? "U" )
+    DateTime.parse(date).to_datetime
+  else
+    DateTime.parse(date.to_datetime.to_s).strftime('%Y-%m-%dT%10:%00:00').to_datetime
+  end
+end
+
      def import
       Event.import(params[:file])
       redirect_to events_url, notice: "Activity Data Imported!"
@@ -346,13 +355,227 @@
       end
     end
 
-    #############################################################
-    def weekly
-       if false #!(current_user.email.eql?  "ameropa.logistics@gmail.com")
-        # redirect_to root_path
-      else
-        @search1 = PeriodicTransactionSearch.new(params[:search1])
 
+###################################################################################
+###################################################################################
+###################################################################################
+####################################DISPATCHERS####################################
+###################################################################################
+###################################################################################
+###################################################################################
+
+def dispatchers
+
+   @search1 = PeriodicTransactionSearch.new(params[:search1])
+
+   @nb_weeks = num_weeks
+   @period_start = @search1.date_from.to_date.cweek.to_i
+
+   if  @search1.date_to.to_date.year ==  @search1.date_from.to_date.year
+      @period_end = @search1.date_to.to_date.cweek.to_i
+   elsif @search1.date_to.to_date.year >  @search1.date_from.to_date.year
+      @period_end = @search1.date_to.to_date.cweek.to_i+52-@search1.date_from.to_date.cweek.to_i+1
+   end
+
+   if @search1.time == 2
+      @period_start = @search1.date_from.to_date.month.to_i
+
+     if @search1.date_to.to_date.year ==  @search1.date_from.to_date.year
+        @period_end = @search1.date_to.to_date.month.to_i
+     elsif @search1.date_to.to_date.year >  @search1.date_from.to_date.year
+        @period_end = @search1.date_to.to_date.month.to_i+12- @search1.date_from.to_date.month.to_i+1
+     end
+   end
+
+   if (@period_end- @period_start)<0
+        @period_start = 1
+   end
+
+   @arrayWeeklyTruckExpense = nil
+
+   if @search1.type == 5
+        @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Dispatcher.all.size+2,0)}
+        for week in @period_start..@period_end do
+            @arrayWeeklyTruckExpense[week-@period_start+1][0] = 
+            (Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1) +(week-1)*7).cweek
+        end
+
+       if  @search1.time == 1
+          @arrayWeeklyTruckExpense[0][0] = "Week".to_s
+       else
+          @arrayWeeklyTruckExpense[0][0] = "Month".to_s
+       end
+   end
+
+ for week in @period_start..@period_end do
+       @week_total = 0
+       week1 = week%52
+       if week1 == 0
+          week1 = 52
+       end 
+
+       year = 0
+       if week<53
+          year = @search1.date_from.to_date.strftime("%Y").to_i
+       else
+          year =  @search1.date_from.to_date.strftime("%Y").to_i+1
+       end
+
+       ##Last repair
+
+       @date_start =  Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1)
+       @date_from1 =  @date_start+(week-1)*7
+       @date_to1 =  @date_from1+6
+
+       if @search1.time == 2
+         @date_from1 =  Date.new(year, week1, 1)
+         @date_to1 =  @date_from1.to_date.end_of_month
+       end  
+
+   ## setup the first column in the array with the names of the dispatchers
+   if @search1.type == 5  
+      Dispatcher.all.each_with_index do |dispatcher,j|
+        @arrayWeeklyTruckExpense[0][j+1] = dispatcher.FIRSTNAME + " ".to_s + dispatcher.SECONDNAME
+   end
+
+   ## find all the trips that started in that week
+   @invoiced_trips = InvoicedTrip.find_by_sql(
+                     ['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <= ?', 
+                      @date_from1-1, @date_to1])
+
+   @truck_id_inv = -1
+   @invoiced_trips.each do  |item|
+
+     ## find (and set if needed) the dispatcher via the activity
+     @activity = Activity.find_by_sql(['SELECT * FROM activities where activities."DRIVER_id" = ? and activities.truck_id = ? 
+     and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC',
+     item.DRIVER_id, item.truck_id, to_datetime(item.StartDate)-1, to_datetime(item.StartDate)])
+
+     if item.dispatcher_id == nil and @activity.size >0
+       item.update_attribute(:dispatcher_id, @activity[0].dispatcher_id) #this persists the entities to the DB
+     end   
+   end
+
+  driver_elem = Struct.new(:name, :invoiced_km, :money, :unpaid_km, :avg_consumption)
+  
+  Dispatcher.all.each_with_index do |dispatcher,j|
+   @driver_elements = Array.new
+      @tmp_name = "".to_s
+      @tmp = 0 
+      @tmp_money = 0    
+      @tmp_unpaid_km = 0       
+      @ft = true
+      @total_tmp = "".to_s
+      Driver.all.each_with_index do |driver,t|
+        @tmp = 0  
+        avg_consumption_string = "|".to_s
+           @invoiced_trips_for_dispatcher = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? 
+                                          AND invoiced_trips."StartDate" <= ? AND invoiced_trips."dispatcher_id" = ? AND invoiced_trips."driver_id" = ? ', 
+                                          @date_from1-1, @date_to1, dispatcher.id, driver.id ])
+           
+           same = true  
+           #check if all invoiced_trips_for_dispatcher and driver have the same truck_id  
+           @invoiced_trips_for_dispatcher.each_with_index do |trip, t|
+             if t > 1 and truck_id_prev != trip.truck_id
+                same = false
+               break
+             end
+             truck_id_prev = trip.truck_id
+           end  
+
+
+            if  (@invoiced_trips_for_dispatcher != nil and 
+                @invoiced_trips_for_dispatcher.size > 0 and 
+                FuelExpense.all.size > 0 and same)
+              
+
+                @fuelExpenses = FuelExpense.find_by_sql(["SELECT * FROM fuel_expenses where  
+                (fuel_expenses.product = ? or fuel_expenses.product = ? or fuel_expenses.product = ?)  and fuel_expenses.truck_id = ? AND 
+                fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
+                fuel_expenses.trsdate DESC", "Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-7, 
+                @date_to1])
+
+
+                size_base = FuelExpense.find_by_sql(["SELECT * FROM fuel_expenses where 
+                (fuel_expenses.product = ? or fuel_expenses.product = ? or fuel_expenses.product = ?) and fuel_expenses.truck_id = ? AND
+                fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
+                fuel_expenses.trsdate DESC","Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-1, 
+                @date_to1]).size
+
+                 if @fuelExpenses != nil and @fuelExpenses.size >0
+                  @fuelExpenses.each_with_index do |fuel_expense,i|
+
+
+                      if @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and @fuelExpenses[i].kminsertion<@fuelExpenses[i+1].kminsertion 
+                         avg_consumption_string += "err|".to_s
+
+                      elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and @fuelExpenses[i].kminsertion==@fuelExpenses[i+1].kminsertion 
+                         avg_consumption_string += "∞|".to_s   
+
+                      elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and (i<size_base-1 and @fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion >0)
+                         avg_consumption_string += ((100*@fuelExpenses[i].volume)/
+                                               (@fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion)).round(2).to_s + "|".to_s                       
+                      else 
+                         break 
+                      end
+                  end 
+                 end
+
+
+          end
+
+           @drv = Driver.find_by_sql(['SELECT * FROM drivers where drivers."id" = ? ', driver.id])
+
+           @invoiced_trips_for_dispatcher.each_with_index do |trip,i|
+               if i == 0
+                 @tmp_name =  @drv[0].FIRSTNAME+ " ".to_s + @drv[0].SECONDNAME+ " ".to_s
+               end  
+               @tmp = @tmp + trip.km  
+               @tmp_money = @tmp_money + trip.total_amount
+               @tmp_unpaid_km = @tmp_unpaid_km + trip.km_evogps-trip.km 
+           end
+
+                      
+         if @tmp > 0
+
+
+                      
+                    
+
+          @total_tmp += @tmp_name + @tmp.to_s + " | "
+          @d_elem = driver_elem.new( @tmp_name, @tmp, @tmp_money, @tmp_unpaid_km, avg_consumption_string)
+          @driver_elements << @d_elem
+
+         end  
+      end 
+     
+      @arrayWeeklyTruckExpense[week][j+1] = @driver_elements ##@total_tmp  
+
+
+  end
+
+
+ end  
+
+end
+
+
+ 
+return @arrayWeeklyTruckExpense
+end
+
+
+#############################################################
+def weekly
+ @search1 = PeriodicTransactionSearch.new(params[:search1])
+
+if false #!(current_user.email.eql?  "ameropa.logistics@gmail.com")
+        # redirect_to root_path
+elsif @search1.type == 5
+   return dispatchers 
+
+else
+        
         @nb_weeks = num_weeks
 
 
@@ -633,7 +856,23 @@
 
                             else 
                               @totalAll = 0
-                              for week in @period_start..@period_end do
+
+if @search1.type == 5  and @search1.time == 1
+  @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Dispatcher.all.size+2,0)}
+   for week in @period_start..@period_end do
+                @arrayWeeklyTruckExpense[week-@period_start+1][0] = 
+                (Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1) +(week-1)*7).cweek
+              end
+
+  if  @search1.time == 1
+         @arrayWeeklyTruckExpense[0][0] = "Week".to_s
+       else
+         @arrayWeeklyTruckExpense[0][0] = "Month".to_s
+       end
+
+end
+
+ for week in @period_start..@period_end do
                                 @week_total = 0
 
                                 week1 = week%52
@@ -659,8 +898,67 @@
       @date_to1 =  @date_from1.to_date.end_of_month
     end  
 
+#########################################
+#########################################
+if @search1.type == 5  and @search1.time == 1
 
-    if @search1.type != 2 
+
+
+                    
+                      Dispatcher.all.each_with_index do |dispatcher,j|
+                       @arrayWeeklyTruckExpense[0][j+1] = dispatcher.FIRSTNAME + " ".to_s + dispatcher.SECONDNAME
+
+
+
+                      end
+
+ ## find all the trips that started in that week
+ @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <= ?', @date_from1-1, @date_to1])
+
+
+
+ @invoiced_trips.each { |item|
+  ## find the dispatcher via the activity
+  @activity = Activity.find_by_sql(['SELECT * FROM activities where activities.client_id = ? and activities."DRIVER_id" = ? and activities.truck_id = ? 
+  and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', item.client_id,
+  item.DRIVER_id, item.truck_id, to_datetime(item.StartDate)-1, to_datetime(item.StartDate)])
+
+  if item.dispatcher_id == nil and @activity[0] != nil 
+    item.update_attribute(:dispatcher_id, @activity[0].dispatcher_id) #this persists the entities to the DB
+  end   
+ }
+
+Dispatcher.all.each_with_index do |dispatcher,j|
+    @invoiced_trips_for_dispatcher = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? 
+                                                                AND invoiced_trips."StartDate" <= ? AND invoiced_trips."dispatcher_id" = ? ', 
+                                                                @date_from1-1, @date_to1, dispatcher.id ])
+            
+     @invoiced_trips_for_dispatcher.each_with_index do |trip,i|
+
+            @arrayWeeklyTruckExpense[week][i+1] = @arrayWeeklyTruckExpense[week][i+1].to_s + trip.km.to_s
+
+
+end
+
+                      end
+
+return
+
+
+
+  ##   @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND invoices.date >= ? AND invoices.date <= ?', client.id, @date_from1, @date_to1])
+
+
+
+ ## sort the trips per dispatcher
+
+
+
+#########################################
+#########################################
+
+
+   elsif @search1.type != 2 
 
       Client.all.each_with_index do |client,j|
        @totalInvoicedTrips = 0

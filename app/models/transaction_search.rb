@@ -848,8 +848,8 @@ elsif @truck_id > 0 && @driver_id == 0
 
                     if FuelExpense.all.size
                         @fuelExpenses = FuelExpense.find_by_sql(['SELECT * FROM fuel_expenses where 
-                          fuel_expenses.truck_id = ? AND fuel_expenses.datetime BETWEEN ? AND ? ORDER BY 
-                          fuel_expenses.datetime ASC', @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
+                          fuel_expenses.truck_id = ? AND fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
+                          fuel_expenses.trsdate ASC', @truck_id, to_datetime(@date_from), to_datetime(@date_to)])
                         arrayFuelExpenses.concat(@fuelExpenses)
                     end
 
@@ -929,7 +929,7 @@ else
 
           if FuelExpense.all.size
               @fuelExpenses = FuelExpense.find_by_sql(['SELECT * FROM fuel_expenses where 
-              fuel_expenses.datetime BETWEEN ? AND ? ORDER BY fuel_expenses.datetime ASC', @date_from, @date_to.to_date])
+              fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY fuel_expenses.trsdate ASC', @date_from, @date_to.to_date])
               arrayFuelExpenses.concat(@fuelExpenses)
           end
 

@@ -42,6 +42,10 @@ class PeriodicTransactionSearch
     a3 =Element.new("InvoicesIssued",3)
     
     a4 =Element.new("DriversSchedule",4)
+    a5 =Element.new("Dispatchers",5)
+    a6 =Element.new("Drivers",5)
+    a7 =Element.new("Trucks",5)
+    
     
 
     @arrayC = []
@@ -49,6 +53,9 @@ class PeriodicTransactionSearch
     @arrayC.push(b2)
     @arrayC.push(a3)
     @arrayC.push(a4)
+    @arrayC.push(a5)
+    @arrayC.push(a6)
+    @arrayC.push(a7)
 
     a3 =Element.new("Active",1)
     b3 =Element.new("Inactive",2)    
@@ -528,7 +535,6 @@ end
     n1.to_i
     rescue ArgumentError, TypeError
     default
-
   end
 
   def parsed_invoices_salaries (n1, default)

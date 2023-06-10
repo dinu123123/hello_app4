@@ -59,7 +59,12 @@
 <% if @arrayWeeklyTruckExpense %>
   <legend> 
 
-<% if (@search1.type ==1 )  %>
+<% if (@search1.type == 5 or @search1.type == 0 )  %>
+<small>
+Nume driver, Km facturati, Km Nefacturati(procentaj), Valoare facturata, Consum/100km intre alimentari 
+</small>
+<% end %>
+<% if (@search1.type ==1 and (@arrayWeeklyTruckExpense.size-2)>0 )  %>
     Invoiced (avg. <td><%= (@arrayWeeklyTruckExpense[@arrayWeeklyTruckExpense.size-1][@arrayWeeklyTruckExpense[0].size-1].to_i)/(@arrayWeeklyTruckExpense.size-2) %></td>) 
 <% end %>
 
@@ -143,15 +148,32 @@
 <% else %>
 
       <tbody>
+
         <% @arrayWeeklyTruckExpense.each_with_index do |row, i| %>
           <tr>
             <% row.each_with_index do |value, j| %>
                    <% if @arrayWeeklyTruckExpense[0][0].to_s.starts_with?('Week') and @arrayWeeklyTruckExpense[0][j] == Date.today.cweek.to_i %>
                              <td bgcolor="#FFA500">
                                       <% if value.is_a?(Struct)  %> 
-                                         <%= value.value.to_s+ '€ '.to_s+value.date.strftime(" %d/%b/%Y") %>
-                                      <% else %>
-                                         <%= value %>
+                                          <% if value.size == 1  %>
+                                            <%= value.value.to_s+ '€ '.to_s+value.date.strftime(" %d/%b/%Y") %>
+                                          <% end %>
+
+                                       <% elsif value.is_a?(Array) and value.size  >0 %>
+                                        
+                                        <% value.each_with_index do |val, j| %>
+                                            <% if j > 0 %>
+                                             <br>
+                                            <% end %>    
+                                            <small><%= val.name+ ",".to_s+ val.invoiced_km.to_i.to_s + ",".to_s + 
+                                               val.unpaid_km.to_i.to_s +  ",".to_s +
+                                               (val.unpaid_km.to_i*100/val.invoiced_km.to_i).round(2).to_s+"\%,".to_s + 
+                                               val.money.to_i.to_s + ",".to_s +  val.avg_consumption.to_s%></small>  
+                                        <% end %>
+                                      <% elsif value.is_a?(Array) == false %>
+                                         <%= value.to_s%>
+                                      <% else%>
+                                         
                                      <% end %>
                              </td>
                     <% elsif @arrayWeeklyTruckExpense[0][0].to_s.starts_with?('Month') and @arrayWeeklyTruckExpense[0][j] == Date.today.month.to_i %>
@@ -164,13 +186,28 @@
                                      <td bgcolor="#E8F993"><%= value %></td>
                                  <% end %>
                              <% else %>
-
+                               <td>
                                       <% if value.is_a?(Struct)  %> 
-                                         <td><%= value.value.to_s+ '€ '.to_s+value.date.strftime(" %d/%b/%Y") %></td>
-                                      <% else %>
-                                         <td><%= value %></td>
-                                     <% end %>
+                                        <% if value.size == 1  %>
+                                          <%= value.value.to_s+ '€ '.to_s+value.date.strftime(" %d/%b/%Y") %>
+                                        <% end %>
 
+                                      <% elsif value.is_a?(Array) and value.size >0 %>
+                                         
+                                        <% value.each_with_index do |val, j| %>
+                                           <% if j > 0 %>
+                                             <br>
+                                           <% end %>    
+                                               <small><%= val.name[0,5]+ " ".to_s+ val.invoiced_km.to_i.to_s + "km ".to_s + 
+                                               val.unpaid_km.to_i.to_s +  "km ".to_s +
+                                               (val.unpaid_km.to_i*100/val.invoiced_km.to_i).round(2).to_s+"\%loss  ".to_s + 
+                                               val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%></small>  
+                                        <% end %>
+                                      <% elsif value.is_a?(Array) == false %>
+                                         <%= value %>
+                                      <% else%>
+                                     <% end %>
+                                </td>      
                              <% end %>
                    <% end %>
             <%end%>
@@ -212,7 +249,7 @@
 <% if @arrayWeeklyTruckExpense %>
   <legend> 
 
-<% if (@search1.type ==1)  %>
+<% if (@search1.type ==1) and (@arrayWeeklyTruckExpense.size-2)>0 %>
     Invoiced (avg. <td><%= (@arrayWeeklyTruckExpense[@arrayWeeklyTruckExpense.size-1][@arrayWeeklyTruckExpense[0].size-1].to_i)/(@arrayWeeklyTruckExpense.size-2) %></td>) 
 <% end %>
 

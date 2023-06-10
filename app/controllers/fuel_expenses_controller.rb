@@ -183,7 +183,7 @@ CSV.foreach(file.path,  headers: [
     @my_country = row["Service country"].to_s.try(:gsub,' ', '')
 
     if row["Mileage in km"] != nil
-      @my_kminsertion = row["Mileage in km"].to_d
+      @my_kminsertion = row["Mileage in km"].to_s.try(:gsub,',','').to_d
     else
       @my_kminsertion = 0.to_d
     end
@@ -195,7 +195,7 @@ CSV.foreach(file.path,  headers: [
     @my_eurgrossunitprice = 0.to_d
 
     if row["Value of purchases gross"] != nil
-      @my_eurgrossamount = row["Value of purchases gross"].to_d
+      @my_eurgrossamount = row["Value of purchases gross"].to_s.try(:gsub,',','').to_d
     else
       @my_eurgrossamount = 0.to_d
     end
@@ -313,6 +313,7 @@ elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?
       #default
       @my_eurnetamount = @my_eur
       @my_EuroNetAmountInclVATFreeCharges = @my_eur
+    
       @my_row = @my_row.to_a<<(["eurnetamount",@my_eurnetamount.to_d.round(2)])
       @my_row = @my_row.to_a<<(["EuroNetAmountInclVATFreeCharges",@my_EuroNetAmountInclVATFreeCharges.round(2)])
       
@@ -325,7 +326,6 @@ elsif @my_product == "DIESEL" or @my_product == "diesel" or @my_product.include?
                  @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
                  @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
                  FuelExpense.find_or_create_by @my_row.to_h
-
                end
             else
               #hope one day we will have 1001 trucks
@@ -346,7 +346,6 @@ else
    @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
    @my_row = @my_row.to_a<<(["DESCRIPTION", (row["Product"].to_s.try(:gsub,' ', ' ')+ row["Product group"].to_s.try(:gsub,' ', ' ')+ @my_country) ])
    @my_row = @my_row.to_a<<(["manual",false]) 
-
    TruckExpense.find_or_create_by @my_row.to_h
 
   end
