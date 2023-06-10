@@ -474,6 +474,7 @@ def dispatchers
                                           @date_from1-1, @date_to1, dispatcher.id, driver.id ])
            
            same = true  
+           truck_id_prev = -1
            #check if all invoiced_trips_for_dispatcher and driver have the same truck_id  
            @invoiced_trips_for_dispatcher.each_with_index do |trip, t|
              if t > 1 and truck_id_prev != trip.truck_id
