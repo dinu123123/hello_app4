@@ -467,6 +467,7 @@ def dispatchers
       @ft = true
       @total_tmp = "".to_s
       Driver.all.each_with_index do |driver,t|
+        @tmp_money = 0  
         @tmp = 0  
         avg_consumption_string = "|".to_s
            @invoiced_trips_for_dispatcher = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? 
