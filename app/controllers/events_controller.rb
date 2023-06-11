@@ -509,7 +509,7 @@ def dispatchers
                             elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and @fuelExpenses[i].kminsertion==@fuelExpenses[i+1].kminsertion 
                                avg_consumption_string += " ∞|".to_s   
 
-                            elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and (i<size_base-1 and @fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion >0)
+                            elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and (i+1<=size_base and @fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion >0)
                                avg_consumption_string += " ".to_s + ((100*@fuelExpenses[i].volume)/
                                                      (@fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion)).round(2).to_s + "|".to_s                       
                             else 
