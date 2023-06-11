@@ -517,9 +517,10 @@ def dispatchers
                             end
                         end 
                        end
+                else
+                 sdfsdfs
+                end 
 
-
-                end
 
                  @drv = Driver.find_by_sql(['SELECT * FROM drivers where drivers."id" = ? ', driver.id])
 
