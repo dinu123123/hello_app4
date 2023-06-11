@@ -475,7 +475,7 @@ def dispatchers
                  truck_id_prev = -1
                  #check if all invoiced_trips_for_dispatcher and driver have the same truck_id  
                  @invoiced_trips_for_dispatcher.each_with_index do |trip, t|
-                   if t > 1 and truck_id_prev != trip.truck_id
+                   if t >= 1 and truck_id_prev != trip.truck_id
                       same = false
                      break
                    end
@@ -517,8 +517,6 @@ def dispatchers
                             end
                         end 
                        end
-                else
-                 sdfsdfs
                 end 
 
 
