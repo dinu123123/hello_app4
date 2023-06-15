@@ -444,13 +444,15 @@ def dispatchers
        @truck_id_inv = -1
        @invoiced_trips.each do  |item|
             ## find (and set if needed) the dispatcher via the activity
-            @activity = Activity.find_by_sql(['SELECT * FROM activities where activities."DRIVER_id" = ? and activities.truck_id = ? 
-            and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC',
-            item.DRIVER_id, item.truck_id, to_datetime(item.StartDate)-1, to_datetime(item.StartDate)])
+           if item.dispatcher_id == nil
+             @activity = Activity.find_by_sql(['SELECT * FROM activities where activities."DRIVER_id" = ? and activities.truck_id = ? 
+               and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC',
+               item.DRIVER_id, item.truck_id, to_datetime(item.StartDate)-1, to_datetime(item.StartDate)])
 
-            if item.dispatcher_id == nil and @activity.size >0
-              item.update_attribute(:dispatcher_id, @activity[0].dispatcher_id) #this persists the entities to the DB
-            end   
+             if @activity.size >0
+               item.update_attribute(:dispatcher_id, @activity[0].dispatcher_id) #this persists the entities to the DB
+             end   
+           end
         end
 
         driver_elem = Struct.new(:name, :invoiced_km, :money, :unpaid_km, :avg_consumption)
@@ -509,7 +511,7 @@ def dispatchers
                             elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and @fuelExpenses[i].kminsertion==@fuelExpenses[i+1].kminsertion 
                                avg_consumption_string += " ∞|".to_s   
 
-                            elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and (i+1<=size_base and @fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion >0)
+                            elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and (i<=size_base-1 and @fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion >0)
                                avg_consumption_string += " ".to_s + ((100*@fuelExpenses[i].volume)/
                                                      (@fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion)).round(2).to_s + "|".to_s                       
                             else 
