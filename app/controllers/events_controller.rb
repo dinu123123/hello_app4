@@ -445,9 +445,14 @@ def dispatchers
        @invoiced_trips.each do  |item|
             ## find (and set if needed) the dispatcher via the activity
            if item.dispatcher_id == nil
-             @activity = Activity.find_by_sql(['SELECT * FROM activities where activities."DRIVER_id" = ? and activities.truck_id = ? 
-               and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC',
-               item.DRIVER_id, item.truck_id, to_datetime(item.StartDate)-1, to_datetime(item.StartDate)])
+             # @activity = Activity.find_by_sql(['SELECT * FROM activities where activities."DRIVER_id" = ? and activities.truck_id = ? 
+             #  and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC',
+             #  item.DRIVER_id, item.truck_id, to_datetime(item.StartDate)-1, to_datetime(item.StartDate)])
+
+               @activity = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ?
+               and events."DATE" <= ? and events."START_END" = ? ORDER BY events."DATE" DESC', item.DRIVER_id, to_datetime(item.StartDate), true])
+
+
 
              if @activity.size >0
                item.update_attribute(:dispatcher_id, @activity[0].dispatcher_id) #this persists the entities to the DB
