@@ -367,6 +367,8 @@ end
 def dispatchers
 
  @search1 = PeriodicTransactionSearch.new(params[:search1])
+
+
  @nb_weeks = num_weeks
  @period_start = @search1.date_from.to_date.cweek.to_i
 
@@ -436,9 +438,15 @@ def dispatchers
                end
              
                ## find all the trips that started in that week
-               @invoiced_trips = InvoicedTrip.find_by_sql(
+               if @search1.client_id == 0 
+                       @invoiced_trips = InvoicedTrip.find_by_sql(
                                  ['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <= ?', 
                                   @date_from1-1, @date_to1])
+               else
+                @invoiced_trips = InvoicedTrip.find_by_sql(
+                                 ['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <= ? AND invoiced_trips."client_id" = ?', 
+                                  @date_from1-1, @date_to1, @search1.client_id])
+               end
 
                @truck_id_inv = -1
                @invoiced_trips.each do  |item|
@@ -465,19 +473,21 @@ def dispatchers
                                  @driver_elements = Array.new
                                    
                              Driver.all.each_with_index do |driver,t|
-                               @tmp_name = "".to_s
-                                    @tmp = 0 
-                                    @tmp_money = 0    
-                                    @tmp_unpaid_km = 0       
-                                    @ft = true
-                                    @total_tmp = "".to_s
-                                                  @tmp_money = 0  
-                                                  @tmp = 0  
-                                                  avg_consumption_string = " ".to_s
-                                                     @invoiced_trips_for_dispatcher = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? 
+                                                     @tmp_name = "".to_s
+                                                     @tmp = 0 
+                                                     @tmp_money = 0    
+                                                     @tmp_unpaid_km = 0
+                                                     @total_tmp = "".to_s             
+                                                     avg_consumption_string = " ".to_s
+                                                     if @search1.client_id == 0 
+                                                       @invoiced_trips_for_dispatcher = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? 
                                                                                     AND invoiced_trips."StartDate" <= ? AND invoiced_trips."dispatcher_id" = ? AND invoiced_trips."driver_id" = ? ', 
                                                                                     @date_from1-1, @date_to1, dispatcher.id, driver.id ])
-                                           
+                                                     else  
+                                                      @invoiced_trips_for_dispatcher = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? 
+                                                                                    AND invoiced_trips."StartDate" <= ? AND invoiced_trips."dispatcher_id" = ? AND invoiced_trips."driver_id" = ? AND invoiced_trips."client_id" = ?', 
+                                                                                    @date_from1-1, @date_to1, dispatcher.id, driver.id, @search1.client_id])
+                                                     end
 
                                                      same = true  
                                                      truck_id_prev = -1
