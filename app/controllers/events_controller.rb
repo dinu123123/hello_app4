@@ -431,11 +431,10 @@ def dispatchers
                end  
 
                ## setup the first column in the array with the names of the dispatchers
-               if @search1.type == 5  
-                  Dispatcher.all.each_with_index do |dispatcher,j|
+                 Dispatcher.all.each_with_index do |dispatcher,j|
                     @arrayWeeklyTruckExpense[0][j+1] = dispatcher.FIRSTNAME + " ".to_s + dispatcher.SECONDNAME
                end
-
+             
                ## find all the trips that started in that week
                @invoiced_trips = InvoicedTrip.find_by_sql(
                                  ['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <= ?', 
@@ -464,13 +463,14 @@ def dispatchers
                 
                 Dispatcher.all.each_with_index do |dispatcher,j|
                                  @driver_elements = Array.new
-                                    @tmp_name = "".to_s
+                                   
+                             Driver.all.each_with_index do |driver,t|
+                               @tmp_name = "".to_s
                                     @tmp = 0 
                                     @tmp_money = 0    
                                     @tmp_unpaid_km = 0       
                                     @ft = true
                                     @total_tmp = "".to_s
-                             Driver.all.each_with_index do |driver,t|
                                                   @tmp_money = 0  
                                                   @tmp = 0  
                                                   avg_consumption_string = " ".to_s
@@ -532,22 +532,22 @@ def dispatchers
                                                          if m == 0
                                                            @tmp_name =  driver.FIRSTNAME+ " ".to_s + driver.SECONDNAME+ " ".to_s
                                                          end  
-                                                         @tmp = @tmp + trip.km  
-                                                         @tmp_money = @tmp_money + trip.total_amount
-                                                         @tmp_unpaid_km = @tmp_unpaid_km + trip.km_evogps-trip.km 
-                                                     end
+                                                         @tmp += trip.km  
+                                                         @tmp_money += trip.total_amount
+                                                         @tmp_unpaid_km += @tmp_unpaid_km + trip.km_evogps-trip.km 
+                                                end
 
-                                                                
+                                                    if @tmp_money > 0 or @tmp >0 or @tmp_unpaid_km >0
                                                        @total_tmp += @tmp_name + @tmp.to_s + " | "
                                                        @d_elem = driver_elem.new( @tmp_name, @tmp, @tmp_money, @tmp_unpaid_km, avg_consumption_string)
                                                        @driver_elements << @d_elem
-                                                       
-                                               end 
+                                                    end   
+                                end ## driver                 
                                                
                                                @arrayWeeklyTruckExpense[week][j+1] = @driver_elements ##@total_tmp  
 
 
-                                end ## driver
+                               
 
 
                end  ## dispatcher
