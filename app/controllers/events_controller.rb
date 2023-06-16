@@ -538,7 +538,7 @@ def dispatchers
                                                      end
 
                                                                 
-                                                     if @tmp > 0
+                                                     if @tmp_name.size > 0
                                                        @total_tmp += @tmp_name + @tmp.to_s + " | "
                                                        @d_elem = driver_elem.new( @tmp_name, @tmp, @tmp_money, @tmp_unpaid_km, avg_consumption_string)
                                                        @driver_elements << @d_elem
