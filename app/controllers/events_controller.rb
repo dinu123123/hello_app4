@@ -528,11 +528,9 @@ def dispatchers
                                                         end 
 
 
-                                               @drv = Driver.find_by_sql(['SELECT * FROM drivers where drivers."id" = ? ', driver.id])
-
                                                @invoiced_trips_for_dispatcher.each_with_index do |trip,m|
                                                          if m == 0
-                                                           @tmp_name =  @drv[0].FIRSTNAME+ " ".to_s + @drv[0].SECONDNAME+ " ".to_s
+                                                           @tmp_name =  driver.FIRSTNAME+ " ".to_s + driver.SECONDNAME+ " ".to_s
                                                          end  
                                                          @tmp = @tmp + trip.km  
                                                          @tmp_money = @tmp_money + trip.total_amount
