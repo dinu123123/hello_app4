@@ -156,12 +156,10 @@ Nume driver, Km fact, Km Nefact, % Km Nefact, Suma fact, Consum intre alimentari
                              <td bgcolor="#FFA500">
                                       <% if value.is_a?(Struct)  %> 
                                           <% if value.size == 1  %>
-                                          <%="HEREHERE ".to_s%>
                                             <%= value.value.to_s+ '€ '.to_s+value.date.strftime(" %d/%b/%Y") %>
                                           <% end %>
 
                                        <% elsif value.is_a?(Array) and value.size  >0 %>
-                                        <%="HEREHERE3 ".to_s%>
                                         <% value.each_with_index do |val, j| %>
                                             <% if j > 0 %>
                                              <br>
@@ -169,7 +167,7 @@ Nume driver, Km fact, Km Nefact, % Km Nefact, Suma fact, Consum intre alimentari
 
   
                                               <% if val.unpaid_km > 0 %>
-                                               <small><b><%= val.name %></b><%="XXXXXXXXXXXXXX ".to_s+ val.invoiced_km.to_i.to_s + "km ".to_s + 
+                                               <small><b><%= val.name %></b><%=val.invoiced_km.to_i.to_s + "km ".to_s + 
                                                val.unpaid_km.to_i.to_s +  "km ".to_s +
                                                (val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(0).to_s + "\%".to_s%>
                                                <b><font color="red"><%="loss ".to_s %></font></b>
@@ -186,14 +184,50 @@ Nume driver, Km fact, Km Nefact, % Km Nefact, Suma fact, Consum intre alimentari
                                            
                                         <% end %>
                                       <% elsif value.is_a?(Array) == false %>
-                                      <%="HEREHERE2 ".to_s%>
                                          <%= value.to_s%>
                                       <% else%>
                                          
                                      <% end %>
                              </td>
                     <% elsif @arrayWeeklyTruckExpense[0][0].to_s.starts_with?('Month') and @arrayWeeklyTruckExpense[0][j] == Date.today.month.to_i %>
-                             <td bgcolor="#FFA500"><%= value %></td>
+                             <td bgcolor="#FFA500">
+                               
+                                      <% if value.is_a?(Struct)  %> 
+                                        <% if value.size == 1  %>
+                                          <%= value.value.to_s+ '€ '.to_s+value.date.strftime(" %d/%b/%Y") %>
+                                        <% end %>
+
+                                      <% elsif value.is_a?(Array) and value.size >0 %>
+                                         
+                                        <% value.each_with_index do |val, j| %>
+                                           <% if j > 0 %>
+                                             <br>
+                                           <% end %>    
+
+                                        
+                                         <% if val.unpaid_km > 0 %>
+                                               <small><b><%= val.name %></b><%=val.invoiced_km.to_i.to_s + "km ".to_s +
+                                               val.unpaid_km.to_i.to_s +  "km ".to_s +
+                                               (val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(0).to_s + "\%".to_s%>
+                                               <b><font color="red"><%="loss ".to_s %></font></b>
+
+                                               <%= val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%></small>
+                                               <% else %>                                  
+                                               <small><b><%= val.name %></b><%=" ".to_s+ val.invoiced_km.to_i.to_s + "km ".to_s +
+                                               val.unpaid_km.to_i.to_s +  "km ".to_s +
+                                               -(val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(0).to_s + "\%".to_s%>
+                                               <b><font color="green"><%="gain ".to_s %></font></b>
+
+
+                                               <%= val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%></small>  
+                                               <% end %>                                  
+
+                                        <% end %>
+                                      <% elsif value.is_a?(Array) == false %>
+                                         <%= value.to_s %>
+                                      <% else%>
+                                     <% end %>
+                             </td>
                    <% else %>      
                              <% if i== @arrayWeeklyTruckExpense.size-1 or j== @arrayWeeklyTruckExpense[0].size-1 %>
                                  <% if i== @arrayWeeklyTruckExpense.size-1 and j== @arrayWeeklyTruckExpense[0].size-1 %>
@@ -217,7 +251,7 @@ Nume driver, Km fact, Km Nefact, % Km Nefact, Suma fact, Consum intre alimentari
 
                                         
 <% if val.unpaid_km > 0 %>
-                                               <small><b><%= val.name %></b><%="YYYYYYYYYYYY ".to_s+ val.invoiced_km.to_i.to_s + "km ".to_s +
+                                               <small><b><%= val.name %></b><%=val.invoiced_km.to_i.to_s + "km ".to_s +
                                                val.unpaid_km.to_i.to_s +  "km ".to_s +
                                                (val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(0).to_s + "\%".to_s%>
                                                <b><font color="red"><%="loss ".to_s %></font></b>
@@ -333,7 +367,7 @@ Nume driver, Km fact, Km Nefact, % Km Nefact, Suma fact, Consum intre alimentari
 
                                          <% if value != nil and value.to_i>0 %>
                                          <small> 
-                                            <%=  value.to_s %>
+                                            <%= value.to_s %>
                                          </small> 
                                          <% end %>
 
