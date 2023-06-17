@@ -422,15 +422,18 @@ def dispatchers
                end
 
                ##Last repair
-
-               @date_start =  Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1)
-               @date_from1 =  @date_start+(week-1)*7
-               @date_to1 =  @date_from1+6
+               if @search1.time == 5
+                  @date_start =  Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1)
+                  @date_from1 =  @date_start+(week-1)*7
+                  @date_to1 =  @date_from1+6
+               end
 
                if @search1.time == 2
                  @date_from1 =  Date.new(year, week1, 1)
                  @date_to1 =  @date_from1.to_date.end_of_month
                end  
+
+
 
                ## setup the first column in the array with the names of the dispatchers
                  Dispatcher.all.each_with_index do |dispatcher,j|
@@ -481,12 +484,12 @@ def dispatchers
                                                      avg_consumption_string = " ".to_s
                                                      if @search1.client_id == 0 
                                                        @invoiced_trips_for_dispatcher = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? 
-                                                                                    AND invoiced_trips."StartDate" <= ? AND invoiced_trips."dispatcher_id" = ? AND invoiced_trips."driver_id" = ? ', 
-                                                                                    @date_from1-1, @date_to1, dispatcher.id, driver.id ])
+                                                                                    AND invoiced_trips."StartDate" < ? AND invoiced_trips."dispatcher_id" = ? AND invoiced_trips."driver_id" = ? ', 
+                                                                                    @date_from1-1, @date_to1+1, dispatcher.id, driver.id ])
                                                      else  
                                                       @invoiced_trips_for_dispatcher = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? 
-                                                                                    AND invoiced_trips."StartDate" <= ? AND invoiced_trips."dispatcher_id" = ? AND invoiced_trips."driver_id" = ? AND invoiced_trips."client_id" = ?', 
-                                                                                    @date_from1-1, @date_to1, dispatcher.id, driver.id, @search1.client_id])
+                                                                                    AND invoiced_trips."StartDate" < ? AND invoiced_trips."dispatcher_id" = ? AND invoiced_trips."driver_id" = ? AND invoiced_trips."client_id" = ?', 
+                                                                                    @date_from1-1, @date_to1+1, dispatcher.id, driver.id, @search1.client_id])
                                                      end
 
                                                      same = true  
