@@ -517,10 +517,9 @@ def dispatchers
                                                           fuel_expenses.trsdate DESC","Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-1, 
                                                           @date_to1]).size
 
-                                                           avg_consumption_string += @fuelExpenses[0].platenr.to_s
-
+                                                          
                                                            if @fuelExpenses != nil and @fuelExpenses.size >0
-                                                           
+                                                               avg_consumption_string += @fuelExpenses[0].platenr.to_s
                                                                avg_consumption_string +=" |".to_s 
                                        
                                                                  @fuelExpenses.each_with_index do |fuel_expense,i|
