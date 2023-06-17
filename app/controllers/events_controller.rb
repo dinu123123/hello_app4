@@ -452,7 +452,7 @@ def dispatchers
                @truck_id_inv = -1
                @invoiced_trips.each do  |item|
                     ## find (and set if needed) the dispatcher via the activity
-                   if item.dispatcher_id == nil
+                 ##  if item.dispatcher_id == nil
                      # @activity = Activity.find_by_sql(['SELECT * FROM activities where activities."DRIVER_id" = ? and activities.truck_id = ? 
                      #  and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC',
                      #  item.DRIVER_id, item.truck_id, to_datetime(item.StartDate)-1, to_datetime(item.StartDate)])
@@ -465,7 +465,7 @@ def dispatchers
                      if @activity.size >0
                        item.update_attribute(:dispatcher_id, @activity[0].dispatcher_id) #this persists the entities to the DB
                      end   
-                   end
+                 ##  end
                 end
 
                 driver_elem = Struct.new(:name, :invoiced_km, :money, :unpaid_km, :avg_consumption)
