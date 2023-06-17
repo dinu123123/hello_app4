@@ -156,11 +156,12 @@ Nume driver, Km fact, Km Nefact, % Km Nefact, Suma fact, Consum intre alimentari
                              <td bgcolor="#FFA500">
                                       <% if value.is_a?(Struct)  %> 
                                           <% if value.size == 1  %>
+                                          <%="HEREHERE ".to_s%>
                                             <%= value.value.to_s+ '€ '.to_s+value.date.strftime(" %d/%b/%Y") %>
                                           <% end %>
 
                                        <% elsif value.is_a?(Array) and value.size  >0 %>
-                                        <%="HEREHERE ".to_s%>
+                                        <%="HEREHERE3 ".to_s%>
                                         <% value.each_with_index do |val, j| %>
                                             <% if j > 0 %>
                                              <br>
@@ -185,6 +186,7 @@ Nume driver, Km fact, Km Nefact, % Km Nefact, Suma fact, Consum intre alimentari
                                            
                                         <% end %>
                                       <% elsif value.is_a?(Array) == false %>
+                                      <%="HEREHERE2 ".to_s%>
                                          <%= value.to_s%>
                                       <% else%>
                                          
