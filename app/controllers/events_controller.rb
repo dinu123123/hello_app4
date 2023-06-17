@@ -517,8 +517,11 @@ def dispatchers
                                                           fuel_expenses.trsdate DESC","Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-1, 
                                                           @date_to1]).size
 
+                                                           avg_consumption_string += @fuelExpenses[0].platenr.to_s
+
                                                            if @fuelExpenses != nil and @fuelExpenses.size >0
-                                                               avg_consumption_string += @fuelExpenses[0].platenr.to_s + " |".to_s 
+                                                           
+                                                               avg_consumption_string +=" |".to_s 
                                        
                                                                  @fuelExpenses.each_with_index do |fuel_expense,i|
                                                           
@@ -531,10 +534,13 @@ def dispatchers
                                                                           elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and (i<=size_base-1 and @fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion >0)
                                                                              avg_consumption_string += " ".to_s + ((100*@fuelExpenses[i].volume)/
                                                                                                    (@fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion)).round(2).to_s + "|".to_s                       
-                                                                          else 
+                                                                          elsif @fuelExpenses.size == 1
+                                                                             avg_consumption_string += "NO Tank".to_s
+                                                                          else
                                                                                break 
                                                                           end
                                                                  end 
+
                                                             end
                                                         end 
 
