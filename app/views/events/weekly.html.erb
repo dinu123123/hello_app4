@@ -173,13 +173,13 @@ Nume driver, Km fact, Km Nefact, % Km Nefact, Suma fact, Consum intre alimentari
                                                (val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(0).to_s + "\%".to_s%>
                                                <b><font color="red"><%="loss ".to_s %></font></b>
 
-                                               <%= val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%> 
+                                               <%= val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%></small> 
                                               <% else %>                                  
                                                <small><b><%= val.name %></b><%=" ".to_s+ val.invoiced_km.to_i.to_s + "km ".to_s +
                                                val.unpaid_km.to_i.to_s +  "km ".to_s +
                                                -(val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(0).to_s + "\%".to_s%>
                                                <b><font color="green"><%="gain ".to_s %></font></b>
-                                               
+
                                                <%= val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%></small>  
                                               <% end %>                                  
                                            
@@ -220,7 +220,7 @@ Nume driver, Km fact, Km Nefact, % Km Nefact, Suma fact, Consum intre alimentari
                                                (val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(0).to_s + "\%".to_s%>
                                                <b><font color="red"><%="loss ".to_s %></font></b>
 
-                                               <%= val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%> 
+                                               <%= val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%></small>
 <% else %>                                  
                                                <small><b><%= val.name %></b><%=" ".to_s+ val.invoiced_km.to_i.to_s + "km ".to_s +
                                                val.unpaid_km.to_i.to_s +  "km ".to_s +
