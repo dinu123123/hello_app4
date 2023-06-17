@@ -533,7 +533,7 @@ def dispatchers
                                                                           elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and (i<=size_base-1 and @fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion >0)
                                                                              tmp_avg_consum = ((100*@fuelExpenses[i].volume)/(@fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion)).round(2)
                                                                              
-                                                                             tmp_avg_consum_str ="tmp_avg_consum.to_s".to_s
+                                                                             tmp_avg_consum_str = tmp_avg_consum.to_s
                                                                              
                                                                              if tmp_avg_consum >300
                                                                               tmp_avg_consum_str = "err"
