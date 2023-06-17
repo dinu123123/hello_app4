@@ -536,7 +536,7 @@ def dispatchers
                                                                              tmp_avg_consum_str = tmp_avg_consum.to_s
                                                                              
                                                                              if tmp_avg_consum >300
-                                                                              tmp_avg_consum_str = "err"
+                                                                              tmp_avg_consum_str = "err1"
                                                                              end 
 
                                                                              avg_consumption_string += " ".to_s + tmp_avg_consum_str + "|".to_s                       
