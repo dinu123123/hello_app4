@@ -9,7 +9,7 @@ end
 
 class PeriodicTransactionSearch 
   attr_reader :date_from, :date_to, :time, :type, :type2, :truck_id, :driver_id, 
-  :truck_events, :running, :running_truck_id, :arrayH, :arrayT, :arrayC, :arrayD, :active, :client_id
+  :truck_events, :running, :running_truck_id, :arrayH, :arrayT, :arrayC, :arrayD, :arrayDisp, :active, :client_id
 
   def initialize(params)
     params ||= {}
