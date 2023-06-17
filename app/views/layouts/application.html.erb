@@ -177,7 +177,7 @@ function pagereload(t) {
   <%= link_to "Invoices", invoices_url, class: "topnav1" %>
   <%= link_to "Pallets", mission51_url %>
   <% if  current_user.admin != true and ! current_user.email.eql?  "ameropa.logistics@gmail.com" %> 
-  <%= link_to "ScheduleDrivers", schedule_url %>
+  <%= link_to "Dispatchers", schedule_url %>
   <% end %>  
   <%= link_to "Maintenance", periodics_url %>
   <%= link_to "Repairs", repairs_url %>
