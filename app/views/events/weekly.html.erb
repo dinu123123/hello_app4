@@ -26,6 +26,11 @@
             <%= collection_select :search1, :type, @search1.arrayC, :id, :name %>
 <% end %>
 
+<% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@yahoo.com") %>    
+            <%= collection_select :search1, :time, @search1.arrayT, :id, :name %>
+            <%= collection_select :search1, :type, @search1.arrayC, :id, :name %>
+<% end %>
+
             <%= collection_select :search1, :client_id, Client.all, :id, :Name, {:include_blank => 'Clients'} %>
 
 
