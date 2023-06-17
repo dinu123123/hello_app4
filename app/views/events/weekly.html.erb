@@ -61,7 +61,7 @@
 
 <% if (@search1.type == 5 or @search1.type == 0 )  %>
 <small>
-Nume driver, Km facturati, Km Nefacturati(procentaj), Valoare facturata, Consum/100km intre alimentari 
+Nume driver, Km fact, Km Nefact, % Km Nefact, Suma fact, Consum intre alimentari 
 </small>
 <% end %>
 <% if (@search1.type ==1 and (@arrayWeeklyTruckExpense.size-2)>0 )  %>
@@ -164,11 +164,26 @@ Nume driver, Km facturati, Km Nefacturati(procentaj), Valoare facturata, Consum/
                                         <% value.each_with_index do |val, j| %>
                                             <% if j > 0 %>
                                              <br>
-                                            <% end %>    
-                                            <small><%= val.name+ ",".to_s+ val.invoiced_km.to_i.to_s + ",".to_s + 
-                                               val.unpaid_km.to_i.to_s +  ",".to_s +
-                                               (val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(2).to_s+"\%,".to_s + 
-                                               val.money.to_i.to_s + ",".to_s +  val.avg_consumption.to_s%></small>  
+                                            <% end %>   
+
+  
+                                              <% if val.unpaid_km > 0 %>
+                                               <small><b><%= val.name %></b><%=" ".to_s+ val.invoiced_km.to_i.to_s + "km ".to_s + 
+                                               val.unpaid_km.to_i.to_s +  "km ".to_s +
+                                               (val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(0).to_s + "\%".to_s%>
+                                               <b><font color="red"><%="loss ".to_s %></font></b>
+
+                                               <%= val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%> 
+                                              <% else %>                                  
+                                                <b><%= val.name %></b><%=" ".to_s+ val.invoiced_km.to_i.to_s + "km ".to_s + 
+                                               val.unpaid_km.to_i.to_s +  "km ".to_s +
+                                               -(val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(0).to_s + "\%".to_s%>
+                                               <b><font color="green"><%="gain ".to_s %></font></b>
+
+
+                                               <%= val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%></small>  
+                                              <% end %>                                  
+                                           
                                         <% end %>
                                       <% elsif value.is_a?(Array) == false %>
                                          <%= value.to_s%>
@@ -198,10 +213,26 @@ Nume driver, Km facturati, Km Nefacturati(procentaj), Valoare facturata, Consum/
                                            <% if j > 0 %>
                                              <br>
                                            <% end %>    
+
+                                        
+<% if val.unpaid_km > 0 %>
                                                <small><b><%= val.name %></b><%=" ".to_s+ val.invoiced_km.to_i.to_s + "km ".to_s + 
                                                val.unpaid_km.to_i.to_s +  "km ".to_s +
-                                               (val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(2).to_s+"\%loss  ".to_s + 
-                                               val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%></small>  
+                                               (val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(0).to_s + "\%".to_s%>
+                                               <b><font color="red"><%="loss ".to_s %></font></b>
+
+                                               <%= val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%> 
+<% else %>                                  
+                                                <b><%= val.name %></b><%=" ".to_s+ val.invoiced_km.to_i.to_s + "km ".to_s + 
+                                               val.unpaid_km.to_i.to_s +  "km ".to_s +
+                                               -(val.unpaid_km.to_i*100/(1+val.invoiced_km.to_i)).round(0).to_s + "\%".to_s%>
+                                               <b><font color="green"><%="gain ".to_s %></font></b>
+
+
+                                               <%= val.money.to_i.to_s + "€  ".to_s +  val.avg_consumption.to_s%></small>  
+<% end %>                                  
+
+
                                         <% end %>
                                       <% elsif value.is_a?(Array) == false %>
                                          <%= value %>

@@ -476,10 +476,10 @@ def dispatchers
                                  @driver_elements = Array.new
                                    
                              Driver.all.each_with_index do |driver,t|
-                                                     @tmp_name = "".to_s
-                                                     @tmp = 0 
-                                                     @tmp_money = 0    
-                                                     @tmp_unpaid_km = 0
+                                                     tmp_name = "".to_s
+                                                     tmp = 0 
+                                                     tmp_money = 0    
+                                                     tmp_unpaid_km = 0
                                                      @total_tmp = "".to_s             
                                                      avg_consumption_string = " ".to_s
                                                      if @search1.client_id == 0 
@@ -543,16 +543,16 @@ def dispatchers
 
                                                @invoiced_trips_for_dispatcher.each_with_index do |trip,m|
                                                          if m == 0
-                                                           @tmp_name =  driver.FIRSTNAME+ " ".to_s + driver.SECONDNAME+ " ".to_s
+                                                           tmp_name =  driver.FIRSTNAME+ " ".to_s + driver.SECONDNAME+ " ".to_s
                                                          end  
-                                                         @tmp += trip.km  
-                                                         @tmp_money += trip.total_amount
-                                                         @tmp_unpaid_km += @tmp_unpaid_km + trip.km_evogps-trip.km 
+                                                         tmp += trip.km  
+                                                         tmp_money += trip.total_amount
+                                                         tmp_unpaid_km += tmp_unpaid_km + trip.km_evogps-trip.km 
                                                 end
 
-                                                    if @tmp_money > 0 or @tmp >0 or @tmp_unpaid_km >0
-                                                       @total_tmp += @tmp_name + @tmp.to_s + " | "
-                                                       @d_elem = driver_elem.new( @tmp_name, @tmp, @tmp_money, @tmp_unpaid_km, avg_consumption_string)
+                                                    if tmp_money > 0 or tmp >0 or tmp_unpaid_km >0
+                                                       @total_tmp += tmp_name + tmp.to_s + " | "
+                                                       @d_elem = driver_elem.new( tmp_name, tmp, tmp_money, tmp_unpaid_km, avg_consumption_string)
                                                        @driver_elements << @d_elem
                                                     end   
                                 end ## driver                 
@@ -692,14 +692,14 @@ else
 
                        @localEvent.each_with_index do |event,i|
 
-                         @tmpEvent = Struct.new(:date, :type)
-                         @tmp = @tmpEvent.new(event.DATE, event.START_END)                                
-                         @arrayWeeklyTruckExpense[event.DATE.strftime("%U").to_i+1][j+1] = @tmp 
+                         tmpEvent = Struct.new(:date, :type)
+                         tmp = tmpEvent.new(event.DATE, event.START_END)                                
+                         @arrayWeeklyTruckExpense[event.DATE.strftime("%U").to_i+1][j+1] = tmp 
 
                          if i == @localEvent.size-1 and event.expected_date and (@arrayWeeklyTruckExpense.length > (1+event.expected_date.strftime("%U").to_i+1))
-                           @tmpEvent = Struct.new(:date, :type)
-                           @tmp = @tmpEvent.new(event.expected_date, not(event.START_END)) 
-                           @arrayWeeklyTruckExpense[event.expected_date.strftime("%U").to_i+1][j+1] = @tmp 
+                           tmpEvent = Struct.new(:date, :type)
+                           tmp = tmpEvent.new(event.expected_date, not(event.START_END)) 
+                           @arrayWeeklyTruckExpense[event.expected_date.strftime("%U").to_i+1][j+1] = tmp 
 
                          end 
 
