@@ -421,9 +421,9 @@ def dispatchers
                   year =  @search1.date_from.to_date.strftime("%Y").to_i+1
                end
 
+               @date_start =  Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1)
                ##Last repair
                if @search1.time == 5
-                  @date_start =  Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1)
                   @date_from1 =  @date_start+(week-1)*7
                   @date_to1 =  @date_from1+6
                end
@@ -432,8 +432,6 @@ def dispatchers
                  @date_from1 =  Date.new(year, week1, 1)
                  @date_to1 =  @date_from1.to_date.end_of_month
                end  
-
-
 
                ## setup the first column in the array with the names of the dispatchers
                  Dispatcher.all.each_with_index do |dispatcher,j|
@@ -547,7 +545,7 @@ def dispatchers
                                                          end  
                                                          tmp += trip.km  
                                                          tmp_money += trip.total_amount
-                                                         tmp_unpaid_km += tmp_unpaid_km + trip.km_evogps-trip.km 
+                                                         tmp_unpaid_km += trip.km_evogps-trip.km 
                                                 end
 
                                                     if tmp_money > 0 or tmp >0 or tmp_unpaid_km >0
