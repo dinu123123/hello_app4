@@ -423,7 +423,7 @@ def dispatchers
 
                @date_start =  Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1)
                ##Last repair
-               if @search1.time == 5
+               if @search1.time == 1
                   @date_from1 =  @date_start+(week-1)*7
                   @date_to1 =  @date_from1+6
                end
