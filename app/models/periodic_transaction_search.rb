@@ -45,12 +45,7 @@ class PeriodicTransactionSearch
     a5 =Element.new("Dispatchers",5)
     a6 =Element.new("Drivers",5)
     a7 =Element.new("Trucks",5)
-    
-    
-
-    
-    if (current_user != nil and 
-        (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com"))
+        
     @arrayC = []
     @arrayC.push(a2)
     @arrayC.push(b2)
@@ -59,18 +54,11 @@ class PeriodicTransactionSearch
     @arrayC.push(a5)
     @arrayC.push(a6)
     @arrayC.push(a7)
-  end
-
-
-    if (current_user != nil and 
-        (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@yahoo.com"))
-
-    @arrayC = []
-    @arrayC.push(a4)
-    @arrayC.push(a5)
-    
-  end
-
+ 
+    @arrayDisp = []
+    @arrayDisp.push(a4)
+    @arrayDisp.push(a5)
+ 
     a3 =Element.new("Active",1)
     b3 =Element.new("Inactive",2)    
     c3 =Element.new("All",3)
