@@ -508,7 +508,7 @@ def dispatchers
                                                           @fuelExpenses = FuelExpense.find_by_sql(["SELECT * FROM fuel_expenses where  
                                                           (fuel_expenses.product = ? or fuel_expenses.product = ? or fuel_expenses.product = ?)  and fuel_expenses.truck_id = ? AND 
                                                           fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
-                                                          fuel_expenses.trsdate ASC, fuel_expenses.trstime ASC", "Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-7, 
+                                                          fuel_expenses.trsdate ASC, fuel_expenses.trstime ASC", "Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1+7, 
                                                           @date_to1])
 
                                                           size_base = FuelExpense.find_by_sql(["SELECT * FROM fuel_expenses where 
