@@ -621,7 +621,11 @@ end
 
                                                     if tmp_money > 0 or tmp >0 or tmp_unpaid_km >0
                                                        @total_tmp += tmp_name + tmp.to_s + " | "
-                                                       @d_elem = driver_elem.new( tmp_name, tmp, tmp_money, tmp_unpaid_km, @fuelExpenses[0].platenr.to_s + " |".to_s  + avg_consumption_string)
+                                                       fuel_nb_plate = NO_plate
+                                                       if @fuelExpenses[0] != nil
+                                                        fuel_nb_plate = @fuelExpenses[0].platenr.to_s
+                                                       end
+                                                       @d_elem = driver_elem.new( tmp_name, tmp, tmp_money, tmp_unpaid_km, fuel_nb_plate + " |".to_s  + avg_consumption_string)
                                                        @driver_elements << @d_elem
                                                     end   
                                 end ## driver                 
