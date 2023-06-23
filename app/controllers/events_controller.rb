@@ -508,43 +508,102 @@ def dispatchers
                                                           @fuelExpenses = FuelExpense.find_by_sql(["SELECT * FROM fuel_expenses where  
                                                           (fuel_expenses.product = ? or fuel_expenses.product = ? or fuel_expenses.product = ?)  and fuel_expenses.truck_id = ? AND 
                                                           fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
-                                                          fuel_expenses.trsdate DESC", "Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-7, 
+                                                          fuel_expenses.trsdate ASC, fuel_expenses.trstime ASC", "Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-7, 
                                                           @date_to1])
 
                                                           size_base = FuelExpense.find_by_sql(["SELECT * FROM fuel_expenses where 
                                                           (fuel_expenses.product = ? or fuel_expenses.product = ? or fuel_expenses.product = ?) and fuel_expenses.truck_id = ? AND
                                                           fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
-                                                          fuel_expenses.trsdate DESC","Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-1, 
+                                                          fuel_expenses.trsdate ASC, fuel_expenses.trstime ASC","Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-1, 
                                                           @date_to1]).size
+
 
                                                           
                                                            if @fuelExpenses != nil and @fuelExpenses.size >0
-                                                               avg_consumption_string += @fuelExpenses[0].platenr.to_s
-                                                               avg_consumption_string +=" |".to_s 
-                                       
-                                                                 @fuelExpenses.each_with_index do |fuel_expense,i|
+                                                               km_start = 0 
+                                                                       km_end = 0
+                                                                     
+                                                                       tmp_i = 0
+                                                                       break_var = false
+
+                                                                 @fuelExpenses.each_with_index do |fuel_expenses,i|
                                                           
-                                                                          if @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and @fuelExpenses[i].kminsertion<@fuelExpenses[i+1].kminsertion 
-                                                                             avg_consumption_string += " err|".to_s
+                                                             
+                                                                       acc = 0 #fuel_expenses.volume.to_f
+                                                                       next if  i < tmp_i
 
-                                                                          elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and @fuelExpenses[i].kminsertion==@fuelExpenses[i+1].kminsertion 
-                                                                             avg_consumption_string += " ∞|".to_s   
 
-                                                                          elsif @fuelExpenses[i] != nil and @fuelExpenses[i+1] != nil and (i<=size_base-1 and @fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion >0)
-                                                                             tmp_avg_consum = ((100*@fuelExpenses[i].volume)/(@fuelExpenses[i].kminsertion-@fuelExpenses[i+1].kminsertion)).round(2)
-                                                                             
-                                                                             tmp_avg_consum_str = tmp_avg_consum.to_s
-                                                                             
-                                                                             if tmp_avg_consum >300
-                                                                              tmp_avg_consum_str = "err1"
-                                                                             end 
+                                                                       @fuelExpenses.each_with_index do |fuel_expense_trav,j|
+                                                                         if j > i 
+                                           
 
-                                                                             avg_consumption_string += " ".to_s + tmp_avg_consum_str + "|".to_s                       
+                                                                                   if @fuelExpenses != nil and @fuelExpenses[i].trsdate == @fuelExpenses[j].trsdate and
+                                                                                      ((@fuelExpenses[i].kminsertion == @fuelExpenses[j].kminsertion))  
+
+                                                                                      acc += fuel_expense_trav.volume.to_f
+                                                                                   elsif fuel_expense_trav.volume.to_i <= 200 and
+                                                                                       # dont accumulate in case this is the first tanking for a double tank truck
+                                                                                        (@fuelExpenses[j+1] != nil and @fuelExpenses[j+1].trsdate != @fuelExpenses[j].trsdate) 
+                                                                                   
+                                                                                      acc += fuel_expense_trav.volume.to_f
+
+                                                                                   #    if @fuelExpenses[0].truck_id == 10
+                                                                                    #      sdfsdfsdf
+                                                                                     #  end
+
+                                                                                   else
+                                                                                      km_start = @fuelExpenses[i].kminsertion.to_f
+                                                                                      km_end = @fuelExpenses[j].kminsertion.to_f
+                                                                                      acc += fuel_expense_trav.volume.to_f
+                                                                                      tmp_i = j
+                                                                                      
+                                                                                      if (@fuelExpenses[j+1] != nil and @fuelExpenses[j+1].trsdate == @fuelExpenses[j].trsdate and
+                                                                                           (@fuelExpenses[j+1].trstime.hour - @fuelExpenses[j].trstime.hour).abs() < 10 ) 
+                                                                                         acc += @fuelExpenses[j+1].volume
+                                                                                         km_end = @fuelExpenses[j+1].kminsertion.to_f
+                                                                                         tmp_i = j+1
+                                                                                      end  
+
+
+                                                                                      
+                                                                                      break_var = true
+
+                                                                                       #if @fuelExpenses[0].truck_id == 10
+                                                                                         # sdfsdfsdf
+                                                                                       #end
+                                                                                      break
+                                                                                    end   
+
+                                                                            
+                                                                            end
+                                                                        end
+                                                                           
+              
+                                                                              #   if @fuelExpenses[0].truck_id == 10
+                                                                                  #  sdfsdfsdf
+                                                                              #   end
+
+if i<@fuelExpenses.size-1
+                                                                         if @fuelExpenses[i] != nil
+                                                                             tmp_avg_consum = ((100*acc.to_f)/(km_end-km_start)).round(1)                         
+                                                                             tmp_avg_consum_str = tmp_avg_consum.to_d.to_s ######################+ " i=".to_s + i.to_s + " acc ".to_s + acc.to_s + " km_start".to_s + km_start.to_s + "km_end ".to_s + km_end.to_s
+                                                                            
+
+                                                                               #  if @fuelExpenses[0].truck_id == 10
+                                                                                #   sdfsdfsdf
+                                                                                 # end
+
+                                                                             #if tmp_avg_consum >300
+                                                                             # tmp_avg_consum_str = "err1"
+                                                                             #end 
+
+                                                                             avg_consumption_string += " ".to_s + tmp_avg_consum_str + " | ".to_s                       
                                                                           elsif @fuelExpenses.size == 1
                                                                              avg_consumption_string += "NO Tank".to_s
                                                                           else
-                                                                               break 
+                                                                              #break 
                                                                           end
+end
                                                                  end 
 
                                                             end
@@ -562,7 +621,7 @@ def dispatchers
 
                                                     if tmp_money > 0 or tmp >0 or tmp_unpaid_km >0
                                                        @total_tmp += tmp_name + tmp.to_s + " | "
-                                                       @d_elem = driver_elem.new( tmp_name, tmp, tmp_money, tmp_unpaid_km, avg_consumption_string)
+                                                       @d_elem = driver_elem.new( tmp_name, tmp, tmp_money, tmp_unpaid_km, @fuelExpenses[0].platenr.to_s + " |".to_s  + avg_consumption_string)
                                                        @driver_elements << @d_elem
                                                     end   
                                 end ## driver                 
