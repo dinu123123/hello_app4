@@ -621,7 +621,7 @@ end
 
                                                     if tmp_money > 0 or tmp >0 or tmp_unpaid_km >0
                                                        @total_tmp += tmp_name + tmp.to_s + " | "
-                                                       fuel_nb_plate = NO_plate
+                                                       fuel_nb_plate = "NO_plate".to_s
                                                        if @fuelExpenses[0] != nil
                                                         fuel_nb_plate = @fuelExpenses[0].platenr.to_s
                                                        end
