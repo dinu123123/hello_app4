@@ -595,7 +595,7 @@ def dispatchers
 
 if i<@fuelExpenses.size-1
                                                                          if @fuelExpenses[i] != nil
-                                                                             tmp_avg_consum = ((100*acc.to_f)/(km_end-km_start)).round(1)                         
+                                                                             tmp_avg_consum = ((100*acc.to_f)/(km_end-km_start)).round(2)                         
                                                                              tmp_avg_consum_str = tmp_avg_consum.to_d.to_s #############+ " i=".to_s + i.to_s + " acc ".to_s + acc.to_s + " km_start".to_s + km_start.to_s + "km_end ".to_s + km_end.to_s
                                                                             
 
