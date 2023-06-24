@@ -553,7 +553,7 @@ def dispatchers
                                                                                       ((@fuelExpenses[i].kminsertion == @fuelExpenses[j].kminsertion))  
 
                                                                                       acc += fuel_expense_trav.volume.to_f
-                                                                                   elsif fuel_expense_trav.volume.to_i <= 200 and
+                                                                                   elsif fuel_expense_trav.volume.to_i <= 250 and
                                                                                        # dont accumulate in case this is the first tanking for a double tank truck
                                                                                         (@fuelExpenses[j+1] != nil and @fuelExpenses[j+1].trsdate != @fuelExpenses[j].trsdate) 
                                                                                    
