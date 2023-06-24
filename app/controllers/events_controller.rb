@@ -531,7 +531,7 @@ def dispatchers
                                                                 
                                                                 if @size_base != nil and @size_base >1
 
-                                                                 @skip_to_last_before_first = @fuelExpenses.size - @size_base - 1
+                                                                 @skip_to_last_before_first = @fuelExpenses.size - @size_base
                                                                 else
                                                                  @skip_to_last_before_first = 0
                                                                 end
