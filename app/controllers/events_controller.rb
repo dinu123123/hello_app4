@@ -531,13 +531,13 @@ def dispatchers
                                                                 
                                                                 if @size_base != nil and @size_base >1
 
-                                                                 @skip_to_last_before_first = @size_base - @fuelExpenses.size
+                                                                 @skip_to_last_before_first = @size_base - @fuelExpenses.size -1
                                                                 end
 
                                                                  @fuelExpenses.each_with_index do |fuel_expenses,i|
                                                                      
-                                                                      if skip_to_last_before_first > 1
-                                                                       next if i <= @skip_to_last_before_first -1
+                                                                      if @skip_to_last_before_first > 1
+                                                                       next if i+1 <= @skip_to_last_before_first
                                                                       end
                                                                        acc = 0 #fuel_expenses.volume.to_f
                                                                        next if  i < tmp_i
