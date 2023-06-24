@@ -539,7 +539,7 @@ def dispatchers
                                                                  @fuelExpenses.each_with_index do |fuel_expenses,i|
                                                                      
                                                                     
-                                                                       next if i <= @skip_to_last_before_first -1
+                                                                       next if i <= @skip_to_last_before_first -2
                                                                       
                                                                        acc = 0 #fuel_expenses.volume.to_f
                                                                        next if  i < tmp_i
