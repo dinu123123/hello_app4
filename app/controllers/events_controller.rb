@@ -480,6 +480,7 @@ def dispatchers
                                                      tmp_unpaid_km = 0
                                                      @total_tmp = "".to_s             
                                                      avg_consumption_string = " ".to_s
+                                                     @invoiced_trips_for_dispatcher = nil
                                                      if @search1.client_id == 0 
                                                        @invoiced_trips_for_dispatcher = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? 
                                                                                     AND invoiced_trips."StartDate" < ? AND invoiced_trips."dispatcher_id" = ? AND invoiced_trips."driver_id" = ? ', 
@@ -508,27 +509,36 @@ def dispatchers
                                                           @fuelExpenses = FuelExpense.find_by_sql(["SELECT * FROM fuel_expenses where  
                                                           (fuel_expenses.product = ? or fuel_expenses.product = ? or fuel_expenses.product = ?)  and fuel_expenses.truck_id = ? AND 
                                                           fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
-                                                          fuel_expenses.trsdate ASC, fuel_expenses.trstime ASC", "Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1+7, 
+                                                          fuel_expenses.trsdate ASC, fuel_expenses.trstime ASC", "Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-30, 
                                                           @date_to1])
 
-                                                          size_base = FuelExpense.find_by_sql(["SELECT * FROM fuel_expenses where 
+                                                          @size_base = FuelExpense.find_by_sql(["SELECT * FROM fuel_expenses where  
                                                           (fuel_expenses.product = ? or fuel_expenses.product = ? or fuel_expenses.product = ?) and fuel_expenses.truck_id = ? AND
                                                           fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
-                                                          fuel_expenses.trsdate ASC, fuel_expenses.trstime ASC","Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-1, 
+                                                          fuel_expenses.trsdate ASC, fuel_expenses.trstime ASC","Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1, 
                                                           @date_to1]).size
 
 
-                                                          
+
+
+                                                          skip_to_last_before_first = -1
                                                            if @fuelExpenses != nil and @fuelExpenses.size >0
                                                                km_start = 0 
                                                                        km_end = 0
                                                                      
                                                                        tmp_i = 0
                                                                        break_var = false
+                                                                
+                                                                if @size_base != nil and @size_base >1
+
+                                                                 @skip_to_last_before_first = @size_base - @fuelExpenses.size - 1
+                                                                end
 
                                                                  @fuelExpenses.each_with_index do |fuel_expenses,i|
-                                                          
-                                                             
+                                                                     
+                                                                      if skip_to_last_before_first > 1
+                                                                       next if i <= @skip_to_last_before_first -1
+                                                                      end
                                                                        acc = 0 #fuel_expenses.volume.to_f
                                                                        next if  i < tmp_i
 
@@ -586,7 +596,7 @@ def dispatchers
 if i<@fuelExpenses.size-1
                                                                          if @fuelExpenses[i] != nil
                                                                              tmp_avg_consum = ((100*acc.to_f)/(km_end-km_start)).round(1)                         
-                                                                             tmp_avg_consum_str = tmp_avg_consum.to_d.to_s ######################+ " i=".to_s + i.to_s + " acc ".to_s + acc.to_s + " km_start".to_s + km_start.to_s + "km_end ".to_s + km_end.to_s
+                                                                             tmp_avg_consum_str = tmp_avg_consum.to_d.to_s #############+ " i=".to_s + i.to_s + " acc ".to_s + acc.to_s + " km_start".to_s + km_start.to_s + "km_end ".to_s + km_end.to_s
                                                                             
 
                                                                                #  if @fuelExpenses[0].truck_id == 10
