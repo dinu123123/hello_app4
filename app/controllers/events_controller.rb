@@ -480,6 +480,7 @@ def dispatchers
                                                      @total_tmp = "".to_s             
                                                      avg_consumption_string = " ".to_s
                                                      @invoiced_trips_for_dispatcher = nil
+                                                     total_avg_consumption_string = "NO Tank  ".to_s
                                                      if @search1.client_id == 0 
                                                        @invoiced_trips_for_dispatcher = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? 
                                                                                     AND invoiced_trips."StartDate" < ? AND invoiced_trips."dispatcher_id" = ? AND invoiced_trips."driver_id" = ? ', 
@@ -565,7 +566,7 @@ def dispatchers
 
                                                                        @fuelExpenses.each_with_index do |fuel_expense_trav,j|
                                                                          if j > i 
-                                                                          
+
                                                                                    if @fuelExpenses != nil and @fuelExpenses[i].trsdate == @fuelExpenses[j].trsdate and
                                                                                       ((@fuelExpenses[i].kminsertion == @fuelExpenses[j].kminsertion))
 
