@@ -179,7 +179,7 @@ CSV.foreach(file.path,  headers: [
       @my_date = row["Date"]
 
     @my_product = row["Product"].to_s.try(:gsub,' ', ' ')
-    @my_volume = row["Sales"].to_s.to_d
+    @my_volume = row["Sales"].to_s.try(:gsub,',','').to_d
     @my_country = row["Service country"].to_s.try(:gsub,' ', '')
 
     if row["Mileage in km"] != nil
