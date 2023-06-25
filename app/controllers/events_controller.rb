@@ -461,7 +461,6 @@ def dispatchers
                        and events."DATE" <= ? and events."START_END" = ? ORDER BY events."DATE" DESC', item.DRIVER_id, to_datetime(item.StartDate), true])
 
 
-
                      if @activity.size >0
                        item.update_attribute(:dispatcher_id, @activity[0].dispatcher_id) #this persists the entities to the DB
                      end   
@@ -491,6 +490,9 @@ def dispatchers
                                                                                     @date_from1-1, @date_to1+1, dispatcher.id, driver.id, @search1.client_id])
                                                      end
 
+
+
+
                                                      same = true  
                                                      truck_id_prev = -1
                                                      #check if all invoiced_trips_for_dispatcher and driver have the same truck_id  
@@ -512,12 +514,12 @@ def dispatchers
                                                           fuel_expenses.trsdate ASC, fuel_expenses.trstime ASC", "Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1-30, 
                                                           @date_to1])
 
+
                                                           @size_base = FuelExpense.find_by_sql(["SELECT * FROM fuel_expenses where  
                                                           (fuel_expenses.product = ? or fuel_expenses.product = ? or fuel_expenses.product = ?) and fuel_expenses.truck_id = ? AND
                                                           fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY 
                                                           fuel_expenses.trsdate ASC, fuel_expenses.trstime ASC","Diesel","diesel","DIESEL", @invoiced_trips_for_dispatcher[0].truck_id, @date_from1, 
                                                           @date_to1]).size
-
 
 
 
@@ -527,7 +529,6 @@ def dispatchers
                                                                        km_end = 0
                                                                      
                                                                        tmp_i = 0
-                                                                       break_var = false
                                                                 
                                                                 if @size_base != nil and @size_base >1
 
@@ -536,33 +537,47 @@ def dispatchers
                                                                  @skip_to_last_before_first = 0
                                                                 end
 
+                                                                 overall_acc = 0
+                                                                 total_avg_consumption_string = "NO Tank".to_s
+                                                                 start_overall_km = -1
+
                                                                  @fuelExpenses.each_with_index do |fuel_expenses,i|
                                                                      
                                                                     
                                                                        next if i <= @skip_to_last_before_first -2
                                                                       
+                                                                       if start_overall_km >0
+                                                                          overall_acc += fuel_expenses.volume
+                                                                       end
+
+                                                                       if overall_acc == 0
+                                                                         start_overall_km = @fuelExpenses[i].kminsertion
+                                                                       end
+
+                                                                        if i == @fuelExpenses.size - 1 and start_overall_km != -1
+                                                                         total_avg_consumption_string = (overall_acc / (@fuelExpenses[i].kminsertion-start_overall_km) * 100).round(2).to_s
+                                                                        end
+
+
                                                                        acc = 0 #fuel_expenses.volume.to_f
                                                                        next if  i < tmp_i
 
 
                                                                        @fuelExpenses.each_with_index do |fuel_expense_trav,j|
                                                                          if j > i 
-                                           
-
+                                                                          
                                                                                    if @fuelExpenses != nil and @fuelExpenses[i].trsdate == @fuelExpenses[j].trsdate and
-                                                                                      ((@fuelExpenses[i].kminsertion == @fuelExpenses[j].kminsertion))  
+                                                                                      ((@fuelExpenses[i].kminsertion == @fuelExpenses[j].kminsertion))
 
                                                                                       acc += fuel_expense_trav.volume.to_f
                                                                                    elsif fuel_expense_trav.volume.to_i <= 250 and
                                                                                        # dont accumulate in case this is the first tanking for a double tank truck
-                                                                                        (@fuelExpenses[j+1] != nil and @fuelExpenses[j+1].trsdate != @fuelExpenses[j].trsdate) 
-                                                                                   
+                                                                                        (@fuelExpenses[j+1] != nil and @fuelExpenses[j+1].trsdate != @fuelExpenses[j].trsdate)
+
                                                                                       acc += fuel_expense_trav.volume.to_f
-
-                                                                                   #    if @fuelExpenses[0].truck_id == 10
-                                                                                    #      sdfsdfsdf
-                                                                                     #  end
-
+                                                                                     #if @fuelExpenses[0].truck_id == 10
+                                                                                     #   sdfsdfsdf
+                                                                                     #end
                                                                                    else
                                                                                       km_start = @fuelExpenses[i].kminsertion.to_f
                                                                                       km_end = @fuelExpenses[j].kminsertion.to_f
@@ -576,10 +591,9 @@ def dispatchers
                                                                                          tmp_i = j+1
                                                                                       end  
 
-
-                                                                                      
-                                                                                      break_var = true
-
+#if @fuelExpenses[0].truck_id == 10 and week == 5 and j ==2
+                                                                                          #sdfsdfsdf
+ #                                                                                      end
                                                                                        #if @fuelExpenses[0].truck_id == 10
                                                                                          # sdfsdfsdf
                                                                                        #end
@@ -637,12 +651,12 @@ end
                                                        if @fuelExpenses[0] != nil
                                                         fuel_nb_plate = @fuelExpenses[0].platenr.to_s
                                                        end
-                                                       @d_elem = driver_elem.new( tmp_name, tmp, tmp_money, tmp_unpaid_km, fuel_nb_plate + " |".to_s  + avg_consumption_string)
+                                                       @d_elem = driver_elem.new( tmp_name, tmp, tmp_money, tmp_unpaid_km, fuel_nb_plate + " avg cons= ".to_s  + total_avg_consumption_string + " indiv cons= {".to_s  + avg_consumption_string[0...-2] + "}".to_s)
                                                        @driver_elements << @d_elem
                                                     end   
                                 end ## driver                 
                                                
-                                               @arrayWeeklyTruckExpense[week][j+1] = @driver_elements ##@total_tmp  
+                                               @arrayWeeklyTruckExpense[week-@period_start+1][j+1] = @driver_elements ##@total_tmp  
 
 
                                
