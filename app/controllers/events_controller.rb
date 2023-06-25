@@ -555,9 +555,14 @@ def dispatchers
                                                                          start_overall_km = @fuelExpenses[i].kminsertion
                                                                        end
 
-                                                                        if i == @fuelExpenses.size - 1 and start_overall_km != -1
+                                                                        if i == @fuelExpenses.size - 1 and start_overall_km != -1 and @fuelExpenses[i].kminsertion != start_overall_km
                                                                          total_avg_consumption_string = (overall_acc / (@fuelExpenses[i].kminsertion-start_overall_km) * 100).round(2).to_s
                                                                         end
+
+                                                                          if i == @fuelExpenses.size - 1 and start_overall_km != -1 and @fuelExpenses[i].kminsertion != start_overall_km
+                                                                         total_avg_consumption_string = "NO km".to_s
+                                                                        end
+
 
 
                                                                        acc = 0 #fuel_expenses.volume.to_f
