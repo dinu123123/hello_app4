@@ -121,7 +121,8 @@ get "home/download_pdf"
   collection { post :import}
   collection { post :import_as24}
   collection { post :import_dkv}
-  end
+  collection { post :import_shell}
+end
 
   resources :de_tolls do
   collection { post :import }

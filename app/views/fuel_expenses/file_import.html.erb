@@ -1,4 +1,26 @@
 <p id="notice"><%= notice %></p>
+<h1>Shell - CSV File Import</h1>
+<div>
+<h4> Import Shell data!</h4>
+   <%= form_tag import_shell_fuel_expenses_path, multipart: true do%>
+    <%= label_tag :date_format_month_day_year, 'Bifeaza daca formatul de data folosit in fisierul CSV este Luna/Zi/An!!!'  %>
+    <%= check_box_tag :date_format_month_day_year, id: :date_format_month_day_year%>   
+    <p></p>
+    <%= file_field_tag :file %>
+    <%= submit_tag  "Import CSV"%>
+<% end %>
+
+<h1>DKV - CSV File Import</h1>
+<div>
+<h4> Import DKV data!</h4>
+  <%= form_tag import_dkv_fuel_expenses_path, multipart: true do%>
+    <%= label_tag :date_format_month_day_year, 'Bifeaza daca formatul de data folosit in fisierul CSV este Luna/Zi/An!!!'  %>
+    <%= check_box_tag :date_format_month_day_year, id: :date_format_month_day_year%>   
+    <p></p>
+    <%= file_field_tag :file %>
+    <%= submit_tag  "Import CSV"%>
+<% end %>
+
 <h1>IDS - Fuel Expense Import File</h1>
 <div>
 <h4> Import that data!</h4>
@@ -7,8 +29,6 @@
   <%= submit_tag  "Import CSV"%>
 <% end %>
 
-
-
 <h1>AS24 - Fuel Expense Import File</h1>
 <div>
 <h4> Import that data!</h4>
@@ -16,5 +36,7 @@
   <%= file_field_tag :file %>
   <%= submit_tag  "Import CSV"%>
 <% end %>
+
+
 
 </div>

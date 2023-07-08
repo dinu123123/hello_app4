@@ -43,8 +43,10 @@ class PeriodicTransactionSearch
     
     a4 =Element.new("DriversSchedule",4)
     a5 =Element.new("Dispatchers",5)
-    a6 =Element.new("Drivers",5)
-    a7 =Element.new("Trucks",5)
+    a6 =Element.new("Drivers",6)
+    a7 =Element.new("Trucks",7)
+    a8 =Element.new("Finance",8)
+    
         
     @arrayC = []
     @arrayC.push(a2)
@@ -54,6 +56,7 @@ class PeriodicTransactionSearch
     @arrayC.push(a5)
     @arrayC.push(a6)
     @arrayC.push(a7)
+    @arrayC.push(a8)
  
     @arrayDisp = []
     @arrayDisp.push(a4)

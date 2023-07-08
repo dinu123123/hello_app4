@@ -66,7 +66,9 @@
       <th colspan="1"></th>
       <th>Name</th>
       <th>Info</th>
-      <th>Date</th>
+      <th>Issue Date</th>
+      <th>Due Date</th>
+      <th>Collection Date</th>
       <th>Client</th>
       <th>VAT(%)</th>
       <th>Amount(€)</th>
@@ -74,13 +76,13 @@
 
       <% if false %>    
          <% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %>    
-            <th colspan="6"></th>
+            <th colspan="8"></th>
          <% else %>
-            <th colspan="5"></th>
+            <th colspan="7"></th>
          <% end %>
       <% end %>
 
-      <th colspan="6"></th>
+      <th colspan="8"></th>
     </tr>
   </thead>
 
@@ -93,6 +95,8 @@
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.name %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.info %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.ddate %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.collection_date %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%=  invoice.vat %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= invoice.total_amount %></td>
@@ -101,6 +105,8 @@
         <td bgcolor="#00f9fe" style="font-weight:bold"><%= invoice.name %></td>
         <td bgcolor="#00f9fe" style="font-weight:bold"><%= invoice.info %></td>
         <td bgcolor="#00f9fe" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00f9fe" style="font-weight:bold"><%= invoice.ddate %></td>
+        <td bgcolor="#00f9fe" style="font-weight:bold"><%= invoice.collection_date %></td>
         <td bgcolor="#00f9fe" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
         <td bgcolor="#00f9fe" style="font-weight:bold"><%=  invoice.vat %></td>
         <td bgcolor="#00f9fe" style="font-weight:bold"><%= invoice.total_amount %></td>
@@ -109,6 +115,8 @@
         <td bgcolor="#00eeed" style="font-weight:bold"><%= invoice.name %></td>
         <td bgcolor="#00eeed" style="font-weight:bold"><%= invoice.info %></td>
         <td bgcolor="#00eeed" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00eeed" style="font-weight:bold"><%= invoice.ddate %></td>
+        <td bgcolor="#00eeed" style="font-weight:bold"><%= invoice.collection_date %></td>
         <td bgcolor="#00eeed" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
         <td bgcolor="#00eeed" style="font-weight:bold"><%=  invoice.vat %></td>
         <td bgcolor="#00eeed" style="font-weight:bold"><%= invoice.total_amount %></td>
@@ -117,6 +125,8 @@
         <td bgcolor="#00dbdd" style="font-weight:bold"><%= invoice.name %></td>
         <td bgcolor="#00dbdd" style="font-weight:bold"><%= invoice.info %></td>
         <td bgcolor="#00dbdd" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00dbdd" style="font-weight:bold"><%= invoice.ddate %></td>
+        <td bgcolor="#00dbdd" style="font-weight:bold"><%= invoice.collection_date %></td>
         <td bgcolor="#00dbdd" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
         <td bgcolor="#00dbdd" style="font-weight:bold"><%=  invoice.vat %></td>
         <td bgcolor="#00dbdd" style="font-weight:bold"><%= invoice.total_amount %></td>
@@ -125,6 +135,8 @@
         <td bgcolor="#00cbcd" style="font-weight:bold"><%= invoice.name %></td>
         <td bgcolor="#00cbcd" style="font-weight:bold"><%= invoice.info %></td>
         <td bgcolor="#00cbcd" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00cbcd" style="font-weight:bold"><%= invoice.ddate %></td>
+        <td bgcolor="#00cbcd" style="font-weight:bold"><%= invoice.collection_date %></td>
         <td bgcolor="#00cbcd" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
         <td bgcolor="#00cbcd" style="font-weight:bold"><%=  invoice.vat %></td>
         <td bgcolor="#00cbcd" style="font-weight:bold"><%= invoice.total_amount %></td>
@@ -133,6 +145,9 @@
         <td bgcolor="#00bdbf" style="font-weight:bold"><%= invoice.name %></td>
         <td bgcolor="#00bdbf" style="font-weight:bold"><%= invoice.info %></td>
         <td bgcolor="#00bdbf" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00bdbf" style="font-weight:bold"><%= invoice.ddate %></td>
+        <td bgcolor="#00bdbf" style="font-weight:bold"><%= invoice.collection_date %></td>
+        
         <td bgcolor="#00bdbf" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
         <td bgcolor="#00bdbf" style="font-weight:bold"><%=  invoice.vat %></td>
         <td bgcolor="#00bdbf" style="font-weight:bold"><%= invoice.total_amount %></td>
@@ -141,6 +156,9 @@
         <td bgcolor="#00a7a3" style="font-weight:bold"><%= invoice.name %></td>
         <td bgcolor="#00a7a3" style="font-weight:bold"><%= invoice.info %></td>
         <td bgcolor="#00a7a3" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#00a7a3" style="font-weight:bold"><%= invoice.ddate %></td>
+        <td bgcolor="#00a7a3" style="font-weight:bold"><%= invoice.collection_date %></td>
+        
         <td bgcolor="#00a7a3" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
         <td bgcolor="#00a7a3" style="font-weight:bold"><%=  invoice.vat %></td>
         <td bgcolor="#00a7a3" style="font-weight:bold"><%= invoice.total_amount %></td>
@@ -149,6 +167,9 @@
         <td bgcolor="#008d8c" style="font-weight:bold"><%= invoice.name %></td>
         <td bgcolor="#008d8c" style="font-weight:bold"><%= invoice.info %></td>
         <td bgcolor="#008d8c" style="font-weight:bold"><%= invoice.date %></td>
+        <td bgcolor="#008d8c" style="font-weight:bold"><%= invoice.ddate %></td>
+        <td bgcolor="#008d8c" style="font-weight:bold"><%= invoice.collection_date %></td>
+        
         <td bgcolor="#008d8c" style="font-weight:bold"><%= @clients.find(invoice.client_id).Name %></td>
         <td bgcolor="#008d8c" style="font-weight:bold"><%=  invoice.vat %></td>
         <td bgcolor="#008d8c" style="font-weight:bold"><%= invoice.total_amount %></td>
@@ -157,6 +178,9 @@
         <td><%= invoice.name %></td>
         <td><%= invoice.info %></td>
         <td><%= invoice.date %></td>
+        <td><%= invoice.ddate %></td>
+        <td><%= invoice.collection_date %></td>
+
         <td><%= @clients.find(invoice.client_id).Name %></td>
         <td><%=  invoice.vat %></td>
         <td><%= invoice.total_amount %></td>

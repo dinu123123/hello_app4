@@ -85,10 +85,202 @@ end
     end
   end
 
+
+def import_shell
+    import_shell_file(params[:file], parsed_active(params[:date_format_month_day_year], 1))
+    #redirect_to fuel_expenses_url, notice: "Activity Data Imported!"
+  end 
+
   def import_dkv
     import_dkv_file(params[:file], parsed_active(params[:date_format_month_day_year], 1))
     #redirect_to fuel_expenses_url, notice: "Activity Data Imported!"
   end 
+
+def import_shell_file(file, date_format_month_day_year)
+   
+# TruckExpense.delete_all; FuelExpense.delete_all; DeToll.delete_all; GenericToll.delete_all; DriverExpense.delete_all
+
+## this is used to count the line numbers within the file
+lines_end_to_skip = CSV.read(file.path,  headers: [
+  "Tip trx.","Țara","Cod țară","Cod staţie","Nume staţie","Data",
+  
+  "Ora","Referinţă","Nr. bon","Cod emitent","Cod de ţară client",
+  
+  "Cod emitere","Numar cont","ID Grup de carduri","Nr. Card","Cifra control",
+  
+  "Vehicul","Kilometraj","ID flotă","Cod produs","Cantitate",
+  
+  "Moneda tranzacţiei","Prețul unității în moneda tranzacției (inclusiv TVA)",
+  "Prețul unității în moneda tranzacției (fără TVA)","Valoare bruta (TVA si reducere incluse)",
+  "Rata TVA",
+
+  "Valoare TVA","Tip reducere (unitar sau %)","Rata reducere",
+  "Reducere aplicata sumei nete (in momenda tranzactiei)","Reducere pe litru (fără TVA, in moneda tranzacţiei)",
+  
+  "Valoare reducere (fără TVA, în moneda tranzacţiei)","Valoare netă in moneda tranzacţiei",
+  "Tipul tranzacţiei","Indicator Pin","Cod dialog",
+
+  "TVA aplicabil","Indicator TVA","Indicator factură netă",
+  "Monedă client","Rata schimb euro din ţara tranzacției",
+
+  "Rata schimb Euro (cuTVA, in moneda clientului)","Rată de schimb","Data facturii","Număr factură","Valoare netă in EURO",
+
+  "Reducere pe litru (fără TVA, în EURO)","Reducere efectivă (fără TVA, în EURO)",
+  "Reducere aplicata sumei nete (in moneda clientului)","Valoarea TVA (EURO)","Origine fişier",
+
+  "Stare tranzacţie","Cod reţea","Valoare netă euro","Sumă reducere in Euro","Valoare TVA in Euro",
+  
+  "Reţea","Număr complet card","Nume şofer","Nume plătitor","Nume grup de carduri",
+
+  "Nume produs","Număr plătitor","Aditional1","Aditional2","Aditional3",
+
+  "Aditional4","Identificator tranzactie","Cod autorizare tranzactie","ID grup statie","Nume grup statie",
+
+  "Tip card","Grup de plătitori","Indicator returnare","ID tranzactie returnata","Data postarii",
+
+  "Ora postarii","Numar ID flota","Descriere ID Flota","Tara tranzactiei"],
+     encoding: "ISO-8859-1",  
+                               :col_sep => ",", 
+                               :quote_char => '"', 
+                               :header_converters => lambda { |h| h.try(:gsub,' ', ' ').try(:gsub,'ï»¿', '') }
+                    ).count-1
+
+row_to_skip = 0
+
+CSV.foreach(file.path,  headers:  ["Tip trx.","Țara","Cod țară","Cod staţie","Nume staţie","Data","Ora","Referinţă","Nr. bon","Cod emitent","Cod de ţară client","Cod emitere","Numar cont","ID Grup de carduri","Nr. Card","Cifra control","Vehicul","Kilometraj","ID flotă","Cod produs","Cantitate","Moneda tranzacţiei","Prețul unității în moneda tranzacției (inclusiv TVA)","Prețul unității în moneda tranzacției (fără TVA)","Valoare bruta (TVA si reducere incluse)","Rata TVA","Valoare TVA","Tip reducere (unitar sau %)","Rata reducere","Reducere aplicata sumei nete (in momenda tranzactiei)","Reducere pe litru (fără TVA, in moneda tranzacţiei)","Valoare reducere (fără TVA, în moneda tranzacţiei)","Valoare netă in moneda tranzacţiei","Tipul tranzacţiei","Indicator Pin","Cod dialog","TVA aplicabil","Indicator TVA","Indicator factură netă","Monedă client","Rata schimb euro din ţara tranzacției","Rata schimb Euro (cuTVA, in moneda clientului)","Rată de schimb","Data facturii","Număr factură","Valoare netă in EURO","Reducere pe litru (fără TVA, în EURO)","Reducere efectivă (fără TVA, în EURO)","Reducere aplicata sumei nete (in moneda clientului)","Valoarea TVA (EURO)","Origine fişier","Stare tranzacţie","Cod reţea","Valoare netă euro","Sumă reducere in Euro","Valoare TVA in Euro","Reţea","Număr complet card","Nume şofer","Nume plătitor","Nume grup de carduri","Nume produs","Număr plătitor","Aditional1","Aditional2","Aditional3","Aditional4","Identificator tranzactie","Cod autorizare tranzactie","ID grup statie","Nume grup statie","Tip card","Grup de plătitori","Indicator returnare","ID tranzactie returnata","Data postarii","Ora postarii","Numar ID flota","Descriere ID Flota","Tara tranzactiei"],
+     encoding: "ISO-8859-1",  
+                               :col_sep => ",", 
+                               :quote_char => '"', 
+                               :header_converters => lambda { |h| h.try(:gsub,' ', ' ').try(:gsub,'ï»¿', '') }
+                    ).with_index do |row, index| 
+   next if index == 0 
+
+    @my_date = row["Data"]
+    @my_product = row["Nume produs"].to_s.try(:gsub,' ', ' ')
+    @my_volume = row["Cantitate"].to_s.try(:gsub,',','').to_d
+    @my_country = row["Tara tranzactiei"].to_s.try(:gsub,' ', '')
+    @my_truck = row["Vehicul"].to_s.try(:gsub,' ', '').try(:gsub,'-', '') 
+    @my_cardnr = row["Număr complet card"].to_s.try(:gsub,' ', '')
+    @my_stationid = row["Cod staţie"].to_s.try(:gsub,' ', '')
+    @my_stationname = row["Nume staţie"].to_s
+
+    @my_tip_statie = row["Nume grup statie"].to_s
+
+    if row["Kilometraj"] != nil
+      @my_kminsertion = row["Kilometraj"].to_s.try(:gsub,',','').to_d
+    else
+      @my_kminsertion = 0.to_d
+    end
+
+   if @my_truck == " "
+      @my_truck_id =  23
+      @my_platenr = "Office".to_s
+   else
+      @my_truck_id_ROW = Truck.find_by NB_PLATE:@my_truck.try(:gsub,' ', '')
+      if @my_truck_id_ROW == nil
+        @my_truck_id =  23
+        @my_platenr = "Office".to_s
+      else
+        @my_truck_id = @my_truck_id_ROW.id
+      end
+   end
+
+   @my_row = Hash.new
+ 
+   if date_format_month_day_year == 1
+    # month/day/year
+       @my_trsdatetime = DateTime.new((20.to_s+ @my_date[6..7]).to_i , @my_date[0..1].to_i,  
+                         @my_date[3..4].to_i, 10 , 10, 0.to_i, DateTime.now.zone)
+   else
+    # day/month/year
+     @my_trsdatetime = DateTime.new((20.to_s+ @my_date[6..7]).to_i , @my_date[3..4].to_i,  
+                         @my_date[0..1].to_i, 10 , 10, 0.to_i, DateTime.now.zone)
+   end
+
+   @my_trsdate = @my_trsdatetime.to_time
+
+   @my_eur = row["Valoare netă euro"].try(:gsub,',', '').to_s.to_d 
+
+   if @my_product.match?( /#{"tax"}/i ) == true or @my_product.match?( /#{"toll"}/i ) == true 
+      
+   @my_platenr = @my_truck.to_s.try(:gsub,' ', '').try(:gsub,'-', '')
+   @my_date = @my_trsdatetime.to_date
+   @my_time = "12:00".to_time
+
+   @my_datetime = @my_date.to_s+ "T" + @my_trsdatetime.to_time.to_s
+   @my_row = @my_row.to_a<<(["StartDate",@my_datetime]) 
+   @my_row = @my_row.to_a<<(["EndDate",@my_datetime]) 
+
+   @my_km = @my_kminsertion.to_s.to_i
+   @my_row = @my_row.to_a<<(["Km",@my_km]) 
+   @my_net_costs = @my_eur 
+   @my_row = @my_row.to_a<<(["EUR",@my_net_costs]) 
+
+   @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
+   @my_row = @my_row.to_a<<(["country",@my_country]) 
+   @my_row = @my_row.to_a<<(["manual",false]) 
+   GenericToll.find_or_create_by @my_row.to_h
+
+elsif @my_product.match?( /#{"diesel"}/i ) == true or @my_product.match?( /#{"blue"}/i ) == true 
+
+      @my_row = Hash.new
+      @my_row = @my_row.to_a<<(["trstime",@my_trsdatetime.to_time])
+      @my_row = @my_row.to_a<<(["trsdate",@my_trsdatetime.to_date])
+      @my_row = @my_row.to_a<<(["product",@my_product])
+      @my_row = @my_row.to_a<<(["volume",@my_volume])
+      @my_row = @my_row.to_a<<(["kminsertion",@my_kminsertion])
+      @my_row = @my_row.to_a<<(["platenr",@my_truck])
+      @my_row = @my_row.to_a<<(["cardnr",@my_cardnr])
+      @my_row = @my_row.to_a<<(["stationid",@my_stationid])
+      @my_row = @my_row.to_a<<(["stationname",@my_stationname])
+      @my_row = @my_row.to_a<<(["eurgrossunitprice",@my_eurgrossunitprice])
+      @my_row = @my_row.to_a<<(["eurgrossamount",@my_eurgrossamount])
+      @my_row = @my_row.to_a<<(["country",@my_country])
+      @my_row = @my_row.to_a<<(["truck_id",@my_truck_id])
+
+      #default
+      @my_eurnetamount = @my_eur
+      @my_EuroNetAmountInclVATFreeCharges = @my_eur
+    
+      @my_row = @my_row.to_a<<(["eurnetamount",@my_eurnetamount.to_d.round(2)])
+      @my_row = @my_row.to_a<<(["EuroNetAmountInclVATFreeCharges",@my_EuroNetAmountInclVATFreeCharges.round(2)])
+      
+      @my_row_datetime =@my_trsdate.to_s + "T" + @my_trstime.to_s
+
+            if @my_truck != nil 
+              if @my_eur > 0.to_d
+                 #do not register transactions with zero value 
+                 @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
+                 @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
+                 FuelExpense.find_or_create_by @my_row.to_h
+               end
+            else
+              #hope one day we will have 1001 trucks
+              #but then that wont be a problem 
+              @my_row = @my_row.to_a<<(["truck_id",23.to_i]) 
+              #@my_row_datetime = row.to_a[1][1].try(:gsub!,'/', '-')+ "T" + row.to_a[0][1]
+              @my_row = @my_row.to_a<<(["datetime",@my_row_datetime]) 
+              FuelExpense.find_or_create_by @my_row.to_h
+            end 
+else 
+  
+   @my_platenr = @my_truck.to_s.try(:gsub,' ', '').try(:gsub,'-', '')
+   @my_date = @my_trsdatetime
+   @my_row = @my_row.to_a<<(["DATE",@my_date]) 
+   @my_row = @my_row.to_a<<(["AMOUNT",@my_eur]) 
+   @my_row = @my_row.to_a<<(["truck_id",@my_truck_id]) 
+   @my_row = @my_row.to_a<<(["DESCRIPTION", (row["Product"].to_s.try(:gsub,' ', ' ')+ row["Product group"].to_s.try(:gsub,' ', ' ')+ @my_country) ])
+   @my_row = @my_row.to_a<<(["manual",false]) 
+   TruckExpense.find_or_create_by @my_row.to_h
+
+  end
+
+end
+
+end
+
+
+
 
 def import_dkv_file(file, date_format_month_day_year)
    
@@ -351,16 +543,6 @@ else
   end
 
 end
-
-##end
-
-
-
-
-
-
-
-
 
 end
 

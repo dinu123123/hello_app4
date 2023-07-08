@@ -52,7 +52,19 @@
   <%= form.label :name, 'You can introduce multiple pdf/jpg files at once.' %>
   <%= form.file_field :images, multiple: true %>
 </div>
-<br></br>
+
+<p>
+
+<% if current_user != nil and (current_user.admin == true or current_user.email.eql?  "ameropa.logistics@gmail.com") %> 
+ <div class="field">
+    <%= form.label :inv, 'Investment'  %>
+    <%= form.check_box :inv, id: :inv%>
+ </div>
+ <% end %> 
+ <div class="field">
+    <%= form.label :frt, 'Mark if payment for fuel or road tax Shell/DKV/IDS/AS24/etc'  %>
+    <%= form.check_box :frt, id: :frt%>
+ </div>
 
   <div class="actions">
     <%= form.submit %>

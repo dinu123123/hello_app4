@@ -21,8 +21,6 @@ end
   # GET /drivers.json
   def index
 
-
-
  @search = TransactionSearch.new(params[:search])
 
  if @search.truck_id == 0
@@ -130,6 +128,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def truck_expense_params
-      params.require(:truck_expense).permit(:truck_id, :DATE, :AMOUNT, :INFO, :DESCRIPTION, :manual, images: [])
+      params.require(:truck_expense).permit(:truck_id, :DATE, :AMOUNT, :INFO, :DESCRIPTION, :manual, :inv, :frt, images: [])
     end
 end

@@ -2,7 +2,6 @@
   <% if invoice.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
-
       <ul>
       <% invoice.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -11,18 +10,7 @@
     </div>
   <% end %>
 
-  <p><h2> Facturile GLS, JCL sHeerenberg si LTC se trec cu  data = data_factura_precedenta + 7zile !!!
-  </h2> </p>
-
-
-
-
-  <div class="field">
-    <%= form.label :paid, 'Mark if PAID'  %>
-    <%= form.check_box :paid, id: :paid%>
-  </div>
-  
-
+<fieldset>
   <div class="field">
     <%= form.label :"Invoice ID" %>
     <%= form.text_field :name, id: :invoice_name %>
@@ -31,11 +19,6 @@
   <div class="field">
     <%= form.label :"Info (for example: 12gb/304503 or Week34)" %>
     <%= form.text_field :info, id: :invoice_info %>
-  </div>
-
-  <div class="field">
-    <%= form.label :date %>
-    <%= form.date_select :date, id: :invoice_date %>
   </div>
 
 <% if false %>
@@ -58,6 +41,15 @@
     <%= form.label :"total_amount" %>
     <%= form.text_field :total_amount, id: :total_amount, :required => 'required' %>
   </div>
+</fieldset>
+
+
+<fieldset>
+ <div class="field">
+    <%= form.label :"Issue Date - DATA EMITERII" %> 
+    <%= form.date_select :date, id: :invoice_date %>
+  </div>
+
 
  <% if invoice.ddate == nil or  invoice.ddate == Date.new(2000,1,1) %>
    <div class="field">
@@ -66,10 +58,25 @@
    </div>
  <% else %>
    <div class="field">
-    <%= form.label :"Due Date" %> 
+    <%= form.label :"Due Date - DATA SCADENTEI" %> 
     <%= form.date_select :ddate, id: :invoice_ddate, start_year: Time.now.year+1, end_year: Time.now.year-50 %>
    </div>
   <% end %>
+</fieldset>
+
+
+<fieldset>
+ <div class="field">
+    <%= form.label :paid, 'Mark if PAID'  %>
+    <%= form.check_box :paid, id: :paid%>
+  </div>
+ 
+  <div class="field">
+    <%= form.label :"Collection Date - DATA INCASARII" %> 
+    <%= form.date_select :collection_date, id: :invoice_collection_date,  start_year: Time.now.year-1, end_year: Time.now.year+1 %>
+   </div>
+</fieldset>
+<p><br>
 
   <div class="actions">
     <%= form.submit %>

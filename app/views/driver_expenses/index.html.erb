@@ -84,6 +84,7 @@ tr:nth-child(even) {
       <th>Driver Second Name</th>
       <th>Truck Number Plate</th>
       <th>Date</th>
+      <th>Due Date</th>
       <th>Amount</th>
       <th>Info</th>
       <th>Description</th>
@@ -115,6 +116,7 @@ tr:nth-child(even) {
            <% end%>   
         </td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.DATE %></td>
+        <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.due_date %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.AMOUNT %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.INFO %></td>
         <td bgcolor="#b6f666" style="font-weight:bold"><%= driver_expense.DESCRIPTION %></td>
@@ -131,6 +133,7 @@ tr:nth-child(even) {
            <% end%>   
         </td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.DATE %></td>
+        <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.due_date %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.AMOUNT %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.INFO %></td>
         <td bgcolor="#8bf0f8" style="font-weight:bold"><%= driver_expense.DESCRIPTION %></td>
@@ -148,6 +151,7 @@ tr:nth-child(even) {
            <% end%>   
         </td>
         <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.DATE %></td>
+        <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.due_date %></td>
         <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.AMOUNT %></td>
         <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.INFO %></td>
         <td bgcolor="#008080" style="font-weight:bold"><%= driver_expense.DESCRIPTION %></td>
@@ -165,6 +169,7 @@ tr:nth-child(even) {
            <% end%>   
         </td>
         <td><%= driver_expense.DATE %></td>
+        <td><%= driver_expense.due_date %></td>
         <td><%= driver_expense.AMOUNT %></td>
         <td><%= driver_expense.INFO %></td>
         <td><%= driver_expense.DESCRIPTION %></td>

@@ -678,6 +678,334 @@ return @arrayWeeklyTruckExpense
 end
 
 
+###################################################################################
+###################################################################################
+###################################################################################
+######################################FINANCE######################################
+###################################################################################
+###################################################################################
+###################################################################################
+
+def finance
+
+ @search1 = PeriodicTransactionSearch.new(params[:search1])
+
+
+ @nb_weeks = num_weeks
+ @period_start = @search1.date_from.to_date.cweek.to_i
+
+ if  @search1.date_to.to_date.year ==  @search1.date_from.to_date.year
+    @period_end = @search1.date_to.to_date.cweek.to_i
+ elsif @search1.date_to.to_date.year >  @search1.date_from.to_date.year
+    @period_end = @search1.date_to.to_date.cweek.to_i+52-@search1.date_from.to_date.cweek.to_i+1
+ end
+
+ if @search1.time == 2
+    @period_start = @search1.date_from.to_date.month.to_i
+   if @search1.date_to.to_date.year ==  @search1.date_from.to_date.year
+      @period_end = @search1.date_to.to_date.month.to_i
+   elsif @search1.date_to.to_date.year >  @search1.date_from.to_date.year
+      @period_end = @search1.date_to.to_date.month.to_i+12- @search1.date_from.to_date.month.to_i+1
+   end
+ end
+
+ if (@period_end- @period_start)<0
+      @period_start = 1
+ end
+
+   @arrayWeeklyTruckExpense = nil
+
+ if @search1.type == 8
+        @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(8+2,0)}
+        for week in @period_start..@period_end do
+            @arrayWeeklyTruckExpense[week-@period_start+1][0] = 
+            (Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1) +(week-1)*7).cweek
+        end
+
+       if  @search1.time == 1
+          @arrayWeeklyTruckExpense[0][0] = "Week".to_s
+       else
+          @arrayWeeklyTruckExpense[0][0] = "Month".to_s
+       end
+ end
+
+
+## setup the first column in the array with the names of the dispatchers
+
+
+@arrayWeeklyTruckExpense[0][1] = "Facturi Emise".to_s
+@arrayWeeklyTruckExpense[0][2] = "Costuri".to_s
+@arrayWeeklyTruckExpense[0][3] = "Profit brut".to_s
+@arrayWeeklyTruckExpense[0][4] = "Investitii".to_s
+               
+
+@arrayWeeklyTruckExpense[0][5] = "Incasari Planificate".to_s
+@arrayWeeklyTruckExpense[0][6] = "Incasari Efectuate".to_s
+@arrayWeeklyTruckExpense[0][7] = "Plati".to_s
+@arrayWeeklyTruckExpense[0][8] = "CashFlow".to_s
+           
+
+
+            
+ for week in @period_start..@period_end do
+               @week_total = 0
+               week1 = week%52
+               if week1 == 0
+                  week1 = 52
+               end 
+
+               year = 0
+               if week<53
+                  year = @search1.date_from.to_date.strftime("%Y").to_i
+               else
+                  year =  @search1.date_from.to_date.strftime("%Y").to_i+1
+               end
+
+               @date_start =  Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1)
+               ##Last repair
+               if @search1.time == 1
+                  @date_from1 =  @date_start+(week-1)*7
+                  @date_to1 =  @date_from1+6
+               end
+
+               if @search1.time == 2
+                 @date_from1 =  Date.new(year, week1, 1)
+                 @date_to1 =  @date_from1.to_date.end_of_month
+               end  
+
+               value_invoiced = nil
+               payed_invoices = nil
+               expected_paid_invoices = nil
+               tr_expenses_profit = nil
+               tr_expenses_cash_flow = nil
+               investments = nil
+               ## find all the trips that started in that week
+               if @search1.client_id == 0 
+
+                 value_invoiced = InvoicedTrip.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoiced_trips where 
+                 invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <= ?', @date_from1-1, @date_to1])[0].sum1
+
+                 payed_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
+                  invoices."collection_date" > ? AND invoices."collection_date" <= ?', @date_from1-1, @date_to1])[0].sum1
+
+                 expected_paid_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
+                  invoices."ddate" > ? AND invoices."ddate" <= ?', @date_from1-1, @date_to1])[0].sum1
+
+                 tr_expenses_profit = TruckExpense.find_by_sql(['SELECT SUM("AMOUNT") AS sum1 FROM truck_expenses where  
+                  truck_expenses."DATE" > ? AND truck_expenses."DATE" <= ? AND  truck_expenses."inv" = ? AND truck_expenses."frt" = ?', 
+                  @date_from1-1, @date_to1, false, false])[0].sum1
+
+
+                 fuel_expenses_profit = FuelExpense.find_by_sql(['SELECT SUM("eurnetamount") AS sum1 FROM fuel_expenses where  
+                  fuel_expenses."trsdate" > ? AND fuel_expenses."trsdate" <= ?', @date_from1-1, @date_to1])[0].sum1
+
+                 generic_toll_profit = GenericToll.find_by_sql(['SELECT SUM("EUR") AS sum1 FROM generic_tolls where  
+                  generic_tolls."StartDate" > ? AND generic_tolls."StartDate" <= ? and generic_tolls."manual" = ?', 
+                  @date_from1-1, @date_to1, false])[0].sum1
+
+
+                 de_toll_profit = DeToll.find_by_sql(['SELECT SUM("eur") AS sum1 FROM de_tolls where  
+                  de_tolls."Date" > ? AND de_tolls."Date" <= ? and de_tolls."manual" = ?', 
+                  @date_from1-1, @date_to1, false])[0].sum1
+
+                 be_toll_profit = BeToll.find_by_sql(['SELECT SUM("charged_amount_excluding_vat") AS sum1 FROM be_tolls where  
+                  be_tolls."date_of_usage" > ? AND be_tolls."date_of_usage" <= ? and be_tolls."manual" = ?', 
+                  @date_from1-1, @date_to1, false])[0].sum1
+
+                  tr_expenses_cash_flow = TruckExpense.find_by_sql(['SELECT SUM("AMOUNT") AS sum1 FROM truck_expenses where  
+                  truck_expenses."DATE" > ? AND truck_expenses."DATE" <= ? AND  truck_expenses."inv" = ? AND truck_expenses."manual" = ?', 
+                  @date_from1-1, @date_to1, false, true])[0].sum1
+
+
+                 investments = TruckExpense.find_by_sql(['SELECT SUM("AMOUNT") AS sum1 FROM truck_expenses where  
+                  truck_expenses."DATE" > ? AND truck_expenses."DATE" <= ? AND truck_expenses."inv" = ?', 
+                  @date_from1-1, @date_to1, true])[0].sum1
+
+                 dr_expenses = DriverExpense.find_by_sql(['SELECT SUM("AMOUNT") AS sum1 FROM driver_expenses where  
+                  driver_expenses."DATE" > ? AND driver_expenses."DATE" <= ?', @date_from1-1, @date_to1])[0].sum1
+
+                 dr_expenses_due = DriverExpense.find_by_sql(['SELECT SUM("AMOUNT") AS sum1 FROM driver_expenses where  
+                  driver_expenses."due_date" > ? AND driver_expenses."due_date" <= ?', @date_from1-1, @date_to1])[0].sum1
+
+               else
+
+                 value_invoiced = InvoicedTrip.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoiced_trips where 
+                 invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <= ? AND invoiced_trips."client_id" = ?', 
+                 @date_from1-1, @date_to1, @search1.client_id])[0].sum1
+               
+
+                 payed_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
+                  invoices."collection_date" > ? AND invoices."collection_date" <= ?  AND invoices."client_id" = ?', 
+                  @date_from1-1, @date_to1, @search1.client_id])[0].sum1
+
+                 expected_paid_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
+                  invoices."ddate" > ? AND invoices."ddate" <= ?  AND invoices."client_id" = ?', 
+                  @date_from1-1, @date_to1, @search1.client_id])[0].sum1
+
+
+
+                 truck_expenses_profit = TruckExpense.find_by_sql(['SELECT * FROM truck_expenses where  
+                  truck_expenses."DATE" > ? AND truck_expenses."DATE" <= ? AND  truck_expenses."inv" = ? AND truck_expenses."frt" = ?', 
+                  @date_from1-1, @date_to1, false, false])
+
+                 #filter out the expenses for trucks that worked for other clients
+                 truck_expenses_profit.each_with_index do |item,i|
+                     # find the closest event of that truck 
+                     # if is start and if of the same client then accumulate the amount
+                     @activity = Event.find_by_sql(['SELECT * FROM events where events."truck_id" = ?
+                     and events."DATE" <= ? ORDER BY events."DATE" DESC', item.truck_id, to_datetime(@date_to1)])
+                 
+                     if (@activity != nil and @activity.size > 0 and @activity[0].client_id == @search1.client_id and 
+                       @activity[0].START_END == true)
+                        if tr_expenses_profit != nil
+                           tr_expenses_profit += item.AMOUNT
+                        else
+                           tr_expenses_profit = item.AMOUNT
+                        end
+                     end      
+                  end
+
+                  generic_toll_profit_all = GenericToll.find_by_sql(['SELECT * FROM generic_tolls where  
+                  generic_tolls."StartDate" > ? AND generic_tolls."StartDate" <= ? and generic_tolls."manual" = ? ', @date_from1-1, @date_to1, false])
+
+                  generic_toll_profit_all.each_with_index do |item,i|
+                     # find the closest event of that truck 
+                     # if is start and if of the same client then accumulate the amount
+                     @activity = Event.find_by_sql(['SELECT * FROM events where events."truck_id" = ?
+                     and events."DATE" <= ? ORDER BY events."DATE" DESC', item.truck_id, to_datetime(@date_to1)])
+                 
+                     if (@activity != nil and @activity.size > 0 and @activity[0].client_id == @search1.client_id and 
+                       @activity[0].START_END == true)
+                        if tr_expenses_profit != nil
+                           tr_expenses_profit += item.eurnetamount
+                        else
+                           tr_expenses_profit = item.eurnetamount
+                        end
+                     end      
+                  end
+
+                  be_toll_profit_all = BeToll.find_by_sql(['SELECT * FROM be_tolls where  
+                  be_tolls."date_of_usage" > ? AND be_tolls."date_of_usage" <= ? and be_tolls."manual" = ?', 
+                  @date_from1-1, @date_to1, false])
+
+                  be_toll_profit_all.each_with_index do |item,i|
+                     # find the closest event of that truck 
+                     # if is start and if of the same client then accumulate the amount
+                     @activity = Event.find_by_sql(['SELECT * FROM events where events."truck_id" = ?
+                     and events."DATE" <= ? ORDER BY events."DATE" DESC', item.truck_id, to_datetime(@date_to1)])
+                 
+                     if (@activity != nil and @activity.size > 0 and @activity[0].client_id == @search1.client_id and 
+                       @activity[0].START_END == true)
+                        if tr_expenses_profit != nil
+                           tr_expenses_profit += item.charged_amount_excluding_vat
+                        else
+                           tr_expenses_profit = item.charged_amount_excluding_vat
+                        end
+                     end      
+                  end
+
+                  de_toll_profit_all = DeToll.find_by_sql(['SELECT * FROM de_tolls where  
+                  de_tolls."Date" > ? AND de_tolls."Date" <= ? and de_tolls."manual" = ?', 
+                  @date_from1-1, @date_to1, false])
+
+                  de_toll_profit_all.each_with_index do |item,i|
+                     # find the closest event of that truck 
+                     # if is start and if of the same client then accumulate the amount
+                     @activity = Event.find_by_sql(['SELECT * FROM events where events."truck_id" = ?
+                     and events."DATE" <= ? ORDER BY events."DATE" DESC', item.truck_id, to_datetime(@date_to1)])
+                 
+                     if (@activity != nil and @activity.size > 0 and @activity[0].client_id == @search1.client_id and 
+                       @activity[0].START_END == true)
+                        if tr_expenses_profit != nil
+                           tr_expenses_profit += item.eur
+                        else
+                           tr_expenses_profit = item.eur
+                        end
+                     end      
+                  end
+
+                 be_toll_profit_all = BeToll.find_by_sql(['SELECT * FROM be_tolls where  
+                  be_tolls."date_of_usage" > ? AND be_tolls."date_of_usage" <= ? and be_tolls."manual" = ?', 
+                  @date_from1-1, @date_to1, false])
+
+                 be_toll_profit_all.each_with_index do |item,i|
+                     # find the closest event of that truck 
+                     # if is start and if of the same client then accumulate the amount
+                     @activity = Event.find_by_sql(['SELECT * FROM events where events."truck_id" = ?
+                     and events."DATE" <= ? ORDER BY events."DATE" DESC', item.truck_id, to_datetime(@date_to1)])
+                 
+                     if (@activity != nil and @activity.size > 0 and @activity[0].client_id == @search1.client_id and 
+                       @activity[0].START_END == true)
+                        if tr_expenses_profit != nil
+                           tr_expenses_profit += item.eur
+                        else
+                           tr_expenses_profit = item.eur
+                        end
+                     end      
+                  end
+
+                  fuel_expenses_profit_all = FuelExpense.find_by_sql(['SELECT * FROM fuel_expenses where  
+                  fuel_expenses."trsdate" > ? AND fuel_expenses."trsdate" <= ?', @date_from1-1, @date_to1])
+
+                  fuel_expenses_profit_all.each_with_index do |item,i|
+                     # find the closest event of that truck 
+                     # if is start and if of the same client then accumulate the amount
+                     @activity = Event.find_by_sql(['SELECT * FROM events where events."truck_id" = ?
+                     and events."DATE" <= ? ORDER BY events."DATE" DESC', item.truck_id, to_datetime(@date_to1)])
+                 
+                     if (@activity != nil and @activity.size > 0 and @activity[0].client_id == @search1.client_id and 
+                       @activity[0].START_END == true)
+                        if tr_expenses_profit != nil
+                           tr_expenses_profit += item.eurnetamount
+                        else
+                           tr_expenses_profit = item.eurnetamount
+                        end
+                     end      
+                  end
+
+
+
+                 driver_expenses_due = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where     
+                    driver_expenses."due_date" > ? AND driver_expenses."due_date" <= ?', @date_from1-1, @date_to1])
+
+                 #filter out the expenses for trucks that worked for other clients
+                 driver_expenses_due.each_with_index do |item,i|
+                     # find the closest event of that truck 
+                     # if is start and if of the same client then accumulate the amount
+                     @activity = Event.find_by_sql(['SELECT * FROM events where events."driver_id" = ?
+                     and events."DATE" <= ? ORDER BY events."DATE" DESC', item.driver_id, to_datetime(@date_to1)])
+                 
+                     if (@activity != nil and @activity.size > 0 and @activity[0].client_id == @search1.client_id and 
+                       @activity[0].START_END == true)
+                        if dr_expenses_due != nil
+                           dr_expenses_due += item.AMOUNT
+                        else
+                           dr_expenses_due = item.AMOUNT
+                        end
+                     end      
+                  end
+                
+               investments = "none".to_s
+                 
+               end
+  
+   @arrayWeeklyTruckExpense[week-@period_start+1][1] = value_invoiced.to_f.to_d.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][2] = (tr_expenses_profit.to_f.to_d + dr_expenses_due.to_f.to_d + fuel_expenses_profit.to_f.to_d + generic_toll_profit.to_f.to_d + de_toll_profit.to_f.to_d + be_toll_profit.to_f.to_d).to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][3] = (@arrayWeeklyTruckExpense[week-@period_start+1][1].to_d - @arrayWeeklyTruckExpense[week-@period_start+1][2].to_d).to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][4] = investments.to_f.to_d.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][5] = payed_invoices.to_f.to_d.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][6] = expected_paid_invoices.to_f.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][7] = (tr_expenses_cash_flow.to_f.to_d + dr_expenses.to_f.to_d).to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][8] = (@arrayWeeklyTruckExpense[week-@period_start+1][6].to_d - @arrayWeeklyTruckExpense[week-@period_start+1][7].to_d).to_s
+
+end ## period
+
+
+ 
+return @arrayWeeklyTruckExpense
+end
+
+
 #############################################################
 def weekly
  @search1 = PeriodicTransactionSearch.new(params[:search1])
@@ -686,6 +1014,9 @@ if false #!(current_user.email.eql?  "ameropa.logistics@gmail.com")
         # redirect_to root_path
 elsif @search1.type == 5
    return dispatchers 
+
+elsif @search1.type == 8
+   return finance
 
 else
         

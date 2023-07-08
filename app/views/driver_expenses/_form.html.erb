@@ -25,9 +25,16 @@
 <%= form.collection_select :truck_id, Truck.all, :id, :NB_PLATE, {prompt: "Number plate"}, :required => 'required' %>
 
   <div class="field">
-    <%= form.label :DATE %>
+    <%= form.label :"Date - data transferului bancar" %> 
     <%= form.date_select :DATE, id: :driver_expense_DATE, :required => 'required' %>
   </div>
+
+
+  <div class="field">
+    <%= form.label :"Due Date - data corespunzatoare platii efectuate" %> 
+    <%= form.date_select :due_date, id: :driver_expense_due_date,  start_year: Time.now.year-1, end_year: Time.now.year+1 %>
+   </div> 
+
 
   <div class="field">
     <%= form.label :AMOUNT %>
@@ -36,12 +43,12 @@
 
 <div class="field">
     <%= form.label :INFO %>
-    <%= form.select :INFO, options_for_select(['Salary','Fine','Parking','Bridge','Tunnel','Ferryboat']), { prompt: "Expense Type"}, :required => 'required' %>
+    <%= form.select :INFO, options_for_select(['Salary','Fine','Parking','Bridge','Tunnel','Ferryboat','Other']), { prompt: "Expense Type"}, :required => 'required' %>
   </div>
 
   <div class="field">
     <%= form.label :DESCRIPTION, 'Describe the expense (country, invoice/ticket ID, etc.):' %>
-    <%= form.text_area :DESCRIPTION, id: :driver_expense_DESCRIPTION, :required => 'required' %>
+    <%= form.text_area :DESCRIPTION, id: :driver_expense_DESCRIPTION %>
   </div>
 <p></p>
   <div class="form_group">
