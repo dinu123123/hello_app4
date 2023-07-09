@@ -786,7 +786,8 @@ def finance
                  invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <= ?', @date_from1-1, @date_to1])[0].sum1
 
                  payed_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
-                  invoices."collection_date" > ? AND invoices."collection_date" <= ?', @date_from1-1, @date_to1])[0].sum1
+                  (invoices."collection_date" > ? AND invoices."collection_date" <= ?) OR 
+                  (invoices."collection_date" IS NULL AND invoices."updated_at" > ? AND invoices."updated_at" <= ? )', @date_from1-1, @date_to1, @date_from1-1, @date_to1])[0].sum1
 
                  expected_paid_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
                   invoices."ddate" > ? AND invoices."ddate" <= ?', @date_from1-1, @date_to1])[0].sum1
@@ -816,7 +817,6 @@ def finance
                   truck_expenses."DATE" > ? AND truck_expenses."DATE" <= ? AND  truck_expenses."inv" = ? AND truck_expenses."manual" = ?', 
                   @date_from1-1, @date_to1, false, true])[0].sum1
 
-
                  investments = TruckExpense.find_by_sql(['SELECT SUM("AMOUNT") AS sum1 FROM truck_expenses where  
                   truck_expenses."DATE" > ? AND truck_expenses."DATE" <= ? AND truck_expenses."inv" = ?', 
                   @date_from1-1, @date_to1, true])[0].sum1
@@ -833,16 +833,15 @@ def finance
                  invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <= ? AND invoiced_trips."client_id" = ?', 
                  @date_from1-1, @date_to1, @search1.client_id])[0].sum1
                
-
                  payed_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
-                  invoices."collection_date" > ? AND invoices."collection_date" <= ?  AND invoices."client_id" = ?', 
-                  @date_from1-1, @date_to1, @search1.client_id])[0].sum1
+                  ((invoices."collection_date" > ? AND invoices."collection_date" <= ?) OR 
+                  (invoices."collection_date" IS NULL AND invoices."updated_at" > ? AND invoices."updated_at" <= ?))
+                   AND invoices."client_id" = ?', 
+                  @date_from1-1, @date_to1, @date_from1-1, @date_to1, @search1.client_id])[0].sum1
 
                  expected_paid_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
                   invoices."ddate" > ? AND invoices."ddate" <= ?  AND invoices."client_id" = ?', 
                   @date_from1-1, @date_to1, @search1.client_id])[0].sum1
-
-
 
                  truck_expenses_profit = TruckExpense.find_by_sql(['SELECT * FROM truck_expenses where  
                   truck_expenses."DATE" > ? AND truck_expenses."DATE" <= ? AND  truck_expenses."inv" = ? AND truck_expenses."frt" = ?', 
@@ -996,7 +995,7 @@ def finance
    @arrayWeeklyTruckExpense[week-@period_start+1][5] = payed_invoices.to_f.to_d.to_i.to_s
    @arrayWeeklyTruckExpense[week-@period_start+1][6] = expected_paid_invoices.to_f.to_i.to_s
    @arrayWeeklyTruckExpense[week-@period_start+1][7] = (tr_expenses_cash_flow.to_f.to_d + dr_expenses.to_f.to_d).to_i.to_s
-   @arrayWeeklyTruckExpense[week-@period_start+1][8] = (@arrayWeeklyTruckExpense[week-@period_start+1][6].to_d - @arrayWeeklyTruckExpense[week-@period_start+1][7].to_d.to_i).to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][8] = (@arrayWeeklyTruckExpense[week-@period_start+1][6].to_d - @arrayWeeklyTruckExpense[week-@period_start+1][7].to_d).to_i.to_s
 
 end ## period
 
