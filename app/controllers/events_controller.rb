@@ -733,7 +733,7 @@ def finance
 ## setup the first column in the array with the names of the dispatchers
 
 
-@arrayWeeklyTruckExpense[0][1] = "Facturi Emise".to_s
+@arrayWeeklyTruckExpense[0][1] = "Rute Facturate".to_s
 @arrayWeeklyTruckExpense[0][2] = "Costuri".to_s
 @arrayWeeklyTruckExpense[0][3] = "Profit brut".to_s
 @arrayWeeklyTruckExpense[0][4] = "Investitii".to_s
@@ -1456,7 +1456,7 @@ return
    @totalInvoicedTrips = 0
    1.upto( @invoices.count) do |k|
      @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoices[k-1].total_amount.to_d 
-     @pInvoices[week-@period_start+1][j+1][k-1]=@invoices[k-1]
+     @pInvoices[week-@period_start+1][j+1][k-1]=@invoices[k-1].to_s
 
    end
  end  
