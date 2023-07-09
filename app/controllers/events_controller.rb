@@ -1444,13 +1444,16 @@ return
     end
 
   elsif @search1.type == 3 
+
    @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
     invoices.date >= ? AND invoices.date <= ?', client.id, 
     @date_from1, @date_to1])
+
  end
 
 
  if  @invoices != nil
+   @totalInvoicedTrips = 0
    1.upto( @invoices.count) do |k|
      @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoices[k-1].total_amount.to_d 
      @pInvoices[week-@period_start+1][j+1][k-1]=@invoices[k-1]
