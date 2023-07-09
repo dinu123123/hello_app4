@@ -729,26 +729,17 @@ def finance
        end
  end
 
- @arrayWeeklyTruckExpense[0][0] = "Week".to_s
-
-
-## setup the first column in the array with the names of the dispatchers
-
-
 @arrayWeeklyTruckExpense[0][1] = "Rute Facturate".to_s
 @arrayWeeklyTruckExpense[0][2] = "Costuri".to_s
 @arrayWeeklyTruckExpense[0][3] = "Profit brut".to_s
 @arrayWeeklyTruckExpense[0][4] = "Investitii".to_s
                
-
 @arrayWeeklyTruckExpense[0][5] = "Incasari Planificate".to_s
 @arrayWeeklyTruckExpense[0][6] = "Incasari Efectuate".to_s
 @arrayWeeklyTruckExpense[0][7] = "Plati Efectuate".to_s
 @arrayWeeklyTruckExpense[0][8] = "CashFlow".to_s
            
 
-
-            
  for week in @period_start..@period_end do
                @week_total = 0
                week1 = week%52
@@ -1010,14 +1001,6 @@ def finance
    @arrayWeeklyTruckExpense[@period_end-@period_start+2][8] += @arrayWeeklyTruckExpense[week-@period_start+1][8].to_i
 
 end ## period
-
-
-
-# @arrayWeeklyTruckExpense[@period_end-@period_start+2][j+1] += @totalInvoicedTrips
-
-# @arrayWeeklyTruckExpense[week-@period_start+1][Client.all.size+1]+=@totalInvoicedTrips
-
-
  
 return @arrayWeeklyTruckExpense
 end
