@@ -741,7 +741,7 @@ def finance
 
 @arrayWeeklyTruckExpense[0][5] = "Incasari Planificate".to_s
 @arrayWeeklyTruckExpense[0][6] = "Incasari Efectuate".to_s
-@arrayWeeklyTruckExpense[0][7] = "Plati".to_s
+@arrayWeeklyTruckExpense[0][7] = "Plati Efectuate".to_s
 @arrayWeeklyTruckExpense[0][8] = "CashFlow".to_s
            
 
@@ -876,9 +876,9 @@ def finance
                      if (@activity != nil and @activity.size > 0 and @activity[0].client_id == @search1.client_id and 
                        @activity[0].START_END == true)
                         if tr_expenses_profit != nil
-                           tr_expenses_profit += item.eurnetamount
+                           tr_expenses_profit += item.EUR
                         else
-                           tr_expenses_profit = item.eurnetamount
+                           tr_expenses_profit = item.EUR
                         end
                      end      
                   end
