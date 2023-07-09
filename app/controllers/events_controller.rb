@@ -989,14 +989,14 @@ def finance
                  
                end
   
-   @arrayWeeklyTruckExpense[week-@period_start+1][1] = value_invoiced.to_f.to_d.round(0).to_s
-   @arrayWeeklyTruckExpense[week-@period_start+1][2] = (tr_expenses_profit.to_f.to_d + dr_expenses_due.to_f.to_d + fuel_expenses_profit.to_f.to_d + generic_toll_profit.to_f.to_d + de_toll_profit.to_f.to_d + be_toll_profit.to_f.to_d).round(0).to_s
-   @arrayWeeklyTruckExpense[week-@period_start+1][3] = (@arrayWeeklyTruckExpense[week-@period_start+1][1].to_d - @arrayWeeklyTruckExpense[week-@period_start+1][2].to_d).round(0).to_s
-   @arrayWeeklyTruckExpense[week-@period_start+1][4] = investments.to_f.to_d.round(0).to_s
-   @arrayWeeklyTruckExpense[week-@period_start+1][5] = payed_invoices.to_f.to_d.round(0).to_s
-   @arrayWeeklyTruckExpense[week-@period_start+1][6] = expected_paid_invoices.to_f.round(0).to_s
-   @arrayWeeklyTruckExpense[week-@period_start+1][7] = (tr_expenses_cash_flow.to_f.to_d + dr_expenses.to_f.to_d).round(0).to_s
-   @arrayWeeklyTruckExpense[week-@period_start+1][8] = (@arrayWeeklyTruckExpense[week-@period_start+1][6].to_d - @arrayWeeklyTruckExpense[week-@period_start+1][7].to_d.round(0)).to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][1] = value_invoiced.to_f.to_d.to_i.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][2] = (tr_expenses_profit.to_f.to_d + dr_expenses_due.to_f.to_d + fuel_expenses_profit.to_f.to_d + generic_toll_profit.to_f.to_d + de_toll_profit.to_f.to_d + be_toll_profit.to_f.to_d).to_i.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][3] = (@arrayWeeklyTruckExpense[week-@period_start+1][1].to_d - @arrayWeeklyTruckExpense[week-@period_start+1][2].to_d).to_i.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][4] = investments.to_f.to_d.to_i.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][5] = payed_invoices.to_f.to_d.to_i.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][6] = expected_paid_invoices.to_f.to_i.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][7] = (tr_expenses_cash_flow.to_f.to_d + dr_expenses.to_f.to_d).to_i.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][8] = (@arrayWeeklyTruckExpense[week-@period_start+1][6].to_d - @arrayWeeklyTruckExpense[week-@period_start+1][7].to_d.to_i).to_s
 
 end ## period
 
