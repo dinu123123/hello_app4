@@ -716,7 +716,7 @@ def finance
    @arrayWeeklyTruckExpense = nil
 
  if @search1.type == 8
-        @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(8+2,0)}
+        @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(8+1,0)}
         for week in @period_start..@period_end do
             @arrayWeeklyTruckExpense[week-@period_start+1][0] = 
             (Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1) +(week-1)*7).cweek
@@ -728,6 +728,8 @@ def finance
           @arrayWeeklyTruckExpense[0][0] = "Month".to_s
        end
  end
+
+ @arrayWeeklyTruckExpense[0][0] = "Week".to_s
 
 
 ## setup the first column in the array with the names of the dispatchers
@@ -997,7 +999,23 @@ def finance
    @arrayWeeklyTruckExpense[week-@period_start+1][7] = (tr_expenses_cash_flow.to_f.to_d + dr_expenses.to_f.to_d).to_i.to_s
    @arrayWeeklyTruckExpense[week-@period_start+1][8] = (@arrayWeeklyTruckExpense[week-@period_start+1][6].to_d - @arrayWeeklyTruckExpense[week-@period_start+1][7].to_d).to_i.to_s
 
+   @arrayWeeklyTruckExpense[@period_end-@period_start+2][0] = "".to_s
+   @arrayWeeklyTruckExpense[@period_end-@period_start+2][1] += @arrayWeeklyTruckExpense[week-@period_start+1][1].to_i
+   @arrayWeeklyTruckExpense[@period_end-@period_start+2][2] += @arrayWeeklyTruckExpense[week-@period_start+1][2].to_i
+   @arrayWeeklyTruckExpense[@period_end-@period_start+2][3] += @arrayWeeklyTruckExpense[week-@period_start+1][3].to_i
+   @arrayWeeklyTruckExpense[@period_end-@period_start+2][4] += @arrayWeeklyTruckExpense[week-@period_start+1][4].to_i
+   @arrayWeeklyTruckExpense[@period_end-@period_start+2][5] += @arrayWeeklyTruckExpense[week-@period_start+1][5].to_i
+   @arrayWeeklyTruckExpense[@period_end-@period_start+2][6] += @arrayWeeklyTruckExpense[week-@period_start+1][6].to_i
+   @arrayWeeklyTruckExpense[@period_end-@period_start+2][7] += @arrayWeeklyTruckExpense[week-@period_start+1][7].to_i
+   @arrayWeeklyTruckExpense[@period_end-@period_start+2][8] += @arrayWeeklyTruckExpense[week-@period_start+1][8].to_i
+
 end ## period
+
+
+
+# @arrayWeeklyTruckExpense[@period_end-@period_start+2][j+1] += @totalInvoicedTrips
+
+# @arrayWeeklyTruckExpense[week-@period_start+1][Client.all.size+1]+=@totalInvoicedTrips
 
 
  
