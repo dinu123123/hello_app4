@@ -1301,7 +1301,8 @@ else
                             else 
                               @totalAll = 0
 
-if @search1.type == 5  and @search1.time == 1
+if @search1.type == 5  
+
   @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Dispatcher.all.size+2,0)}
    for week in @period_start..@period_end do
                 @arrayWeeklyTruckExpense[week-@period_start+1][0] = 
@@ -1316,6 +1317,7 @@ if @search1.type == 5  and @search1.time == 1
 
 end
 
+return 
  for week in @period_start..@period_end do
                                 @week_total = 0
 
@@ -1342,64 +1344,16 @@ end
       @date_to1 =  @date_from1.to_date.end_of_month
     end  
 
+
 #########################################
 #########################################
-if @search1.type == 5  and @search1.time == 1
 
 
-
-                    
-                      Dispatcher.all.each_with_index do |dispatcher,j|
-                       @arrayWeeklyTruckExpense[0][j+1] = dispatcher.FIRSTNAME + " ".to_s + dispatcher.SECONDNAME
-
-
-
-                      end
-
- ## find all the trips that started in that week
- @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <= ?', @date_from1-1, @date_to1])
-
-
-
- @invoiced_trips.each { |item|
-  ## find the dispatcher via the activity
-  @activity = Activity.find_by_sql(['SELECT * FROM activities where activities.client_id = ? and activities."DRIVER_id" = ? and activities.truck_id = ? 
-  and activities."DATE" BETWEEN ? AND ? ORDER BY activities."DATE" DESC, activities."DRIVER_id" ASC', item.client_id,
-  item.DRIVER_id, item.truck_id, to_datetime(item.StartDate)-1, to_datetime(item.StartDate)])
-
-  if item.dispatcher_id == nil and @activity[0] != nil 
-    item.update_attribute(:dispatcher_id, @activity[0].dispatcher_id) #this persists the entities to the DB
-  end   
- }
-
-Dispatcher.all.each_with_index do |dispatcher,j|
-    @invoiced_trips_for_dispatcher = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? 
-                                                                AND invoiced_trips."StartDate" <= ? AND invoiced_trips."dispatcher_id" = ? ', 
-                                                                @date_from1-1, @date_to1, dispatcher.id ])
-            
-     @invoiced_trips_for_dispatcher.each_with_index do |trip,i|
-
-            @arrayWeeklyTruckExpense[week][i+1] = @arrayWeeklyTruckExpense[week][i+1].to_s + trip.km.to_s
-
-
-end
-
-                      end
+if @search1.type == 5  
+     
 
 return
 
-
-
-  ##   @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND invoices.date >= ? AND invoices.date <= ?', client.id, @date_from1, @date_to1])
-
-
-
- ## sort the trips per dispatcher
-
-
-
-#########################################
-#########################################
 
 
    elsif @search1.type != 2 
@@ -1430,6 +1384,9 @@ return
     #                          @date_from1, @date_to1])
     #                      end
 
+
+
+
     if client.PaymentDelay != nil 
 
       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where ddate = ? AND invoices.client_id = ? AND
@@ -1439,9 +1396,12 @@ return
         invoices.ddate >= ? AND invoices.ddate <= ?', client.id,
         @date_from1, @date_to1])
     else
+ 
       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
         invoices.ddate >= ? AND invoices.ddate <= ?', client.id,
         @date_from1, @date_to1])
+
+
     end
 
   elsif @search1.type == 3 
@@ -1455,20 +1415,23 @@ return
 
  if  @invoices != nil
    @totalInvoicedTrips = 0
-   1.upto( @invoices.count) do |k|
-     @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoices[k-1].total_amount.to_d 
+    1.upto( @invoices.count) do |k|
+      @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoices[k-1].total_amount.to_d 
      @pInvoices[week-@period_start+1][j+1][k-1]=@invoices[k-1].to_s
+     @pInvoices[week-@period_start+1][j+1][k-1]=@invoices[k-1]
+ 
+    end
 
-   end
  end  
-
 
  @arrayWeeklyTruckExpense[week-@period_start+1][j+1]=@totalInvoicedTrips
 
+if  @arrayWeeklyTruckExpense[@period_end-@period_start+2][j+1] != nil
  @arrayWeeklyTruckExpense[@period_end-@period_start+2][j+1] += @totalInvoicedTrips
-
+end
+if @arrayWeeklyTruckExpense[week-@period_start+1][Client.all.size+1] != nil
  @arrayWeeklyTruckExpense[week-@period_start+1][Client.all.size+1]+=@totalInvoicedTrips
-
+end
  @totalAll += @totalInvoicedTrips
 end
 
