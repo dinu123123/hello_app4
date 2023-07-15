@@ -1017,12 +1017,15 @@ elsif @search1.type == 5
 
 elsif @search1.type == 8
    return finance
-
+elsif  @search1.type == 1
+   return payments
 else
+
+
+
+
         
         @nb_weeks = num_weeks
-
-
         @period_start = @search1.date_from.to_date.cweek.to_i
 
         if  @search1.date_to.to_date.year ==  @search1.date_from.to_date.year
@@ -1030,7 +1033,6 @@ else
         elsif @search1.date_to.to_date.year >  @search1.date_from.to_date.year
           @period_end = @search1.date_to.to_date.cweek.to_i+52-@search1.date_from.to_date.cweek.to_i+1
         end
-
 
         if @search1.time == 2
           @period_start = @search1.date_from.to_date.month.to_i
@@ -1301,7 +1303,7 @@ else
                             else 
                               @totalAll = 0
 
-if @search1.type == 5  and @search1.time == 1
+if @search1.type == 5 
   @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Dispatcher.all.size+2,0)}
    for week in @period_start..@period_end do
                 @arrayWeeklyTruckExpense[week-@period_start+1][0] = 
@@ -1430,6 +1432,8 @@ return
     #                          @date_from1, @date_to1])
     #                      end
 
+
+
     if client.PaymentDelay != nil 
 
       @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where ddate = ? AND invoices.client_id = ? AND
@@ -1515,6 +1519,189 @@ end
 @clients = Client.all
 end
 
+
+end
+
+
+#############################################################################################
+#############################################################################################
+
+def payments
+
+ @search1 = PeriodicTransactionSearch.new(params[:search1])
+
+ @nb_weeks = num_weeks
+ @period_start = @search1.date_from.to_date.cweek.to_i
+
+ if  @search1.date_to.to_date.year ==  @search1.date_from.to_date.year
+     @period_end = @search1.date_to.to_date.cweek.to_i
+ elsif @search1.date_to.to_date.year >  @search1.date_from.to_date.year
+     @period_end = @search1.date_to.to_date.cweek.to_i+52-@search1.date_from.to_date.cweek.to_i+1
+ end
+
+ if @search1.time == 2
+    @period_start = @search1.date_from.to_date.month.to_i
+
+    if  @search1.date_to.to_date.year ==  @search1.date_from.to_date.year
+        @period_end = @search1.date_to.to_date.month.to_i
+    elsif @search1.date_to.to_date.year >  @search1.date_from.to_date.year
+          @period_end = @search1.date_to.to_date.month.to_i+12- @search1.date_from.to_date.month.to_i+1
+    end
+ end
+
+ if (@period_end- @period_start)<0
+     @period_start = 1
+ end
+
+ @arrayWeeklyTruckExpense = nil
+
+if @search1.type == 1 or @search1.type == 3 
+
+          @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(Client.all.size+2,0)}
+                #up to max 30 invoices per client
+                @pInvoices = Array.new(@period_end- @period_start+3){Array.new(Client.all.size+2,0) {Array.new(30,0)}}
+
+                @arrayWeeklyTruckExpense[0][0]= "".to_s
+
+
+                Client.all.each_with_index do |client,j|
+                  @arrayWeeklyTruckExpense[0][j+1]=client.Name
+                end
+
+                if @search1.time == 1
+                  @arrayWeeklyTruckExpense[0][0] = "Week".to_s
+                  @arrayWeeklyTruckExpense[0][Client.all.size+1] = "Total".to_s
+                end
+
+                if @search1.time == 2
+                  @arrayWeeklyTruckExpense[0][0] = "Month".to_s
+                  @arrayWeeklyTruckExpense[0][Client.all.size+1] = "Total".to_s
+                end
+
+                @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
+              else
+
+                @Drv = Driver.find_by_sql(['SELECT * FROM drivers where drivers."active" = ? ', true])
+
+                @arrayWeeklyTruckExpense = Array.new(@period_end- @period_start+3){Array.new(@Drv.size+2,0)}
+
+
+                @arrayWeeklyTruckExpense[0][0]= "".to_s
+                @Drv.each_with_index do |driver,j|
+                  if driver.active 
+                    @arrayWeeklyTruckExpense[0][j+1]=1.to_s+driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
+                  else
+                    @arrayWeeklyTruckExpense[0][j+1]=0.to_s+driver.FIRSTNAME+" "+driver.SECONDNAME+" "+driver.CNP
+                  end
+                  
+                end  
+
+                @arrayWeeklyTruckExpense[0][0] = "Week".to_s
+
+                @arrayWeeklyTruckExpense[0][@Drv.size+1] = "Total".to_s
+                @arrayWeeklyTruckExpense[@period_end- @period_start+2][0] = "Total".to_s
+              end
+
+              for week in @period_start..@period_end do
+                @arrayWeeklyTruckExpense[week-@period_start+1][0] = 
+                (Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1) +(week-1)*7).cweek
+              end
+
+
+
+
+ 
+      @totalAll = 0
+
+                                  for week in @period_start..@period_end do
+                                    @week_total = 0
+
+                                    week1 = week%52
+                                    if week1 == 0
+                                        week1 = 52
+                                    end 
+
+                                    year = 0
+                                    if week<53
+                                      year = @search1.date_from.to_date.strftime("%Y").to_i
+                                    else
+                                      year =  @search1.date_from.to_date.strftime("%Y").to_i+1
+                                    end
+
+                                     ##Last repair
+
+                                     @date_start =  Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1)
+                                     @date_from1 =  @date_start+(week-1)*7
+                                     @date_to1 =  @date_from1+6
+
+                                 Client.all.each_with_index do |client,j|
+                                     @totalInvoicedTrips = 0
+
+
+                                       if client.PaymentDelay != nil 
+                                         @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where ddate = ? AND invoices.client_id = ? AND
+                                           invoices.date >= ? AND invoices.date <= ?','2000-01-01', client.id,
+                                           @date_from1-client.PaymentDelay, @date_to1-client.PaymentDelay]) + 
+                                         Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
+                                           invoices.ddate >= ? AND invoices.ddate <= ?', client.id,
+                                           @date_from1, @date_to1])
+                                       else
+                                         @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
+                                           invoices.ddate >= ? AND invoices.ddate <= ?', client.id,
+                                           @date_from1, @date_to1])
+                                       end
+
+
+                                       if @invoices != nil
+                                         @totalInvoicedTrips = 0
+                                           1.upto( @invoices.count) do |k|
+                                                @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoices[k-1].total_amount.to_d 
+                                                @pInvoices[week-@period_start+1][j+1][k-1]=@invoices[k-1]
+                                           end  
+                                      
+                                           @arrayWeeklyTruckExpense[week-@period_start+1][j+1]=@totalInvoicedTrips
+                                           @arrayWeeklyTruckExpense[@period_end-@period_start+2][j+1] += @totalInvoicedTrips
+                                           @arrayWeeklyTruckExpense[week-@period_start+1][Client.all.size+1]+=@totalInvoicedTrips
+                                           @totalAll += @totalInvoicedTrips
+                                        end
+
+                                 @arrayWeeklyTruckExpense[@period_end-@period_start+2][Client.all.size+1] = @totalAll
+
+                                 end
+
+                            end
+
+@arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose() 
+
+if @pInvoices != nil
+  @pInvoices = @pInvoices.transpose()
+end
+
+@count_delete = 0
+
+@arrayWeeklyTruckExpense.each_with_index {|column, i|
+  if (column.first.to_s != "Week" and column.first.to_s != "Total" and column.last.to_i == 0)
+   if @pInvoices != nil
+     @pInvoices.delete_at(i-@count_delete)
+     @count_delete = @count_delete + 1
+   end
+ end
+}
+
+@arrayWeeklyTruckExpense.delete_if.with_index {|column,i|
+   column.first.to_s != "Week" and column.first.to_s != "Total" and column.last.to_i == 0
+}
+
+if @pInvoices != nil
+ @pInvoices =  @pInvoices.transpose()
+end 
+
+@arrayWeeklyTruckExpense = @arrayWeeklyTruckExpense.transpose()
+
+
+@drivers = Driver.all
+@trucks = Truck.all
+@clients = Client.all
 
 end
 
