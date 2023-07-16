@@ -1486,7 +1486,7 @@ end
 @count_delete = 0
 
 @arrayWeeklyTruckExpense.each_with_index {|column, i|
-  if (column.first.to_s != "Week" and column.first.to_s != "Total" and column.last.to_i == 0)
+  if (column.first.to_s != "Week" and column.first.to_s != "Month" and column.first.to_s != "Total" and column.last.to_i == 0)
    if @pInvoices != nil
      @pInvoices.delete_at(i-@count_delete)
      @count_delete = @count_delete + 1
@@ -1495,7 +1495,7 @@ end
 }
 
 @arrayWeeklyTruckExpense.delete_if.with_index {|column,i|
-   column.first.to_s != "Week" and column.first.to_s != "Total" and column.last.to_i == 0
+   column.first.to_s != "Week" and column.first.to_s != "Month" and column.first.to_s != "Total" and column.last.to_i == 0
 }
 
 if @pInvoices != nil
@@ -1663,7 +1663,7 @@ end
 @count_delete = 0
 
 @arrayWeeklyTruckExpense.each_with_index {|column, i|
-  if (column.first.to_s != "Week" and column.first.to_s != "Total" and column.last.to_i == 0)
+  if (column.first.to_s != "Week" and column.first.to_s != "Month" and column.first.to_s != "Total" and column.last.to_i == 0)
    if @pInvoices != nil
      @pInvoices.delete_at(i-@count_delete)
      @count_delete = @count_delete + 1
@@ -1672,7 +1672,7 @@ end
 }
 
 @arrayWeeklyTruckExpense.delete_if.with_index {|column,i|
-   column.first.to_s != "Week" and column.first.to_s != "Total" and column.last.to_i == 0
+   column.first.to_s != "Week"  and column.first.to_s != "Month" and column.first.to_s != "Total" and column.last.to_i == 0
 }
 
 if @pInvoices != nil
