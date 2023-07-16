@@ -823,9 +823,9 @@ def finance
 
 
 
-                 paid_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  invoices."paid" IS TRUE AND
+                 paid_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  invoices."paid" = ? AND
                   ((invoices."collection_date" > ? AND invoices."collection_date" <  ?) OR 
-                  (invoices."collection_date" IS NULL AND invoices."updated_at" > ? AND invoices."updated_at" <  ? ))', @date_from1-1, @date_to1+1, @date_from1-1, @date_to1+1])[0].sum1
+                  (invoices."collection_date" IS NULL AND invoices."updated_at" > ? AND invoices."updated_at" <  ? ))', true, @date_from1-1, @date_to1+1, @date_from1-1, @date_to1+1])[0].sum1
 
              #    expected_paid_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
               #    invoices."ddate" > ? AND invoices."ddate" <  ?', @date_from1-1, @date_to1+1])[0].sum1
