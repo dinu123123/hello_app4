@@ -769,7 +769,7 @@ def finance
                investments = nil
                ## find all the trips that started in that week
                if @search1.client_id == 0 
-                
+
                  value_invoiced = InvoicedTrip.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoiced_trips where 
                  invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <  ?', @date_from1-1, @date_to1+1])[0].sum1
 
@@ -1443,8 +1443,8 @@ return
   elsif @search1.type == 3 
 
    @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
-    invoices.date >= ? AND invoices.date <  ?', client.id, 
-    @date_from1, @date_to1+1])
+    invoices.date > ? AND invoices.date <  ?', client.id, 
+    @date_from1-1, @date_to1+1])
 
  end
 
@@ -1627,15 +1627,15 @@ for week in @period_start..@period_end do
 
               if client.PaymentDelay != nil 
                   @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where ddate = ? AND invoices.client_id = ? AND
-                    invoices.date >= ? AND invoices.date <  ?','2000-01-01', client.id,
-                    @date_from1-client.PaymentDelay, @date_to1+1-client.PaymentDelay]) + 
+                    invoices.date > ? AND invoices.date <  ?','2000-01-01', client.id,
+                    @date_from1-client.PaymentDelay-1, @date_to1+1-client.PaymentDelay]) + 
                   Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
-                    invoices.ddate >= ? AND invoices.ddate <  ?', client.id,
-                    @date_from1, @date_to1])
+                    invoices.ddate > ? AND invoices.ddate <  ?', client.id,
+                    @date_from1-1, @date_to1+1])
               else
                   @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
-                    invoices.ddate >= ? AND invoices.ddate <  ?', client.id,
-                    @date_from1, @date_to1+1])
+                    invoices.ddate > ? AND invoices.ddate <  ?', client.id,
+                    @date_from1-1, @date_to1+1])
               end
 
               if @invoices != nil
