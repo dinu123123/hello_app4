@@ -240,7 +240,7 @@ tr:nth-child(even) {
         <td bgcolor="#b6f666" style="font-weight:bold">
           <% if invoiced_trip.km_evogps != nil and invoiced_trip.km_evogps > 0 %>
                   <%= invoiced_trip.km_evogps %>
-          `<% else %> 
+          <% else %> 
                   <%=  @sum_km_activities = @activities.find_by_sql(['SELECT * FROM activities where invoiced_trip_id = ?', invoiced_trip.id]).to_a.map(&:km_evogps).inject(:+) %>
           <% end %>
         </td>
@@ -257,7 +257,7 @@ tr:nth-child(even) {
               <% else %>
                   <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - @sum_km_activities %></td>
               <% end %> 
-       `<% else %>
+       <% else %>
               <td bgcolor="#b6f666" style="font-weight:bold">NO INFO1</td>
         <% end %>
 
@@ -363,7 +363,7 @@ tr:nth-child(even) {
               <% else %>
                   <td bgcolor="red" style="font-weight:bold"><%= invoiced_trip.km - @sum_km_activities1 %></td>
               <% end %> 
-       `<% else %>
+       <% else %>
               <td bgcolor="#8bf0f8" style="font-weight:bold">NO INFO</td>
         <% end %>
 
@@ -429,7 +429,7 @@ tr:nth-child(even) {
         <td>
         <% if invoiced_trip.km_evogps != nil and invoiced_trip.km_evogps > 0 %>
                 <%= invoiced_trip.km_evogps %></td>
-        `<% else %> 
+        <% else %> 
                 <%=  @sum_km_activities2 = @activities.find_by_sql(['SELECT * FROM activities where invoiced_trip_id = ?', invoiced_trip.id]).to_a.map(&:km_evogps).inject(:+) %>
         <% end %>
         </td>
@@ -446,7 +446,7 @@ tr:nth-child(even) {
               <% else %>
                   <td><%= invoiced_trip.km - @sum_km_activities2 %></td>
               <% end %> 
-       `<% else %>
+       <% else %>
               <td>NO INFO</td>
         <% end %>
  

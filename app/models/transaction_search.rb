@@ -203,10 +203,9 @@ else
                     invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', 
                     @driver_id, @truck_id, to_datetime(@date_from), to_datetime(@date_to)])          
       else  
-
                   @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.brand IS NULL and
-                  invoiced_trips."StartDate" >= ? and invoiced_trips."StartDate" <= ? ORDER BY invoiced_trips."StartDate" DESC, 
-                  invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', to_datetime(@date_from), to_datetime(@date_to)])
+                  invoiced_trips."StartDate" > ? and invoiced_trips."StartDate" < ? ORDER BY invoiced_trips."StartDate" DESC, 
+                  invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', to_datetime(@date_from)-1, to_datetime(@date_to)+1])
       end
 end
 
