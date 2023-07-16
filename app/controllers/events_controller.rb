@@ -762,7 +762,7 @@ def finance
                end  
 
                value_invoiced = nil
-               payed_invoices = nil
+               paid_invoices = nil
                expected_paid_invoices = nil
                tr_expenses_profit = nil
                tr_expenses_cash_flow = nil
@@ -773,12 +773,62 @@ def finance
                  value_invoiced = InvoicedTrip.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoiced_trips where 
                  invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <  ?', @date_from1-1, @date_to1+1])[0].sum1
 
-                 payed_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
+
+
+         @totalInvoicedTrips = 0
+
+ Client.all.each_with_index do |client,j|
+     
+
+              if client.PaymentDelay != nil 
+                  @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where ddate = ? AND invoices.client_id = ? AND
+                    invoices.date > ? AND invoices.date <  ?','2000-01-01', client.id,
+                    @date_from1-client.PaymentDelay-1, @date_to1+1-client.PaymentDelay]) + 
+                  Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
+                    invoices.ddate > ? AND invoices.ddate <  ?', client.id,
+                    @date_from1-1, @date_to1+1])
+              else
+                  @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
+                    invoices.ddate > ? AND invoices.ddate <  ?', client.id,
+                    @date_from1-1, @date_to1+1])
+              end
+
+              if @invoices != nil
+                    1.upto( @invoices.count) do |k|
+                         @totalInvoicedTrips = @totalInvoicedTrips.to_d + @invoices[k-1].total_amount.to_d 
+                    end                 
+              end
+         end
+
+
+ expected_paid_invoices = @totalInvoicedTrips
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 paid_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
                   (invoices."collection_date" > ? AND invoices."collection_date" <  ?) OR 
                   (invoices."collection_date" IS NULL AND invoices."updated_at" > ? AND invoices."updated_at" <  ? )', @date_from1-1, @date_to1+1, @date_from1-1, @date_to1+1])[0].sum1
 
-                 expected_paid_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
-                  invoices."ddate" > ? AND invoices."ddate" <  ?', @date_from1-1, @date_to1+1])[0].sum1
+             #    expected_paid_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
+              #    invoices."ddate" > ? AND invoices."ddate" <  ?', @date_from1-1, @date_to1+1])[0].sum1
 
                  tr_expenses_profit = TruckExpense.find_by_sql(['SELECT SUM("AMOUNT") AS sum1 FROM truck_expenses where  
                   truck_expenses."DATE" > ? AND truck_expenses."DATE" <  ? AND  truck_expenses."inv" = ? AND truck_expenses."frt" = ?', 
@@ -821,7 +871,7 @@ def finance
                  invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <  ? AND invoiced_trips."client_id" = ?', 
                  @date_from1-1, @date_to1+1, @search1.client_id])[0].sum1
                
-                 payed_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
+                 paid_invoices = Invoice.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoices where  
                   ((invoices."collection_date" > ? AND invoices."collection_date" <  ?) OR 
                   (invoices."collection_date" IS NULL AND invoices."updated_at" > ? AND invoices."updated_at" <  ?))
                    AND invoices."client_id" = ?', 
@@ -980,8 +1030,8 @@ def finance
    @arrayWeeklyTruckExpense[week-@period_start+1][2] = (tr_expenses_profit.to_f.to_d + dr_expenses_due.to_f.to_d + fuel_expenses_profit.to_f.to_d + generic_toll_profit.to_f.to_d + de_toll_profit.to_f.to_d + be_toll_profit.to_f.to_d).to_i.to_s
    @arrayWeeklyTruckExpense[week-@period_start+1][3] = (@arrayWeeklyTruckExpense[week-@period_start+1][1].to_d - @arrayWeeklyTruckExpense[week-@period_start+1][2].to_d).to_i.to_s
    @arrayWeeklyTruckExpense[week-@period_start+1][4] = investments.to_f.to_d.to_i.to_s
-   @arrayWeeklyTruckExpense[week-@period_start+1][5] = payed_invoices.to_f.to_d.to_i.to_s
-   @arrayWeeklyTruckExpense[week-@period_start+1][6] = expected_paid_invoices.to_f.to_i.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][5] = expected_paid_invoices.to_f.to_i.to_s
+   @arrayWeeklyTruckExpense[week-@period_start+1][6] = paid_invoices.to_f.to_d.to_i.to_s
    @arrayWeeklyTruckExpense[week-@period_start+1][7] = (tr_expenses_cash_flow.to_f.to_d + dr_expenses.to_f.to_d).to_i.to_s
    @arrayWeeklyTruckExpense[week-@period_start+1][8] = (@arrayWeeklyTruckExpense[week-@period_start+1][6].to_d - @arrayWeeklyTruckExpense[week-@period_start+1][7].to_d).to_i.to_s
 
@@ -1621,6 +1671,12 @@ for week in @period_start..@period_end do
               @date_start =  Date.commercial(@search1.date_from.to_date.year, @search1.date_from.to_date.strftime("%W").to_i+1, 1)
               @date_from1 =  @date_start+(week-1)*7
               @date_to1 =  @date_from1+6
+
+              if @search1.time == 2
+                 @date_from1 =  Date.new(year, week1, 1)
+                 @date_to1 =  @date_from1.to_date.end_of_month
+              end  
+
 
           Client.all.each_with_index do |client,j|
               @totalInvoicedTrips = 0
