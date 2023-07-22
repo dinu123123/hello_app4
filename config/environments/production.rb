@@ -19,16 +19,21 @@ Rails.application.configure do
   # `config/secrets.yml.key`.
   config.read_encrypted_secrets = true
 
+  config.secret_key_base = 'a25949ca4298acd4fe13ef666db9a0b02f7a0195dbed236f6135785016220aaa5874e7f6cbe80e581fc359bda991265803443b20f25856f36408e43cf73aff39'
+
+
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  # config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+
+  config.public_file_server.enabled = true
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
@@ -76,6 +81,7 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  config.require_master_key = true    #config/environments/production.rb
 
 config.action_mailer.delivery_method = :smtp
 # SMTP settings for gmail
@@ -83,27 +89,31 @@ config.action_mailer.smtp_settings = {
  :address              => "smtp.gmail.com",
  :port                 => 587,
  :user_name            => "ameropa.logistics@gmail.com",
- :password             => "2021Amp!",
+ :password             => "drlmghkotlxomzoj",
  :authentication       => "plain",
 :enable_starttls_auto => true
 }
 
 
-  config.logger = Logger.new("/dev/null")
-
+# :password             => "2021Amp!1",
+# :password             =>  "ifuqrjtyjzunofve"
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-#  if ENV["RAILS_LOG_TO_STDOUT"].present?
-#    logger           = ActiveSupport::Logger.new(STDOUT)
-#    logger.formatter = config.log_formatter
-#    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-#  end
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: 'https://gentle-ocean-84384.herokuapp.com' }
+  config.active_storage.service = :amazon
+
+
+## a25949ca4298acd4fe13ef666db9a0b02f7a0195dbed236f6135785016220aaa5874e7f6cbe80e581fc359bda991265803443b20f25856f36408e43cf73aff39
 
 end
+              
