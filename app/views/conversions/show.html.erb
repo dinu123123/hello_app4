@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @conversion.date %>
+</p>
+
+<p>
+  <strong>Conversion rate:</strong>
+  <%= @conversion.conversion_rate %>
+</p>
+
+<p>
+  <strong>Currency:</strong>
+  <%= @conversion.currency_id %>
+</p>
+
+<%= link_to 'Edit', edit_conversion_path(@conversion) %> |
+<%= link_to 'Back', conversions_path %>

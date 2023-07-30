@@ -1,0 +1,18 @@
+<%= form_with(model: conversion, local: true) do |f| %>
+  <div class="field">
+    <%= f.label :"Conversion rate - suma echivalenta pentru 1 EUR" %>
+    <%= f.text_field :conversion_rate, :required => 'required' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :date %>
+    <%= f.date_select :date, id: :event_DATE, :required => 'required' %>
+  </div>
+
+
+  <%= f.collection_select :currency_id, Currency.all, :id, :name, {prompt: "Currency"}, :required => 'required' %>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
