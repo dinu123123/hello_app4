@@ -126,6 +126,18 @@ end
   # GET /invoiced_trips/1.json
   def show
     @invoices = Invoice.all
+      if @invoiced_trip.typeT == nil
+     
+        @truck  = Truck.find(@invoiced_trip.truck_id)
+        @driver = Driver.find(@invoiced_trip.DRIVER_id)
+        @client = Client.find(@invoiced_trip.client_id)
+
+
+      else
+  @truck  = @invoiced_trip.brand.to_s + " ".to_s + @invoiced_trip.model.to_s + " ".to_s + @invoiced_trip.vin.to_s
+        @driver = "".to_s
+        @client = Client.find(@invoiced_trip.client_id)
+       end    
   end
 
 
@@ -178,7 +190,7 @@ labels = {
   tax_id: 'VAT',
   tax_id2: 'EUID',
   payment: 'Forma uhrady',
-  payment_by_transfer: 'Payment by bank transfer on the account bellow:',
+  payment_by_transfer: 'asdasdasdPayment by bank transfer on the account bellow:',
   account_number: 'IBAN:',
   bank_account_number: '',
   issue_date: 'Issue Date:',
@@ -276,7 +288,13 @@ respond_to do |format|
   # POST /invoiced_trips.json
   def create
   
-  @invoiced_trip = InvoicedTrip.new(invoiced_trip_params)
+   inv_trip_params = invoiced_trip_params.merge(:total_amount => (invoiced_trip_params["amount"].to_d/
+   Conversion.find_by_sql(["SELECT * FROM conversions where conversions.currency_id = ? and 
+   conversions.date <= ? order by conversions.date asc", invoiced_trip_params["currency_id"], 
+   Date.new(invoiced_trip_params["date(1i)"].to_i,invoiced_trip_params["date(2i)"].to_i,
+    invoiced_trip_params["date(3i)"].to_i)])[0]["conversion_rate"]).round(2))
+
+  @invoiced_trip = InvoicedTrip.new(inv_trip_params)
   
   if  @invoiced_trip.brand != nil #_params.fetch(:brand).to_s.size
     @invoiced_trip.StartDate = Invoice.find_by(id: @invoiced_trip.invoice_id).date
@@ -327,8 +345,18 @@ respond_to do |format|
   end
 
   def update
+
+
+   inv_params = invoiced_trip_params.merge(:total_amount => (invoiced_trip_params["amount"].to_d/
+   Conversion.find_by_sql(["SELECT * FROM conversions where conversions.currency_id = ? and 
+   conversions.date <= ? order by conversions.date asc", invoiced_trip_params["currency_id"], 
+   Date.new(invoiced_trip_params["date(1i)"].to_i,invoiced_trip_params["date(2i)"].to_i,
+    invoiced_trip_params["date(3i)"].to_i)])[0]["conversion_rate"]).round(2))
+
+
+
     respond_to do |format|
-      if @invoiced_trip.update(invoiced_trip_params)
+      if @invoiced_trip.update(inv_params)
         format.html { redirect_to @invoiced_trip, notice: 'Invoiced trip was successfully updated.' }
         format.json { render :show, status: :ok, location: @invoiced_trip }
       else
@@ -353,7 +381,7 @@ respond_to do |format|
     def set_invoiced_trip
       @invoiced_trip = InvoicedTrip.find(params[:id])
 
-      if @invoiced_trip.typeT == 0
+      if @invoiced_trip.typeT == nil
         @truck  = Truck.find(@invoiced_trip.truck_id)
         @driver = Driver.find(@invoiced_trip.DRIVER_id)
         @client = Client.find(@invoiced_trip.client_id)
@@ -371,6 +399,6 @@ respond_to do |format|
         :DRIVER_id, :truck_id, :info, :germany_toll, :belgium_toll, :swiss_toll, :france_toll, 
         :italy_toll, :uk_toll, :netherlands_toll, :bridge, :parking, :tunnel, :trailer_cost, :km, 
         :km_evogps, :km_driver_route_note, :surcharge, :price_per_km, :total_amount, :typeT,
-        :brand, :model, :vin, :production_year, :km_usage, :shipper, images: [] , bill_of_lading: [], export_document: [])
+        :brand, :model, :vin, :production_year, :km_usage, :shipper, :currency_id, :amount, images: [], bill_of_lading: [], export_document: [])
     end
 end

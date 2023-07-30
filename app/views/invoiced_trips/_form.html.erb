@@ -10,9 +10,7 @@
 }
 </style>
 
-
 <%= form_with(model: invoiced_trip, local: true) do |form| %>
-
 
 <% if @invoiced_trip.typeT == 0 %>
   <h2>New Invoiced Trip</h2>
@@ -32,9 +30,6 @@
     </div>
   <% end %>
 
-
-
-
 <% if @invoiced_trip.typeT == nil or @invoiced_trip.typeT == 0 %>
 
 <% if false %>
@@ -51,10 +46,9 @@
  <%= form.collection_select :truck_id, Truck.all.where(:active => true).order(:NB_PLATE), :id, :NB_PLATE, {prompt: "Truck Nb Plate"}, :required => 'required' %>
 
  <div class="field",  border-color: coral>
-    <%= form.label :info %>
-    <%= form.text_field :info, id: :invoiced_trip_info %>
-  </div>
-
+   <%= form.label :info %>
+   <%= form.text_field :info, id: :invoiced_trip_info %>
+ </div>
 
 <div class="row">
   
@@ -177,17 +171,26 @@
     <%= form.date_select :date, id: :invoiced_trip_date, :required => 'required' %>
   </div>
 
+ <div class="field">
+    <%= form.label :"amount" %>
+    <%= form.text_field :amount, id: :amount, :required => 'required' %>
+  </div>
+
+
+ <div class="field">
+  <%= form.label :currency_id %>
+  <%= form.collection_select :currency_id, Currency.all, :id, :name, {prompt: "Currency"}, :required => 'required' %>
+ </div>
+
+
+
+
 <% if false %>
   <div class="field">
     <%= form.label :"surcharge" %>
     <%= form.text_field :surcharge, id: :surcharge, :required => 'required' %>
   </div>
 <% end %>
-
-  <div class="field">
-    <%= form.label :total_amount %>
-    <%= form.text_field :total_amount, id: :invoiced_trip_total_amount, :required => 'required' %>
-  </div>
 
   <p>
 

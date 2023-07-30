@@ -38,9 +38,16 @@
   </div>
 
  <div class="field">
-    <%= form.label :"total_amount" %>
-    <%= form.text_field :total_amount, id: :total_amount, :required => 'required' %>
+    <%= form.label :"amount" %>
+    <%= form.text_field :amount, id: :amount, :required => 'required' %>
   </div>
+
+
+ <div class="field">
+  <%= form.label :currency_id %>
+  <%= form.collection_select :currency_id, Currency.all, :id, :name, {prompt: "Currency"}, :required => 'required' %>
+</div>
+
 </fieldset>
 
 

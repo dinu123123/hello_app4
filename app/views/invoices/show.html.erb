@@ -26,8 +26,13 @@
 </p>
 
 <p>
-  <strong>Total Amount:</strong>
+  <strong>Value Amount in EURO:</strong>
   <%= @invoice.total_amount %>
+</p>
+
+<p>
+  <strong>Value Amount in <%= Currency.where(:id=>@invoice.currency_id)[0]["name"] %> (<%= Currency.where(:id=>@invoice.currency_id)[0]["symbol"] %>):</strong> 
+  <%= @invoice.amount %>
 </p>
 
  <% if @invoice.ddate != nil %>

@@ -11,11 +11,11 @@
   <%= @client.Name %>
 </p>
 
- <% if @invoiced_trip.typeT == 0 %>
+ <% if @invoiced_trip.typeT == nil %>
 
 <p>
   <strong>Driver:</strong>
-  <%= @driver.FIRSTNAME.to+" "+@driver.SECONDNAME %>
+  <%= @driver.FIRSTNAME+" "+@driver.SECONDNAME %>
 </p>
 
 <p>
@@ -118,6 +118,18 @@
   <strong>Diesel Surcharge:</strong>
   <%= @invoiced_trip.surcharge %>
 </p>
+
+<p>
+  <strong>Amount in Euros:</strong>
+  <%= @invoiced_trip.total_amount %>
+</p>
+
+<p>
+  <strong>Amount in 
+  <%= Currency.find_by_sql(["SELECT * FROM currencies where currencies.id = ?", @invoiced_trip.currency_id])[0]["abbr"].to_s %></strong> 
+  <%= @invoiced_trip.amount %>
+</p>
+
 
 <% else %>
 
