@@ -1,6 +1,8 @@
   Rails.application.routes.draw do
   
   
+  resources :conversions
+  resources :currencies
   resources :card_events
   resources :cards
   resources :dispatchers
