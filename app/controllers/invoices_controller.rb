@@ -1,6 +1,6 @@
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy]
-
+#
 attr_accessor :total_price_calculated
 
   # GET /invoices

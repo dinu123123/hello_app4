@@ -1,6 +1,7 @@
 require 'json'
 require 'invoice_printer'
 
+#
 class InvoicedTripsController < ApplicationController
   before_action :set_invoiced_trip, only: [:show, :edit, :update, :destroy]
 
