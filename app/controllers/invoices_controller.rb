@@ -867,7 +867,7 @@ labels = {
   price_per_item: 'Quantity',
   amount: 'Value (€)',
   tax: 'VAT (' + invoice.vat.to_s + '%)',
-  total: 'TURJAN MIHAIL AS872851               Total'
+  total: 'TURJAN MIHAIL AS872851                                            Total'
 }
 
 else
@@ -890,7 +890,7 @@ labels = {
   price_per_item: 'VIN',
   amount: 'Value (€)',
   tax: 'VAT (' + invoice.vat.to_s + '%)',
-  total: 'TURJAN MIHAIL AS872851               Total'
+  total: 'TURJAN MIHAIL AS872851                             Total'
 }
 
 end
@@ -924,9 +924,9 @@ invoice_inline = InvoicePrinter::Document.new(
   purchaser_extra_address_line: '',
   issue_date: invoice.date.to_s,
   due_date: @due_date.to_s,
-  subtotal: '€ '+invoice.total_amount.round(2).to_s,
-  tax: '€ '+ (invoice.vat/100*invoice.total_amount).round(2).to_s,
-  total: '€ '+(invoice.total_amount*((100+invoice.vat)/100)).round(2).to_s,
+  subtotal: "€".to_s+invoice.total_amount.round(2).to_s+" ".to_s ,
+  tax: "€ ".to_s+ (invoice.vat/100*invoice.total_amount).round(2).to_s+" ".to_s,
+  total: "€ ".to_s+(invoice.total_amount*((100+invoice.vat)/100)).round(2).to_s+" ".to_s,
 
   bank_account_number: 'RO53 RZBR 0000 0600 1753 0734',
   items: ary,
