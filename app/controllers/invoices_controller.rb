@@ -44,7 +44,7 @@ attr_accessor :total_price_calculated
   # POST /invoices.json
   def create
    inv_params = invoice_params.merge(:total_amount => (invoice_params["amount"].to_d/
-   Conversion.finds_by_sql(["SELECT * FROM conversions where conversions.currency_id = ? and 
+   Conversion.find_by_sql(["SELECT * FROM conversions where conversions.currency_id = ? and 
    conversions.date <= ? order by conversions.date asc", invoice_params["currency_id"], 
    Date.new(invoice_params["date(1i)"].to_i,invoice_params["date(2i)"].to_i,invoice_params["date(3i)"].to_i)])[0]["conversion_rate"]).round(2))
 
