@@ -195,7 +195,7 @@ end
 if client.kprice>0 and (invoiced_trip.typeT == 0 or invoiced_trip.typeT == nil)
   @price_distance = a.km*a.price_per_km
 else
-  @price_distance = a.total_amount
+  @price_distance = a.amount
 end
 
 
