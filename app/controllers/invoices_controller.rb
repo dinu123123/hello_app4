@@ -458,7 +458,7 @@ labels = {
   price_per_item: str_price_per_item,
   amount: str_amount+ symbol +')'+" ".to_s,
   tax: str_tax + invoice.vat.to_s + '%)'+ " ".to_s,
-  total: 'TURJAN MIHAIL AS872851                             ' + str_total +" ".to_s
+  total: 'TURJAN MIHAIL AS872851                           ' + str_total +" ".to_s
 }
 
 else
@@ -481,7 +481,7 @@ labels = {
   price_per_item: 'VIN',
   amount: str_amount + symbol +')'+" ".to_s,
   tax: str_tax + invoice.vat.to_s + '%)'+" ".to_s,
-  total: 'TURJAN MIHAIL AS872851                             ' + str_total +" ".to_s
+  total: 'TURJAN MIHAIL AS872851                           ' + str_total +" ".to_s
 }
 
 end
