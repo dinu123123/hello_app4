@@ -232,7 +232,7 @@ ary << item
 
 else
 
-if Client.find(invoice.client_id)downcase.match("binar")
+if Client.find(invoice.client_id).Name.downcase.match("binar")
   str_quatity = "kg".to_s
 else
   str_quatity = "km".to_s
