@@ -417,7 +417,7 @@ item = InvoicePrinter::Document::Item.new(
   unit: "1".to_s,
   quantity: "piece".to_s,
   price: '1',
-  amount: invoice.total_amount.round(2),
+  amount: invoice.amount.round(2),
   tax: '0'  
 )
 
@@ -510,9 +510,9 @@ invoice_inline = InvoicePrinter::Document.new(
   purchaser_extra_address_line: '',
   issue_date: invoice.date.to_s,
   due_date: @due_date.to_s,
-  subtotal: " ".to_s+invoice.total_amount.round(2).to_s,
-  tax: " ".to_s+  (invoice.vat/100*invoice.total_amount).round(2).to_s,
-  total: symbol+' '+(invoice.total_amount*((100+invoice.vat)/100)).round(2).to_s+" ".to_s,
+  subtotal: " ".to_s+invoice.amount.round(2).to_s,
+  tax: " ".to_s+  (invoice.vat/100*invoice.amount).round(2).to_s,
+  total: symbol+' '+(invoice.amount*((100+invoice.vat)/100)).round(2).to_s+" ".to_s,
   bank_account_number: 'RO53 RZBR 0000 0600 1753 0734                               '+ conversion_string.to_s,
   items: ary,
   note: 'This is computer generated invoice. No signature required.'
