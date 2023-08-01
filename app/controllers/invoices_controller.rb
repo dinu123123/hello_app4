@@ -232,10 +232,16 @@ ary << item
 
 else
 
+if Client.find(invoice.client_id)downcase.match("binar")
+  str_quatity = "kg".to_s
+else
+  str_quatity = "km".to_s
+end  
+
 item = InvoicePrinter::Document::Item.new(
-  name: @info+"  "+truck.NB_PLATE+" / "+ driver.FIRSTNAME.to_s+" "+driver.SECONDNAME.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+  name: @info+"  "+truck.NB_PLATE+"/ "+ driver.FIRSTNAME[0,1]+". "+driver.SECONDNAME.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
   unit: a.price_per_km,
-  quantity: "km".to_s,
+  quantity: str_quatity,
   price: a.km,
   tax: (invoice.vat/100*@price_distance.round(2)).round(2).to_s,
   amount: @price_distance.round(2) # client_id.price_per_km,
@@ -663,7 +669,7 @@ ary << item
 else
 
 item = InvoicePrinter::Document::Item.new(
-  name: @info+"  "+truck.NB_PLATE+" / "+ driver.FIRSTNAME.to_s+" "+driver.SECONDNAME.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
+  name: @info+"  "+truck.NB_PLATE+"/"+ driver.FIRSTNAME[0,1]+". "+driver.SECONDNAME.to_s, #+invoiced_trip.date.strftime("%U").to_s+" ".to_s+Truck.find(invoiced_trip.truck_id).NB_PLATE,
   unit: a.price_per_km,
   quantity: "km".to_s,
   price: a.km,
