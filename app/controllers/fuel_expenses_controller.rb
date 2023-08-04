@@ -141,7 +141,7 @@ lines_end_to_skip = CSV.read(file.path,  headers: [
   "Ora postarii","Numar ID flota","Descriere ID Flota","Tara tranzactiei"],
      encoding: "ISO-8859-1",  
                                :col_sep => ",", 
-                               :quote_char => '\"', 
+                               :quote_char => '"', 
                                :header_converters => lambda { |h| h.try(:gsub,' ', ' ').try(:gsub,'ï»¿', '') }
                     ).count-1
 
