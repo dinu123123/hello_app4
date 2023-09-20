@@ -163,11 +163,15 @@ end
 
 invoice_trip_all.each {
  |a| 
+
+
  if a.currency_id != invoice.currency_id
  currency_invoice = Currency.find_by_sql(["SELECT * FROM currencies where currencies.id = ?", invoice.currency_id])[0]["abbr"].to_s
  currency_trip = Currency.find_by_sql(["SELECT * FROM currencies where currencies.id = ?", a.currency_id])[0]["abbr"].to_s
  render html: "<b> The currency of the invoice is ".to_s.html_safe + currency_invoice + " </b><br>".to_s.html_safe + 
         "<b> The currency of the trip ".to_s.html_safe + a.info+ " is ".to_s + currency_trip.to_s+ " </b>".to_s.html_safe
+ 
+
  return  
  end
 }
@@ -427,14 +431,16 @@ item = InvoicePrinter::Document::Item.new(
   tax: '0'  
 )
 
-if invoiced_trip.typeT == 0 or invoiced_trip.typeT == nil
-
 conversion = Conversion.find_by_sql(["SELECT * FROM conversions where conversions.currency_id = ? and 
    conversions.date <= ? order by conversions.date asc", invoice.currency_id, 
    invoice.date])[0]["conversion_rate"].round(2).to_s
 
 currency = Currency.find_by_sql(["SELECT * FROM currencies where currencies.id = ?", invoice.currency_id])[0]["abbr"].to_s
 symbol = Currency.find_by_sql(["SELECT * FROM currencies where currencies.id = ?", invoice.currency_id])[0]["symbol"].to_s
+
+
+if invoiced_trip.typeT == 0 or invoiced_trip.typeT == nil
+
 
 if invoice.currency_id != 1
   conversion_string = '1 EURO = '+ conversion + ' ' + currency

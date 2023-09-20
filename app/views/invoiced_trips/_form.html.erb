@@ -39,7 +39,8 @@
   </div>
 <% end %>
 
- <%= form.collection_select :invoice_id, Invoice.all.order('"id" DESC'), :id, :name, {prompt: "Invoice"}, :required => 'required' %>
+<%= form.collection_select :invoice_id, Invoice.all.order(:id).reverse_order, :id, :name, {prompt: "Invoice"}, :required => 'required' %>
+ 
  <%= form.collection_select :client_id, Client.all.where(:active => true), :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
  <%= form.collection_select :DRIVER_id, Driver.find_by_sql(['SELECT * FROM drivers where drivers.active = ? 
                     ORDER BY drivers.SECONDNAME ASC', true]) , :id, :name_with_cnp, {prompt: "Driver Name and CNP"},:required => 'required'%>
@@ -201,13 +202,6 @@
   </div>
  
 
-
-<% else %>
- <%= form.collection_select :invoice_id, Invoice.all, :id, :name, {prompt: "Invoice"}, :required => 'required' %>
-
- <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
-
-
 <div class="field">
     <%= form.label :StartDate, 'Trip Start Date' %>
     <%= form.datetime_select :StartDate, id: :invoiced_trip_StartDate, :required => 'required' %>
@@ -223,6 +217,29 @@
     <%= form.date_select :date, id: :invoiced_trip_date, :required => 'required' %>
   </div>
 
+<% else %>
+ <%= form.collection_select :invoice_id, Invoice.all.order(:id).reverse_order, :id, :name, {prompt: "Invoice"}, :required => 'required' %>
+
+ <%= form.collection_select :client_id, Client.all, :id, :Name, {prompt: "Client Name"}, :required => 'required' %>
+
+
+ <div class="field">
+  <%= form.label :currency_id %>
+  <%= form.collection_select :currency_id, Currency.all, :id, :name, {prompt: "Currency"}, :required => 'required' %>
+ </div>
+
+
+ <div class="field">
+    <%= form.label :"amount" %>
+    <%= form.text_field :amount, id: :amount, :required => 'required' %>
+  </div>
+
+<div class="field">
+    <%= form.label :date, 'Invoice Date' %>
+    <%= form.date_select :date, id: :invoiced_trip_date, :required => 'required' %>
+  </div>
+
+
 <div class="field">
     <%= form.label :brand %>
     <%= form.text_field :brand, id: :brand %>
@@ -234,12 +251,10 @@
     <%= form.text_field :model, id: :model %>
   </div>
 
-
 <div class="field">
     <%= form.label :vin %>
     <%= form.text_field :vin, id: :vin %>
   </div>
-
 
   <div class="field">
     <%= form.label :km_usage %>
