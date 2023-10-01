@@ -1024,7 +1024,7 @@ end
 @total_fuel = 0
 if  arrayFuelExpenses != nil
     1.upto(arrayFuelExpenses.count) do |i|
-      if arrayFuelExpenses[i].to_s.downcase.include? "DI".downcase
+      if arrayFuelExpenses[i-1].product.to_s.downcase.include? "DI".downcase
         @total_fuel = @total_fuel.to_s.to_d + arrayFuelExpenses[i-1].volume.to_s.to_d
       end
     end
@@ -1033,7 +1033,7 @@ end
 @total_adblue = 0
 if  arrayFuelExpenses != nil
     1.upto(arrayFuelExpenses.count) do |i|
-      if arrayFuelExpenses[i].to_s.downcase.include? "BL".downcase
+      if arrayFuelExpenses[i-1].product.to_s.downcase.include? "BL".downcase
         @total_adblue = @total_adblue.to_s.to_d + arrayFuelExpenses[i-1].volume.to_s.to_d
       end
     end
