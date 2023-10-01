@@ -64,19 +64,19 @@ end
 
 def to_datetime (date)
   if date.to_s.include? "T" and ! (date.to_s.include? "U" )
-    DateTime.parse(date).to_datetime
+    DateTime.parse(date).to_s.to_datetime
   else
-    DateTime.parse(date.to_datetime.to_s).strftime('%Y-%m-%dT%H:%M:00').to_datetime
+    DateTime.parse(date.to_s.to_datetime.to_s).strftime('%Y-%m-%dT%H:%M:00').to_s.to_datetime
   end
 end
 
 def event_to_date (date)
 
   if date.to_s.include? "T" and ! (date.to_s.include? "U" )
-     Date.parse(date).strftime('%Y-%m-%d').to_date
+     Date.parse(date).strftime('%Y-%m-%d').to_s.to_date
   else
     #Time.parse(date).strftime('2000-01-01 %H:%M:00')  
-    Date.parse(date).to_date
+    Date.parse(date).to_s.to_date
   end
 
 end
@@ -206,7 +206,7 @@ else
 
                   @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips.brand IS NULL and
                   invoiced_trips."StartDate" > ? and invoiced_trips."StartDate" < ? ORDER BY invoiced_trips."StartDate" DESC, 
-                  invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', to_datetime(@date_from).to_date-1, to_datetime(@date_to).to_date+1])
+                  invoiced_trips.invoice_id DESC, invoiced_trips.client_id ASC, invoiced_trips."DRIVER_id" ASC', to_datetime(@date_from).to_s.to_date-1, to_datetime(@date_to).to_s.to_date+1])
       end
 end
 
@@ -552,6 +552,7 @@ arrayEvents = Array.new
 
 if @driver_id > 0
 
+
     if Event.all.size > 0
               @localEvent = Event.find_by_sql(['SELECT * FROM events where events."DRIVER_id" = ? 
               and events."DATE" BETWEEN ? AND ? ORDER BY events."DATE" ASC', 
@@ -794,7 +795,7 @@ elsif @truck_id > 0 && @driver_id == 0
                       if DriverExpense.all.size
                           @driverExpenses = DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where 
                             driver_expenses."DRIVER_id" = ? AND driver_expenses."DATE" BETWEEN ? AND ? ORDER BY 
-                            driver_expenses."DATE"', @localEvent[2*(i-1)].DRIVER_id, @localEvent[2*(i-1)].DATE.to_date, @localEvent[2*(i-1)+1].DATE.to_date ])
+                            driver_expenses."DATE"', @localEvent[2*(i-1)].DRIVER_id, @localEvent[2*(i-1)].DATE.to_s.to_date, @localEvent[2*(i-1)+1].DATE.to_s.to_date ])
                           arrayDriverExpenses.concat(@driverExpenses)
                       end                
                     end
@@ -929,7 +930,7 @@ else
 
           if FuelExpense.all.size
               @fuelExpenses = FuelExpense.find_by_sql(['SELECT * FROM fuel_expenses where 
-              fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY fuel_expenses.trsdate ASC', @date_from, @date_to.to_date])
+              fuel_expenses.trsdate BETWEEN ? AND ? ORDER BY fuel_expenses.trsdate ASC', @date_from, @date_to.to_s.to_date])
               arrayFuelExpenses.concat(@fuelExpenses)
           end
 
@@ -950,7 +951,7 @@ else
 @totalTruckExpense = 0
 if  arrayTruckExpense != nil
     1.upto( arrayTruckExpense.count) do |i|
-        @totalTruckExpense = @totalTruckExpense.to_d + arrayTruckExpense[i-1].AMOUNT.to_d
+        @totalTruckExpense = @totalTruckExpense.to_s.to_d + arrayTruckExpense[i-1].AMOUNT.to_s.to_d
     end
 end    
 
@@ -958,21 +959,21 @@ end
 if  arrayGermanyToll != nil
     1.upto( arrayGermanyToll.count) do |i|
     #  puts  arrayGermanyToll[i-1].eur.to_s
-        @totalGermanyToll = @totalGermanyToll + arrayGermanyToll[i-1].eur.to_d
+        @totalGermanyToll = @totalGermanyToll + arrayGermanyToll[i-1].eur.to_s.to_d
     end
 end    
 
 @totalBeToll = 0
 if  arrayBeToll != nil
     1.upto( arrayBeToll.count) do |i|
-        @totalBeToll = @totalBeToll.to_d + arrayBeToll[i-1].charged_amount_excluding_vat.to_d
+        @totalBeToll = @totalBeToll.to_s.to_d + arrayBeToll[i-1].charged_amount_excluding_vat.to_s.to_d
     end
 end   
 
 @totalFuelExpenses = 0
 if  arrayFuelExpenses != nil
     1.upto(arrayFuelExpenses.count) do |i|
-        @totalFuelExpenses = @totalFuelExpenses.to_d + arrayFuelExpenses[i-1].EuroNetAmountInclVATFreeCharges.to_d
+        @totalFuelExpenses = @totalFuelExpenses.to_s.to_d + arrayFuelExpenses[i-1].EuroNetAmountInclVATFreeCharges.to_s.to_d
     end
 end   
 
@@ -982,7 +983,7 @@ end
 @totalGenericToll = 0
 if  arrayGenericToll != nil
     1.upto( arrayGenericToll.count) do |i|
-        @totalGenericToll = @totalGenericToll.to_d + arrayGenericToll[i-1].EUR.to_d
+        @totalGenericToll = @totalGenericToll.to_s.to_d + arrayGenericToll[i-1].EUR.to_s.to_d
     end
 end   
 
@@ -990,14 +991,14 @@ end
 @totalDriverExpenses = 0
 if  arrayDriverExpenses != nil
     1.upto( arrayDriverExpenses.count) do |i|
-        @totalDriverExpenses = @totalDriverExpenses.to_d + arrayDriverExpenses[i-1].AMOUNT.to_d
+        @totalDriverExpenses = @totalDriverExpenses.to_s.to_d + arrayDriverExpenses[i-1].AMOUNT.to_s.to_d
     end
 end  
 
 @totalInvoicedTrips = 0
 if  arrayInvoicedTrips != nil
     1.upto( arrayInvoicedTrips.count) do |i|
-        @totalInvoicedTrips = @totalInvoicedTrips.to_d + arrayInvoicedTrips[i-1].total_amount.to_d
+        @totalInvoicedTrips = @totalInvoicedTrips.to_s.to_d + arrayInvoicedTrips[i-1].total_amount.to_s.to_d
     end
 end  
 
@@ -1006,48 +1007,70 @@ end
 @total_km_evogps = 0
 if  arrayInvoicedTrips != nil
     1.upto( arrayInvoicedTrips.count) do |i|
-        @total_km_evogps = @total_km_evogps.to_d + arrayInvoicedTrips[i-1].km_evogps.to_d
+        @total_km_evogps = @total_km_evogps.to_s.to_d + arrayInvoicedTrips[i-1].km_evogps.to_s.to_d
     end
 end  
 
 @total_km_invoiced = 0
 if  arrayInvoicedTrips != nil
     1.upto( arrayInvoicedTrips.count) do |i|
-        @total_km_invoiced = @total_km_invoiced.to_d + arrayInvoicedTrips[i-1].km.to_d
+        @total_km_invoiced = @total_km_invoiced.to_s.to_d + arrayInvoicedTrips[i-1].km.to_s.to_d
     end
 end  
+
+
+
+
+@total_fuel = 0
+if  arrayFuelExpenses != nil
+    1.upto(arrayFuelExpenses.count) do |i|
+      if arrayFuelExpenses[i].to_s.downcase.include? "DI".downcase
+        @total_fuel = @total_fuel.to_s.to_d + arrayFuelExpenses[i-1].volume.to_s.to_d
+      end
+    end
+end  
+
+@total_adblue = 0
+if  arrayFuelExpenses != nil
+    1.upto(arrayFuelExpenses.count) do |i|
+      if arrayFuelExpenses[i].to_s.downcase.include? "BL".downcase
+        @total_adblue = @total_adblue.to_s.to_d + arrayFuelExpenses[i-1].volume.to_s.to_d
+      end
+    end
+end  
+
+
 
 #@total_km_invoiced = 0
 #if  arrayInvoicedTrips != nil
 #    1.upto( arrayInvoicedTrips.count) do |i|
-#        @total_km_invoiced = @total_km_invoiced.to_d + arrayInvoicedTrips[i-1].km.to_d
+#        @total_km_invoiced = @total_km_invoiced.to_s.to_d + arrayInvoicedTrips[i-1].km.to_s.to_d
 #    end
 #end  
 
 @total_toll_invoiced = 0
 if  arrayInvoicedTrips != nil
     1.upto( arrayInvoicedTrips.count) do |i|
-        @total_toll_invoiced = @total_toll_invoiced.to_d + 
-        arrayInvoicedTrips[i-1].germany_toll.to_d +
-        arrayInvoicedTrips[i-1].belgium_toll.to_d +
-        arrayInvoicedTrips[i-1].swiss_toll.to_d +
-        arrayInvoicedTrips[i-1].france_toll.to_d +
-        arrayInvoicedTrips[i-1].italy_toll.to_d +
-        arrayInvoicedTrips[i-1].uk_toll.to_d +
-        arrayInvoicedTrips[i-1].netherlands_toll.to_d
+        @total_toll_invoiced = @total_toll_invoiced.to_s.to_d + 
+        arrayInvoicedTrips[i-1].germany_toll.to_s.to_d +
+        arrayInvoicedTrips[i-1].belgium_toll.to_s.to_d +
+        arrayInvoicedTrips[i-1].swiss_toll.to_s.to_d +
+        arrayInvoicedTrips[i-1].france_toll.to_s.to_d +
+        arrayInvoicedTrips[i-1].italy_toll.to_s.to_d +
+        arrayInvoicedTrips[i-1].uk_toll.to_s.to_d +
+        arrayInvoicedTrips[i-1].netherlands_toll.to_s.to_d
     end
 end  
 ############################################################################################
 ############################################################################################
 
 @total_debit = 
-@totalTruckExpense.to_d + 
-@totalGermanyToll.to_d +
-@totalBeToll.to_d +
-@totalGenericToll.to_d + 
-@totalDriverExpenses.to_d + 
-@totalFuelExpenses.to_d
-
+@totalTruckExpense.to_s.to_d + 
+@totalGermanyToll.to_s.to_d +
+@totalBeToll.to_s.to_d +
+@totalGenericToll.to_s.to_d + 
+@totalDriverExpenses.to_s.to_d + 
+@totalFuelExpenses.to_s.to_d
 
 return     arrayEvents,
            arrayTruckExpense,
@@ -1067,7 +1090,9 @@ return     arrayEvents,
            @total_debit,
            @total_km_evogps,
            @total_km_invoiced,
-           @total_toll_invoiced
+           @total_toll_invoiced,
+           @total_fuel,
+           @total_adblue
 
 end 
 

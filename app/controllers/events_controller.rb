@@ -1760,7 +1760,7 @@ else
   @total_debit,
   @total_km_evogps,
   @total_km_invoiced,
-  @total_toll_invoiced = @search.scope
+  @total_toll_invoiced, @total_fuel, @total_adblue = @search.scope
 
   @drivers = Driver.all
   @trucks = Truck.all
