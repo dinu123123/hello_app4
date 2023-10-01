@@ -124,14 +124,14 @@
     </thead>
 <tbody>    
     <tr>
-      <td bgcolor="#E8F993"><%= @total_fuel %></td>
-      <td bgcolor="#E8F993"><%= @total_adblue %></td>
-      <td bgcolor="#E8F993"><%= @total_fuel/@total_km_evogps %></td>
-      <td bgcolor="#E8F993"><%= @total_adblue/@total_km_evogps %></td>
-      <td bgcolor="#E8F993"><%= @total_fuel/@total_km_invoiced %></td>
-      <td bgcolor="#E8F993"><%= @total_adblue/@total_km_invoiced %></td>
-      <td bgcolor="#E8F993"><%= @total_fuel_expenses-  @total_fuel_expenses*@total_km_invoiced/@total_km_evogps %></td>
-      <td bgcolor="#E8F993"><%= (@total_fuel_expenses-  @total_fuel_expenses*@total_km_invoiced/@total_km_evogps)/@total_km_evogps %>
+      <td bgcolor="#E8F993"><%= @total_fuel.round(2) %></td>
+      <td bgcolor="#E8F993"><%= @total_adblue.round(2) %></td>
+      <td bgcolor="#E8F993"><%= (@total_fuel/@total_km_evogps).round(2) %></td>
+      <td bgcolor="#E8F993"><%= (@total_adblue/@total_km_evogps).round(2) %></td>
+      <td bgcolor="#E8F993"><%= (@total_fuel/@total_km_invoiced).round(2) %></td>
+      <td bgcolor="#E8F993"><%= (@total_adblue/@total_km_invoiced).round(2) %></td>
+      <td bgcolor="#E8F993"><%= (@total_fuel_expenses-  @total_fuel_expenses*@total_km_invoiced/@total_km_evogps).round(2) %></td>
+      <td bgcolor="#E8F993"><%= ((@total_fuel_expenses-  @total_fuel_expenses*@total_km_invoiced/@total_km_evogps)/@total_km_evogps).round(2) %>
     </tr>
      </tbody>
 </table>
