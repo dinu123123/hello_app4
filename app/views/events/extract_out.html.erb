@@ -113,13 +113,11 @@
       <tr>
     <th>total_fuel(L)</th> 
     <th>total_adblue(L)</th> 
-    <th>Fuel consumption/GPS km</th> 
-    <th>adblue consumption/GPS km</th> 
-    <th>Fuel consumption/Invoiced km</th> 
-    <th>adblue consumption/Invoiced km</th>
-    <th>Loss per km(diesel+AdBlue) due to extra km (total)</th>  
-    <th>Loss per km(diesel+AdBlue) due to extra km (per km)</th>  
-
+    <th>Fuel/GPS km</th> 
+    <th>AdBlue/GPS km</th> 
+    <th>Fuel/Invoiced km</th> 
+    <th>AdBlue/Invoiced km</th>
+    <th>Total and per km loss (diesel+AdBlue)</th> 
       </tr>
     </thead>
 <tbody>    
@@ -130,8 +128,8 @@
       <td bgcolor="#E8F993"><%= (@total_adblue/@total_km_evogps).round(2) %></td>
       <td bgcolor="#E8F993"><%= (@total_fuel/@total_km_invoiced).round(2) %></td>
       <td bgcolor="#E8F993"><%= (@total_adblue/@total_km_invoiced).round(2) %></td>
-      <td bgcolor="#E8F993"><%= (@total_fuel_expenses- (@total_fuel_expenses*(@total_km_invoiced/@total_km_evogps) )).round(2) %></td>
-      <td bgcolor="#E8F993"><%= ((@total_fuel_expenses- (@total_fuel_expenses*(@total_km_invoiced/@total_km_evogps) ))/@total_km_evogps).round(2) %>
+      <td bgcolor="#E8F993"><%= (@total_fuel_expenses- (@total_fuel_expenses*(@total_km_invoiced/@total_km_evogps) )).round(2).to_s+ " | ".to_s+ 
+          (((@total_fuel_expenses- (@total_fuel_expenses*(@total_km_invoiced/@total_km_evogps) ))/@total_km_evogps).round(2)).to_s %>
     </tr>
      </tbody>
 </table>
