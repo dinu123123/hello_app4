@@ -100,12 +100,12 @@ def index
                                        event.DRIVER_id, 
                                        to_datetime(event.DATE)])[0].sum1
 
+                         target = -1
 
                          if sum_km1 != nil
                             @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
                                        and pricings.DATETIME <= ? order by pricings.DATETIME desc", event.client_id, Date.today.to_datetime ]) 
 
-                            target = -1
                             if @pricing[0] != nil and @pricing[0].target != nil
                                  target = @pricing.first.target
                             end
@@ -130,7 +130,6 @@ def index
                             sum_km = sum_km1/nb_days
 
                          else
-                          target = -1
                           sum_km = 0 
                           nb_days = 0
                          end    
