@@ -111,7 +111,6 @@ def index
                             end
 
 
-
                             trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where  
                                        invoiced_trips."DRIVER_id" = ? and 
                                        invoiced_trips."StartDate" >= ? ORDER BY 
@@ -124,38 +123,45 @@ def index
                             end_date = trips.first.EndDate
                             start_date = trips.last.StartDate
                             nb_days = (trips.first.EndDate.to_date- trips.last.StartDate.to_date).to_i+1
+
+                            if nb_days == 200
+                              adasda
+                            end
                             sum_km = sum_km1/nb_days
 
                          else
                           target = -1
                           sum_km = 0 
+                          nb_days = 0
                          end    
 
-                                      @end_ep = 0
-                                      @end_dp = 0
-                                      @end_op = 0
+                          @end_ep = 0
+                          @end_dp = 0
+                          @end_op = 0
 
-                                      if @prev_activity[0] != nil
-                                         @end_ep = @prev_activity[0].end_ep
-                                         @end_dp = @prev_activity[0].end_dp
-                                         @end_op = @prev_activity[0].end_op
-                                      end
+                          if @prev_activity[0] != nil
+                             @end_ep = @prev_activity[0].end_ep
+                             @end_dp = @prev_activity[0].end_dp
+                             @end_op = @prev_activity[0].end_op
+                          end
 
-                                     @new_Activity = Activity.create(:date => Date.today, 
-                                                    :DRIVER_id  => event.DRIVER_id,
-                                                    :truck_id => event.truck_id,
-                                                    :trailer_id => event.trailer_id,
-                                                    :client_id => event.client_id,
-                                                    :dispatcher_id => event.dispatcher_id,
-                                                    :start_ep => @end_ep,
-                                                    :start_dp => @end_dp,
-                                                    :start_op => @end_op,
-                                                    :end_ep => @end_ep,
-                                                    :end_dp => @end_dp,
-                                                    :end_op => @end_op,
-                                                    :km => (sum_km*100/(target/30)),
-                                                    :comments => "[08:00]\n[09:00]\n[10:00]\n[11:00]\n[12:00]\n[13:00]\n[14:00]\n[15:00]\n[16:00]\n[17:00]".to_s
-                                                    )
+                         @new_Activity = Activity.create(:date => Date.today, 
+                                        :DRIVER_id  => event.DRIVER_id,
+                                        :truck_id => event.truck_id,
+                                        :trailer_id => event.trailer_id,
+                                        :client_id => event.client_id,
+                                        :dispatcher_id => event.dispatcher_id,
+                                        :start_ep => @end_ep,
+                                        :start_dp => @end_dp,
+                                        :start_op => @end_op,
+                                        :end_ep => @end_ep,
+                                        :end_dp => @end_dp,
+                                        :end_op => @end_op,
+                                        :km => (sum_km*100/(target/30)),
+                                        :days_with_client => nb_days,
+                                        :client_target => target,
+                                        :comments => "[08:00]\n[09:00]\n[10:00]\n[11:00]\n[12:00]\n[13:00]\n[14:00]\n[15:00]\n[16:00]\n[17:00]".to_s
+                                        )
       
                      end
           end 
@@ -372,7 +378,8 @@ end
         :dest1_loaded_op, :dest2_address, :dest2_comments, :dest2_unloaded_ep, :dest2_unloaded_dp,
         :dest2_unloaded_op, :dest2_loaded_ep, :dest2_loaded_dp, :dest2_loaded_op, :end_ep, :end_dp, 
         :end_op , :pallets_paid_in, :pallets_paid_out, :name_advisor, :km_destination, :starting_time, :driving_time_left,
-        :end_time, :night_break, :weekend_break, :invoiced_trip_id, :dispatcher_id, :km_evogps, :km, images: [], trip_images: [])
+        :end_time, :night_break, :weekend_break, :invoiced_trip_id, :dispatcher_id, :km_evogps, :km, 
+        :days_with_client, :client_target, images: [], trip_images: [])
     end
 
 end
