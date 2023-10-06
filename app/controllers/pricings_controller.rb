@@ -75,7 +75,7 @@ class PricingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pricing_params
-      params.require(:pricing).permit(:DATETIME, :client_id, :price_per_km, :price_per_day, :surcharge, :PaymentDelay, :DESCRIPTION)
+      params.require(:pricing).permit(:DATETIME, :client_id, :price_per_km, :price_per_day, :surcharge, :target, :PaymentDelay, :DESCRIPTION)
     
     end
 end

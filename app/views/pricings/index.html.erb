@@ -9,6 +9,7 @@
       <th>Client</th>
       <th>Price/km</th>
       <th>Price/day</th>
+      <th>Target</th>
       <th>Surcharge (extra %percent)</th>
       <th>PaymentDelay (PaymentDate - InvoiceDate)</th>
       <th>Description</th>
@@ -23,6 +24,7 @@
         <td><%= @clients.find(pricing.client_id).Name %></td>
         <td><%= pricing.price_per_km %></td>
         <td><%= pricing.price_per_day %></td>
+        <td><%= pricing.target %></td>
         <td><%= pricing.surcharge %></td>
         <td><%= pricing.PaymentDelay %></td>
         <td><%= pricing.DESCRIPTION %></td>

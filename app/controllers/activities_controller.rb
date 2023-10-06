@@ -42,6 +42,14 @@ def update_individual
 
 end
 
+def to_datetime (date)
+  if date.to_s.include? "T" and ! (date.to_s.include? "U" )
+    DateTime.parse(date).to_s.to_datetime
+  else
+    DateTime.parse(date.to_s.to_datetime.to_s).strftime('%Y-%m-%dT%H:%M:00').to_s.to_datetime
+  end
+end
+
   # GET /activities
   # GET /activities.json
 def index
@@ -76,12 +84,52 @@ def index
                @curr_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", 
                 Date.today, event.truck_id ]) 
             
+
+
+
                      if @curr_activity.size == 0 and event.START_END == true
 
                                       @prev_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and 
                                         activities.truck_id = ? order by activities.date asc ", 
                                         Date.today-1, event.truck_id ]) 
-                          
+
+                                       sum_km1 = InvoicedTrip.find_by_sql(['SELECT SUM("km") AS sum1 FROM invoiced_trips where  
+                                       invoiced_trips."DRIVER_id" = ? and 
+                                       invoiced_trips."StartDate" >= ? ORDER BY 
+                                       invoiced_trips."StartDate" DESC, 
+                                       invoiced_trips.invoice_id DESC, 
+                                       invoiced_trips.client_id ASC', 
+                                       event.DRIVER_id, 
+                                       to_datetime(event.DATE)])[0].sum1
+
+if sum_km1 != nil
+              
+ @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
+  and pricings.DATETIME <= ? order by pricings.DATETIME desc", event.client_id, Date.today.to_datetime ]) 
+
+ target = -1
+ if @pricing[0] != nil and @pricing[0].target != nil
+   target = @pricing.first.target
+ end
+
+
+
+                            trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where  
+                                       invoiced_trips."DRIVER_id" = ? and 
+                                       invoiced_trips."StartDate" >= ? ORDER BY 
+                                       invoiced_trips."StartDate" DESC, 
+                                       invoiced_trips.invoice_id DESC, 
+                                       invoiced_trips.client_id ASC', 
+                                       event.DRIVER_id, 
+                                       to_datetime(event.DATE)])
+
+                            end_date = trips.first.EndDate
+                            start_date = trips.last.StartDate
+                            nb_days = (trips.first.EndDate.to_date- trips.last.StartDate.to_date).to_i+1
+                            sum_km = sum_km1/nb_days
+
+
+            end              
                                       @end_ep = 0
                                       @end_dp = 0
                                       @end_op = 0
@@ -104,6 +152,7 @@ def index
                                                     :end_ep => @end_ep,
                                                     :end_dp => @end_dp,
                                                     :end_op => @end_op,
+                                                    :km => (sum_km*100/target),
                                                     :comments => "[08:00]\n[09:00]\n[10:00]\n[11:00]\n[12:00]\n[13:00]\n[14:00]\n[15:00]\n[16:00]\n[17:00]".to_s
                                                     )
       
@@ -319,7 +368,7 @@ end
         :dest1_loaded_op, :dest2_address, :dest2_comments, :dest2_unloaded_ep, :dest2_unloaded_dp,
         :dest2_unloaded_op, :dest2_loaded_ep, :dest2_loaded_dp, :dest2_loaded_op, :end_ep, :end_dp, 
         :end_op , :pallets_paid_in, :pallets_paid_out, :name_advisor, :km_destination, :starting_time, :driving_time_left,
-        :end_time, :night_break, :weekend_break, :invoiced_trip_id, :dispatcher_id, :km_evogps, images: [], trip_images: [])
+        :end_time, :night_break, :weekend_break, :invoiced_trip_id, :dispatcher_id, :km_evogps, :km, images: [], trip_images: [])
     end
 
 end

@@ -210,9 +210,24 @@ function checkAll(check_all){
 
         <td bgcolor= <%=bg_color %> ><%= activity.date.strftime("%m/%d") %></td>
           
-        <td bgcolor= <%=bg_color %> style="font-weight:bold" > <%= (@activities.size-index).to_s+".".to_s + @drivers.find(activity.DRIVER_id).CNP.split(//).last(0).join+" "+
+    <% if activity.km.to_s.to_i < "100".to_i and activity.km.to_s.to_i >= "0".to_i %>
+
+        
+
+<td bgcolor= <%=bg_color %> style="font-weight:bold;background-color:yellow;font-size:120%;" > 
+  <%= (@activities.size-index).to_s+".".to_s + 
                                          @drivers.find(activity.DRIVER_id).FIRSTNAME.split.first+" "+
-                                         @drivers.find(activity.DRIVER_id).SECONDNAME.split.first %></td>
+                                         @drivers.find(activity.DRIVER_id).SECONDNAME.split.first+" => "+ activity.km.to_s.to_i.to_s+ "\% from target" %></td>
+
+<% else %> 
+
+<td bgcolor= <%=bg_color %> style="font-weight:bold;background-color:green;font-size:100%;" > 
+  <%= (@activities.size-index).to_s+".".to_s + 
+                                         @drivers.find(activity.DRIVER_id).FIRSTNAME.split.first+" "+
+                                         @drivers.find(activity.DRIVER_id).SECONDNAME.split.first+" => "+ activity.km.to_s+ "\% from the target" %></td>
+
+<% end %>   
+
 
 <% if activity.dispatcher_id != nil %>
         <td bgcolor= <%=bg_color %> >
