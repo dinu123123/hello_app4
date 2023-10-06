@@ -61,6 +61,7 @@ def index
  @dispatchers = Dispatcher.all
  @invoiced_trips = InvoicedTrip.all
 
+
  if  @@recorded_date.to_s != Date.today.to_s
       @@recorded_date=Date.today
 
@@ -84,8 +85,8 @@ def index
                @curr_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", 
                 Date.today, event.truck_id ]) 
             
-                     if @curr_activity.size == 0 and event.START_END == true
 
+                     if @curr_activity.size == 0 and event.START_END == true
                                       @prev_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and 
                                         activities.truck_id = ? order by activities.date asc ", 
                                         Date.today-1, event.truck_id ]) 
@@ -98,6 +99,7 @@ def index
                                        invoiced_trips.client_id ASC', 
                                        event.DRIVER_id, 
                                        to_datetime(event.DATE)])[0].sum1
+
 
                          if sum_km1 != nil
                             @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
@@ -125,6 +127,7 @@ def index
                             sum_km = sum_km1/nb_days
 
                          else
+                          target = -1
                           sum_km = 0 
                          end    
 
