@@ -84,9 +84,6 @@ def index
                @curr_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", 
                 Date.today, event.truck_id ]) 
             
-
-
-
                      if @curr_activity.size == 0 and event.START_END == true
 
                                       @prev_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and 
@@ -102,15 +99,14 @@ def index
                                        event.DRIVER_id, 
                                        to_datetime(event.DATE)])[0].sum1
 
-if sum_km1 != nil
-              
- @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
-  and pricings.DATETIME <= ? order by pricings.DATETIME desc", event.client_id, Date.today.to_datetime ]) 
+                         if sum_km1 != nil
+                            @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
+                                       and pricings.DATETIME <= ? order by pricings.DATETIME desc", event.client_id, Date.today.to_datetime ]) 
 
- target = -1
- if @pricing[0] != nil and @pricing[0].target != nil
-   target = @pricing.first.target
- end
+                            target = -1
+                            if @pricing[0] != nil and @pricing[0].target != nil
+                                 target = @pricing.first.target
+                            end
 
 
 
@@ -128,8 +124,10 @@ if sum_km1 != nil
                             nb_days = (trips.first.EndDate.to_date- trips.last.StartDate.to_date).to_i+1
                             sum_km = sum_km1/nb_days
 
+                         else
+                          sum_km = 0 
+                         end    
 
-            end              
                                       @end_ep = 0
                                       @end_dp = 0
                                       @end_op = 0
@@ -152,35 +150,38 @@ if sum_km1 != nil
                                                     :end_ep => @end_ep,
                                                     :end_dp => @end_dp,
                                                     :end_op => @end_op,
-                                                    :km => (sum_km*100/target),
+                                                    :km => (sum_km*100/(target/30)),
                                                     :comments => "[08:00]\n[09:00]\n[10:00]\n[11:00]\n[12:00]\n[13:00]\n[14:00]\n[15:00]\n[16:00]\n[17:00]".to_s
                                                     )
       
                      end
           end 
        end
-     end       
+
+
+
+     end # for all events  
    end
 
-   @search = TransactionSearch.new(params[:search],1)
+     @search = TransactionSearch.new(params[:search],1)
 
-   @activities = @search.scope_activities_index
-   
-   respond_to do |format|
-      format.html
-      format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
-      format.pdf do
-            render pdf: "activities",
-            page_size: 'A4',
-            template: "activities/pdf_index.html.erb",
-            layout: "pdf.html",
-            orientation: "Portrait",
-            lowquality: true,
-            zoom: 1,
-            dpi: 75
+     @activities = @search.scope_activities_index
+     
+     respond_to do |format|
+        format.html
+        format.xls #{ send_data @trucks.to_csv(col_sep: "\t") }
+        format.pdf do
+              render pdf: "activities",
+              page_size: 'A4',
+              template: "activities/pdf_index.html.erb",
+              layout: "pdf.html",
+              orientation: "Portrait",
+              lowquality: true,
+              zoom: 1,
+              dpi: 75
+        end
       end
-    end
-  
+    
 end
 
 
