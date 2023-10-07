@@ -214,14 +214,14 @@ function checkAll(check_all){
 
         
 
-<td bgcolor= <%=bg_color %> style="font-weight:bold;background-color:yellow;font-size:120%;" > 
+<td bgcolor= <%=bg_color %> style="font-weight:bold;background-color:#FF2400;font-size:110%;" > 
   <%= (@activities.size-index).to_s+".".to_s + 
                                          @drivers.find(activity.DRIVER_id).FIRSTNAME.split.first+" "+
                                          @drivers.find(activity.DRIVER_id).SECONDNAME.split.first+" => "+ activity.km.to_s.to_i.to_s+ "\% din target zilnic. Client target(30 zile) = " + activity.client_target.to_s+ ". Zile la client=" + activity.days_with_client.to_s %></td>
 
 <% else %> 
 
-<td bgcolor= <%=bg_color %> style="font-weight:bold;background-color:green;font-size:100%;" > 
+<td bgcolor= <%=bg_color %> style="font-weight:bold;background-color:#98FF98;font-size:110%;" > 
   <%= (@activities.size-index).to_s+".".to_s + 
                                          @drivers.find(activity.DRIVER_id).FIRSTNAME.split.first+" "+
                                          @drivers.find(activity.DRIVER_id).SECONDNAME.split.first+" => "+ activity.km.to_s.to_i.to_s+ "\% din target zilnic. Client target(30 zile) = " + activity.client_target.to_s+ ". Zile la client=" + activity.days_with_client.to_s %></td>
@@ -335,7 +335,7 @@ function checkAll(check_all){
  
 
         <% if line_out.partition('|').first ==  line_in.partition('|').first and  line_out[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i == line_in[/#{'\|'}(.*?)#{'\|'}/m, 1].to_i  %>
-             <p style="background-color:green;font-size:100%;"><%= line_out %></p>
+             <p style="background-color:#98FB98;font-size:100%;"><%= line_out %></p>
             <% @match = true %>
         <% end %>
 
