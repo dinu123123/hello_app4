@@ -172,14 +172,14 @@ def index
                                else
 
 
-                                 missing_days_acc +=  (all_trips[index].StartDate.to_date - all_trips[index-1].EndDate.to_date).to_i
+
+                                 #missing_days_acc +=  (all_trips[index].StartDate.to_date - all_trips[index-1].EndDate.to_date).to_i
                                 
                                  #nb_days = (all_trips[index].EndDate.to_date- all_trips.first.StartDate.to_date).to_i+1-missing_days_acc
 
-                                 missing_days_acc +=  ((all_trips[index].StartDate - all_trips[index-1].EndDate)/(60*24*60)).ceil
+                                 missing_days_acc +=  ((all_trips[index].StartDate - all_trips[index-1].EndDate)/(60*24*60))
 
-                                 nb_days = (all_trips.first.EndDate-all_trips.first.StartDate)/(60*24*60)
-
+                                 nb_days = ((all_trips[index].EndDate- all_trips.first.StartDate)/(60*24*60)) - missing_days_acc
 
                                  trg =  ((km_acc/nb_days)/(target/30))*100
 
