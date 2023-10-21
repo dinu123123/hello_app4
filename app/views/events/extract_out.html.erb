@@ -228,12 +228,18 @@
 
         <td><%= @drivers.find(invoiced_trip.DRIVER_id).FIRSTNAME+" "+ @drivers.find(invoiced_trip.DRIVER_id).SECONDNAME %></td>
         <td><%= @drivers.find(invoiced_trip.DRIVER_id).CNP %></td>
-<% end %>
+
+<% else %> 
+        <td><%= "NO DRIVER" %></td>
+        <td><%= " - " %></td>
+<% end %> 
 
         <td><%= invoiced_trip.DRIVER_id %></td>
 
 <% if invoiced_trip.truck_id != nil %>
         <td><%= @trucks.find(invoiced_trip.truck_id).NB_PLATE %></td>
+<% else %>
+        <td><%= " - " %></td>
 <% end %>
 
         <td><%= invoiced_trip.truck_id %></td>
