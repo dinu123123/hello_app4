@@ -174,7 +174,7 @@ def index
                                else
 
 
-                                 missing_days_acc +=  (all_trips[index].StartDate.to_date - all_trips[index-1].EndDate.to_date).to_i-1
+                                 missing_days_acc +=  (all_trips[index].StartDate.to_date - all_trips[index-1].EndDate.to_date).to_i
                                 
                                  nb_days = (all_trips[index].EndDate.to_date- all_trips.first.StartDate.to_date).to_i+1-missing_days_acc
                                  trg =  ((km_acc/nb_days)/(target/30))*100
