@@ -185,7 +185,7 @@ def index
 
                                  array_target.push(trg.to_i)
                                
-                                 array_missing_days.push(missing_days_acc)
+                                 array_missing_days.push(missing_days_acc.floor)
                                                       
                                end 
 
