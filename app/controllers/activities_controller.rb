@@ -93,6 +93,7 @@ def index
             
 
 
+
                      if @curr_activity.size == 0 and event.START_END == true
 
                            @prev_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and 
@@ -191,7 +192,7 @@ def index
 
                              }
                            
-
+                          end
 
 
                           sum_km1 = InvoicedTrip.find_by_sql(['SELECT SUM("km") AS sum1 FROM invoiced_trips where  
@@ -285,7 +286,7 @@ def index
       
                      end
           end 
-       end
+       
 
 
      end # for all events  
@@ -347,7 +348,8 @@ def index_old
         elsif event.START_END == true 
                 
                reg_trucks.push(event.truck_id)
-          
+      
+
                @curr_activity = Activity.find_by_sql(["SELECT * FROM activities where activities.date = ? and activities.truck_id = ? order by activities.date asc ", 
                 Date.today, event.truck_id ]) 
             
