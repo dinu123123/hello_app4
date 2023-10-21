@@ -200,17 +200,17 @@ def index
                                       to_datetime(event.DATE)])[0].sum1
 
 
-                          days = InvoicedTrip.find_by_sql(['SELECT SUM( JULIANDAY("EndDate")- JULIANDAY("StartDate")+1 ) as days FROM invoiced_trips where  
+                          days = InvoicedTrip.find_by_sql(['SELECT SUM( JULIANDAY(datetime("EndDate","localtime")||"Z") - JULIANDAY(datetime("StartDate","localtime")||"Z") ) as days FROM invoiced_trips where  
                                       invoiced_trips."DRIVER_id" = ? and 
                                       invoiced_trips."StartDate" >= ? ORDER BY 
                                       invoiced_trips."StartDate" DESC, 
                                       invoiced_trips.invoice_id DESC, 
                                       invoiced_trips.client_id ASC', 
                                       event.DRIVER_id, 
-                                      to_datetime(event.DATE)])[0].days
+                                      to_datetime(event.DATE)])[0].days.ceil
 
 
-  target = -1
+                         target = -1
 
                          if sum_km1 != nil
                             @pricing = Pricing.find_by_sql(["SELECT * FROM pricings where pricings.client_id = ? 
