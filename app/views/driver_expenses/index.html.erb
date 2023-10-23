@@ -27,14 +27,19 @@ tr:nth-child(even) {
 <h4>This page is dedicated to the driver expenses description - you can see the existent list of driver expenses, modify them or introduce new ones.</h4>
 <ul>
  
+  <% if false %> 
   <li>
   <p>
+
   <h4> Download All Driver Expenses as CSV or Excel file:
   <%= link_to "CSV", driver_expenses_path(format: "csv") %> |
   <%= link_to "Excel", driver_expenses_path(format: "xls") %> 
-  </h4> 
+  </h4>
   </p>
   </li>
+
+<% end %> 
+
 
   <li>
   <div>
