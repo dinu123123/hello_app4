@@ -88,13 +88,7 @@
     <th> <%= link_to 'New Driver Expense', new_driver_expense_path %> </th>
   </tr>
   <tr>
-
-  <% if  current_user.admin != true and ! current_user.email.eql?  "ameropa.logistics@gmail.com" %> 
-    <th> <%= link_to 'All Driver Expenses', truck_expenses_path %> </th>
-  <% else %> 
     <th> <%= link_to 'All Driver Expenses', driver_expenses_path %> </th>
-  <% end %> 
-
   </tr>
 </table>
 
