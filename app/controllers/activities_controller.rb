@@ -118,7 +118,7 @@ def index
                            if all_activities != nil and all_activities.size>0
                               all_activities.each_with_index {|val, index| 
                                if index == 0
-                                  if all_activities_before != nil and all_activities_before.size > 0 and -all_activities_before[0].odometer != nil 
+                                  if all_activities_before != nil and all_activities_before.size > 0 and all_activities_before[0].odometer != nil 
                                     consumption.push(( (all_activities[index].volume)*100/ (all_activities[index].odometer-all_activities_before[0].odometer.to_s.to_i)).to_i)
                                   else
                                     consumption.push(-1)
