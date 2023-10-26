@@ -168,7 +168,7 @@ def index
                           
                                        nb_days = (all_trips.first.EndDate- all_trips.first.StartDate)/(60*24*60)
                                        trg =  ((first_trip.km/nb_days)/((target.to_s.to_i+1)/30))*100
-                                       array_target.push(trg.to_i)
+                                       array_target.push(trg.to_s.to_i)
                                        array_missing_days.push(0)  
                                else
 
