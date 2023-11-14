@@ -124,7 +124,11 @@ def index
                                     consumption.push(-1)
                                   end  
                                else 
-                                  consumption.push(( (all_activities[index].volume.to_s.to_i)*100/ (all_activities[index].odometer.to_s.to_i - all_activities[index-1].odometer.to_s.to_i)).to_i)
+                                  if all_activities[index].volume.to_s.to_i - all_activities[index-1].odometer.to_s.to_i != 0
+                                    consumption.push(( (all_activities[index].volume.to_s.to_i)*100/ (all_activities[index].odometer.to_s.to_i - all_activities[index-1].odometer.to_s.to_i)).to_i)
+                                  else
+                                    consumption.push(-1)
+                                  end
                                end
                              }
                            end
