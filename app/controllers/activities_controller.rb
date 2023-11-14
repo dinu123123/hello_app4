@@ -119,12 +119,12 @@ def index
                               all_activities.each_with_index {|val, index| 
                                if index == 0
                                   if all_activities_before != nil and all_activities_before.size > 0 and all_activities_before[0].odometer != nil 
-                                    consumption.push(( (all_activities[index].volume)*100/ (all_activities[index].odometer-all_activities_before[0].odometer.to_s.to_i)).to_i)
+                                    consumption.push(( (all_activities[index].volume.to_s.to_i)*100/ (all_activities[index].odometer.to_s.to_i-all_activities_before[0].odometer.to_s.to_i)).to_i)
                                   else
                                     consumption.push(-1)
                                   end  
                                else 
-                                  consumption.push(( (all_activities[index].volume)*100/ (all_activities[index].odometer - all_activities[index-1].odometer.to_s.to_i)).to_i)
+                                  consumption.push(( (all_activities[index].volume.to_s.to_i)*100/ (all_activities[index].odometer.to_s.to_i - all_activities[index-1].odometer.to_s.to_i)).to_i)
                                end
                              }
                            end
