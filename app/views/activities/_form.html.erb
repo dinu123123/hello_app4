@@ -251,8 +251,11 @@ legend {
 
 <div id="container">
 
-
-
+<fieldset>
+  <div class="field">
+    <%= form.label :full, 'Bifeaza daca s-a facut PLINUL LA REZERVOR'  %>
+    <%= form.check_box :full, id: :full%>
+  </div>
 
   <div class="field">
     <%= form.label :volume, "Volume diesel" %>
@@ -265,10 +268,16 @@ legend {
     <%= form.number_field :odometer %>
   </div>
 
+</fieldset>
+
+<br>
+
+
   <div class="field">
     <%= form.label :comments, "Dispatcher comments regarding hourly activities!" %>
     <%= form.text_area :comments , size: "100x11" %>
-  </div
+  </div>
+
 
 
 

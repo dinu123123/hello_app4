@@ -69,6 +69,7 @@ def index
 
     reg_trucks = Array.new
       
+
     Event.order('DATE DESC').all.each do |event|
 
       if (@trucks.find(event.truck_id).NB_PLATE.start_with?("PH") == true or 
@@ -109,32 +110,52 @@ def index
 
 
                            all_activities = Activity.find_by_sql(["SELECT * FROM activities where activities.date >= ? 
-                                      and activities.truck_id = ? and activities.volume not NULL order by activities.date asc ", event.DATE, event.truck_id ]) 
+                                      and activities.truck_id = ? and activities.volume not NULL  and activities.full = ? order by activities.date asc", event.DATE, event.truck_id, true ]) 
 
                           all_activities_before = Activity.find_by_sql(["SELECT * FROM activities where activities.date < ? 
-                                      and activities.truck_id = ? and activities.volume not NULL order by activities.date desc ", event.DATE, event.truck_id ]) 
-
+                                      and activities.truck_id = ? and activities.volume not NULL  and activities.full = ? 
+                                      order by activities.date desc", event.DATE, event.truck_id, true ]) 
 
                            if all_activities != nil and all_activities.size>0
                               all_activities.each_with_index {|val, index| 
-                               if index == 0
-                                  if all_activities_before != nil and all_activities_before.size > 0 and all_activities_before[0].odometer != nil 
-                                    consumption.push(( (all_activities[index].volume.to_s.to_i)*100/ (all_activities[index].odometer.to_s.to_i-all_activities_before[0].odometer.to_s.to_i)).to_i)
-                                  else
-                                    consumption.push(-1)
-                                  end  
-                               else 
-                                  if (all_activities[index].odometer.to_s.to_i - all_activities[index-1].odometer.to_s.to_i) > 0
-                                    consumption.push(( (all_activities[index].volume.to_s.to_i)*100/ 
-                                      (all_activities[index].odometer.to_s.to_i - all_activities[index-1].odometer.to_s.to_i)).to_i)
-                                  else
-                                    consumption.push(-1)
-                                  end
-                               end
-                             }
+
+
+
+                                   if index == 0
+                                      if all_activities_before != nil and all_activities_before.size > 0 and all_activities_before[0].odometer != nil 
+
+                                      #this should represent partial tankings    
+                                      sum = Activity.find_by_sql(['SELECT SUM("volume") AS sum1 FROM activities where activities.date < ? 
+                                          and activities.date > ? and activities.truck_id = ? and activities.volume NOT NULL and 
+                                          (activities.full IS NOT NULL OR activities.full = ?) order by activities.date desc', 
+                                          all_activities[index].date, all_activities_before[0].date,  event.truck_id, false ])[0].sum1.to_s.to_i
+
+                                        consumption.push(( (all_activities[index].volume.to_s.to_i+sum)*100/ (all_activities[index].odometer.to_s.to_i-all_activities_before[0].odometer.to_s.to_i)).to_i)
+                                      else
+                                        
+                                        consumption.push(-1)
+                                      end  
+                                   else 
+                                      if (all_activities[index].odometer.to_s.to_i - all_activities[index-1].odometer.to_s.to_i) > 0
+
+
+                                        #this should represent partial tankings
+                                        sum = Activity.find_by_sql(['SELECT SUM("volume") AS sum1 FROM activities where activities.date < ? 
+                                          and activities.date > ? and (activities.full IS NULL OR activities.full = ?) and activities.truck_id = ? and 
+                                          activities.volume not NULL order by activities.date desc ', 
+                                          all_activities[index].date, all_activities[index-1].date, false, event.truck_id ])[0].sum1.to_s.to_i
+
+                                        consumption.push(( (all_activities[index].volume.to_s.to_i+sum)*100/ 
+                                          (all_activities[index].odometer.to_s.to_i - all_activities[index-1].odometer.to_s.to_i)).to_i)
+
+                                      else
+                                        consumption.push(-1)
+                                      end
+                                   end
+                              }
                            end
 
-
+                           
                          #  if(all_trips)
                          #  first_trip = all_trips.first 
 
@@ -657,7 +678,7 @@ end
         :dest2_unloaded_op, :dest2_loaded_ep, :dest2_loaded_dp, :dest2_loaded_op, :end_ep, :end_dp, 
         :end_op , :pallets_paid_in, :pallets_paid_out, :name_advisor, :km_destination, :starting_time, :driving_time_left,
         :end_time, :night_break, :weekend_break, :invoiced_trip_id, :dispatcher_id, :km_evogps, :km, 
-        :days_with_client, :client_target, :odometer, images: [], trip_images: [],  array_target: [], 
+        :days_with_client, :client_target, :odometer, :full, images: [], trip_images: [],  array_target: [], 
         array_passed_days: [], array_missing_days: [], waste: [], consumption: [])
     end
 

@@ -277,9 +277,16 @@ function checkAll(check_all){
 <% end %>
 
 
-<td bgcolor= <%=bg_color %> ><%= @trucks.find(activity.truck_id).NB_PLATE %></td>
-<td bgcolor= <%=bg_color %> ><%= activity.volume.to_s+"L ".to_s + activity.odometer.to_s+"km ".to_s%></td>
 
+
+<td bgcolor= <%=bg_color %> ><%= @trucks.find(activity.truck_id).NB_PLATE %></td>
+
+
+  <% if activity.full != nil and activity.full == TRUE %>
+      <td bgcolor= <%=bg_color %> ><%= "Full tank ".to_s + activity.volume.to_s+"L ".to_s + activity.odometer.to_s+"km ".to_s%></td>
+  <% else %>
+      <td bgcolor= <%=bg_color %> ><%= activity.volume.to_s+"L ".to_s + activity.odometer.to_s+"km ".to_s%></td>
+  <% end %>
 
         <td bgcolor= <%=bg_color %> >
           <% if activity.trailer_id!=nil  and @trailers.exists?(activity.trailer_id) %>
