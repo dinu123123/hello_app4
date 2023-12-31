@@ -771,7 +771,7 @@ elsif @truck_id > 0 && @driver_id == 0
                else
 
               @localEvent = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
-              and events."DATE" <= ? and events."START_END" = ? ORDER BY events."DATE" ASC', 
+              and events."DATE" <= ? and events."START_END" = ? ORDER BY events."DATE" DESC', 
               @truck_id, to_datetime(@date_from), true])
  
 
