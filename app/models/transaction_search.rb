@@ -771,20 +771,35 @@ elsif @truck_id > 0 && @driver_id == 0
                else
 
               @localEvent = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
-              and events."DATE" <= ? ORDER BY events."DATE" ASC', 
-              @truck_id, to_datetime(@date_from)])
+              and events."DATE" <= ? and events."START_END" = ? ORDER BY events."DATE" ASC', 
+              @truck_id, to_datetime(@date_from), true])
  
 
-               if (@localEvent.size >= 1 and  @localEvent.to_a[@localEvent.size-1].START_END == true)
-
-                  @DRIVER_id = @localEvent.to_a[@localEvent.size-1].DRIVER_id 
-
-                 @localEvent = Array.new(2) { Event.new }
+               if (@localEvent.size == 1) # and  @localEvent.to_a[@localEvent.size-1].START_END == true)
+                  @localEvent = Array.new(2) { Event.new } 
+                  @DRIVER_id = @localEvent.to_a[0].DRIVER_id 
                   @localEvent[0].START_END = true
                   @localEvent[0].DATE = @date_from
                   @localEvent[0].DRIVER_id = @DRIVER_id
                   @localEvent[1].START_END = false
                   @localEvent[1].DATE = @date_to
+                  truck_events = false
+                 end
+
+             if (@localEvent.size == 2) # and  @localEvent.to_a[@localEvent.size-1].START_END == true)
+                  @localEvent = Array.new(4) { Event.new }
+                  @localEvent[0].START_END = true
+                  @localEvent[0].DATE = @date_from
+                  @localEvent[0].DRIVER_id = @localEvent.to_a[0].DRIVER_id
+                  @localEvent[1].START_END = false
+                  @localEvent[1].DATE = @date_to
+
+                  @localEvent[2].START_END = true
+                  @localEvent[2].DATE = @date_from
+                  @localEvent[2].DRIVER_id = @localEvent.to_a[1].DRIVER_id
+                  @localEvent[3].START_END = false
+                  @localEvent[3].DATE = @date_to
+
                   truck_events = false
                  end
 
