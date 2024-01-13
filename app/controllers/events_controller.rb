@@ -867,6 +867,7 @@ def finance
 
                else
 
+
                  value_invoiced = InvoicedTrip.find_by_sql(['SELECT SUM("total_amount") AS sum1 FROM invoiced_trips where 
                  invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <  ? AND invoiced_trips."client_id" = ?', 
                  @date_from1-1, @date_to1+1, @search1.client_id])[0].sum1
@@ -1053,7 +1054,9 @@ end
 
 #############################################################
 def weekly
+
  @search1 = PeriodicTransactionSearch.new(params[:search1])
+
 
 if false #!(current_user.email.eql?  "ameropa.logistics@gmail.com")
         # redirect_to root_path
@@ -1063,6 +1066,7 @@ elsif @search1.type == 5
 elsif @search1.type == 8
    return finance
 elsif  @search1.type == 1
+
    return payments
 else
 
@@ -1388,6 +1392,8 @@ end
 
 #########################################
 #########################################
+
+
 if @search1.type == 5  and @search1.time == 1
 
 
@@ -1399,6 +1405,7 @@ if @search1.type == 5  and @search1.time == 1
 
 
                       end
+
 
  ## find all the trips that started in that week
  @invoiced_trips = InvoicedTrip.find_by_sql(['SELECT * FROM invoiced_trips where invoiced_trips."StartDate" > ? AND invoiced_trips."StartDate" <  ?', @date_from1-1, @date_to1+1])
@@ -1429,6 +1436,8 @@ Dispatcher.all.each_with_index do |dispatcher,j|
 end
 
                       end
+
+
 
 return
 
@@ -1491,6 +1500,7 @@ return
     end
 
   elsif @search1.type == 3 
+
 
    @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
     invoices.date > ? AND invoices.date <  ?', client.id, 
@@ -1681,6 +1691,9 @@ for week in @period_start..@period_end do
           Client.all.each_with_index do |client,j|
               @totalInvoicedTrips = 0
 
+
+
+if false
               if client.PaymentDelay != nil 
                   @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where ddate = ? AND invoices.client_id = ? AND
                     invoices.date > ? AND invoices.date <  ?','2000-01-01', client.id,
@@ -1692,6 +1705,34 @@ for week in @period_start..@period_end do
                   @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
                     invoices.ddate > ? AND invoices.ddate <  ?', client.id,
                     @date_from1-1, @date_to1+1])
+              end
+end
+
+
+              if client.PaymentDelay != nil 
+
+
+                  @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where ddate = ? AND invoices.client_id = ? AND
+                    invoices.date > ? AND invoices.date <  ? AND invoices.paid = ?','2000-01-01', client.id,
+                    @date_from1-client.PaymentDelay-1, @date_to1+1-client.PaymentDelay, false]) + 
+                
+                  Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND
+                    invoices.ddate > ? AND invoices.ddate <  ? AND invoices.paid = ?', client.id,
+                    @date_from1-1, @date_to1+1, false])+
+                
+                  Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND invoices.paid = ? AND 
+                    invoices.invoice_collection_date > ? AND invoices.invoice_collection_date <  ? ', client.id,
+                    true, @date_from1-1, @date_to1+1])
+
+
+              else
+                  @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? 
+                    AND invoices.paid = ? AND invoices.ddate > ? AND invoices.ddate <  ?', false, client.id,
+                    @date_from1-1, @date_to1+1])+
+                     Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND invoices.paid = ? AND 
+                    invoices.invoice_collection_date > ? AND invoices.invoice_collection_date <  ? ', client.id,
+                    true, @date_from1-1, @date_to1+1])
+
               end
 
               if @invoices != nil
