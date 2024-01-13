@@ -746,12 +746,15 @@ elsif @truck_id > 0 && @driver_id == 0
                        @localEvent[@localEvent.count-1].id = @localEvent.count
                        @localEvent[@localEvent.count-1].DATE = @date_to
                        @localEvent[@localEvent.count-1].START_END = false
+
+
                     else
                        #append at the beginning the @date_from as it comes from the form interval
                        @localEvent.unshift(@localEvent[0].dup)
                        @localEvent[0].id = @localEvent.count+1
                        @localEvent[0].DATE = @date_from
                        @localEvent[0].START_END = true
+
                     end
                   else
                     if @localEvent[0].START_END == false
@@ -765,19 +768,79 @@ elsif @truck_id > 0 && @driver_id == 0
                        @localEvent[@localEvent.count-1].id = @localEvent.count
                        @localEvent[@localEvent.count-1].DATE = @date_to
                        @localEvent[@localEvent.count-1].START_END = false    
-                     end
+                    else
+
+
+                      @local_Event = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
+                       and events."DATE" >= ? ORDER BY events."DATE" DESC', 
+                       @truck_id, to_datetime(@date_from)])
+                      @localEvent = Array.new(4) { Event.new }
+
+
+                      if (@local_Event.to_a[0].START_END == true and ( @local_Event.size==1 or @local_Event.to_a[1].START_END == false) )
+                          @DRIVER_id = @local_Event.to_a[0].DRIVER_id 
+                          @localEvent[0].START_END = true
+                          @localEvent[0].DATE = @date_from
+                          @localEvent[0].DRIVER_id = @DRIVER_id
+                          @localEvent[1].START_END = false
+                          @localEvent[1].DATE = @date_to
+                          truck_events = false
+                      end
+
+                      if (@local_Event.to_a[0].START_END == true and (@local_Event.size>1 and @local_Event.to_a[1].START_END == true and 
+                          @local_Event.to_a[1].DATE.to_date.to_s == @local_Event.to_a[0].DATE.to_date.to_s) )
+
+                          @localEvent[0].START_END = true
+                          @localEvent[0].DATE = @date_from
+                          @localEvent[0].DRIVER_id = @local_Event.to_a[0].DRIVER_id
+                          @localEvent[1].START_END = false
+                          @localEvent[1].DATE = @date_to
+
+                          @localEvent[2].START_END = true
+                          @localEvent[2].DATE = @date_from
+                          @localEvent[2].DRIVER_id = @local_Event.to_a[1].DRIVER_id
+                          @localEvent[3].START_END = false
+                          @localEvent[3].DATE = @date_to
+
+                          truck_events = false
+                       end
+
+                      if (@local_Event.to_a[0].START_END == false and (@local_Event.size>3 and @local_Event.to_a[1].START_END == false and
+                          @local_Event.to_a[2].DATE.to_date.to_s == @local_Event.to_a[3].DATE.to_date.to_s) )
+
+                          @localEvent[0].START_END = true
+                          @localEvent[0].DATE = @date_from
+                          @localEvent[0].DRIVER_id = @local_Event.to_a[2].DRIVER_id
+                          @localEvent[1].START_END = false
+                          @localEvent[1].DATE = @date_to
+
+                          @localEvent[2].START_END = true
+                          @localEvent[2].DATE = @date_from
+                          @localEvent[2].DRIVER_id = @local_Event.to_a[3].DRIVER_id
+                          @localEvent[3].START_END = false
+                          @localEvent[3].DATE = @date_to
+
+                          truck_events = false
+                       end
+
+
+
+
+
+                    end  
+
                   end
                   truck_events = true
                else
 
-              @localEvent = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
-              and events."DATE" <= ? and events."START_END" = ? ORDER BY events."DATE" DESC', 
-              @truck_id, to_datetime(@date_from), true])
+              @local_Event = Event.find_by_sql(['SELECT * FROM events where events.truck_id = ? 
+              and events."DATE" <= ? ORDER BY events."DATE" DESC', 
+              @truck_id, to_datetime(@date_from)])
+              @localEvent = Array.new(4) { Event.new }
  
 
-               if (@localEvent.size == 1) # and  @localEvent.to_a[@localEvent.size-1].START_END == true)
-                  @localEvent = Array.new(2) { Event.new } 
-                  @DRIVER_id = @localEvent.to_a[0].DRIVER_id 
+              if (@local_Event.to_a[0].START_END == true and ( @local_Event.size==1 or @local_Event.to_a[1].START_END == false) )
+                  @DRIVER_id = @local_Event.to_a[0].DRIVER_id 
                   @localEvent[0].START_END = true
                   @localEvent[0].DATE = @date_from
                   @localEvent[0].DRIVER_id = @DRIVER_id
@@ -786,17 +849,18 @@ elsif @truck_id > 0 && @driver_id == 0
                   truck_events = false
                  end
 
-             if (@localEvent.size == 2) # and  @localEvent.to_a[@localEvent.size-1].START_END == true)
-                  @localEvent = Array.new(4) { Event.new }
+             if (@local_Event.to_a[0].START_END == true and (@local_Event.size>1 and @local_Event.to_a[1].START_END == true and 
+                 @local_Event.to_a[1].DATE.to_date.to_s == @local_Event.to_a[0].DATE.to_date.to_s) )
+
                   @localEvent[0].START_END = true
                   @localEvent[0].DATE = @date_from
-                  @localEvent[0].DRIVER_id = @localEvent.to_a[0].DRIVER_id
+                  @localEvent[0].DRIVER_id = @local_Event.to_a[0].DRIVER_id
                   @localEvent[1].START_END = false
                   @localEvent[1].DATE = @date_to
 
                   @localEvent[2].START_END = true
                   @localEvent[2].DATE = @date_from
-                  @localEvent[2].DRIVER_id = @localEvent.to_a[1].DRIVER_id
+                  @localEvent[2].DRIVER_id = @local_Event.to_a[1].DRIVER_id
                   @localEvent[3].START_END = false
                   @localEvent[3].DATE = @date_to
 

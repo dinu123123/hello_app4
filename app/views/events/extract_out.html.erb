@@ -166,12 +166,15 @@
     <% @events.each do |event| %>
     <tr>
       <td><%= event.DATE.strftime("%d %B %Y %H:%M") %></td>
-      
+      <% if @drivers.find(event.DRIVER_id) != nil %> 
       <td><%= @drivers.find(event.DRIVER_id).CNP %></td>
       <td><%= @drivers.find(event.DRIVER_id).FIRSTNAME %></td>
       <td><%= @drivers.find(event.DRIVER_id).SECONDNAME %></td>
       <td><%= @trucks.find(event.truck_id).NB_PLATE %></td>
-      
+
+    <% end %>
+
+
       <% if event.START_END? %>
       <td><%= 'Start' %></td>
       <% else %>
@@ -198,9 +201,8 @@
       <th>Client ID</th>
       <th>Driver Name</th>
       <th>Driver CNP </th>
-      <th>Driver ID</th>
       <th>Truck</th>
-       <th>Truck ID</th>
+      <th>Truck ID</th>
       <th>Germany toll</th>
       <th>Belgium toll</th>
       <th>Swiss toll</th>
@@ -234,7 +236,6 @@
         <td><%= " - " %></td>
 <% end %> 
 
-        <td><%= invoiced_trip.DRIVER_id %></td>
 
 <% if invoiced_trip.truck_id != nil %>
         <td><%= @trucks.find(invoiced_trip.truck_id).NB_PLATE %></td>
