@@ -1721,16 +1721,17 @@ end
                     @date_from1-1, @date_to1+1, false])+
                 
                   Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND invoices.paid = ? AND 
-                    invoices.invoice_collection_date > ? AND invoices.invoice_collection_date <  ? ', client.id,
+                    invoices.collection_date > ? AND invoices.collection_date <  ? ', client.id,
                     true, @date_from1-1, @date_to1+1])
 
 
               else
+                
                   @invoices = Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? 
                     AND invoices.paid = ? AND invoices.ddate > ? AND invoices.ddate <  ?', false, client.id,
                     @date_from1-1, @date_to1+1])+
                      Invoice.find_by_sql(['SELECT * FROM invoices where invoices.client_id = ? AND invoices.paid = ? AND 
-                    invoices.invoice_collection_date > ? AND invoices.invoice_collection_date <  ? ', client.id,
+                    invoices.collection_date > ? AND invoices.collection_date <  ? ', client.id,
                     true, @date_from1-1, @date_to1+1])
 
               end
