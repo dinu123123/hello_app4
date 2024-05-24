@@ -104,8 +104,9 @@ legend {
 <%= form.collection_select :trailer_id, Trailer.all, :id, :NB_PLATE, {prompt: "Trailer Nb Plate"} %>
 <%= form.collection_select :client_id, Client.all.where(:active => true), :id, :Name, {prompt: "Client"} %>
 
-<%= form.collection_select :driver_expense_id, DriverExpense.all, :id, :id_with_info, {prompt: "DriverExpense"} %>
-<%= form.collection_select :truck_expense_id, TruckExpense.all, :id, :id_with_info, {prompt: "TruckExpense"} %>
+<%= form.collection_select :invoiced_trip_id, DriverExpense.find_by_sql(['SELECT * FROM driver_expenses where driver_expenses."DATE" BETWEEN ? AND ?', Date.today-50, Date.today+10]), :id, :id_with_info, {prompt: "DriverExpense"} %>
+
+<%= form.collection_select :truck_expense_id, TruckExpense.find_by_sql(['SELECT * FROM truck_expenses where truck_expenses."DATE" BETWEEN ? AND ?', Date.today-50, Date.today+10]), :id, :id_with_info, {prompt: "TruckExpense"} %>
  
 <%= form.collection_select :dispatcher_id, Dispatcher.all, :id, :FIRSTNAME, {:include_blank => 'All Dispatchers'} %>
 
