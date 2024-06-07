@@ -238,20 +238,10 @@ invoice = InvoicePrinter::Document.new(
   tax: 'Eur 0.00',
   total: 'Eur '+invoiced_trip.total_amount.to_s,
 
-  bank_account_number: 'RO53 RZBR 0000 0600 1753 0734',
+  bank_account_number: 'BE61 9670 4827 2317',
   items: [item],
   note: 'Invoice valid in electronic form without stamp and signature'
 )
-
-
-#InvoicePrinter.print(
-#  document: invoice,
-#  labels: labels,
-#  page_size: :a4,
-#  file_name:   'wk'.to_s+invoiced_trip.date.strftime("%U").to_s+"_"+
-#               client.Name.try(:gsub!,' ', '').to_s+"_"+
-#               Truck.find(invoiced_trip.truck_id).NB_PLATE+'.pdf'
-#)
 
 respond_to do |format|
     format.pdf {

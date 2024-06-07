@@ -525,7 +525,7 @@ invoice_inline = InvoicePrinter::Document.new(
   subtotal: " ".to_s+invoice.amount.round(2).to_s,
   tax: " ".to_s+  (invoice.vat/100*invoice.amount).round(2).to_s,
   total: symbol+' '+(invoice.amount*((100+invoice.vat)/100)).round(2).to_s+" ".to_s,
-  bank_account_number: 'RO53 RZBR 0000 0600 1753 0734                               '+ conversion_string.to_s,
+  bank_account_number: 'BE61 9670 4827 2317                               '+ conversion_string.to_s,
   items: ary,
   note: 'This is computer generated invoice. No signature required.'
 )
@@ -944,7 +944,7 @@ invoice_inline = InvoicePrinter::Document.new(
   tax: "€ ".to_s+ (invoice.vat/100*invoice.total_amount).round(2).to_s+" ".to_s,
   total: "€ ".to_s+(invoice.total_amount*((100+invoice.vat)/100)).round(2).to_s+" ".to_s,
 
-  bank_account_number: 'RO53 RZBR 0000 0600 1753 0734',
+  bank_account_number: 'BE61 9670 4827 2317',
   items: ary,
   note: 'This is computer generated invoice. No signature required.'
 )
