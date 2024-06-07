@@ -238,10 +238,11 @@ invoice = InvoicePrinter::Document.new(
   tax: 'Eur 0.00',
   total: 'Eur '+invoiced_trip.total_amount.to_s,
 
-  bank_account_number: 'BE61 9670 4827 2317',
+  bank_account_number: 'BE61 9670 4827 2317          ',
   items: [item],
   note: 'Invoice valid in electronic form without stamp and signature'
 )
+
 
 respond_to do |format|
     format.pdf {
